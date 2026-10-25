@@ -5,8 +5,9 @@
 - `src/core/` — pure logic. No React, no browser APIs, no hidden clock or randomness (time and the
   random generator are passed in). Fully unit-tested.
 - `src/db/` — Dexie (IndexedDB) schema and the repository. The only place that talks to storage.
-- `src/i18n/` — translation files (`uk`, `en`). _(Stage 2)_
-- `src/ui/` — React components and screens. _(Stage 2)_
+- `src/i18n/` — translation files (`en.ts` defines the keys, `uk.ts` must have all of them) and the `useI18n()` hook.
+- `src/ui/` — React components (`components/`), screens (`screens/`), providers and routes.
+- `src/dev/` — demo data for development only (`/?seed`), not part of the production bundle.
 - `scripts/` — reproducible data preparation scripts, run with `node scripts/<name>.ts`.
 
 Dependencies point one way: `ui` → `db` → `core`. `core` imports nothing from the other layers.
@@ -84,6 +85,21 @@ Everything that touches several tables (delete deck, save session, import) runs 
 **Schema changes without losing data:** never edit an existing `version(n)` block; add `version(n + 1)`
 with only the changed stores and an `.upgrade()` function. `repo.test.ts` contains a test that opens a
 database created at version 1 with a version-2 class and checks the data survived.
+
+## UI (`src/ui`)
+
+- `App` = `AppProviders` (opens the database, loads settings, provides repository and UI language,
+  shows a clear screen if storage is blocked) + `HashRouter` + `AppRoutes`. A hash router is used so the
+  static site works offline and on any static host without server rewrites.
+- Screens read data with `useLiveQuery` (dexie-react-hooks), so lists update by themselves after a write.
+- Routes: `/` home, `/decks`, `/decks/new`, `/decks/:id`, `/decks/:id/edit`, `/decks/:id/cards/new`,
+  `/decks/:id/cards/:cardId`, `/backup`, `/settings`.
+- i18n: all text goes through `t(key)` / `tp(base, count)` (plural rules from `Intl.PluralRules`; Ukrainian
+  needs one/few/many/other). Language names come from `Intl.DisplayNames`. Tests check that `uk` has every
+  key, all plural forms and the same placeholders as `en`.
+- Destructive actions (delete deck/card) use `ConfirmDialog` (native `<dialog>`). Forms show errors next to
+  the field and keep what the user typed; a failed save shows a message and changes nothing.
+- Design tokens are CSS custom properties in `src/styles/tokens.css`; see `docs/DESIGN.md`.
 
 ## Testing
 

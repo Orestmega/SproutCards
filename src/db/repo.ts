@@ -17,6 +17,12 @@ export interface NewDeck {
   source?: string;
 }
 
+export interface DeckSummary {
+  deck: Deck;
+  cardCount: number;
+  dueCount: number;
+}
+
 export interface NewCard {
   term: string;
   translations: string[];
@@ -96,6 +102,10 @@ export function createRepo(
       if (updated === 0) throw new Error(`Card ${id} not found`);
     },
 
+    getCard(id: string): Promise<Card | undefined> {
+      return db.cards.get(id);
+    },
+
     listCards(deckId: string): Promise<Card[]> {
       return db.cards.where('deckId').equals(deckId).sortBy('createdAt');
     },
@@ -127,16 +137,33 @@ export function createRepo(
       });
     },
 
+    /** Per-deck numbers for lists: card count and review records due at `at` (card x direction pairs). */
+    async deckSummaries(at: number): Promise<DeckSummary[]> {
+      const decks = await this.listDecks();
+      return Promise.all(
+        decks.map(async (deck) => ({
+          deck,
+          cardCount: await db.cards.where('deckId').equals(deck.id).count(),
+          dueCount: await db.progress
+            .where('deckId')
+            .equals(deck.id)
+            .filter((p) => p.dueAt <= at)
+            .count(),
+        })),
+      );
+    },
+
     listLogs(since: number): Promise<ReviewLog[]> {
       return db.reviewLogs.where('at').aboveOrEqual(since).toArray();
     },
 
     // ---- settings ----
-    async getSettings(): Promise<Settings> {
+    /** @param defaults used for everything not saved yet (e.g. the UI language guessed from the browser) */
+    async getSettings(defaults: Settings = DEFAULT_SETTINGS): Promise<Settings> {
       const row = await db.settings.get('app');
-      if (!row) return { ...DEFAULT_SETTINGS };
+      if (!row) return { ...defaults };
       const { id: _id, ...saved } = row;
-      return { ...DEFAULT_SETTINGS, ...saved }; // new settings added later get their defaults
+      return { ...defaults, ...saved }; // new settings added later get their defaults
     },
 
     async saveSettings(settings: Settings): Promise<void> {
