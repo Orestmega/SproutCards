@@ -1,9 +1,91 @@
 # Architecture
 
-(Skeleton — filled in as the stages are built.)
+## Layers
 
-- `src/core/` — pure logic, no React or browser APIs (scheduler, Learn engine, answer checking, import/export).
-- `src/db/` — Dexie schema and repositories.
-- `src/i18n/` — translation files (`uk`, `en`).
-- `src/ui/` — React components and screens.
-- `scripts/` — reproducible data preparation scripts.
+- `src/core/` — pure logic. No React, no browser APIs, no hidden clock or randomness (time and the
+  random generator are passed in). Fully unit-tested.
+- `src/db/` — Dexie (IndexedDB) schema and the repository. The only place that talks to storage.
+- `src/i18n/` — translation files (`uk`, `en`). _(Stage 2)_
+- `src/ui/` — React components and screens. _(Stage 2)_
+- `scripts/` — reproducible data preparation scripts, run with `node scripts/<name>.ts`.
+
+Dependencies point one way: `ui` → `db` → `core`. `core` imports nothing from the other layers.
+
+## Data model (`src/core/types.ts`)
+
+| Type | Meaning |
+|---|---|
+| `Deck` | name, `learningLang` and `translationLang` (BCP 47 codes — no language is hard-coded), optional description and source |
+| `Card` | `term` (learning language), `translations[]` (first is primary), `examples[]`, `notes`, `reviewed` |
+| `Progress` | schedule of one card **in one direction**: `reps`, `intervalDays`, `dueAt`, `lapses`, `lastReviewedAt`. Id is `cardId:direction` |
+| `ReviewLog` | one row per answer (time, card, mode, level, result) for statistics |
+| `Settings` | UI language, speech on/off, new cards per day, ignore accents |
+
+`Direction` is `forward` (term → translation) or `backward` (translation → term). Forward and backward
+progress of the same card are independent. A card with no `Progress` row has never been studied.
+
+`reviewed: false` marks content of unknown quality (machine translations, CSV imports). Cards typed by
+the user are `reviewed: true`.
+
+## Answer checking (`answer.ts`)
+
+`normalizeAnswer` makes two strings comparable: Unicode NFC, lower case, typographic quotes/dashes →
+plain, edge punctuation and extra spaces removed, optionally accents removed (setting). On Cyrillic
+letters `й`, `ї`, `ё` keep their marks; the stress mark is removed.
+
+`checkAnswer` returns `correct`, `almost` or `wrong`. **Rule for `almost`:** the answer is within a small
+edit distance of an accepted answer (swapping two neighbouring letters counts as one edit). Allowed
+distance depends on the length of the accepted answer: ≤3 letters → 0, 4–7 → 1, ≥8 → 2. `almost` is
+**not** fully correct: the right answer is shown, the level does not rise, and it is not a mistake for
+scheduling.
+
+## Scheduler (`scheduler.ts`)
+
+`Scheduler.review(previous, 'correct' | 'wrong', now) → ScheduleState` is the only contract. The default
+`createFixedIntervalScheduler` uses 1, 3, 7, 14, 30 days (the last repeats); a mistake resets to the first
+interval and counts a lapse. Due dates are the **start of a local calendar day**, so a card is available
+from the morning of its day. Replace the implementation (SM-2, FSRS) by providing another `Scheduler`;
+`ScheduleState.extra` can hold algorithm-specific numbers.
+
+## Learn engine (`learn.ts`)
+
+A pure state machine: `startSession` → repeated `submitAnswer` → `summarize` / `applySessionToProgress`.
+
+- Levels are data (`LearnConfig.levels`): choice(term→translation), typing(term→translation),
+  typing(translation→term). The session `Direction` swaps the sides.
+- Correct: level + 1, card goes to the back of the queue. Passing = a correct answer on the last level.
+- Wrong or "I don't know": level − 1 (not below 0), mistake counted, card returns after 3–5 cards.
+- `almost`: level unchanged, no mistake, card returns after 3–5 cards.
+- If a choice question cannot get distractors (one-card deck), it is asked as typing.
+- Cards sharing a prompt (duplicates such as two cards for "bank") accept each other's answers.
+- Choice options never contain another valid answer.
+- Scheduling happens once per card when it **passes**: a card with ≥1 mistake in the session is scheduled
+  as `wrong` (back to the first interval), otherwise as `correct`. Cards that did not pass (interrupted
+  session) are not scheduled.
+- `selection.ts` picks due and new cards for a session.
+
+## Exchange formats (`exchange.ts`, `csv.ts`)
+
+- JSON, `format: "sproutcards-deck"` (one deck) or `"sproutcards-backup"` (several), `version: 1`.
+  A file with a newer version is refused with a clear code. To change the layout, bump
+  `EXCHANGE_VERSION` and add an upgrade step in `parseExchange`.
+- `parseExchange` validates everything first and returns **all** problems (code + path) or the data.
+  Any error refuses the whole file; nothing is written. Unknown progress entries only produce a warning.
+- Import always creates **new** decks with new ids (`remapBundleIds`), so existing data is never
+  overwritten; the write is one transaction.
+- CSV (`term, translations, example, exampleTranslation, notes`, `|` between translations, `,` `;` or tab
+  as delimiter, optional header) carries cards only; imported cards are `reviewed: false`.
+
+## Storage (`src/db`)
+
+Dexie database `sproutcards`. Tables: `decks`, `cards`, `progress`, `reviewLogs`, `settings` (one row).
+Everything that touches several tables (delete deck, save session, import) runs in one transaction.
+
+**Schema changes without losing data:** never edit an existing `version(n)` block; add `version(n + 1)`
+with only the changed stores and an `.upgrade()` function. `repo.test.ts` contains a test that opens a
+database created at version 1 with a version-2 class and checks the data survived.
+
+## Testing
+
+Vitest + Testing Library; `fake-indexeddb` gives an in-memory IndexedDB (`src/test/setup.ts`). Logic is
+tested before UI. Checks: `npm run lint`, `npm run typecheck`, `npm run test`, `npm run build`.
