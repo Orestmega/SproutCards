@@ -74,9 +74,14 @@ export function HomeScreen() {
           {t('home.decks')}
         </h2>
         {summaries.length === 0 ? (
-          <ButtonLink to="/decks/new" block>
-            {t('decks.new')}
-          </ButtonLink>
+          <>
+            <ButtonLink to="/decks/new" block>
+              {t('decks.new')}
+            </ButtonLink>
+            <ButtonLink to="/catalog" variant="secondary" block>
+              {t('decks.catalog')}
+            </ButtonLink>
+          </>
         ) : (
           <>
             <ul className="list">

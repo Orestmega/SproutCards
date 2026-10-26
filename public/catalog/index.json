@@ -1,0 +1,82 @@
+{
+ "version": 1,
+ "tatoebaExport": "Sat, 24 Oct 2026 06:41:06 GMT",
+ "decks": [
+  {
+   "id": "freq-en-uk-1",
+   "kind": "frequent",
+   "title": {
+    "en": "Frequent English words, part 1",
+    "uk": "Частотні англійські слова, частина 1"
+   },
+   "description": {
+    "en": "Common English words in order of how often they occur in Tatoeba sentences, with example sentences.",
+    "uk": "Поширені англійські слова в порядку частоти в реченнях Tatoeba, з прикладами речень."
+   },
+   "learningLang": "en",
+   "translationLang": "uk",
+   "cardCount": 100,
+   "exampleCount": 100,
+   "file": "decks/freq-en-uk-1.json",
+   "attribution": "attribution/freq-en-uk-1.tsv",
+   "reviewed": false
+  },
+  {
+   "id": "freq-en-uk-2",
+   "kind": "frequent",
+   "title": {
+    "en": "Frequent English words, part 2",
+    "uk": "Частотні англійські слова, частина 2"
+   },
+   "description": {
+    "en": "Common English words in order of how often they occur in Tatoeba sentences, with example sentences.",
+    "uk": "Поширені англійські слова в порядку частоти в реченнях Tatoeba, з прикладами речень."
+   },
+   "learningLang": "en",
+   "translationLang": "uk",
+   "cardCount": 100,
+   "exampleCount": 99,
+   "file": "decks/freq-en-uk-2.json",
+   "attribution": "attribution/freq-en-uk-2.tsv",
+   "reviewed": false
+  },
+  {
+   "id": "freq-en-uk-3",
+   "kind": "frequent",
+   "title": {
+    "en": "Frequent English words, part 3",
+    "uk": "Частотні англійські слова, частина 3"
+   },
+   "description": {
+    "en": "Common English words in order of how often they occur in Tatoeba sentences, with example sentences.",
+    "uk": "Поширені англійські слова в порядку частоти в реченнях Tatoeba, з прикладами речень."
+   },
+   "learningLang": "en",
+   "translationLang": "uk",
+   "cardCount": 100,
+   "exampleCount": 99,
+   "file": "decks/freq-en-uk-3.json",
+   "attribution": "attribution/freq-en-uk-3.tsv",
+   "reviewed": false
+  },
+  {
+   "id": "topic-travel-en-uk",
+   "kind": "topic",
+   "title": {
+    "en": "Travel (English)",
+    "uk": "Подорожі (англійська)"
+   },
+   "description": {
+    "en": "Words and phrases for trips: transport, hotels, restaurants, emergencies.",
+    "uk": "Слова й фрази для подорожей: транспорт, готелі, ресторани, надзвичайні ситуації."
+   },
+   "learningLang": "en",
+   "translationLang": "uk",
+   "cardCount": 53,
+   "exampleCount": 43,
+   "file": "decks/topic-travel-en-uk.json",
+   "attribution": "attribution/topic-travel-en-uk.tsv",
+   "reviewed": false
+  }
+ ]
+}

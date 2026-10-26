@@ -1,0 +1,773 @@
+{
+ "format": "sproutcards-deck",
+ "version": 1,
+ "deck": {
+  "id": "topic-travel-en-uk",
+  "name": "Travel (English)",
+  "learningLang": "en",
+  "translationLang": "uk",
+  "description": "Words and phrases for trips: transport, hotels, restaurants, emergencies.",
+  "source": "SproutCards catalog",
+  "catalogId": "topic-travel-en-uk",
+  "createdAt": 0
+ },
+ "cards": [
+  {
+   "id": "topic-travel-en-uk-1",
+   "term": "airport",
+   "translations": [
+    "аеропорт"
+   ],
+   "examples": [
+    {
+     "text": "Where's the airport?",
+     "translation": "Де аеропорт?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-travel-en-uk-2",
+   "term": "flight",
+   "translations": [
+    "рейс",
+    "політ"
+   ],
+   "examples": [
+    {
+     "text": "I missed my flight.",
+     "translation": "Я запізнився на літак."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-travel-en-uk-3",
+   "term": "ticket",
+   "translations": [
+    "квиток"
+   ],
+   "examples": [
+    {
+     "text": "Where's my ticket?",
+     "translation": "Де мій квиток?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-travel-en-uk-4",
+   "term": "passport",
+   "translations": [
+    "паспорт"
+   ],
+   "examples": [
+    {
+     "text": "I have a passport.",
+     "translation": "У мене є паспорт."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-travel-en-uk-5",
+   "term": "visa",
+   "translations": [
+    "віза"
+   ],
+   "examples": [
+    {
+     "text": "I don't have a visa.",
+     "translation": "Я не маю візи."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-travel-en-uk-6",
+   "term": "luggage",
+   "translations": [
+    "багаж"
+   ],
+   "examples": [
+    {
+     "text": "Here's my luggage.",
+     "translation": "Ось мій багаж."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-travel-en-uk-7",
+   "term": "suitcase",
+   "translations": [
+    "валіза"
+   ],
+   "examples": [
+    {
+     "text": "Open your suitcase.",
+     "translation": "Відкрий валізу."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-travel-en-uk-8",
+   "term": "hotel",
+   "translations": [
+    "готель"
+   ],
+   "examples": [
+    {
+     "text": "Is this our hotel?",
+     "translation": "Це наш готель?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-travel-en-uk-9",
+   "term": "reservation",
+   "translations": [
+    "бронювання"
+   ],
+   "examples": [
+    {
+     "text": "I'd like a hotel reservation.",
+     "translation": "Я б хотів забронювати номер в готелі."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-travel-en-uk-10",
+   "term": "key",
+   "translations": [
+    "ключ"
+   ],
+   "examples": [
+    {
+     "text": "He turned the key.",
+     "translation": "Він повернув ключ."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-travel-en-uk-11",
+   "term": "map",
+   "translations": [
+    "карта"
+   ],
+   "examples": [
+    {
+     "text": "Do you have a map?",
+     "translation": "Маєш карту?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-travel-en-uk-12",
+   "term": "tourist",
+   "translations": [
+    "турист",
+    "туристка"
+   ],
+   "examples": [
+    {
+     "text": "I'm not a tourist.",
+     "translation": "Я не турист."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-travel-en-uk-13",
+   "term": "guide",
+   "translations": [
+    "гід",
+    "путівник"
+   ],
+   "examples": [
+    {
+     "text": "He acted as our guide.",
+     "translation": "Він виступив у ролі нашого провідника."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-travel-en-uk-14",
+   "term": "trip",
+   "translations": [
+    "поїздка"
+   ],
+   "examples": [
+    {
+     "text": "Let's take a trip.",
+     "translation": "Поїхали поподорожуємо."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-travel-en-uk-15",
+   "term": "journey",
+   "translations": [
+    "подорож"
+   ],
+   "examples": [
+    {
+     "text": "How was the journey?",
+     "translation": "Як пройшла подорож?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-travel-en-uk-16",
+   "term": "travel",
+   "translations": [
+    "подорожувати"
+   ],
+   "examples": [
+    {
+     "text": "I liked to travel.",
+     "translation": "Мені подобалося подорожувати."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-travel-en-uk-17",
+   "term": "arrive",
+   "translations": [
+    "прибувати"
+   ],
+   "examples": [
+    {
+     "text": "When did he arrive?",
+     "translation": "Коли він приїхав?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-travel-en-uk-18",
+   "term": "depart",
+   "translations": [
+    "відправлятися"
+   ],
+   "examples": [
+    {
+     "text": "When does the train depart?",
+     "translation": "Коли відправляється поїзд?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-travel-en-uk-19",
+   "term": "departure",
+   "translations": [
+    "відправлення"
+   ],
+   "examples": [
+    {
+     "text": "He got ready for departure.",
+     "translation": "Він приготувався до відльоту."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-travel-en-uk-20",
+   "term": "arrival",
+   "translations": [
+    "прибуття"
+   ],
+   "examples": [
+    {
+     "text": "She informed him of her arrival.",
+     "translation": "Вона повідомила його про свій приїзд."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-travel-en-uk-21",
+   "term": "station",
+   "translations": [
+    "станція",
+    "вокзал"
+   ],
+   "examples": [
+    {
+     "text": "What station is it?",
+     "translation": "Що це за станція?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-travel-en-uk-22",
+   "term": "platform",
+   "translations": [
+    "платформа",
+    "перон"
+   ],
+   "examples": [],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-travel-en-uk-23",
+   "term": "taxi",
+   "translations": [
+    "таксі"
+   ],
+   "examples": [
+    {
+     "text": "Let's take a taxi.",
+     "translation": "Давай візьмемо таксі."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-travel-en-uk-24",
+   "term": "ship",
+   "translations": [
+    "корабель"
+   ],
+   "examples": [
+    {
+     "text": "It's a cargo ship.",
+     "translation": "Це вантажне судно."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-travel-en-uk-25",
+   "term": "boat",
+   "translations": [
+    "човен"
+   ],
+   "examples": [
+    {
+     "text": "I got in the boat.",
+     "translation": "Я сів у човен."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-travel-en-uk-26",
+   "term": "ferry",
+   "translations": [
+    "пором"
+   ],
+   "examples": [],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-travel-en-uk-27",
+   "term": "border",
+   "translations": [
+    "кордон"
+   ],
+   "examples": [
+    {
+     "text": "We live near the border.",
+     "translation": "Ми живемо біля кордону."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-travel-en-uk-28",
+   "term": "customs",
+   "translations": [
+    "митниця"
+   ],
+   "examples": [
+    {
+     "text": "A customs declaration is required.",
+     "translation": "Потрібна митна декларація."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-travel-en-uk-29",
+   "term": "passenger",
+   "translations": [
+    "пасажир",
+    "пасажирка"
+   ],
+   "examples": [
+    {
+     "text": "I opened the passenger side door.",
+     "translation": "Я відчинив пасажирські двері."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-travel-en-uk-30",
+   "term": "seat",
+   "translations": [
+    "місце"
+   ],
+   "examples": [
+    {
+     "text": "Is this seat free?",
+     "translation": "Це місце вільне?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-travel-en-uk-31",
+   "term": "delay",
+   "translations": [
+    "затримка"
+   ],
+   "examples": [
+    {
+     "text": "What is the delay?",
+     "translation": "Що за затримка?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-travel-en-uk-32",
+   "term": "cancelled",
+   "translations": [
+    "скасований"
+   ],
+   "examples": [
+    {
+     "text": "The meeting was cancelled.",
+     "translation": "Зустріч скасували."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-travel-en-uk-33",
+   "term": "beach",
+   "translations": [
+    "пляж"
+   ],
+   "examples": [
+    {
+     "text": "How was the beach?",
+     "translation": "Як було на пляжі?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-travel-en-uk-34",
+   "term": "mountain",
+   "translations": [
+    "гора"
+   ],
+   "examples": [
+    {
+     "text": "How high is that mountain?",
+     "translation": "Яка висота у цієї гори?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-travel-en-uk-35",
+   "term": "museum",
+   "translations": [
+    "музей"
+   ],
+   "examples": [
+    {
+     "text": "Where's the museum?",
+     "translation": "Де знаходиться музей?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-travel-en-uk-36",
+   "term": "restaurant",
+   "translations": [
+    "ресторан"
+   ],
+   "examples": [
+    {
+     "text": "I ate at a restaurant.",
+     "translation": "Я поїв у ресторані."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-travel-en-uk-37",
+   "term": "menu",
+   "translations": [
+    "меню"
+   ],
+   "examples": [
+    {
+     "text": "Here is your menu.",
+     "translation": "Ось ваше меню."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-travel-en-uk-38",
+   "term": "bill",
+   "translations": [
+    "рахунок"
+   ],
+   "examples": [
+    {
+     "text": "Add it to my bill.",
+     "translation": "Додайте це до мого рахунку."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-travel-en-uk-39",
+   "term": "price",
+   "translations": [
+    "ціна"
+   ],
+   "examples": [
+    {
+     "text": "Look at the price.",
+     "translation": "Подивись на ціну."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-travel-en-uk-40",
+   "term": "cheap",
+   "translations": [
+    "дешевий"
+   ],
+   "examples": [
+    {
+     "text": "Carrots are cheap!",
+     "translation": "Морква дешева!"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-travel-en-uk-41",
+   "term": "expensive",
+   "translations": [
+    "дорогий"
+   ],
+   "examples": [
+    {
+     "text": "They're expensive.",
+     "translation": "Вони дорогі."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-travel-en-uk-42",
+   "term": "currency",
+   "translations": [
+    "валюта"
+   ],
+   "examples": [],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-travel-en-uk-43",
+   "term": "street",
+   "translations": [
+    "вулиця"
+   ],
+   "examples": [
+    {
+     "text": "The street is wet.",
+     "translation": "Вулиця мокра."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-travel-en-uk-44",
+   "term": "hospital",
+   "translations": [
+    "лікарня"
+   ],
+   "examples": [
+    {
+     "text": "He is in hospital.",
+     "translation": "Він у лікарні."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-travel-en-uk-45",
+   "term": "pharmacy",
+   "translations": [
+    "аптека"
+   ],
+   "examples": [
+    {
+     "text": "Where's the pharmacy?",
+     "translation": "Де знаходиться аптека?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-travel-en-uk-46",
+   "term": "How much is it?",
+   "translations": [
+    "Скільки це коштує?"
+   ],
+   "examples": [],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-travel-en-uk-47",
+   "term": "Where is the station?",
+   "translations": [
+    "Де знаходиться вокзал?",
+    "Де вокзал?"
+   ],
+   "examples": [],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-travel-en-uk-48",
+   "term": "I would like a ticket.",
+   "translations": [
+    "Я хотів би квиток.",
+    "Я хотіла б квиток."
+   ],
+   "examples": [],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-travel-en-uk-49",
+   "term": "Do you speak English?",
+   "translations": [
+    "Ви розмовляєте англійською?",
+    "Ти розмовляєш англійською?"
+   ],
+   "examples": [],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-travel-en-uk-50",
+   "term": "I am lost.",
+   "translations": [
+    "Я заблукав.",
+    "Я заблукала."
+   ],
+   "examples": [],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-travel-en-uk-51",
+   "term": "Excuse me.",
+   "translations": [
+    "Перепрошую.",
+    "Вибачте."
+   ],
+   "examples": [],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-travel-en-uk-52",
+   "term": "Thank you.",
+   "translations": [
+    "Дякую."
+   ],
+   "examples": [],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-travel-en-uk-53",
+   "term": "Help!",
+   "translations": [
+    "Допоможіть!"
+   ],
+   "examples": [
+    {
+     "text": "We need your help.",
+     "translation": "Потребуємо вашої допомоги."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  }
+ ],
+ "progress": []
+}

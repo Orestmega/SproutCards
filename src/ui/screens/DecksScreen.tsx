@@ -18,6 +18,7 @@ export function DecksScreen() {
       {summaries.length === 0 ? (
         <EmptyState title={t('decks.empty.title')} text={t('decks.empty.text')}>
           <ButtonLink to="/decks/new">{t('decks.new')}</ButtonLink>
+          <ButtonLink to="/catalog">{t('decks.catalog')}</ButtonLink>
           <ButtonLink to="/backup" variant="secondary">
             {t('decks.backup')}
           </ButtonLink>
@@ -31,6 +32,9 @@ export function DecksScreen() {
           </ul>
           <div className="row">
             <ButtonLink to="/decks/new">{t('decks.new')}</ButtonLink>
+            <ButtonLink to="/catalog" variant="secondary">
+              {t('decks.catalog')}
+            </ButtonLink>
             <ButtonLink to="/backup" variant="secondary">
               {t('decks.backup')}
             </ButtonLink>

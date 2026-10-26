@@ -1,0 +1,1573 @@
+{
+ "format": "sproutcards-deck",
+ "version": 1,
+ "deck": {
+  "id": "freq-en-uk-1",
+  "name": "Frequent English words, part 1",
+  "learningLang": "en",
+  "translationLang": "uk",
+  "description": "Common English words in order of how often they occur in Tatoeba sentences, with example sentences.",
+  "source": "SproutCards catalog",
+  "catalogId": "freq-en-uk-1",
+  "createdAt": 0
+ },
+ "cards": [
+  {
+   "id": "freq-en-uk-1-1",
+   "term": "i",
+   "translations": [
+    "я"
+   ],
+   "examples": [
+    {
+     "text": "I have a headache.",
+     "translation": "У мене болить голова."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-2",
+   "term": "you",
+   "translations": [
+    "ти",
+    "ви"
+   ],
+   "examples": [
+    {
+     "text": "You are in my way.",
+     "translation": "Ти на моєму шляху."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-3",
+   "term": "to",
+   "translations": [
+    "до",
+    "щоб"
+   ],
+   "examples": [
+    {
+     "text": "I listen to music.",
+     "translation": "Я слухаю музику."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-4",
+   "term": "is",
+   "translations": [
+    "є"
+   ],
+   "examples": [
+    {
+     "text": "Life is beautiful.",
+     "translation": "Життя прекрасне."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-5",
+   "term": "that",
+   "translations": [
+    "що",
+    "той"
+   ],
+   "examples": [
+    {
+     "text": "That won't happen.",
+     "translation": "Цього не станеться."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-6",
+   "term": "do",
+   "translations": [
+    "робити"
+   ],
+   "examples": [
+    {
+     "text": "When do we arrive?",
+     "translation": "Коли ми прибуваємо?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-7",
+   "term": "in",
+   "translations": [
+    "в",
+    "у"
+   ],
+   "examples": [
+    {
+     "text": "What's in the box?",
+     "translation": "Що у коробці?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-8",
+   "term": "he",
+   "translations": [
+    "він"
+   ],
+   "examples": [
+    {
+     "text": "He made me a suit.",
+     "translation": "Він зшив мені костюм."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-9",
+   "term": "have",
+   "translations": [
+    "мати"
+   ],
+   "examples": [
+    {
+     "text": "Can I have a bite?",
+     "translation": "Можна мені відкусити?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-10",
+   "term": "me",
+   "translations": [
+    "мене",
+    "мені"
+   ],
+   "examples": [
+    {
+     "text": "Keep away from me.",
+     "translation": "Тримайтеся від мене подалі."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-11",
+   "term": "it",
+   "translations": [
+    "це",
+    "воно"
+   ],
+   "examples": [
+    {
+     "text": "It rained heavily.",
+     "translation": "Йшов сильний дощ."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-12",
+   "term": "was",
+   "translations": [
+    "був",
+    "була",
+    "було"
+   ],
+   "examples": [
+    {
+     "text": "I was very hungry.",
+     "translation": "Я був дуже голодний."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-13",
+   "term": "are",
+   "translations": [
+    "є"
+   ],
+   "examples": [
+    {
+     "text": "Are you not tired?",
+     "translation": "Хіба ти не втомився?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-14",
+   "term": "this",
+   "translations": [
+    "це",
+    "цей"
+   ],
+   "examples": [
+    {
+     "text": "I liked this film.",
+     "translation": "Мені сподобався цей фільм."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-15",
+   "term": "my",
+   "translations": [
+    "мій",
+    "моя",
+    "моє"
+   ],
+   "examples": [
+    {
+     "text": "It's not my fault!",
+     "translation": "Це не моя провина."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-16",
+   "term": "what",
+   "translations": [
+    "що",
+    "який"
+   ],
+   "examples": [
+    {
+     "text": "What do you learn?",
+     "translation": "Що ти вчиш?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-17",
+   "term": "your",
+   "translations": [
+    "твій",
+    "ваш"
+   ],
+   "examples": [
+    {
+     "text": "I share your idea.",
+     "translation": "Ми з тобою однієї думки."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-18",
+   "term": "for",
+   "translations": [
+    "для"
+   ],
+   "examples": [
+    {
+     "text": "Look out for bees.",
+     "translation": "Остерігайся бджіл."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-19",
+   "term": "not",
+   "translations": [
+    "не"
+   ],
+   "examples": [
+    {
+     "text": "I'm not ready yet.",
+     "translation": "Я ще не готова."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-20",
+   "term": "be",
+   "translations": [
+    "бути"
+   ],
+   "examples": [
+    {
+     "text": "Don't be so angry.",
+     "translation": "Не будь таким сердитим."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-21",
+   "term": "know",
+   "translations": [
+    "знати"
+   ],
+   "examples": [
+    {
+     "text": "How should I know?",
+     "translation": "Звідки мені знати?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-22",
+   "term": "we",
+   "translations": [
+    "ми"
+   ],
+   "examples": [
+    {
+     "text": "We went due north.",
+     "translation": "Ми пішли точно на північ."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-23",
+   "term": "like",
+   "translations": [
+    "любити",
+    "подобатися"
+   ],
+   "examples": [
+    {
+     "text": "I don't like this.",
+     "translation": "Мені це не подобається."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-24",
+   "term": "with",
+   "translations": [
+    "з",
+    "із"
+   ],
+   "examples": [
+    {
+     "text": "Stay here with us.",
+     "translation": "Залишайся тут з нами."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-25",
+   "term": "want",
+   "translations": [
+    "хотіти"
+   ],
+   "examples": [
+    {
+     "text": "I want a lot more.",
+     "translation": "Я прагну значно більшого."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-26",
+   "term": "on",
+   "translations": [
+    "на"
+   ],
+   "examples": [
+    {
+     "text": "Put on your shoes.",
+     "translation": "Одягни взуття."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-27",
+   "term": "and",
+   "translations": [
+    "і",
+    "та"
+   ],
+   "examples": [
+    {
+     "text": "You and I are men.",
+     "translation": "Ми з вами чоловіки."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-28",
+   "term": "she",
+   "translations": [
+    "вона"
+   ],
+   "examples": [
+    {
+     "text": "She knew the teen.",
+     "translation": "Вона знала цього підлітка."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-29",
+   "term": "think",
+   "translations": [
+    "думати"
+   ],
+   "examples": [
+    {
+     "text": "I think it's true.",
+     "translation": "Я вважаю, що це правда."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-30",
+   "term": "has",
+   "translations": [
+    "має"
+   ],
+   "examples": [
+    {
+     "text": "Nancy has a piano.",
+     "translation": "У Ненсі є піаніно."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-31",
+   "term": "can",
+   "translations": [
+    "могти",
+    "вміти"
+   ],
+   "examples": [
+    {
+     "text": "Can I go home now?",
+     "translation": "Можна мені зараз піти додому?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-32",
+   "term": "his",
+   "translations": [
+    "його"
+   ],
+   "examples": [
+    {
+     "text": "This plane is his.",
+     "translation": "Це його літак."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-33",
+   "term": "why",
+   "translations": [
+    "чому"
+   ],
+   "examples": [
+    {
+     "text": "Why are you alone?",
+     "translation": "Чого ти сам?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-34",
+   "term": "at",
+   "translations": [
+    "біля",
+    "на"
+   ],
+   "examples": [
+    {
+     "text": "No problem at all!",
+     "translation": "Жодних проблем!"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-35",
+   "term": "how",
+   "translations": [
+    "як"
+   ],
+   "examples": [
+    {
+     "text": "How lucky you are!",
+     "translation": "Як тобі пощастило!"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-36",
+   "term": "go",
+   "translations": [
+    "йти",
+    "їхати"
+   ],
+   "examples": [
+    {
+     "text": "You had better go.",
+     "translation": "Вам краще піти."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-37",
+   "term": "very",
+   "translations": [
+    "дуже"
+   ],
+   "examples": [
+    {
+     "text": "They are very big.",
+     "translation": "Вони дуже великі."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-38",
+   "term": "her",
+   "translations": [
+    "її"
+   ],
+   "examples": [
+    {
+     "text": "That is her house.",
+     "translation": "То її будинок."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-39",
+   "term": "him",
+   "translations": [
+    "його",
+    "йому"
+   ],
+   "examples": [
+    {
+     "text": "I saw him no more.",
+     "translation": "Я більше його не бачив."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-40",
+   "term": "here",
+   "translations": [
+    "тут"
+   ],
+   "examples": [
+    {
+     "text": "You can park here.",
+     "translation": "Ви можете припаркуватися тут."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-41",
+   "term": "said",
+   "translations": [
+    "сказав",
+    "сказала"
+   ],
+   "examples": [
+    {
+     "text": "He said the truth.",
+     "translation": "Він сказав правду."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-42",
+   "term": "about",
+   "translations": [
+    "про"
+   ],
+   "examples": [
+    {
+     "text": "How about a drink?",
+     "translation": "Як щодо того, щоб чогось випити?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-43",
+   "term": "all",
+   "translations": [
+    "все",
+    "всі"
+   ],
+   "examples": [
+    {
+     "text": "Are you all ready?",
+     "translation": "Ви всі готові?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-44",
+   "term": "they",
+   "translations": [
+    "вони"
+   ],
+   "examples": [
+    {
+     "text": "They went fishing.",
+     "translation": "Вони пішли на риболовлю."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-45",
+   "term": "there",
+   "translations": [
+    "там"
+   ],
+   "examples": [
+    {
+     "text": "There is no hurry.",
+     "translation": "Це не терміново."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-46",
+   "term": "no",
+   "translations": [
+    "ні"
+   ],
+   "examples": [
+    {
+     "text": "You have no heart.",
+     "translation": "Серця не маєш."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-47",
+   "term": "who",
+   "translations": [
+    "хто"
+   ],
+   "examples": [
+    {
+     "text": "Who made the doll?",
+     "translation": "Хто зробив цю ляльку?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-48",
+   "term": "time",
+   "translations": [
+    "час"
+   ],
+   "examples": [
+    {
+     "text": "Long time, no see.",
+     "translation": "Давно не бачилися."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-49",
+   "term": "one",
+   "translations": [
+    "один"
+   ],
+   "examples": [
+    {
+     "text": "One day I met him.",
+     "translation": "Одного разу я зустрів його."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-50",
+   "term": "help",
+   "translations": [
+    "допомога",
+    "допомагати"
+   ],
+   "examples": [
+    {
+     "text": "Could you help me?",
+     "translation": "Ви не могли б мені допомогти?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-51",
+   "term": "were",
+   "translations": [
+    "були"
+   ],
+   "examples": [
+    {
+     "text": "We were all tired.",
+     "translation": "Ми всі втомилися."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-52",
+   "term": "need",
+   "translations": [
+    "потребувати",
+    "потрібно"
+   ],
+   "examples": [
+    {
+     "text": "I need an ashtray.",
+     "translation": "Мені потрібна попільничка."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-53",
+   "term": "had",
+   "translations": [
+    "мав",
+    "мала"
+   ],
+   "examples": [
+    {
+     "text": "I had a nightmare.",
+     "translation": "Мені приснився кошмар."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-54",
+   "term": "tell",
+   "translations": [
+    "розповідати",
+    "казати"
+   ],
+   "examples": [
+    {
+     "text": "Tell me the story.",
+     "translation": "Розкажи мені цю історію."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-55",
+   "term": "where",
+   "translations": [
+    "де",
+    "куди"
+   ],
+   "examples": [
+    {
+     "text": "Where will we eat?",
+     "translation": "Де ми будемо їсти?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-56",
+   "term": "good",
+   "translations": [
+    "добрий",
+    "гарний",
+    "хороший"
+   ],
+   "examples": [
+    {
+     "text": "This is very good.",
+     "translation": "Це дуже добре."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-57",
+   "term": "if",
+   "translations": [
+    "якщо"
+   ],
+   "examples": [
+    {
+     "text": "What if I am poor?",
+     "translation": "А що, якщо я бідний?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-58",
+   "term": "so",
+   "translations": [
+    "так",
+    "тому"
+   ],
+   "examples": [
+    {
+     "text": "Don't run so fast.",
+     "translation": "Не біжи так швидко."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-59",
+   "term": "just",
+   "translations": [
+    "просто",
+    "лише"
+   ],
+   "examples": [
+    {
+     "text": "He is just my age.",
+     "translation": "Він мого віку."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-60",
+   "term": "come",
+   "translations": [
+    "приходити",
+    "прийти"
+   ],
+   "examples": [
+    {
+     "text": "Please come again.",
+     "translation": "Будь ласка, приходь ще."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-61",
+   "term": "up",
+   "translations": [
+    "вгору"
+   ],
+   "examples": [
+    {
+     "text": "You must hurry up.",
+     "translation": "Ти мусиш поквапитися."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-62",
+   "term": "us",
+   "translations": [
+    "нас",
+    "нам"
+   ],
+   "examples": [
+    {
+     "text": "Cows give us milk.",
+     "translation": "Корови дають нам молоко."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-63",
+   "term": "than",
+   "translations": [
+    "ніж"
+   ],
+   "examples": [
+    {
+     "text": "I'm older than you.",
+     "translation": "Я старша, ніж ти."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-64",
+   "term": "please",
+   "translations": [
+    "будь ласка"
+   ],
+   "examples": [
+    {
+     "text": "The check, please.",
+     "translation": "Рахунок, будь ласка."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-65",
+   "term": "told",
+   "translations": [
+    "сказав",
+    "розповів"
+   ],
+   "examples": [
+    {
+     "text": "I told you before!",
+     "translation": "Я тобі ще раніше казав!"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-66",
+   "term": "never",
+   "translations": [
+    "ніколи"
+   ],
+   "examples": [
+    {
+     "text": "It's now or never.",
+     "translation": "Зараз або ніколи."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-67",
+   "term": "from",
+   "translations": [
+    "з",
+    "від"
+   ],
+   "examples": [
+    {
+     "text": "Stay away from me.",
+     "translation": "Тримайся від мене подалі."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-68",
+   "term": "too",
+   "translations": [
+    "теж",
+    "також",
+    "занадто"
+   ],
+   "examples": [
+    {
+     "text": "You work too hard.",
+     "translation": "Ти працюєш занадто тяжко."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-69",
+   "term": "get",
+   "translations": [
+    "отримувати",
+    "діставати"
+   ],
+   "examples": [
+    {
+     "text": "I'll get off here.",
+     "translation": "Я вийду тут."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-70",
+   "term": "now",
+   "translations": [
+    "зараз"
+   ],
+   "examples": [
+    {
+     "text": "May I go home now?",
+     "translation": "Можна мені зараз додому?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-71",
+   "term": "got",
+   "translations": [
+    "отримав",
+    "отримала"
+   ],
+   "examples": [
+    {
+     "text": "I got a flat tire.",
+     "translation": "В мене спустило колесо."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-72",
+   "term": "see",
+   "translations": [
+    "бачити"
+   ],
+   "examples": [
+    {
+     "text": "See you next week!",
+     "translation": "Побачимося наступного тижня!"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-73",
+   "term": "when",
+   "translations": [
+    "коли"
+   ],
+   "examples": [
+    {
+     "text": "When was it built?",
+     "translation": "Коли це збудували?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-74",
+   "term": "really",
+   "translations": [
+    "справді"
+   ],
+   "examples": [
+    {
+     "text": "That's really sad.",
+     "translation": "Це дуже сумно."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-75",
+   "term": "out",
+   "translations": [
+    "назовні",
+    "геть"
+   ],
+   "examples": [
+    {
+     "text": "The fire went out.",
+     "translation": "Вогонь згас."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-76",
+   "term": "much",
+   "translations": [
+    "багато"
+   ],
+   "examples": [
+    {
+     "text": "You talk too much.",
+     "translation": "Ти забагато розмовляєш."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-77",
+   "term": "still",
+   "translations": [
+    "все ще",
+    "досі"
+   ],
+   "examples": [
+    {
+     "text": "He is still young.",
+     "translation": "Він все ще молодий."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-78",
+   "term": "thought",
+   "translations": [
+    "думав",
+    "думка"
+   ],
+   "examples": [
+    {
+     "text": "I thought so, too.",
+     "translation": "Я теж так думала."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-79",
+   "term": "home",
+   "translations": [
+    "дім",
+    "додому"
+   ],
+   "examples": [
+    {
+     "text": "I want to go home.",
+     "translation": "Я хочу піти додому."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-80",
+   "term": "should",
+   "translations": [
+    "повинен",
+    "слід"
+   ],
+   "examples": [
+    {
+     "text": "What should I eat?",
+     "translation": "Що мені слід з'їсти?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-81",
+   "term": "car",
+   "translations": [
+    "автомобіль",
+    "машина"
+   ],
+   "examples": [
+    {
+     "text": "Which car is ours?",
+     "translation": "Яка з машин наша?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-82",
+   "term": "right",
+   "translations": [
+    "правильний",
+    "правий",
+    "право"
+   ],
+   "examples": [
+    {
+     "text": "Turn to the right.",
+     "translation": "Поверни праворуч."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-83",
+   "term": "love",
+   "translations": [
+    "любов",
+    "любити"
+   ],
+   "examples": [
+    {
+     "text": "Do you love music?",
+     "translation": "Ти любиш музику?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-84",
+   "term": "today",
+   "translations": [
+    "сьогодні"
+   ],
+   "examples": [
+    {
+     "text": "It's cloudy today.",
+     "translation": "Сьогодні хмарно."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-85",
+   "term": "more",
+   "translations": [
+    "більше"
+   ],
+   "examples": [
+    {
+     "text": "Speak more slowly.",
+     "translation": "Говори повільніше."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-86",
+   "term": "speak",
+   "translations": [
+    "говорити"
+   ],
+   "examples": [
+    {
+     "text": "I'm able to speak.",
+     "translation": "Я можу говорити."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-87",
+   "term": "work",
+   "translations": [
+    "робота",
+    "працювати"
+   ],
+   "examples": [
+    {
+     "text": "Where do you work?",
+     "translation": "Де ти працюєш?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-88",
+   "term": "back",
+   "translations": [
+    "назад",
+    "спина"
+   ],
+   "examples": [
+    {
+     "text": "Turn on your back.",
+     "translation": "Перевернися на спину."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-89",
+   "term": "money",
+   "translations": [
+    "гроші"
+   ],
+   "examples": [
+    {
+     "text": "I want some money.",
+     "translation": "Мені потрібні гроші."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-90",
+   "term": "but",
+   "translations": [
+    "але"
+   ],
+   "examples": [
+    {
+     "text": "But you have kids.",
+     "translation": "Але ж у тебе є діти."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-91",
+   "term": "eat",
+   "translations": [
+    "їсти"
+   ],
+   "examples": [
+    {
+     "text": "I usually eat out.",
+     "translation": "Я, як правило, їм не вдома."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-92",
+   "term": "say",
+   "translations": [
+    "казати",
+    "говорити"
+   ],
+   "examples": [
+    {
+     "text": "How do you say...?",
+     "translation": "Як сказати...?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-93",
+   "term": "take",
+   "translations": [
+    "брати"
+   ],
+   "examples": [
+    {
+     "text": "May I take a rest?",
+     "translation": "Можна мені відпочити?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-94",
+   "term": "wanted",
+   "translations": [
+    "хотів",
+    "хотіла"
+   ],
+   "examples": [
+    {
+     "text": "I wanted sympathy.",
+     "translation": "Я хотів співчуття."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-95",
+   "term": "could",
+   "translations": [
+    "міг",
+    "могла"
+   ],
+   "examples": [
+    {
+     "text": "Where could he be?",
+     "translation": "Де би він міг бути?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-96",
+   "term": "lot",
+   "translations": [
+    "багато"
+   ],
+   "examples": [
+    {
+     "text": "You changed a lot.",
+     "translation": "Ти сильно змінився."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-97",
+   "term": "always",
+   "translations": [
+    "завжди"
+   ],
+   "examples": [
+    {
+     "text": "I'm always hungry.",
+     "translation": "Я завжди голодний."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-98",
+   "term": "any",
+   "translations": [
+    "будь-який",
+    "якийсь"
+   ],
+   "examples": [
+    {
+     "text": "Any paper will do.",
+     "translation": "Підійде будь-який папір."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-99",
+   "term": "some",
+   "translations": [
+    "деякий",
+    "кілька"
+   ],
+   "examples": [
+    {
+     "text": "Here's some water.",
+     "translation": "Ось трохи води."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-1-100",
+   "term": "them",
+   "translations": [
+    "їх",
+    "їм"
+   ],
+   "examples": [
+    {
+     "text": "I don't know them.",
+     "translation": "Я їх не знаю."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  }
+ ],
+ "progress": []
+}

@@ -2,12 +2,14 @@ import { Route, Routes } from 'react-router-dom';
 import { AppLayout } from './components/Layout';
 import { BackupScreen } from './screens/BackupScreen';
 import { CardFormScreen } from './screens/CardFormScreen';
+import { CatalogScreen } from './screens/CatalogScreen';
 import { DeckFormScreen } from './screens/DeckFormScreen';
 import { DeckScreen } from './screens/DeckScreen';
 import { DecksScreen } from './screens/DecksScreen';
 import { HomeScreen } from './screens/HomeScreen';
 import { NotFoundScreen } from './screens/NotFoundScreen';
 import { SettingsScreen } from './screens/SettingsScreen';
+import { SourcesScreen } from './screens/SourcesScreen';
 import { FlipScreen } from './study/FlipScreen';
 import { LearnScreen } from './study/LearnScreen';
 import { QuizScreen } from './study/QuizScreen';
@@ -25,6 +27,8 @@ export function AppRoutes() {
         <Route path="decks/:deckId/edit" element={<DeckFormScreen />} />
         <Route path="decks/:deckId/cards/new" element={<CardFormScreen />} />
         <Route path="decks/:deckId/cards/:cardId" element={<CardFormScreen />} />
+        <Route path="catalog" element={<CatalogScreen />} />
+        <Route path="sources" element={<SourcesScreen />} />
         <Route path="backup" element={<BackupScreen />} />
         <Route path="settings" element={<SettingsScreen />} />
         <Route path="*" element={<NotFoundScreen />} />

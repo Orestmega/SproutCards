@@ -86,6 +86,26 @@ navigation). Each screen loads a **snapshot** of the deck once (`StudyGate`), so
 a running session. Results are saved when the session ends, or when the user leaves (finished cards only).
 Keyboard: choice options 1–4, Enter submits/continues, Space/Enter turns a flashcard, ← / → answer it.
 
+## Deck catalog (`core/catalog.ts`, `ui/catalog.ts`, `scripts/`, `public/catalog/`)
+
+- Ready-made decks are **static files**: `public/catalog/index.json` plus one deck file per deck in the normal
+  export format (`decks/<id>.json`) and an author list (`attribution/<id>.tsv`). Decks are split into parts
+  of 100 words and fetched one at a time, only when the user adds them; they are not part of the app
+  bundle or the precache (the service worker caches them on first use, stale-while-revalidate).
+- `parseCatalogIndex` validates the index and refuses it as a whole if anything is wrong; file paths may
+  only be plain relative paths inside the catalog folder (no `..`, scheme or leading slash).
+- Adding a deck downloads the file, validates it with the **same** `parseExchange` as a user import, then
+  `prepareCatalogBundle` names it in the interface language, stamps the time and sets `Deck.catalogId`
+  (so the catalog shows "already added" and cannot add it twice); `importBundles` writes it in one
+  transaction. A network, validation or storage failure adds nothing. After adding, the deck lives in
+  IndexedDB and needs no network.
+- Content comes from `scripts/` (run by hand, deterministic): `fetch-tatoeba.ts` (official addresses only,
+  records sizes and sha256), `candidates.ts` (word frequencies computed from the Tatoeba corpus, proper
+  names removed), `build-catalog.ts` (cards + one example per card, never the same sentence twice, a light
+  content filter). Word translations are hand-written by an AI assistant in
+  `scripts/data/translations.en-uk.json`; every catalog card has `reviewed: false`. Sources, licences and
+  attribution rules: `docs/DATA_SOURCES.md`. A test validates every generated file.
+
 ## Exchange formats (`exchange.ts`, `csv.ts`)
 
 - JSON, `format: "sproutcards-deck"` (one deck) or `"sproutcards-backup"` (several), `version: 1`.

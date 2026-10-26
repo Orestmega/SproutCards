@@ -141,11 +141,13 @@ function parseDeck(raw: unknown, path: string, c: Collector, now: number): Deck 
   }
   const description = readString(raw, 'description', path, c, { required: false });
   const source = readString(raw, 'source', path, c, { required: false });
+  const catalogId = readString(raw, 'catalogId', path, c, { required: false });
   const createdAt = readTimestamp(raw, 'createdAt', path, c, now);
   if (c.errors.length > before || !id || !name || !learningLang || !translationLang) return null;
   const deck: Deck = { id, name, learningLang, translationLang, createdAt };
   if (description !== undefined) deck.description = description;
   if (source !== undefined) deck.source = source;
+  if (catalogId !== undefined) deck.catalogId = catalogId;
   return deck;
 }
 

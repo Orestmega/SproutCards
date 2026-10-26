@@ -238,4 +238,52 @@ export const en = {
   'quiz.leave.title': 'Leave the quiz?',
   'quiz.leave.text': 'Your answers so far will be lost. A quiz does not change your progress.',
   'quiz.leave.confirm': 'Leave quiz',
+
+  'decks.catalog': 'Deck catalog',
+  'settings.sources': 'Sources and licenses',
+
+  'catalog.title': 'Deck catalog',
+  'catalog.intro':
+    'Ready-made decks. When you add one, it is copied to this device and works offline.',
+  'catalog.loading': 'Loading the catalog…',
+  'catalog.error.network':
+    'Could not load the catalog. Check your internet connection and try again.',
+  'catalog.error.invalid': 'The catalog file is damaged. Please try again later.',
+  'catalog.retry': 'Try again',
+  'catalog.unchecked': 'Translations not checked',
+  'catalog.examples_one': '{count} example sentence',
+  'catalog.examples_other': '{count} example sentences',
+  'catalog.authors': 'Authors of the sentences',
+  'catalog.alreadyAdded': 'Already added: open',
+  'catalog.add': 'Add to my decks',
+  'catalog.addLabel': 'Add “{name}” to my decks',
+  'catalog.adding': 'Adding…',
+  'catalog.addedMessage': '“{name}” was added.',
+  'catalog.open': 'Open the deck',
+  'catalog.addFailed.network':
+    'Could not download “{name}”. Check your internet connection and try again. Nothing was added.',
+  'catalog.addFailed.invalid': 'The file for “{name}” is damaged. Nothing was added.',
+  'catalog.addFailed.save': 'Could not save “{name}” on this device. Nothing was added.',
+  'catalog.sources': 'Sources and licenses',
+
+  'sources.title': 'Sources and licenses',
+  'sources.intro':
+    'Where the content of the ready-made decks comes from, and under which terms it may be used.',
+  'sources.tatoeba.title': 'Example sentences: Tatoeba',
+  'sources.tatoeba.text':
+    'The English example sentences and their Ukrainian translations were written by volunteers of the Tatoeba project and taken from its official data export.',
+  'sources.tatoeba.license': 'License CC BY 2.0 FR',
+  'sources.tatoeba.export': 'Tatoeba export used: {date}.',
+  'sources.tatoeba.credit':
+    'The sentences may be used if their author is credited. Every deck has a file listing the authors of its sentences.',
+  'sources.authors': 'Authors of the sentences',
+  'sources.authorsOffline': 'The author files are available when you are online.',
+  'sources.authorsFile': 'List of sentences and authors (opens in a new tab)',
+  'sources.ai.title': 'Word translations: written by AI, not checked',
+  'sources.ai.text':
+    'The translations of the words and phrases in the ready-made decks were written by an AI assistant. A human has not checked them, so they can contain mistakes or miss other meanings. These cards are marked “Not checked”. The words themselves were chosen by how often they occur in Tatoeba sentences.',
+  'sources.app.title': 'The app',
+  'sources.app.text':
+    'SproutCards is open source software under the MIT license. It has no trackers and sends no data anywhere; your decks stay on your device.',
+  'sources.nonCommercial': 'This is a non-commercial personal project.',
 } as const;

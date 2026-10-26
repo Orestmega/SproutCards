@@ -9,6 +9,16 @@ export default defineConfig({
     VitePWA({
       registerType: 'prompt',
       includeAssets: ['favicon.svg'],
+      workbox: {
+        runtimeCaching: [
+          {
+            // catalog index and deck files: fresh when online, last copy when offline
+            urlPattern: ({ url }) => url.pathname.includes('/catalog/'),
+            handler: 'StaleWhileRevalidate',
+            options: { cacheName: 'catalog' },
+          },
+        ],
+      },
       manifest: {
         name: 'SproutCards',
         short_name: 'SproutCards',

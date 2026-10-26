@@ -28,6 +28,8 @@ export interface Deck {
   description?: string;
   /** Where the content came from (free text, e.g. a source name). */
   source?: string;
+  /** Set when the deck was added from the built-in catalog: the catalog entry's id. */
+  catalogId?: string;
   createdAt: number;
 }
 

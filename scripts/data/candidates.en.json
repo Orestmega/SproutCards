@@ -1,0 +1,2005 @@
+{
+  "pairCount": 217637,
+  "words": [
+    {
+      "word": "i",
+      "count": 52061
+    },
+    {
+      "word": "you",
+      "count": 44403
+    },
+    {
+      "word": "to",
+      "count": 39088
+    },
+    {
+      "word": "the",
+      "count": 31398
+    },
+    {
+      "word": "is",
+      "count": 28279
+    },
+    {
+      "word": "a",
+      "count": 28171
+    },
+    {
+      "word": "that",
+      "count": 20919
+    },
+    {
+      "word": "do",
+      "count": 17167
+    },
+    {
+      "word": "in",
+      "count": 11717
+    },
+    {
+      "word": "he",
+      "count": 11159
+    },
+    {
+      "word": "have",
+      "count": 11076
+    },
+    {
+      "word": "i'm",
+      "count": 10182
+    },
+    {
+      "word": "me",
+      "count": 10084
+    },
+    {
+      "word": "it",
+      "count": 10074
+    },
+    {
+      "word": "was",
+      "count": 10013
+    },
+    {
+      "word": "are",
+      "count": 9946
+    },
+    {
+      "word": "don't",
+      "count": 9804
+    },
+    {
+      "word": "this",
+      "count": 9713
+    },
+    {
+      "word": "of",
+      "count": 9252
+    },
+    {
+      "word": "my",
+      "count": 9100
+    },
+    {
+      "word": "what",
+      "count": 7891
+    },
+    {
+      "word": "your",
+      "count": 7702
+    },
+    {
+      "word": "for",
+      "count": 7481
+    },
+    {
+      "word": "not",
+      "count": 7428
+    },
+    {
+      "word": "did",
+      "count": 7057
+    },
+    {
+      "word": "be",
+      "count": 6947
+    },
+    {
+      "word": "know",
+      "count": 6893
+    },
+    {
+      "word": "we",
+      "count": 6774
+    },
+    {
+      "word": "like",
+      "count": 6315
+    },
+    {
+      "word": "with",
+      "count": 5857
+    },
+    {
+      "word": "want",
+      "count": 5675
+    },
+    {
+      "word": "on",
+      "count": 5553
+    },
+    {
+      "word": "and",
+      "count": 5324
+    },
+    {
+      "word": "she",
+      "count": 5244
+    },
+    {
+      "word": "think",
+      "count": 4985
+    },
+    {
+      "word": "has",
+      "count": 4781
+    },
+    {
+      "word": "didn't",
+      "count": 4617
+    },
+    {
+      "word": "can",
+      "count": 4560
+    },
+    {
+      "word": "his",
+      "count": 4479
+    },
+    {
+      "word": "you're",
+      "count": 4449
+    },
+    {
+      "word": "will",
+      "count": 4290
+    },
+    {
+      "word": "why",
+      "count": 4244
+    },
+    {
+      "word": "at",
+      "count": 4225
+    },
+    {
+      "word": "how",
+      "count": 4202
+    },
+    {
+      "word": "go",
+      "count": 4146
+    },
+    {
+      "word": "it's",
+      "count": 3970
+    },
+    {
+      "word": "very",
+      "count": 3843
+    },
+    {
+      "word": "going",
+      "count": 3619
+    },
+    {
+      "word": "her",
+      "count": 3542
+    },
+    {
+      "word": "him",
+      "count": 3470
+    },
+    {
+      "word": "here",
+      "count": 3414
+    },
+    {
+      "word": "said",
+      "count": 3276
+    },
+    {
+      "word": "about",
+      "count": 3140
+    },
+    {
+      "word": "all",
+      "count": 3089
+    },
+    {
+      "word": "they",
+      "count": 3037
+    },
+    {
+      "word": "isn't",
+      "count": 2933
+    },
+    {
+      "word": "there",
+      "count": 2888
+    },
+    {
+      "word": "no",
+      "count": 2859
+    },
+    {
+      "word": "who",
+      "count": 2805
+    },
+    {
+      "word": "an",
+      "count": 2771
+    },
+    {
+      "word": "as",
+      "count": 2740
+    },
+    {
+      "word": "time",
+      "count": 2575
+    },
+    {
+      "word": "one",
+      "count": 2573
+    },
+    {
+      "word": "help",
+      "count": 2567
+    },
+    {
+      "word": "i've",
+      "count": 2559
+    },
+    {
+      "word": "were",
+      "count": 2517
+    },
+    {
+      "word": "need",
+      "count": 2472
+    },
+    {
+      "word": "had",
+      "count": 2435
+    },
+    {
+      "word": "would",
+      "count": 2415
+    },
+    {
+      "word": "tell",
+      "count": 2408
+    },
+    {
+      "word": "i'll",
+      "count": 2395
+    },
+    {
+      "word": "doesn't",
+      "count": 2334
+    },
+    {
+      "word": "where",
+      "count": 2332
+    },
+    {
+      "word": "good",
+      "count": 2299
+    },
+    {
+      "word": "can't",
+      "count": 2295
+    },
+    {
+      "word": "if",
+      "count": 2286
+    },
+    {
+      "word": "so",
+      "count": 2268
+    },
+    {
+      "word": "just",
+      "count": 2253
+    },
+    {
+      "word": "come",
+      "count": 2244
+    },
+    {
+      "word": "up",
+      "count": 2235
+    },
+    {
+      "word": "am",
+      "count": 2230
+    },
+    {
+      "word": "us",
+      "count": 2208
+    },
+    {
+      "word": "than",
+      "count": 2092
+    },
+    {
+      "word": "please",
+      "count": 2087
+    },
+    {
+      "word": "told",
+      "count": 2087
+    },
+    {
+      "word": "never",
+      "count": 2086
+    },
+    {
+      "word": "from",
+      "count": 2078
+    },
+    {
+      "word": "too",
+      "count": 2041
+    },
+    {
+      "word": "get",
+      "count": 2036
+    },
+    {
+      "word": "now",
+      "count": 2021
+    },
+    {
+      "word": "got",
+      "count": 2015
+    },
+    {
+      "word": "see",
+      "count": 2015
+    },
+    {
+      "word": "when",
+      "count": 1982
+    },
+    {
+      "word": "been",
+      "count": 1979
+    },
+    {
+      "word": "does",
+      "count": 1972
+    },
+    {
+      "word": "really",
+      "count": 1933
+    },
+    {
+      "word": "out",
+      "count": 1854
+    },
+    {
+      "word": "much",
+      "count": 1786
+    },
+    {
+      "word": "by",
+      "count": 1774
+    },
+    {
+      "word": "that's",
+      "count": 1749
+    },
+    {
+      "word": "doing",
+      "count": 1732
+    },
+    {
+      "word": "still",
+      "count": 1718
+    },
+    {
+      "word": "thought",
+      "count": 1661
+    },
+    {
+      "word": "aren't",
+      "count": 1643
+    },
+    {
+      "word": "home",
+      "count": 1637
+    },
+    {
+      "word": "should",
+      "count": 1599
+    },
+    {
+      "word": "car",
+      "count": 1577
+    },
+    {
+      "word": "right",
+      "count": 1544
+    },
+    {
+      "word": "won't",
+      "count": 1538
+    },
+    {
+      "word": "love",
+      "count": 1517
+    },
+    {
+      "word": "today",
+      "count": 1515
+    },
+    {
+      "word": "more",
+      "count": 1506
+    },
+    {
+      "word": "speak",
+      "count": 1497
+    },
+    {
+      "word": "work",
+      "count": 1492
+    },
+    {
+      "word": "back",
+      "count": 1478
+    },
+    {
+      "word": "money",
+      "count": 1462
+    },
+    {
+      "word": "but",
+      "count": 1441
+    },
+    {
+      "word": "we're",
+      "count": 1420
+    },
+    {
+      "word": "he's",
+      "count": 1387
+    },
+    {
+      "word": "eat",
+      "count": 1384
+    },
+    {
+      "word": "say",
+      "count": 1380
+    },
+    {
+      "word": "take",
+      "count": 1372
+    },
+    {
+      "word": "wanted",
+      "count": 1371
+    },
+    {
+      "word": "could",
+      "count": 1363
+    },
+    {
+      "word": "lot",
+      "count": 1355
+    },
+    {
+      "word": "always",
+      "count": 1345
+    },
+    {
+      "word": "any",
+      "count": 1322
+    },
+    {
+      "word": "some",
+      "count": 1318
+    },
+    {
+      "word": "them",
+      "count": 1311
+    },
+    {
+      "word": "book",
+      "count": 1304
+    },
+    {
+      "word": "or",
+      "count": 1295
+    },
+    {
+      "word": "anything",
+      "count": 1254
+    },
+    {
+      "word": "talk",
+      "count": 1246
+    },
+    {
+      "word": "sure",
+      "count": 1238
+    },
+    {
+      "word": "already",
+      "count": 1232
+    },
+    {
+      "word": "give",
+      "count": 1228
+    },
+    {
+      "word": "wasn't",
+      "count": 1217
+    },
+    {
+      "word": "many",
+      "count": 1216
+    },
+    {
+      "word": "our",
+      "count": 1208
+    },
+    {
+      "word": "three",
+      "count": 1179
+    },
+    {
+      "word": "only",
+      "count": 1157
+    },
+    {
+      "word": "made",
+      "count": 1155
+    },
+    {
+      "word": "something",
+      "count": 1153
+    },
+    {
+      "word": "what's",
+      "count": 1145
+    },
+    {
+      "word": "buy",
+      "count": 1129
+    },
+    {
+      "word": "day",
+      "count": 1121
+    },
+    {
+      "word": "last",
+      "count": 1103
+    },
+    {
+      "word": "happy",
+      "count": 1100
+    },
+    {
+      "word": "live",
+      "count": 1098
+    },
+    {
+      "word": "wonder",
+      "count": 1084
+    },
+    {
+      "word": "tomorrow",
+      "count": 1083
+    },
+    {
+      "word": "school",
+      "count": 1081
+    },
+    {
+      "word": "let's",
+      "count": 1077
+    },
+    {
+      "word": "well",
+      "count": 1064
+    },
+    {
+      "word": "again",
+      "count": 1063
+    },
+    {
+      "word": "house",
+      "count": 1053
+    },
+    {
+      "word": "knows",
+      "count": 1041
+    },
+    {
+      "word": "dog",
+      "count": 1040
+    },
+    {
+      "word": "look",
+      "count": 1039
+    },
+    {
+      "word": "went",
+      "count": 1029
+    },
+    {
+      "word": "people",
+      "count": 1025
+    },
+    {
+      "word": "new",
+      "count": 1023
+    },
+    {
+      "word": "old",
+      "count": 1011
+    },
+    {
+      "word": "i'd",
+      "count": 1005
+    },
+    {
+      "word": "done",
+      "count": 1004
+    },
+    {
+      "word": "must",
+      "count": 997
+    },
+    {
+      "word": "saw",
+      "count": 992
+    },
+    {
+      "word": "win",
+      "count": 979
+    },
+    {
+      "word": "off",
+      "count": 976
+    },
+    {
+      "word": "let",
+      "count": 972
+    },
+    {
+      "word": "understand",
+      "count": 971
+    },
+    {
+      "word": "yet",
+      "count": 971
+    },
+    {
+      "word": "likes",
+      "count": 970
+    },
+    {
+      "word": "wants",
+      "count": 961
+    },
+    {
+      "word": "knew",
+      "count": 960
+    },
+    {
+      "word": "wait",
+      "count": 951
+    },
+    {
+      "word": "play",
+      "count": 948
+    },
+    {
+      "word": "stop",
+      "count": 931
+    },
+    {
+      "word": "call",
+      "count": 925
+    },
+    {
+      "word": "believe",
+      "count": 923
+    },
+    {
+      "word": "make",
+      "count": 914
+    },
+    {
+      "word": "asked",
+      "count": 910
+    },
+    {
+      "word": "father",
+      "count": 910
+    },
+    {
+      "word": "read",
+      "count": 908
+    },
+    {
+      "word": "ask",
+      "count": 907
+    },
+    {
+      "word": "two",
+      "count": 900
+    },
+    {
+      "word": "ever",
+      "count": 885
+    },
+    {
+      "word": "better",
+      "count": 884
+    },
+    {
+      "word": "hope",
+      "count": 878
+    },
+    {
+      "word": "name",
+      "count": 875
+    },
+    {
+      "word": "yesterday",
+      "count": 869
+    },
+    {
+      "word": "may",
+      "count": 865
+    },
+    {
+      "word": "wrong",
+      "count": 862
+    },
+    {
+      "word": "says",
+      "count": 837
+    },
+    {
+      "word": "find",
+      "count": 836
+    },
+    {
+      "word": "everything",
+      "count": 832
+    },
+    {
+      "word": "she's",
+      "count": 823
+    },
+    {
+      "word": "left",
+      "count": 817
+    },
+    {
+      "word": "leave",
+      "count": 815
+    },
+    {
+      "word": "used",
+      "count": 806
+    },
+    {
+      "word": "little",
+      "count": 804
+    },
+    {
+      "word": "lost",
+      "count": 798
+    },
+    {
+      "word": "bought",
+      "count": 793
+    },
+    {
+      "word": "everyone",
+      "count": 793
+    },
+    {
+      "word": "nothing",
+      "count": 784
+    },
+    {
+      "word": "whether",
+      "count": 782
+    },
+    {
+      "word": "late",
+      "count": 775
+    },
+    {
+      "word": "years",
+      "count": 774
+    },
+    {
+      "word": "long",
+      "count": 773
+    },
+    {
+      "word": "these",
+      "count": 767
+    },
+    {
+      "word": "children",
+      "count": 763
+    },
+    {
+      "word": "problem",
+      "count": 763
+    },
+    {
+      "word": "busy",
+      "count": 751
+    },
+    {
+      "word": "friends",
+      "count": 748
+    },
+    {
+      "word": "over",
+      "count": 748
+    },
+    {
+      "word": "way",
+      "count": 748
+    },
+    {
+      "word": "afraid",
+      "count": 740
+    },
+    {
+      "word": "coffee",
+      "count": 734
+    },
+    {
+      "word": "seen",
+      "count": 729
+    },
+    {
+      "word": "down",
+      "count": 725
+    },
+    {
+      "word": "able",
+      "count": 718
+    },
+    {
+      "word": "put",
+      "count": 717
+    },
+    {
+      "word": "there's",
+      "count": 710
+    },
+    {
+      "word": "married",
+      "count": 708
+    },
+    {
+      "word": "next",
+      "count": 707
+    },
+    {
+      "word": "every",
+      "count": 706
+    },
+    {
+      "word": "job",
+      "count": 699
+    },
+    {
+      "word": "friend",
+      "count": 688
+    },
+    {
+      "word": "haven't",
+      "count": 688
+    },
+    {
+      "word": "cat",
+      "count": 687
+    },
+    {
+      "word": "ready",
+      "count": 683
+    },
+    {
+      "word": "plan",
+      "count": 678
+    },
+    {
+      "word": "happened",
+      "count": 676
+    },
+    {
+      "word": "room",
+      "count": 675
+    },
+    {
+      "word": "try",
+      "count": 674
+    },
+    {
+      "word": "stay",
+      "count": 666
+    },
+    {
+      "word": "man",
+      "count": 662
+    },
+    {
+      "word": "looking",
+      "count": 659
+    },
+    {
+      "word": "mother",
+      "count": 657
+    },
+    {
+      "word": "first",
+      "count": 656
+    },
+    {
+      "word": "came",
+      "count": 652
+    },
+    {
+      "word": "life",
+      "count": 650
+    },
+    {
+      "word": "wish",
+      "count": 647
+    },
+    {
+      "word": "drink",
+      "count": 640
+    },
+    {
+      "word": "heard",
+      "count": 639
+    },
+    {
+      "word": "water",
+      "count": 634
+    },
+    {
+      "word": "you've",
+      "count": 631
+    },
+    {
+      "word": "gave",
+      "count": 628
+    },
+    {
+      "word": "anyone",
+      "count": 625
+    },
+    {
+      "word": "hungry",
+      "count": 619
+    },
+    {
+      "word": "often",
+      "count": 618
+    },
+    {
+      "word": "before",
+      "count": 611
+    },
+    {
+      "word": "tired",
+      "count": 611
+    },
+    {
+      "word": "hard",
+      "count": 606
+    },
+    {
+      "word": "they're",
+      "count": 596
+    },
+    {
+      "word": "found",
+      "count": 595
+    },
+    {
+      "word": "into",
+      "count": 589
+    },
+    {
+      "word": "alone",
+      "count": 582
+    },
+    {
+      "word": "bad",
+      "count": 579
+    },
+    {
+      "word": "sorry",
+      "count": 579
+    },
+    {
+      "word": "waiting",
+      "count": 574
+    },
+    {
+      "word": "both",
+      "count": 573
+    },
+    {
+      "word": "nobody",
+      "count": 573
+    },
+    {
+      "word": "parents",
+      "count": 572
+    },
+    {
+      "word": "happen",
+      "count": 569
+    },
+    {
+      "word": "night",
+      "count": 566
+    },
+    {
+      "word": "other",
+      "count": 565
+    },
+    {
+      "word": "wife",
+      "count": 564
+    },
+    {
+      "word": "beautiful",
+      "count": 563
+    },
+    {
+      "word": "hear",
+      "count": 558
+    },
+    {
+      "word": "everybody",
+      "count": 555
+    },
+    {
+      "word": "you'll",
+      "count": 554
+    },
+    {
+      "word": "hate",
+      "count": 549
+    },
+    {
+      "word": "their",
+      "count": 549
+    },
+    {
+      "word": "wouldn't",
+      "count": 549
+    },
+    {
+      "word": "away",
+      "count": 543
+    },
+    {
+      "word": "took",
+      "count": 541
+    },
+    {
+      "word": "week",
+      "count": 539
+    },
+    {
+      "word": "learn",
+      "count": 529
+    },
+    {
+      "word": "teacher",
+      "count": 527
+    },
+    {
+      "word": "we'll",
+      "count": 527
+    },
+    {
+      "word": "feel",
+      "count": 522
+    },
+    {
+      "word": "question",
+      "count": 522
+    },
+    {
+      "word": "books",
+      "count": 521
+    },
+    {
+      "word": "died",
+      "count": 519
+    },
+    {
+      "word": "answer",
+      "count": 512
+    },
+    {
+      "word": "open",
+      "count": 511
+    },
+    {
+      "word": "brother",
+      "count": 510
+    },
+    {
+      "word": "even",
+      "count": 510
+    },
+    {
+      "word": "almost",
+      "count": 509
+    },
+    {
+      "word": "being",
+      "count": 507
+    },
+    {
+      "word": "idea",
+      "count": 506
+    },
+    {
+      "word": "remember",
+      "count": 504
+    },
+    {
+      "word": "needs",
+      "count": 503
+    },
+    {
+      "word": "door",
+      "count": 501
+    },
+    {
+      "word": "big",
+      "count": 500
+    },
+    {
+      "word": "family",
+      "count": 498
+    },
+    {
+      "word": "year",
+      "count": 493
+    },
+    {
+      "word": "enough",
+      "count": 492
+    },
+    {
+      "word": "lives",
+      "count": 492
+    },
+    {
+      "word": "tried",
+      "count": 492
+    },
+    {
+      "word": "where's",
+      "count": 490
+    },
+    {
+      "word": "cold",
+      "count": 489
+    },
+    {
+      "word": "turn",
+      "count": 489
+    },
+    {
+      "word": "sing",
+      "count": 486
+    },
+    {
+      "word": "keep",
+      "count": 485
+    },
+    {
+      "word": "soon",
+      "count": 483
+    },
+    {
+      "word": "anymore",
+      "count": 482
+    },
+    {
+      "word": "show",
+      "count": 480
+    },
+    {
+      "word": "true",
+      "count": 480
+    },
+    {
+      "word": "phone",
+      "count": 472
+    },
+    {
+      "word": "angry",
+      "count": 467
+    },
+    {
+      "word": "best",
+      "count": 467
+    },
+    {
+      "word": "morning",
+      "count": 467
+    },
+    {
+      "word": "after",
+      "count": 466
+    },
+    {
+      "word": "working",
+      "count": 464
+    },
+    {
+      "word": "watch",
+      "count": 458
+    },
+    {
+      "word": "difficult",
+      "count": 456
+    },
+    {
+      "word": "called",
+      "count": 455
+    },
+    {
+      "word": "dinner",
+      "count": 455
+    },
+    {
+      "word": "which",
+      "count": 455
+    },
+    {
+      "word": "write",
+      "count": 455
+    },
+    {
+      "word": "thank",
+      "count": 453
+    },
+    {
+      "word": "party",
+      "count": 451
+    },
+    {
+      "word": "language",
+      "count": 450
+    },
+    {
+      "word": "study",
+      "count": 450
+    },
+    {
+      "word": "looks",
+      "count": 448
+    },
+    {
+      "word": "mind",
+      "count": 447
+    },
+    {
+      "word": "truth",
+      "count": 447
+    },
+    {
+      "word": "care",
+      "count": 446
+    },
+    {
+      "word": "change",
+      "count": 444
+    },
+    {
+      "word": "person",
+      "count": 444
+    },
+    {
+      "word": "without",
+      "count": 442
+    },
+    {
+      "word": "coming",
+      "count": 440
+    },
+    {
+      "word": "sick",
+      "count": 440
+    },
+    {
+      "word": "talking",
+      "count": 440
+    },
+    {
+      "word": "train",
+      "count": 438
+    },
+    {
+      "word": "bus",
+      "count": 435
+    },
+    {
+      "word": "couldn't",
+      "count": 433
+    },
+    {
+      "word": "forget",
+      "count": 432
+    },
+    {
+      "word": "pretty",
+      "count": 431
+    },
+    {
+      "word": "young",
+      "count": 430
+    },
+    {
+      "word": "another",
+      "count": 429
+    },
+    {
+      "word": "glad",
+      "count": 429
+    },
+    {
+      "word": "same",
+      "count": 423
+    },
+    {
+      "word": "pay",
+      "count": 421
+    },
+    {
+      "word": "planning",
+      "count": 421
+    },
+    {
+      "word": "playing",
+      "count": 421
+    },
+    {
+      "word": "nice",
+      "count": 420
+    },
+    {
+      "word": "might",
+      "count": 419
+    },
+    {
+      "word": "forgot",
+      "count": 417
+    },
+    {
+      "word": "probably",
+      "count": 417
+    },
+    {
+      "word": "sleep",
+      "count": 417
+    },
+    {
+      "word": "swim",
+      "count": 417
+    },
+    {
+      "word": "such",
+      "count": 415
+    },
+    {
+      "word": "bit",
+      "count": 414
+    },
+    {
+      "word": "food",
+      "count": 414
+    },
+    {
+      "word": "favorite",
+      "count": 413
+    },
+    {
+      "word": "met",
+      "count": 413
+    },
+    {
+      "word": "trying",
+      "count": 411
+    },
+    {
+      "word": "finished",
+      "count": 408
+    },
+    {
+      "word": "letter",
+      "count": 408
+    },
+    {
+      "word": "son",
+      "count": 405
+    },
+    {
+      "word": "sister",
+      "count": 404
+    },
+    {
+      "word": "else",
+      "count": 402
+    },
+    {
+      "word": "anybody",
+      "count": 399
+    },
+    {
+      "word": "boy",
+      "count": 398
+    },
+    {
+      "word": "myself",
+      "count": 397
+    },
+    {
+      "word": "free",
+      "count": 394
+    },
+    {
+      "word": "thing",
+      "count": 392
+    },
+    {
+      "word": "doctor",
+      "count": 391
+    },
+    {
+      "word": "who's",
+      "count": 387
+    },
+    {
+      "word": "girl",
+      "count": 386
+    },
+    {
+      "word": "rich",
+      "count": 384
+    },
+    {
+      "word": "himself",
+      "count": 383
+    },
+    {
+      "word": "those",
+      "count": 382
+    },
+    {
+      "word": "eating",
+      "count": 380
+    },
+    {
+      "word": "great",
+      "count": 378
+    },
+    {
+      "word": "lunch",
+      "count": 378
+    },
+    {
+      "word": "meet",
+      "count": 377
+    },
+    {
+      "word": "yourself",
+      "count": 377
+    },
+    {
+      "word": "walk",
+      "count": 376
+    },
+    {
+      "word": "ate",
+      "count": 374
+    },
+    {
+      "word": "die",
+      "count": 374
+    },
+    {
+      "word": "loves",
+      "count": 374
+    },
+    {
+      "word": "own",
+      "count": 372
+    },
+    {
+      "word": "trust",
+      "count": 372
+    },
+    {
+      "word": "fun",
+      "count": 371
+    },
+    {
+      "word": "things",
+      "count": 371
+    },
+    {
+      "word": "someone",
+      "count": 370
+    },
+    {
+      "word": "use",
+      "count": 369
+    },
+    {
+      "word": "table",
+      "count": 368
+    },
+    {
+      "word": "easy",
+      "count": 367
+    },
+    {
+      "word": "mistake",
+      "count": 367
+    },
+    {
+      "word": "together",
+      "count": 364
+    },
+    {
+      "word": "you'd",
+      "count": 362
+    },
+    {
+      "word": "country",
+      "count": 361
+    },
+    {
+      "word": "decided",
+      "count": 361
+    },
+    {
+      "word": "because",
+      "count": 360
+    },
+    {
+      "word": "red",
+      "count": 357
+    },
+    {
+      "word": "kind",
+      "count": 356
+    },
+    {
+      "word": "early",
+      "count": 355
+    },
+    {
+      "word": "agree",
+      "count": 354
+    },
+    {
+      "word": "started",
+      "count": 354
+    },
+    {
+      "word": "bed",
+      "count": 350
+    },
+    {
+      "word": "eyes",
+      "count": 347
+    },
+    {
+      "word": "quite",
+      "count": 346
+    },
+    {
+      "word": "ago",
+      "count": 344
+    },
+    {
+      "word": "reading",
+      "count": 343
+    },
+    {
+      "word": "thinks",
+      "count": 343
+    },
+    {
+      "word": "getting",
+      "count": 342
+    },
+    {
+      "word": "hair",
+      "count": 342
+    },
+    {
+      "word": "breakfast",
+      "count": 341
+    },
+    {
+      "word": "rain",
+      "count": 341
+    },
+    {
+      "word": "tea",
+      "count": 341
+    },
+    {
+      "word": "hasn't",
+      "count": 340
+    },
+    {
+      "word": "helped",
+      "count": 338
+    },
+    {
+      "word": "wine",
+      "count": 338
+    },
+    {
+      "word": "mine",
+      "count": 337
+    },
+    {
+      "word": "we've",
+      "count": 336
+    },
+    {
+      "word": "born",
+      "count": 335
+    },
+    {
+      "word": "gone",
+      "count": 335
+    },
+    {
+      "word": "world",
+      "count": 335
+    },
+    {
+      "word": "tonight",
+      "count": 333
+    },
+    {
+      "word": "fast",
+      "count": 329
+    },
+    {
+      "word": "few",
+      "count": 329
+    },
+    {
+      "word": "start",
+      "count": 325
+    },
+    {
+      "word": "changed",
+      "count": 324
+    },
+    {
+      "word": "looked",
+      "count": 321
+    },
+    {
+      "word": "he'd",
+      "count": 320
+    },
+    {
+      "word": "seems",
+      "count": 317
+    },
+    {
+      "word": "lie",
+      "count": 314
+    },
+    {
+      "word": "ten",
+      "count": 314
+    },
+    {
+      "word": "music",
+      "count": 311
+    },
+    {
+      "word": "around",
+      "count": 310
+    },
+    {
+      "word": "each",
+      "count": 310
+    },
+    {
+      "word": "while",
+      "count": 309
+    },
+    {
+      "word": "number",
+      "count": 308
+    },
+    {
+      "word": "football",
+      "count": 306
+    },
+    {
+      "word": "once",
+      "count": 306
+    },
+    {
+      "word": "milk",
+      "count": 305
+    },
+    {
+      "word": "hand",
+      "count": 304
+    },
+    {
+      "word": "speaks",
+      "count": 304
+    },
+    {
+      "word": "questions",
+      "count": 303
+    },
+    {
+      "word": "yours",
+      "count": 303
+    },
+    {
+      "word": "five",
+      "count": 302
+    },
+    {
+      "word": "place",
+      "count": 302
+    },
+    {
+      "word": "thirty",
+      "count": 302
+    },
+    {
+      "word": "usually",
+      "count": 302
+    },
+    {
+      "word": "student",
+      "count": 300
+    },
+    {
+      "word": "word",
+      "count": 300
+    },
+    {
+      "word": "liked",
+      "count": 298
+    },
+    {
+      "word": "fish",
+      "count": 297
+    },
+    {
+      "word": "picture",
+      "count": 297
+    },
+    {
+      "word": "tennis",
+      "count": 296
+    },
+    {
+      "word": "living",
+      "count": 295
+    },
+    {
+      "word": "having",
+      "count": 294
+    },
+    {
+      "word": "paid",
+      "count": 293
+    },
+    {
+      "word": "broke",
+      "count": 291
+    },
+    {
+      "word": "chance",
+      "count": 291
+    },
+    {
+      "word": "thanks",
+      "count": 291
+    },
+    {
+      "word": "cannot",
+      "count": 288
+    },
+    {
+      "word": "fell",
+      "count": 288
+    },
+    {
+      "word": "fine",
+      "count": 288
+    },
+    {
+      "word": "hot",
+      "count": 288
+    },
+    {
+      "word": "learning",
+      "count": 287
+    },
+    {
+      "word": "mean",
+      "count": 287
+    },
+    {
+      "word": "movie",
+      "count": 286
+    },
+    {
+      "word": "city",
+      "count": 285
+    },
+    {
+      "word": "interested",
+      "count": 284
+    },
+    {
+      "word": "team",
+      "count": 284
+    },
+    {
+      "word": "umbrella",
+      "count": 284
+    },
+    {
+      "word": "child",
+      "count": 283
+    },
+    {
+      "word": "turned",
+      "count": 281
+    },
+    {
+      "word": "hat",
+      "count": 280
+    },
+    {
+      "word": "important",
+      "count": 280
+    },
+    {
+      "word": "wrote",
+      "count": 280
+    },
+    {
+      "word": "lying",
+      "count": 278
+    },
+    {
+      "word": "small",
+      "count": 278
+    },
+    {
+      "word": "beer",
+      "count": 277
+    },
+    {
+      "word": "kill",
+      "count": 276
+    },
+    {
+      "word": "interesting",
+      "count": 275
+    },
+    {
+      "word": "police",
+      "count": 275
+    },
+    {
+      "word": "woman",
+      "count": 275
+    },
+    {
+      "word": "computer",
+      "count": 274
+    },
+    {
+      "word": "visit",
+      "count": 274
+    },
+    {
+      "word": "asleep",
+      "count": 273
+    },
+    {
+      "word": "office",
+      "count": 272
+    },
+    {
+      "word": "later",
+      "count": 271
+    },
+    {
+      "word": "listen",
+      "count": 271
+    },
+    {
+      "word": "surprised",
+      "count": 271
+    },
+    {
+      "word": "times",
+      "count": 270
+    },
+    {
+      "word": "won",
+      "count": 270
+    },
+    {
+      "word": "girlfriend",
+      "count": 268
+    },
+    {
+      "word": "watching",
+      "count": 268
+    },
+    {
+      "word": "scared",
+      "count": 267
+    },
+    {
+      "word": "close",
+      "count": 266
+    },
+    {
+      "word": "run",
+      "count": 265
+    },
+    {
+      "word": "minutes",
+      "count": 264
+    },
+    {
+      "word": "studying",
+      "count": 264
+    }
+  ]
+}

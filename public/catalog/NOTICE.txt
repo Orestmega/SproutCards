@@ -1,0 +1,10 @@
+SproutCards deck catalog - notice
+
+Example sentences (English) and their Ukrainian translations come from Tatoeba (https://tatoeba.org)
+and are licensed under CC BY 2.0 FR (https://creativecommons.org/licenses/by/2.0/fr/).
+The author of every sentence is credited in attribution/<deck>.tsv.
+
+Translations of single words and phrases were written by an AI assistant and have not been checked
+by a human. Cards built from them are marked reviewed:false.
+
+See docs/DATA_SOURCES.md in the project for the full list of sources.

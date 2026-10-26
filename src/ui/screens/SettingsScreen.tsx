@@ -79,6 +79,9 @@ export function SettingsScreen() {
         <ButtonLink to="/backup" variant="secondary">
           {t('settings.backup')}
         </ButtonLink>
+        <ButtonLink to="/sources" variant="secondary">
+          {t('settings.sources')}
+        </ButtonLink>
       </section>
     </>
   );

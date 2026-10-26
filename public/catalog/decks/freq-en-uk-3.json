@@ -1,0 +1,1553 @@
+{
+ "format": "sproutcards-deck",
+ "version": 1,
+ "deck": {
+  "id": "freq-en-uk-3",
+  "name": "Frequent English words, part 3",
+  "learningLang": "en",
+  "translationLang": "uk",
+  "description": "Common English words in order of how often they occur in Tatoeba sentences, with example sentences.",
+  "source": "SproutCards catalog",
+  "catalogId": "freq-en-uk-3",
+  "createdAt": 0
+ },
+ "cards": [
+  {
+   "id": "freq-en-uk-3-1",
+   "term": "came",
+   "translations": [
+    "прийшов",
+    "прийшла"
+   ],
+   "examples": [
+    {
+     "text": "He came back soon.",
+     "translation": "Він швидко повернувся."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-2",
+   "term": "life",
+   "translations": [
+    "життя"
+   ],
+   "examples": [
+    {
+     "text": "I owe him my life.",
+     "translation": "Я завдячую йому своїм життям."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-3",
+   "term": "wish",
+   "translations": [
+    "бажати",
+    "бажання"
+   ],
+   "examples": [
+    {
+     "text": "Do you wish to go?",
+     "translation": "Ти бажаєш піти?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-4",
+   "term": "drink",
+   "translations": [
+    "пити",
+    "напій"
+   ],
+   "examples": [
+    {
+     "text": "Do you drink wine?",
+     "translation": "Ти п'єш вино?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-5",
+   "term": "heard",
+   "translations": [
+    "чув",
+    "чула"
+   ],
+   "examples": [
+    {
+     "text": "I heard something.",
+     "translation": "Я щось чув."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-6",
+   "term": "water",
+   "translations": [
+    "вода"
+   ],
+   "examples": [
+    {
+     "text": "There is no water.",
+     "translation": "Води немає."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-7",
+   "term": "gave",
+   "translations": [
+    "дав",
+    "дала"
+   ],
+   "examples": [
+    {
+     "text": "I gave you a book.",
+     "translation": "Я дав тобі книжку."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-8",
+   "term": "anyone",
+   "translations": [
+    "будь-хто"
+   ],
+   "examples": [
+    {
+     "text": "Don't tell anyone.",
+     "translation": "Не кажи нікому."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-9",
+   "term": "hungry",
+   "translations": [
+    "голодний"
+   ],
+   "examples": [
+    {
+     "text": "Aren't you hungry?",
+     "translation": "Ти не голодна?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-10",
+   "term": "often",
+   "translations": [
+    "часто"
+   ],
+   "examples": [
+    {
+     "text": "We go there often.",
+     "translation": "Ми часто туди ходимо."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-11",
+   "term": "before",
+   "translations": [
+    "перед",
+    "раніше"
+   ],
+   "examples": [
+    {
+     "text": "Have we met before?",
+     "translation": "Ми вже зустрічалися?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-12",
+   "term": "tired",
+   "translations": [
+    "втомлений"
+   ],
+   "examples": [
+    {
+     "text": "I was tired today.",
+     "translation": "Я був втомлений сьогодні."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-13",
+   "term": "hard",
+   "translations": [
+    "важкий",
+    "твердий"
+   ],
+   "examples": [
+    {
+     "text": "We must work hard.",
+     "translation": "Ми маємо важко працювати."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-14",
+   "term": "found",
+   "translations": [
+    "знайшов",
+    "знайшла"
+   ],
+   "examples": [
+    {
+     "text": "What've you found?",
+     "translation": "Що ти знайшов?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-15",
+   "term": "alone",
+   "translations": [
+    "самотній",
+    "сам"
+   ],
+   "examples": [
+    {
+     "text": "I can do it alone.",
+     "translation": "Я можу це зробити сам."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-16",
+   "term": "bad",
+   "translations": [
+    "поганий"
+   ],
+   "examples": [
+    {
+     "text": "This apple is bad.",
+     "translation": "Це яблуко погане."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-17",
+   "term": "sorry",
+   "translations": [
+    "вибач",
+    "перепрошую",
+    "шкода"
+   ],
+   "examples": [
+    {
+     "text": "I am really sorry.",
+     "translation": "Мені насправді прикро."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-18",
+   "term": "both",
+   "translations": [
+    "обидва"
+   ],
+   "examples": [
+    {
+     "text": "They both laughed.",
+     "translation": "Вони обидва розсміялися."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-19",
+   "term": "nobody",
+   "translations": [
+    "ніхто"
+   ],
+   "examples": [
+    {
+     "text": "Nobody is perfect.",
+     "translation": "Ніхто не досконалий."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-20",
+   "term": "parents",
+   "translations": [
+    "батьки"
+   ],
+   "examples": [
+    {
+     "text": "I love my parents.",
+     "translation": "Я обожнюю своїх батьків."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-21",
+   "term": "happen",
+   "translations": [
+    "траплятися"
+   ],
+   "examples": [
+    {
+     "text": "What would happen?",
+     "translation": "Що трапилося би?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-22",
+   "term": "night",
+   "translations": [
+    "ніч"
+   ],
+   "examples": [
+    {
+     "text": "He works at night.",
+     "translation": "Він працює уночі."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-23",
+   "term": "other",
+   "translations": [
+    "інший"
+   ],
+   "examples": [
+    {
+     "text": "We love each other.",
+     "translation": "Ми любимо одне одного."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-24",
+   "term": "wife",
+   "translations": [
+    "дружина"
+   ],
+   "examples": [
+    {
+     "text": "Where's your wife?",
+     "translation": "Де твоя дружина?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-25",
+   "term": "beautiful",
+   "translations": [
+    "гарний",
+    "красивий"
+   ],
+   "examples": [
+    {
+     "text": "You are beautiful.",
+     "translation": "Ти прекрасний."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-26",
+   "term": "hear",
+   "translations": [
+    "чути"
+   ],
+   "examples": [
+    {
+     "text": "I didn't hear you.",
+     "translation": "Я вас не чув."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-27",
+   "term": "everybody",
+   "translations": [
+    "усі"
+   ],
+   "examples": [
+    {
+     "text": "Everybody laughed.",
+     "translation": "Всі посміялися."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-28",
+   "term": "hate",
+   "translations": [
+    "ненавидіти"
+   ],
+   "examples": [
+    {
+     "text": "I hate this place.",
+     "translation": "Ненавиджу це місце."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-29",
+   "term": "their",
+   "translations": [
+    "їхній"
+   ],
+   "examples": [
+    {
+     "text": "I feel their pain.",
+     "translation": "Я відчуваю їхній біль."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-30",
+   "term": "away",
+   "translations": [
+    "геть",
+    "далеко"
+   ],
+   "examples": [
+    {
+     "text": "Stay away from us.",
+     "translation": "Тримайся від нас подалі."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-31",
+   "term": "took",
+   "translations": [
+    "взяв",
+    "взяла"
+   ],
+   "examples": [
+    {
+     "text": "He took a day off.",
+     "translation": "Він взяв відгул на день."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-32",
+   "term": "week",
+   "translations": [
+    "тиждень"
+   ],
+   "examples": [
+    {
+     "text": "See you next week.",
+     "translation": "Побачимося наступного тижня!"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-33",
+   "term": "learn",
+   "translations": [
+    "вчити",
+    "вчитися"
+   ],
+   "examples": [
+    {
+     "text": "I'm here to learn.",
+     "translation": "Я тут для того, щоб учитися."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-34",
+   "term": "teacher",
+   "translations": [
+    "вчитель",
+    "вчителька"
+   ],
+   "examples": [
+    {
+     "text": "You are a teacher.",
+     "translation": "Ти вчитель."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-35",
+   "term": "question",
+   "translations": [
+    "питання"
+   ],
+   "examples": [
+    {
+     "text": "I have a question.",
+     "translation": "Маю питання."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-36",
+   "term": "died",
+   "translations": [
+    "помер",
+    "померла"
+   ],
+   "examples": [],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-37",
+   "term": "answer",
+   "translations": [
+    "відповідь"
+   ],
+   "examples": [
+    {
+     "text": "She didn't answer.",
+     "translation": "Вона не відповіла."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-38",
+   "term": "open",
+   "translations": [
+    "відчиняти",
+    "відкритий"
+   ],
+   "examples": [
+    {
+     "text": "The gate was open.",
+     "translation": "Ворота були відкриті."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-39",
+   "term": "brother",
+   "translations": [
+    "брат"
+   ],
+   "examples": [
+    {
+     "text": "She had a brother.",
+     "translation": "У неї був брат."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-40",
+   "term": "even",
+   "translations": [
+    "навіть"
+   ],
+   "examples": [
+    {
+     "text": "Even my mom knows.",
+     "translation": "Навіть моя мама знає."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-41",
+   "term": "almost",
+   "translations": [
+    "майже"
+   ],
+   "examples": [
+    {
+     "text": "I am almost ready.",
+     "translation": "Я майже готовий."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-42",
+   "term": "idea",
+   "translations": [
+    "ідея"
+   ],
+   "examples": [
+    {
+     "text": "Whose idea was it?",
+     "translation": "Чия це була ідея?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-43",
+   "term": "remember",
+   "translations": [
+    "пам'ятати"
+   ],
+   "examples": [
+    {
+     "text": "I remember it now.",
+     "translation": "Тепер пригадую."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-44",
+   "term": "door",
+   "translations": [
+    "двері"
+   ],
+   "examples": [
+    {
+     "text": "She shut the door.",
+     "translation": "Вона зачинила двері."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-45",
+   "term": "big",
+   "translations": [
+    "великий"
+   ],
+   "examples": [
+    {
+     "text": "That house is big.",
+     "translation": "Цей дім великий."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-46",
+   "term": "family",
+   "translations": [
+    "сім'я"
+   ],
+   "examples": [
+    {
+     "text": "How's your family?",
+     "translation": "Як там твоя родина?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-47",
+   "term": "year",
+   "translations": [
+    "рік"
+   ],
+   "examples": [
+    {
+     "text": "See you next year.",
+     "translation": "Побачимося наступного року."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-48",
+   "term": "enough",
+   "translations": [
+    "достатньо"
+   ],
+   "examples": [
+    {
+     "text": "That isn't enough.",
+     "translation": "Цього не достатньо."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-49",
+   "term": "tried",
+   "translations": [
+    "намагався",
+    "намагалася",
+    "пробував"
+   ],
+   "examples": [
+    {
+     "text": "I tried to escape.",
+     "translation": "Я спробував утікти."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-50",
+   "term": "cold",
+   "translations": [
+    "холодний",
+    "застуда"
+   ],
+   "examples": [
+    {
+     "text": "I have a bad cold.",
+     "translation": "У мене сильна застуда."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-51",
+   "term": "turn",
+   "translations": [
+    "повертати",
+    "черга"
+   ],
+   "examples": [
+    {
+     "text": "Turn on the radio.",
+     "translation": "Увімкни радіо."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-52",
+   "term": "sing",
+   "translations": [
+    "співати"
+   ],
+   "examples": [
+    {
+     "text": "Let's sing a song.",
+     "translation": "Заспіваймо пісню!"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-53",
+   "term": "keep",
+   "translations": [
+    "тримати",
+    "зберігати"
+   ],
+   "examples": [
+    {
+     "text": "Please keep quiet.",
+     "translation": "Будь ласка, не галасуй."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-54",
+   "term": "soon",
+   "translations": [
+    "скоро"
+   ],
+   "examples": [
+    {
+     "text": "I'll be back soon.",
+     "translation": "Скоро повернуся."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-55",
+   "term": "show",
+   "translations": [
+    "показувати",
+    "шоу"
+   ],
+   "examples": [
+    {
+     "text": "Show me the photo.",
+     "translation": "Покажи мені фото."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-56",
+   "term": "true",
+   "translations": [
+    "правдивий",
+    "вірний"
+   ],
+   "examples": [
+    {
+     "text": "It cannot be true.",
+     "translation": "Це не може бути правдою."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-57",
+   "term": "phone",
+   "translations": [
+    "телефон"
+   ],
+   "examples": [
+    {
+     "text": "Where's the phone?",
+     "translation": "Де телефон?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-58",
+   "term": "angry",
+   "translations": [
+    "сердитий"
+   ],
+   "examples": [
+    {
+     "text": "He is still angry.",
+     "translation": "Він все ще злий."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-59",
+   "term": "best",
+   "translations": [
+    "найкращий"
+   ],
+   "examples": [
+    {
+     "text": "I will do my best.",
+     "translation": "Я зроблю все, що в моїх силах."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-60",
+   "term": "morning",
+   "translations": [
+    "ранок"
+   ],
+   "examples": [
+    {
+     "text": "Good morning, honey.",
+     "translation": "Доброго ранку, люба."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-61",
+   "term": "after",
+   "translations": [
+    "після"
+   ],
+   "examples": [
+    {
+     "text": "He is after a job.",
+     "translation": "Він шукає роботу."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-62",
+   "term": "watch",
+   "translations": [
+    "дивитися",
+    "годинник"
+   ],
+   "examples": [
+    {
+     "text": "Where is my watch?",
+     "translation": "Де мій годинник?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-63",
+   "term": "difficult",
+   "translations": [
+    "важкий",
+    "складний"
+   ],
+   "examples": [
+    {
+     "text": "This is difficult.",
+     "translation": "Це складно."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-64",
+   "term": "called",
+   "translations": [
+    "назвав",
+    "подзвонив",
+    "подзвонила"
+   ],
+   "examples": [
+    {
+     "text": "I called for help.",
+     "translation": "Я покликав на допомогу."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-65",
+   "term": "dinner",
+   "translations": [
+    "вечеря"
+   ],
+   "examples": [
+    {
+     "text": "Let's have dinner.",
+     "translation": "Давайте вечеряти."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-66",
+   "term": "which",
+   "translations": [
+    "який",
+    "котрий"
+   ],
+   "examples": [
+    {
+     "text": "Which is your pen?",
+     "translation": "Яка ручка твоя?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-67",
+   "term": "write",
+   "translations": [
+    "писати"
+   ],
+   "examples": [
+    {
+     "text": "Poets write poems.",
+     "translation": "Поети пишуть поеми."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-68",
+   "term": "thank",
+   "translations": [
+    "дякувати"
+   ],
+   "examples": [
+    {
+     "text": "Thank you so much!",
+     "translation": "Красно дякую."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-69",
+   "term": "party",
+   "translations": [
+    "вечірка"
+   ],
+   "examples": [
+    {
+     "text": "When is the party?",
+     "translation": "Коли вечірка?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-70",
+   "term": "language",
+   "translations": [
+    "мова"
+   ],
+   "examples": [
+    {
+     "text": "I like my language.",
+     "translation": "Мені подобається моя мова."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-71",
+   "term": "study",
+   "translations": [
+    "вчити",
+    "вивчати"
+   ],
+   "examples": [
+    {
+     "text": "When do you study?",
+     "translation": "Коли ти займаєшся?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-72",
+   "term": "mind",
+   "translations": [
+    "розум"
+   ],
+   "examples": [
+    {
+     "text": "Mind your manners.",
+     "translation": "Слідкуй за своїми манерами."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-73",
+   "term": "truth",
+   "translations": [
+    "правда"
+   ],
+   "examples": [
+    {
+     "text": "He told the truth.",
+     "translation": "Він сказав правду."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-74",
+   "term": "care",
+   "translations": [
+    "піклуватися",
+    "турбота"
+   ],
+   "examples": [
+    {
+     "text": "Take care of this.",
+     "translation": "Подбайте про це."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-75",
+   "term": "change",
+   "translations": [
+    "змінювати",
+    "зміна"
+   ],
+   "examples": [
+    {
+     "text": "That won't change.",
+     "translation": "Це не зміниться."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-76",
+   "term": "person",
+   "translations": [
+    "людина"
+   ],
+   "examples": [
+    {
+     "text": "He came in person.",
+     "translation": "Він прийшов особисто."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-77",
+   "term": "without",
+   "translations": [
+    "без"
+   ],
+   "examples": [
+    {
+     "text": "Don't go without me.",
+     "translation": "Не йдіть без мене."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-78",
+   "term": "sick",
+   "translations": [
+    "хворий"
+   ],
+   "examples": [
+    {
+     "text": "His heart is sick.",
+     "translation": "У нього хворе серце."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-79",
+   "term": "train",
+   "translations": [
+    "потяг"
+   ],
+   "examples": [
+    {
+     "text": "I missed my train.",
+     "translation": "Я запізнилася на потяг."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-80",
+   "term": "bus",
+   "translations": [
+    "автобус"
+   ],
+   "examples": [
+    {
+     "text": "The bus was empty.",
+     "translation": "Автобус був пустий."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-81",
+   "term": "forget",
+   "translations": [
+    "забувати"
+   ],
+   "examples": [
+    {
+     "text": "I forget his name.",
+     "translation": "Я забув, як його звуть."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-82",
+   "term": "pretty",
+   "translations": [
+    "гарний",
+    "досить"
+   ],
+   "examples": [
+    {
+     "text": "She's very pretty.",
+     "translation": "Вона дуже вродлива."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-83",
+   "term": "young",
+   "translations": [
+    "молодий"
+   ],
+   "examples": [
+    {
+     "text": "He appeared young.",
+     "translation": "Він здавався молодим."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-84",
+   "term": "another",
+   "translations": [
+    "інший",
+    "ще один"
+   ],
+   "examples": [
+    {
+     "text": "I got another dog.",
+     "translation": "Я завів ще одного собаку."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-85",
+   "term": "glad",
+   "translations": [
+    "радий"
+   ],
+   "examples": [
+    {
+     "text": "I'm glad I'm done.",
+     "translation": "Я радий, що скінчив."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-86",
+   "term": "same",
+   "translations": [
+    "той самий"
+   ],
+   "examples": [
+    {
+     "text": "I am the same age.",
+     "translation": "Я того ж віку."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-87",
+   "term": "pay",
+   "translations": [
+    "платити"
+   ],
+   "examples": [
+    {
+     "text": "I'll pay the bill.",
+     "translation": "Я розрахуюся."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-88",
+   "term": "nice",
+   "translations": [
+    "гарний",
+    "приємний"
+   ],
+   "examples": [
+    {
+     "text": "Looks really nice.",
+     "translation": "Виглядає дійсно добре."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-89",
+   "term": "forgot",
+   "translations": [
+    "забув",
+    "забула"
+   ],
+   "examples": [
+    {
+     "text": "I forgot my money.",
+     "translation": "Я забув гроші."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-90",
+   "term": "probably",
+   "translations": [
+    "ймовірно"
+   ],
+   "examples": [
+    {
+     "text": "I am probably lost.",
+     "translation": "Я, ймовірно, загубився."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-91",
+   "term": "sleep",
+   "translations": [
+    "спати",
+    "сон"
+   ],
+   "examples": [
+    {
+     "text": "I need some sleep.",
+     "translation": "Мені треба трохи поспати."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-92",
+   "term": "swim",
+   "translations": [
+    "плавати"
+   ],
+   "examples": [
+    {
+     "text": "She tried to swim.",
+     "translation": "Вона намагалася плисти."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-93",
+   "term": "such",
+   "translations": [
+    "такий"
+   ],
+   "examples": [
+    {
+     "text": "Give up such ideas.",
+     "translation": "Позбудься таких ідей."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-94",
+   "term": "bit",
+   "translations": [
+    "трохи"
+   ],
+   "examples": [
+    {
+     "text": "Please wait a bit.",
+     "translation": "Зачекайте хвилинку, будь ласка."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-95",
+   "term": "food",
+   "translations": [
+    "їжа"
+   ],
+   "examples": [
+    {
+     "text": "Our food is cheap.",
+     "translation": "Наша їжа дешева."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-96",
+   "term": "favorite",
+   "translations": [
+    "улюблений"
+   ],
+   "examples": [
+    {
+     "text": "It's my favorite food.",
+     "translation": "Це моя улюблена їжа."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-97",
+   "term": "met",
+   "translations": [
+    "зустрів",
+    "зустріла"
+   ],
+   "examples": [
+    {
+     "text": "I haven't met him.",
+     "translation": "Я з ним не знайомий."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-98",
+   "term": "finished",
+   "translations": [
+    "закінчив",
+    "закінчила"
+   ],
+   "examples": [
+    {
+     "text": "Have you finished?",
+     "translation": "Ви закінчили?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-99",
+   "term": "letter",
+   "translations": [
+    "лист",
+    "літера"
+   ],
+   "examples": [
+    {
+     "text": "He wrote a letter.",
+     "translation": "Він написав листа."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "freq-en-uk-3-100",
+   "term": "son",
+   "translations": [
+    "син"
+   ],
+   "examples": [
+    {
+     "text": "Whose son are you?",
+     "translation": "Чий ти син?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  }
+ ],
+ "progress": []
+}
