@@ -191,6 +191,40 @@ describe('progress', () => {
     await r.saveSession([], [log(10), log(20), log(30)]);
     expect((await r.listLogs(20)).map((l) => l.at)).toEqual([20, 30]);
   });
+
+  it('statsSnapshot gathers decks, card ids, progress and the log in one go', async () => {
+    const r = repo();
+    const deck = await r.createDeck(deckInput);
+    const other = await r.createDeck({ ...deckInput, name: 'Other' });
+    const card = await r.addCard(deck.id, { term: 'cat', translations: ['кіт'] });
+    await r.saveSession(
+      [progressFor(card.id, deck.id)],
+      [
+        {
+          at: 10,
+          cardId: card.id,
+          deckId: deck.id,
+          direction: 'forward',
+          mode: 'learn',
+          result: 'correct',
+        },
+        {
+          at: 30,
+          cardId: card.id,
+          deckId: deck.id,
+          direction: 'forward',
+          mode: 'learn',
+          result: 'wrong',
+        },
+      ],
+    );
+    const snapshot = await r.statsSnapshot(20);
+    expect(snapshot.decks.map((d) => d.id)).toEqual([deck.id, other.id]);
+    expect(snapshot.cardIdsByDeck).toEqual({ [deck.id]: [card.id], [other.id]: [] });
+    expect(snapshot.progress).toHaveLength(1);
+    expect(snapshot.logs.map((l) => l.at)).toEqual([30]);
+    expect(snapshot.totalReviews).toBe(2);
+  });
 });
 
 describe('settings', () => {

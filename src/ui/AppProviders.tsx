@@ -7,6 +7,7 @@ import type { AppDatabase } from '../db/db';
 import { createRepo } from '../db/repo';
 import type { Repo } from '../db/repo';
 import { I18nProvider, useI18n } from '../i18n';
+import { ErrorBoundary } from './components/ErrorBoundary';
 import { Mascot } from './components/Mascot';
 
 /** Interface language guessed from the browser, used until the user chooses one. */
@@ -88,7 +89,9 @@ export function AppProviders({ db, children }: { db: AppDatabase; children: Reac
 
   return (
     <AppContext.Provider value={{ db, repo, settings, updateSettings }}>
-      <I18nProvider language={settings.uiLanguage}>{children}</I18nProvider>
+      <I18nProvider language={settings.uiLanguage}>
+        <ErrorBoundary>{children}</ErrorBoundary>
+      </I18nProvider>
     </AppContext.Provider>
   );
 }

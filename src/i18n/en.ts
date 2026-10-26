@@ -256,7 +256,7 @@ export const en = {
   'catalog.authors': 'Authors of the sentences',
   'catalog.alreadyAdded': 'Already added: open',
   'catalog.add': 'Add to my decks',
-  'catalog.addLabel': 'Add “{name}” to my decks',
+  'catalog.addLabel': 'Add to my decks: {name}',
   'catalog.adding': 'Adding…',
   'catalog.addedMessage': '“{name}” was added.',
   'catalog.open': 'Open the deck',
@@ -286,4 +286,44 @@ export const en = {
   'sources.app.text':
     'SproutCards is open source software under the MIT license. It has no trackers and sends no data anywhere; your decks stay on your device.',
   'sources.nonCommercial': 'This is a non-commercial personal project.',
+
+  'pwa.updateReady': 'A new version of SproutCards is ready.',
+  'pwa.updateKept': 'Your decks and progress are kept.',
+  'pwa.update': 'Update now',
+  'pwa.later': 'Later',
+  'pwa.offlineReady': 'Ready to work offline.',
+  'pwa.dismiss': 'OK',
+  'settings.app': 'App on this device',
+  'settings.app.install': 'Install the app',
+  'settings.app.installed': 'Installed on this device.',
+  'settings.app.ios':
+    'On iPhone or iPad: open this page in Safari, tap Share, then “Add to Home Screen”.',
+  'settings.app.offlineOn': 'Offline mode is on: the app opens without internet.',
+  'settings.app.offlineOff':
+    'Offline mode is not active yet. It turns on after the app has fully loaded once over a secure (https) connection. Then reload the page.',
+  'settings.app.offlineUnavailable': 'This browser cannot run the app offline.',
+  'settings.app.storageOk': 'Your browser has promised to keep your data.',
+  'settings.app.storageRisk':
+    'The browser may delete your data if the device runs low on space. Make backups.',
+  'settings.app.reminders':
+    'Reminders: a web app cannot send notifications while it is closed. Where the system allows it, the app icon shows how many reviews were due when you last opened SproutCards.',
+  'home.statistics': 'Statistics',
+  'stats.title': 'Statistics',
+  'stats.numbers': 'Your numbers',
+  'stats.streak': 'Day streak',
+  'stats.learned': 'Words learned',
+  'stats.reviews': 'Reviews in total',
+  'stats.accuracy': 'Correct, last 7 days',
+  'stats.activity': 'Last 14 days',
+  'stats.chartLabel': 'Reviews per day over the last {days} days',
+  'stats.dayReviews': '{date}: {count}',
+  'stats.decks': 'Progress by deck',
+  'stats.deckSummary': '{learned} learned, {learning} in progress, {fresh} new',
+  'stats.learnedHint': 'A card counts as learned after 3 correct reviews in a row.',
+  'stats.empty.title': 'No statistics yet',
+  'stats.empty.text': 'Study a few cards and your numbers will appear here.',
+  'error.crash.title': 'Something went wrong',
+  'error.crash.text':
+    'The app hit an unexpected problem. Your decks are safe on this device. Reload to continue.',
+  'error.crash.reload': 'Reload',
 } as const;

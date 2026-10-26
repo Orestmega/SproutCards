@@ -2,6 +2,7 @@ import { HashRouter } from 'react-router-dom';
 import { getDb } from './db/db';
 import type { AppDatabase } from './db/db';
 import { AppProviders } from './ui/AppProviders';
+import { PwaProvider } from './ui/pwa';
 import { AppRoutes } from './ui/routes';
 
 /**
@@ -11,9 +12,11 @@ import { AppRoutes } from './ui/routes';
 export function App({ db = getDb() }: { db?: AppDatabase }) {
   return (
     <AppProviders db={db}>
-      <HashRouter>
-        <AppRoutes />
-      </HashRouter>
+      <PwaProvider>
+        <HashRouter>
+          <AppRoutes />
+        </HashRouter>
+      </PwaProvider>
     </AppProviders>
   );
 }

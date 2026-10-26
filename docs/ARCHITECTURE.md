@@ -106,6 +106,42 @@ Keyboard: choice options 1–4, Enter submits/continues, Space/Enter turns a fla
   `scripts/data/translations.en-uk.json`; every catalog card has `reviewed: false`. Sources, licences and
   attribution rules: `docs/DATA_SOURCES.md`. A test validates every generated file.
 
+## PWA, offline and updates (`ui/pwa.tsx`, `vite.config.ts`)
+
+- **Build:** `vite-plugin-pwa` generates the manifest (standalone, icons "any" + "maskable") and a Workbox
+  service worker (`generateSW`). `base: './'` makes every path relative, so the site works from any folder or
+  sub-path of a static host.
+- **Cache strategy.** The app shell (HTML, JS, CSS, icons, ~500 KB) is **precached**: after the first visit
+  the app opens with no network, and any navigation falls back to the cached `index.html`
+  (`navigateFallback`). Old caches are removed on update (`cleanupOutdatedCaches`). Catalog files
+  (`/catalog/`) are not precached; they use **stale-while-revalidate** at run time, so a catalog page that
+  was opened once is also available offline and refreshes in the background. A deck that was added is
+  copied into IndexedDB and never needs the network again.
+- **Updates are never applied by surprise** (`registerType: 'prompt'`). A new service worker waits; the
+  app shows "A new version is ready" (`PwaBanner`, only on normal screens, never inside a study session)
+  and reloads only when the user taps "Update now". User data lives in IndexedDB, which an update does
+  not touch; schema changes use Dexie migrations (see Storage).
+- `PwaProvider` is the only place that talks to the service worker, the install event
+  (`beforeinstallprompt`) and `navigator.storage`. The rest of the UI reads `usePwa()`; tests supply a fake
+  state, and `virtual:pwa-register` is replaced by a stub in Vitest.
+- **Install:** Chromium offers the install event (shown as a button in Settings); iPhone/iPad Safari has none,
+  so Settings shows the "Add to Home Screen" instructions there.
+- **Data protection:** the app asks the browser for persistent storage (`navigator.storage.persist()`) and
+  tells the user in Settings whether it was granted. Closing the tab in the middle of a Learn session or a
+  quiz triggers the browser's confirmation (`beforeunload`); an unexpected rendering error shows a screen
+  with a reload button instead of a blank page (`ErrorBoundary`).
+- **Reminders (limit of the platform):** a web app cannot show notifications while it is closed without a
+  push server, and accounts/servers are out of scope. Instead, where `navigator.setAppBadge` exists (installed
+  app on some platforms), the icon shows the number of due reviews as of the last time the app ran. The
+  number is not refreshed in the background.
+
+## Statistics (`core/stats.ts`, `ui/screens/StatsScreen.tsx`)
+
+Pure functions: `computeStreak`, `dailyCounts` (reviews per local day, zeros included), `accuracy` (share of
+fully correct answers), `stageCounts` (a card is *learned* after `LEARNED_REPS` = 3 correct reviews in a row
+in some direction, *learning* if studied, otherwise *new*). `repo.statsSnapshot()` reads the raw rows; the
+screen draws a CSS bar chart (no chart library) with a text list for screen readers.
+
 ## Exchange formats (`exchange.ts`, `csv.ts`)
 
 - JSON, `format: "sproutcards-deck"` (one deck) or `"sproutcards-backup"` (several), `version: 1`.
@@ -133,7 +169,7 @@ database created at version 1 with a version-2 class and checks the data survive
   shows a clear screen if storage is blocked) + `HashRouter` + `AppRoutes`. A hash router is used so the
   static site works offline and on any static host without server rewrites.
 - Screens read data with `useLiveQuery` (dexie-react-hooks), so lists update by themselves after a write.
-- Routes: `/` home, `/decks`, `/decks/new`, `/decks/:id`, `/decks/:id/edit`, `/decks/:id/cards/new`,
+- Routes: `/` home, `/stats`, `/catalog`, `/sources`, `/decks`, `/decks/new`, `/decks/:id`, `/decks/:id/edit`, `/decks/:id/cards/new`,
   `/decks/:id/cards/:cardId`, `/backup`, `/settings`.
 - i18n: all text goes through `t(key)` / `tp(base, count)` (plural rules from `Intl.PluralRules`; Ukrainian
   needs one/few/many/other). Language names come from `Intl.DisplayNames`. Tests check that `uk` has every
@@ -146,3 +182,14 @@ database created at version 1 with a version-2 class and checks the data survive
 
 Vitest + Testing Library; `fake-indexeddb` gives an in-memory IndexedDB (`src/test/setup.ts`). Logic is
 tested before UI. Checks: `npm run lint`, `npm run typecheck`, `npm run test`, `npm run build`.
+
+### Real-browser checks (`scripts/browser/`)
+
+Unit and UI tests cannot see a service worker, so three scripts drive a headless Chrome (DevTools Protocol, no
+extra dependencies; they use a throw-away profile):
+
+- `npm run check:offline` (after `npm run build`): installs the service worker from `dist/`, stops the
+  server, reloads (the app and the visited catalog page still open), then fakes a new version, checks it
+  waits for the user, applies it and checks that a deck written to IndexedDB is still there.
+- `npm run check:a11y` (with `npm run dev` running): axe-core on 12 screens, with demo data (`/?seed`).
+- Lighthouse is run by hand against `npm run preview` (see README).

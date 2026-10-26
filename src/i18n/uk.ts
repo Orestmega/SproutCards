@@ -276,7 +276,7 @@ export const uk: Record<Keys, string> & Record<string, string> = {
   'catalog.authors': 'Автори речень',
   'catalog.alreadyAdded': 'Уже додано: відкрити',
   'catalog.add': 'Додати до моїх колод',
-  'catalog.addLabel': 'Додати «{name}» до моїх колод',
+  'catalog.addLabel': 'Додати до моїх колод: {name}',
   'catalog.adding': 'Додаю…',
   'catalog.addedMessage': '«{name}» додано.',
   'catalog.open': 'Відкрити колоду',
@@ -306,4 +306,44 @@ export const uk: Record<Keys, string> & Record<string, string> = {
   'sources.app.text':
     'SproutCards — програма з відкритим кодом за ліцензією MIT. У ній немає трекерів, вона нікуди не надсилає дані; твої колоди лишаються на твоєму пристрої.',
   'sources.nonCommercial': 'Це некомерційний особистий проєкт.',
+
+  'pwa.updateReady': 'Готова нова версія SproutCards.',
+  'pwa.updateKept': 'Твої колоди й прогрес збережуться.',
+  'pwa.update': 'Оновити зараз',
+  'pwa.later': 'Пізніше',
+  'pwa.offlineReady': 'Тепер застосунок працює без інтернету.',
+  'pwa.dismiss': 'Добре',
+  'settings.app': 'Застосунок на цьому пристрої',
+  'settings.app.install': 'Встановити застосунок',
+  'settings.app.installed': 'Встановлено на цьому пристрої.',
+  'settings.app.ios':
+    'На iPhone чи iPad: відкрий цю сторінку в Safari, натисни «Поділитися», потім «На початковий екран».',
+  'settings.app.offlineOn': 'Офлайн-режим увімкнено: застосунок відкривається без інтернету.',
+  'settings.app.offlineOff':
+    'Офлайн-режим ще не діє. Він вмикається після того, як застосунок один раз повністю завантажиться через захищене (https) з’єднання. Потім онови сторінку.',
+  'settings.app.offlineUnavailable': 'Цей браузер не може запускати застосунок без інтернету.',
+  'settings.app.storageOk': 'Браузер пообіцяв зберігати твої дані.',
+  'settings.app.storageRisk':
+    'Браузер може видалити дані, якщо на пристрої закінчиться місце. Роби резервні копії.',
+  'settings.app.reminders':
+    'Нагадування: вебзастосунок не може надсилати сповіщення, поки закритий. Де система дозволяє, значок застосунку показує, скільки повторень було на сьогодні під час останнього відкриття SproutCards.',
+  'home.statistics': 'Статистика',
+  'stats.title': 'Статистика',
+  'stats.numbers': 'Твої числа',
+  'stats.streak': 'Днів поспіль',
+  'stats.learned': 'Вивчених слів',
+  'stats.reviews': 'Усього повторень',
+  'stats.accuracy': 'Правильно за 7 днів',
+  'stats.activity': 'Останні 14 днів',
+  'stats.chartLabel': 'Повторень на день за останні {days} днів',
+  'stats.dayReviews': '{date}: {count}',
+  'stats.decks': 'Прогрес за колодами',
+  'stats.deckSummary': 'вивчено {learned}, у процесі {learning}, нових {fresh}',
+  'stats.learnedHint': 'Картка вважається вивченою після 3 правильних повторень поспіль.',
+  'stats.empty.title': 'Статистики ще немає',
+  'stats.empty.text': 'Повчи кілька карток, і тут з’являться твої числа.',
+  'error.crash.title': 'Щось пішло не так',
+  'error.crash.text':
+    'У застосунку сталася несподівана помилка. Твої колоди в безпеці на цьому пристрої. Онови сторінку, щоб продовжити.',
+  'error.crash.reload': 'Оновити сторінку',
 };

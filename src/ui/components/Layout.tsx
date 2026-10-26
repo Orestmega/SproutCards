@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import { Link, NavLink, Outlet } from 'react-router-dom';
 import { useI18n } from '../../i18n';
 import type { MessageKey } from '../../i18n';
+import { PwaBanner } from './PwaBanner';
 
 const ICONS = {
   home: 'M4 11 12 4l8 7v9a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1z',
@@ -40,6 +41,7 @@ export function AppLayout() {
   return (
     <div className="app">
       <main className="app__main" id="main">
+        <PwaBanner />
         <Outlet />
       </main>
       <nav className="nav" aria-label={t('nav.label')}>

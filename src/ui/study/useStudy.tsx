@@ -11,6 +11,19 @@ import { ButtonLink } from '../components/Button';
 import { EmptyState } from '../components/Notice';
 import { NotFoundScreen } from '../screens/NotFoundScreen';
 
+/**
+ * While `active`, closing or reloading the tab asks the browser to confirm (an unfinished session
+ * has results that are saved only when it ends). Browsers show their own generic text.
+ */
+export function useWarnBeforeUnload(active: boolean): void {
+  useEffect(() => {
+    if (!active) return;
+    const warn = (event: BeforeUnloadEvent) => event.preventDefault();
+    window.addEventListener('beforeunload', warn);
+    return () => window.removeEventListener('beforeunload', warn);
+  }, [active]);
+}
+
 /** Everything a study session needs, read once when the session starts (not live: it must not change mid-session). */
 export interface StudyData {
   deck: Deck;

@@ -12,7 +12,7 @@ import { ChoiceList, instructionKey, TypingForm } from './parts';
 import { useStudyChrome } from './StudyLayout';
 import { SummaryView } from './SummaryView';
 import type { SaveState } from './SummaryView';
-import { StudyGate, useStudyParams } from './useStudy';
+import { StudyGate, useStudyParams, useWarnBeforeUnload } from './useStudy';
 import type { StudyData } from './useStudy';
 
 export function QuizScreen() {
@@ -86,6 +86,8 @@ function QuizRun({
     },
     [repo, quiz, cardsById],
   );
+
+  useWarnBeforeUnload(!result && answers.length > 0);
 
   useEffect(
     () => chrome.setProgress(result ? 1 : index / quiz.questions.length),

@@ -3,3 +3,4 @@ dev-dist
 coverage
 package-lock.json
 *.md
+public/catalog

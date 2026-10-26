@@ -24,6 +24,18 @@ export interface DeckSummary {
   dueCount: number;
 }
 
+/** Raw numbers for the statistics screen; the arithmetic itself lives in `core/stats.ts`. */
+export interface StatsSnapshot {
+  decks: Deck[];
+  /** Card ids of every deck. */
+  cardIdsByDeck: Record<string, string[]>;
+  progress: Progress[];
+  /** Review log entries since the requested time. */
+  logs: ReviewLog[];
+  /** All reviews ever made (including those older than `logs`). */
+  totalReviews: number;
+}
+
 export interface NewCard {
   term: string;
   translations: string[];
@@ -161,6 +173,22 @@ export function createRepo(
 
     listLogs(since: number): Promise<ReviewLog[]> {
       return db.reviewLogs.where('at').aboveOrEqual(since).toArray();
+    },
+
+    async statsSnapshot(logsSince: number): Promise<StatsSnapshot> {
+      const [decks, progress, logs, totalReviews] = await Promise.all([
+        this.listDecks(),
+        db.progress.toArray(),
+        this.listLogs(logsSince),
+        db.reviewLogs.count(),
+      ]);
+      const cardIdsByDeck: Record<string, string[]> = {};
+      for (const deck of decks) {
+        cardIdsByDeck[deck.id] = (await db.cards.where('deckId').equals(deck.id).primaryKeys()).map(
+          String,
+        );
+      }
+      return { decks, cardIdsByDeck, progress, logs, totalReviews };
     },
 
     // ---- settings ----

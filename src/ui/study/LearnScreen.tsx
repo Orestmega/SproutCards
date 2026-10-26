@@ -23,7 +23,7 @@ import { ChoiceList, instructionKey, TypingForm } from './parts';
 import { useStudyChrome } from './StudyLayout';
 import { SummaryView } from './SummaryView';
 import type { SaveState } from './SummaryView';
-import { pickSessionCards, StudyGate, useStudyParams } from './useStudy';
+import { pickSessionCards, StudyGate, useStudyParams, useWarnBeforeUnload } from './useStudy';
 import type { StudyData } from './useStudy';
 
 const scheduler = createFixedIntervalScheduler();
@@ -96,6 +96,8 @@ function LearnSession({ data, onRestart }: { data: StudyData; onRestart: () => v
     saved.current = true;
     void save();
   }, [finished, save]);
+
+  useWarnBeforeUnload(!finished && state.events.length > 0);
 
   useEffect(() => chrome.setProgress(progressFraction(state)), [chrome, state]);
 

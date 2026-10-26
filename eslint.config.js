@@ -20,5 +20,10 @@ export default tseslint.config(
       ],
     },
   },
+  {
+    // plain Node scripts that drive a real browser; `document` / `navigator` appear only inside strings
+    files: ['scripts/**/*.mjs'],
+    languageOptions: { globals: { ...globals.node } },
+  },
   prettier,
 );

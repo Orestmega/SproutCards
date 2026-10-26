@@ -1,5 +1,6 @@
 import { createContext, useContext, useMemo, useState } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
+import type { MessageKey } from '../../i18n';
 import { useI18n } from '../../i18n';
 import { ProgressBar } from '../components/ProgressBar';
 
@@ -19,8 +20,15 @@ export function useStudyChrome(): StudyChrome {
 }
 
 /** Focused frame for study screens: progress bar on top, a close button, no bottom navigation. */
+const MODE_TITLES: Record<string, MessageKey> = {
+  learn: 'study.learn',
+  flip: 'study.flip',
+  test: 'study.quiz',
+};
+
 export function StudyLayout() {
   const { t } = useI18n();
+  const mode = useLocation().pathname.split('/').pop() ?? '';
   const [progress, setProgress] = useState(0);
   const [onClose, setOnClose] = useState<(() => void) | null>(null);
 
@@ -51,6 +59,8 @@ export function StudyLayout() {
           </div>
         </header>
         <main className="app__main" id="main">
+          {/* every page needs a first-level heading; the visible content has its own headings */}
+          <h1 className="visually-hidden">{t(MODE_TITLES[mode] ?? 'study.title')}</h1>
           <Outlet />
         </main>
       </div>

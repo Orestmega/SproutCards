@@ -40,7 +40,7 @@ export function SummaryView({
   const { t } = useI18n();
   return (
     <>
-      <h1 className="visually-hidden">{t('study.summary')}</h1>
+      <h2 className="visually-hidden">{t('study.summary')}</h2>
       <MascotBubble mood={mood}>{message}</MascotBubble>
       {headline && (
         <p className="headline" aria-live="polite">

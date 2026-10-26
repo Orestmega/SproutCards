@@ -1,10 +1,12 @@
 import { useState } from 'react';
-import type { UiLanguage } from '../../core/types';
+import type { Settings, UiLanguage } from '../../core/types';
 import { UI_LANGUAGES, useI18n } from '../../i18n';
 import { useApp } from '../AppProviders';
-import { ButtonLink } from '../components/Button';
+import { Button, ButtonLink } from '../components/Button';
 import { CheckField, TextField } from '../components/Fields';
 import { PageHeader } from '../components/Layout';
+import { Notice } from '../components/Notice';
+import { usePwa } from '../pwa';
 
 /** Language names are written in the language itself, so they can be found whatever the UI language. */
 const NATIVE_NAMES: Record<UiLanguage, string> = { uk: 'Українська', en: 'English' };
@@ -14,6 +16,13 @@ const MAX_NEW_CARDS = 200;
 export function SettingsScreen() {
   const { t } = useI18n();
   const { settings, updateSettings } = useApp();
+  const pwa = usePwa();
+  const [saveFailed, setSaveFailed] = useState(false);
+  /** Saves a change; the switch snaps back (settings come from storage) and a message explains why. */
+  const save = (patch: Partial<Settings>) => {
+    setSaveFailed(false);
+    updateSettings(patch).catch(() => setSaveFailed(true));
+  };
   const [newCards, setNewCards] = useState(String(settings.newCardsPerDay));
   const parsed = Number(newCards);
   const newCardsValid = /^\d+$/.test(newCards) && parsed >= 0 && parsed <= MAX_NEW_CARDS;
@@ -21,6 +30,7 @@ export function SettingsScreen() {
   return (
     <>
       <PageHeader title={t('settings.title')} />
+      {saveFailed && <Notice kind="error">{t('common.saveFailed')}</Notice>}
 
       <fieldset className="section" style={{ border: 0, padding: 0, margin: 0 }}>
         <legend className="section__title">{t('settings.language')}</legend>
@@ -32,7 +42,7 @@ export function SettingsScreen() {
               role="radio"
               aria-checked={settings.uiLanguage === lang}
               className={`btn btn--${settings.uiLanguage === lang ? 'primary' : 'secondary'}`}
-              onClick={() => void updateSettings({ uiLanguage: lang })}
+              onClick={() => save({ uiLanguage: lang })}
               lang={lang}
             >
               {NATIVE_NAMES[lang]}
@@ -54,21 +64,45 @@ export function SettingsScreen() {
           onChange={(e) => setNewCards(e.target.value)}
           // Saved when the field loses focus; an invalid value is discarded, not stored half-way.
           onBlur={() => {
-            if (newCardsValid) void updateSettings({ newCardsPerDay: parsed });
+            if (newCardsValid) save({ newCardsPerDay: parsed });
             else setNewCards(String(settings.newCardsPerDay));
           }}
         />
         <CheckField
           label={t('settings.diacritics')}
           checked={settings.ignoreDiacritics}
-          onChange={(checked) => void updateSettings({ ignoreDiacritics: checked })}
+          onChange={(checked) => save({ ignoreDiacritics: checked })}
         />
         <p className="muted">{t('settings.diacriticsHint')}</p>
         <CheckField
           label={t('settings.speech')}
           checked={settings.speechEnabled}
-          onChange={(checked) => void updateSettings({ speechEnabled: checked })}
+          onChange={(checked) => save({ speechEnabled: checked })}
         />
+      </section>
+
+      <section className="section" aria-labelledby="settings-app">
+        <h2 className="section__title" id="settings-app">
+          {t('settings.app')}
+        </h2>
+        {pwa.installed && <p>{t('settings.app.installed')}</p>}
+        {pwa.canInstall && (
+          <Button onClick={() => void pwa.install()}>{t('settings.app.install')}</Button>
+        )}
+        {pwa.needsIosInstructions && <p>{t('settings.app.ios')}</p>}
+        <p>
+          {pwa.offlineActive
+            ? t('settings.app.offlineOn')
+            : pwa.offlineUnavailable
+              ? t('settings.app.offlineUnavailable')
+              : t('settings.app.offlineOff')}
+        </p>
+        {pwa.storagePersistent !== null && (
+          <p>
+            {pwa.storagePersistent ? t('settings.app.storageOk') : t('settings.app.storageRisk')}
+          </p>
+        )}
+        <p className="muted">{t('settings.app.reminders')}</p>
       </section>
 
       <section className="section" aria-labelledby="settings-data">

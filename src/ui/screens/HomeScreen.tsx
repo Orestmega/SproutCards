@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { Link } from 'react-router-dom';
 import { computeStreak } from '../../core/stats';
@@ -21,9 +22,22 @@ export function HomeScreen() {
       now,
     );
   }, [repo]);
-  if (!summaries || streak === undefined) return null;
+  const due = summaries?.reduce((sum, s) => sum + s.dueCount, 0);
 
-  const due = summaries.reduce((sum, s) => sum + s.dueCount, 0);
+  // Where the system supports it, the installed app's icon shows the number of due reviews.
+  // It is refreshed only while the app runs; a web app cannot wake itself up to update it.
+  useEffect(() => {
+    if (due === undefined) return;
+    const badging = navigator as Navigator & {
+      setAppBadge?: (count: number) => Promise<void>;
+      clearAppBadge?: () => Promise<void>;
+    };
+    const update = due > 0 ? badging.setAppBadge?.(due) : badging.clearAppBadge?.();
+    update?.catch(() => undefined);
+  }, [due]);
+
+  if (!summaries || due === undefined || streak === undefined) return null;
+
   const cards = summaries.reduce((sum, s) => sum + s.cardCount, 0);
 
   // the deck with the most reviews waiting
@@ -68,6 +82,8 @@ export function HomeScreen() {
           <span className="muted">{t('home.statCards')}</span>
         </div>
       </div>
+
+      <Link to="/stats">{t('home.statistics')}</Link>
 
       <section className="section" aria-labelledby="home-decks">
         <h2 className="section__title" id="home-decks">
