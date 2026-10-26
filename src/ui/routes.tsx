@@ -8,6 +8,10 @@ import { DecksScreen } from './screens/DecksScreen';
 import { HomeScreen } from './screens/HomeScreen';
 import { NotFoundScreen } from './screens/NotFoundScreen';
 import { SettingsScreen } from './screens/SettingsScreen';
+import { FlipScreen } from './study/FlipScreen';
+import { LearnScreen } from './study/LearnScreen';
+import { QuizScreen } from './study/QuizScreen';
+import { StudyLayout } from './study/StudyLayout';
 
 /** All screens. The router itself (hash or memory) is chosen by the caller. */
 export function AppRoutes() {
@@ -24,6 +28,12 @@ export function AppRoutes() {
         <Route path="backup" element={<BackupScreen />} />
         <Route path="settings" element={<SettingsScreen />} />
         <Route path="*" element={<NotFoundScreen />} />
+      </Route>
+      {/* study screens have their own frame: progress bar on top, no bottom navigation */}
+      <Route element={<StudyLayout />}>
+        <Route path="decks/:deckId/learn" element={<LearnScreen />} />
+        <Route path="decks/:deckId/flip" element={<FlipScreen />} />
+        <Route path="decks/:deckId/test" element={<QuizScreen />} />
       </Route>
     </Routes>
   );

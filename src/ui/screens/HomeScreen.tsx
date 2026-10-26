@@ -26,6 +26,11 @@ export function HomeScreen() {
   const due = summaries.reduce((sum, s) => sum + s.dueCount, 0);
   const cards = summaries.reduce((sum, s) => sum + s.cardCount, 0);
 
+  // the deck with the most reviews waiting
+  const dueDeck = summaries
+    .filter((s) => s.dueCount > 0)
+    .sort((a, b) => b.dueCount - a.dueCount)[0];
+
   let mood: 'normal' | 'happy' | 'encouraging' = 'normal';
   let message = t('home.welcome');
   if (summaries.length > 0 && due > 0) {
@@ -42,6 +47,12 @@ export function HomeScreen() {
     <>
       <h1 className="visually-hidden">{t('nav.home')}</h1>
       <MascotBubble mood={mood}>{message}</MascotBubble>
+
+      {dueDeck && (
+        <ButtonLink to={`/decks/${dueDeck.deck.id}`} block>
+          {t('home.review', { name: dueDeck.deck.name })}
+        </ButtonLink>
+      )}
 
       <div className="stats" role="group" aria-label={t('home.stats')}>
         <div className="stat">

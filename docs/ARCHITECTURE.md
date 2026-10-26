@@ -65,6 +65,27 @@ A pure state machine: `startSession` → repeated `submitAnswer` → `summarize`
   session) are not scheduled.
 - `selection.ts` picks due and new cards for a session.
 
+## Other study modes (`flip.ts`, `quiz.ts`, `voice.ts`)
+
+- **Flashcards** (`flip.ts`): one pass, each card once. "Know" is scheduled as `correct`, "don't know" as
+  `wrong`, immediately and per card (an interrupted session keeps what was answered).
+- **Quiz** (`quiz.ts`): up to 20 questions built with the same `buildExercise` as Learn, every third one
+  typed, the rest multiple choice. No feedback until the end. Points: correct 1, `almost` 0.5, wrong 0;
+  grade thresholds 90 / 70 / 50 %. A quiz never changes review dates; it only writes the review log.
+- **Session cards** (`selection.ts`): due cards (most overdue first) then new cards, at most
+  `SESSION_SIZE` = 20 per session. New cards are limited by the `newCardsPerDay` setting minus the number of
+  cards first studied today (`Progress.firstSeenAt`, counted across decks and directions).
+- **Practice** (`?all=1`): any card can be practised ahead of schedule; progress is not changed, only the
+  review log is written.
+- **Speech** (`src/ui/speech.ts` + `core/voice.ts`): Web Speech API. `pickVoice` chooses an exact language
+  match, then the same base language, preferring on-device voices. If there is no voice or no support,
+  the button shows a message instead of staying silent. Speech buttons are hidden by the setting.
+
+Study screens live in their own layout (`StudyLayout`: progress bar on top, close button, no bottom
+navigation). Each screen loads a **snapshot** of the deck once (`StudyGate`), so live updates cannot change
+a running session. Results are saved when the session ends, or when the user leaves (finished cards only).
+Keyboard: choice options 1–4, Enter submits/continues, Space/Enter turns a flashcard, ← / → answer it.
+
 ## Exchange formats (`exchange.ts`, `csv.ts`)
 
 - JSON, `format: "sproutcards-deck"` (one deck) or `"sproutcards-backup"` (several), `version: 1`.

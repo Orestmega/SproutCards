@@ -14,6 +14,7 @@ import { IssueList } from '../components/IssueList';
 import { PageHeader } from '../components/Layout';
 import { EmptyState, Notice } from '../components/Notice';
 import { downloadText, readTextFile, safeFileName } from '../files';
+import { StudyPanel } from '../study/StudyPanel';
 import { NotFoundScreen } from './NotFoundScreen';
 
 type Message =
@@ -105,6 +106,8 @@ export function DeckScreen() {
       <ButtonLink to={`/decks/${deckId}/cards/new`} block>
         {t('deck.addCard')}
       </ButtonLink>
+
+      <StudyPanel deck={deck} cardCount={cards.length} />
 
       <section className="section" aria-labelledby="deck-cards">
         <h2 className="section__title" id="deck-cards">

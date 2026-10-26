@@ -7,6 +7,7 @@ import type { IdFactory } from '../core/id';
 import { newId } from '../core/id';
 import type { Card, Deck, Direction, Example, Progress, ReviewLog, Settings } from '../core/types';
 import { DEFAULT_SETTINGS } from '../core/types';
+import { countNewSince as countNew } from '../core/selection';
 import type { AppDatabase } from './db';
 
 export interface NewDeck {
@@ -127,6 +128,11 @@ export function createRepo(
     /** Progress records that are due now, across all decks. */
     listDueProgress(at: number): Promise<Progress[]> {
       return db.progress.where('dueAt').belowOrEqual(at).toArray();
+    },
+
+    /** Number of cards first studied at or after `since` (the "new cards per day" budget). */
+    async countNewSince(since: number): Promise<number> {
+      return countNew(await db.progress.toArray(), since);
     },
 
     /** Saves a finished session: progress and review log together. */

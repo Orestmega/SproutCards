@@ -27,6 +27,7 @@ export default defineConfig({
   test: {
     environment: 'jsdom',
     globals: true,
+    testTimeout: 20000, // UI tests play whole study sessions
     setupFiles: ['./src/test/setup.ts'],
   },
 });

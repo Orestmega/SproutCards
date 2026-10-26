@@ -211,12 +211,17 @@
   background: var(--color-primary-soft);
 }
 
-.choice--correct {
+/* After the answer: higher specificity than the "selected" style so a wrong pick is not green. */
+.choice.choice--correct,
+.choice.choice--correct[aria-pressed='true'] {
   border-color: var(--color-correct);
+  background: #e6f3e7;
 }
 
-.choice--wrong {
+.choice.choice--wrong,
+.choice.choice--wrong[aria-pressed='true'] {
   border-color: var(--color-wrong);
+  background: #fbe9e9;
 }
 
 /* ---------- Progress bar ---------- */
@@ -496,4 +501,186 @@ textarea.input {
   .app__main {
     padding-top: var(--space-6);
   }
+}
+
+/* ---------- Study screens ---------- */
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.study__top {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background: var(--color-bg);
+}
+
+.study__bar {
+  display: flex;
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: var(--space-1) var(--space-2) 0;
+}
+
+/* study screens have no bottom navigation, so less space is reserved at the bottom */
+.study .app__main {
+  padding-bottom: var(--space-6);
+}
+
+.prompt {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-5) var(--space-4);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  text-align: center;
+}
+
+.prompt__text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  font-size: 2rem;
+  font-weight: 800;
+  overflow-wrap: anywhere;
+}
+
+.input--big {
+  min-height: 56px;
+  font-size: var(--font-size-lg);
+}
+
+.choice__num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  margin-right: var(--space-3);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--color-text-muted);
+}
+
+.choice:disabled {
+  cursor: default;
+}
+
+.speak {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.headline {
+  text-align: center;
+  font-size: 3rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.flip {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.flip-card {
+  flex: 1;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  padding: var(--space-5) var(--space-4);
+  background: var(--color-bg);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  text-align: center;
+  animation: card-in var(--motion-fast) ease-out;
+}
+
+.flip-card--back {
+  background: var(--color-primary-soft);
+  border-color: var(--color-primary);
+}
+
+.flip-card__text {
+  font-size: 2rem;
+  font-weight: 800;
+  overflow-wrap: anywhere;
+}
+
+.flip-answer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  text-align: center;
+  animation: card-in var(--motion-fast) ease-out;
+}
+
+.flip-answer__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+}
+
+.flip-answer__examples {
+  margin: 0;
+  padding-left: var(--space-4);
+  text-align: left;
+}
+
+@keyframes card-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Segmented control (two or three exclusive options side by side). */
+.seg {
+  display: flex;
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.seg__btn {
+  flex: 1;
+  min-height: 44px;
+  padding: 0 var(--space-3);
+  border: 0;
+  background: var(--color-bg);
+  font-weight: 600;
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+}
+
+.seg__btn + .seg__btn {
+  border-left: 2px solid var(--color-border);
+}
+
+.seg__btn[aria-checked='true'] {
+  background: var(--color-primary-soft);
+  color: var(--color-primary-text);
+  font-weight: 800;
 }

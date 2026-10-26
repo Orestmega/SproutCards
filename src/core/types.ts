@@ -66,6 +66,8 @@ export interface Progress extends ScheduleState {
   deckId: string;
   direction: Direction;
   lastReviewedAt: number;
+  /** When the card was first studied in this direction (used for the "new cards per day" limit). */
+  firstSeenAt?: number;
 }
 
 export function progressId(cardId: string, direction: Direction): string {

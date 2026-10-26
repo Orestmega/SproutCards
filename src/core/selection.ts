@@ -39,3 +39,22 @@ export function selectSessionCards(
 export function countDue(progress: readonly Progress[], now: number): number {
   return progress.reduce((n, p) => (p.dueAt <= now ? n + 1 : n), 0);
 }
+
+/**
+ * How many cards were studied for the first time at or after `since` (start of today). Used to keep
+ * to the "new cards per day" setting across sessions, decks and directions.
+ */
+export function countNewSince(progress: readonly Progress[], since: number): number {
+  return progress.reduce(
+    (n, p) => (p.firstSeenAt !== undefined && p.firstSeenAt >= since ? n + 1 : n),
+    0,
+  );
+}
+
+/** Most cards in one session: long due lists are worked off over several sessions. */
+export const SESSION_SIZE = 20;
+
+/** The cards of one session: due first (most overdue first), then new ones, capped at `SESSION_SIZE`. */
+export function sessionCards(selection: SessionSelection, size: number = SESSION_SIZE): Card[] {
+  return [...selection.due, ...selection.fresh].slice(0, size);
+}

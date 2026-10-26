@@ -1,4 +1,4 @@
-import { countDue, selectSessionCards } from './selection';
+import { countDue, countNewSince, selectSessionCards, sessionCards } from './selection';
 import { makeCard } from './testUtils';
 import type { Progress } from './types';
 import { progressId } from './types';
@@ -62,5 +62,19 @@ describe('selectSessionCards', () => {
 describe('countDue', () => {
   it('counts only records that are due', () => {
     expect(countDue([prog('a', NOW - 1), prog('b', NOW), prog('c', NOW + 1)], NOW)).toBe(2);
+  });
+});
+
+describe('countNewSince / sessionCards', () => {
+  it('counts only cards first seen since the given time', () => {
+    const p = (id: string, firstSeenAt?: number) => ({ ...prog(id, 0), firstSeenAt });
+    expect(countNewSince([p('a', 100), p('b', 50), p('c', undefined), p('d', 100)], 100)).toBe(2);
+  });
+
+  it('puts due cards first and caps the session size', () => {
+    const cards = ['a', 'b', 'c', 'd'].map((id) => makeCard(id, id, { id }));
+    const selection = { due: cards.slice(0, 2), fresh: cards.slice(2) };
+    expect(sessionCards(selection).map((c) => c.id)).toEqual(['a', 'b', 'c', 'd']);
+    expect(sessionCards(selection, 3).map((c) => c.id)).toEqual(['a', 'b', 'c']);
   });
 });

@@ -115,20 +115,27 @@ function lastLevel(config: LearnConfig): number {
   return config.levels.length - 1;
 }
 
-function answerOptions(config: LearnConfig): AnswerOptions {
+function answerOptions(config: Pick<LearnConfig, 'ignoreDiacritics'>): AnswerOptions {
   return { ignoreDiacritics: config.ignoreDiacritics };
 }
 
-function buildQuestion(
+/** The part of the configuration that decides how a single question is built. */
+export type ExerciseConfig = Pick<LearnConfig, 'choiceCount' | 'ignoreDiacritics'>;
+
+/**
+ * Builds one question for a card. Shared by Learn (one question per level) and the quiz.
+ * @param cards every card that may serve as a distractor or as a duplicate with the same prompt
+ */
+export function buildExercise(
   cards: Readonly<Record<string, Card>>,
   cardId: string,
   level: number,
+  spec: LevelSpec,
   direction: Direction,
-  config: LearnConfig,
+  config: ExerciseConfig,
   rng: Rng,
 ): Question {
   const card = cards[cardId] as Card;
-  const spec = config.levels[Math.min(level, lastLevel(config))] as LevelSpec;
   const promptSide = direction === 'forward' ? spec.prompt : flip(spec.prompt);
   const answerSide = flip(promptSide);
   const prompt = sideTexts(card, promptSide)[0] as string;
@@ -170,6 +177,18 @@ function buildQuestion(
   }
 
   return { cardId, level, kind, promptSide, answerSide, prompt, options, acceptable };
+}
+
+function buildQuestion(
+  cards: Readonly<Record<string, Card>>,
+  cardId: string,
+  level: number,
+  direction: Direction,
+  config: LearnConfig,
+  rng: Rng,
+): Question {
+  const spec = config.levels[Math.min(level, lastLevel(config))] as LevelSpec;
+  return buildExercise(cards, cardId, level, spec, direction, config, rng);
 }
 
 /**
@@ -215,6 +234,25 @@ export function isFinished(state: LearnState): boolean {
 }
 
 /**
+ * Decides whether an answer is correct. `null` or blank means "I don't know" and is wrong.
+ * A choice must be exactly right (no typo tolerance); typed answers can be `almost`.
+ */
+export function judgeAnswer(
+  question: Question,
+  input: string | null,
+  options: AnswerOptions,
+): ReviewResult {
+  if (input === null || input.trim() === '') return 'wrong';
+  if (question.kind === 'choice') {
+    const key = normalizeAnswer(input, options);
+    return question.acceptable.some((a) => normalizeAnswer(a, options) === key)
+      ? 'correct'
+      : 'wrong';
+  }
+  return checkAnswer(input, question.acceptable, options).verdict;
+}
+
+/**
  * Submits an answer to the current question.
  * @param input the typed text or the chosen option; `null` means "I don't know" (counts as wrong)
  */
@@ -229,18 +267,7 @@ export function submitAnswer(
   const { config } = state;
   const opts = answerOptions(config);
 
-  let result: ReviewResult;
-  if (input === null || input.trim() === '') {
-    result = 'wrong';
-  } else if (question.kind === 'choice') {
-    // A choice is either the right option or not; no typo tolerance.
-    const key = normalizeAnswer(input, opts);
-    result = question.acceptable.some((a) => normalizeAnswer(a, opts) === key)
-      ? 'correct'
-      : 'wrong';
-  } else {
-    result = checkAnswer(input, question.acceptable, opts).verdict;
-  }
+  const result = judgeAnswer(question, input, opts);
 
   const item = state.items[question.cardId] as ItemState;
   const last = lastLevel(config);
@@ -379,6 +406,7 @@ export function applySessionToProgress(
       deckId: card.deckId,
       direction: state.direction,
       lastReviewedAt: now,
+      firstSeenAt: previous?.firstSeenAt ?? now,
     });
   }
   return updated;
