@@ -192,4 +192,16 @@ extra dependencies; they use a throw-away profile):
   server, reloads (the app and the visited catalog page still open), then fakes a new version, checks it
   waits for the user, applies it and checks that a deck written to IndexedDB is still there.
 - `npm run check:a11y` (with `npm run dev` running): axe-core on 12 screens, with demo data (`/?seed`).
+- `npm run check:headers` (after `npm run build`): serves `dist/` with exactly the headers from `dist/_headers`
+  (including the strict Content-Security-Policy), adds a catalog deck, visits the main screens and fails on any
+  console error or CSP violation.
 - Lighthouse is run by hand against `npm run preview` (see README).
+
+## Hosting (prepared, not deployed)
+
+The build in `dist/` is plain static files with relative paths: any static host or sub-path works. Nothing needs a
+server, a database or an API key. `public/_headers` (Cloudflare Pages, Netlify) sets security headers
+(Content-Security-Policy locked to the app's own origin: no third-party requests exist), long caching for hashed
+files and `no-cache` for `index.html`, `sw.js` and the manifest (otherwise users could be stuck on an old version).
+GitHub Pages cannot set headers; the app works there without them. `.github/workflows/deploy-pages.yml` can publish
+to GitHub Pages but runs only when started by hand. Walkthrough and hosting comparison: `docs/IPHONE_TEST.md`.

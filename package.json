@@ -2,6 +2,8 @@
   "name": "sproutcards",
   "private": true,
   "version": "0.0.0",
+  "description": "Flashcards for learning any language: an installable offline web app (PWA).",
+  "license": "MIT",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -13,7 +15,8 @@
     "test:watch": "vitest",
     "format": "prettier --write .",
     "check:offline": "node scripts/browser/offline-and-update.mjs",
-    "check:a11y": "node scripts/browser/axe.mjs"
+    "check:a11y": "node scripts/browser/axe.mjs",
+    "check:headers": "node scripts/browser/headers-check.mjs"
   },
   "dependencies": {
     "dexie": "^4.4.7",

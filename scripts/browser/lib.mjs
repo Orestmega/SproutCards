@@ -5,7 +5,7 @@ import { spawn } from 'node:child_process';
 import { createServer } from 'node:http';
 import { existsSync, mkdtempSync, readFileSync, rmSync, statSync } from 'node:fs';
 import { tmpdir } from 'node:os';
-import { extname, join, normalize } from 'node:path';
+import { extname, join, normalize, resolve } from 'node:path';
 
 export const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -36,7 +36,8 @@ export function chromePath() {
 }
 
 /** Serves a folder on 127.0.0.1 (localhost counts as a secure context, so service workers work). */
-export async function serveDir(dir, port) {
+export async function serveDir(folder, port, extraHeaders = {}) {
+  const dir = resolve(folder);
   const server = createServer((req, res) => {
     const path = decodeURIComponent(new URL(req.url, 'http://x').pathname);
     let file = join(dir, normalize(path));
@@ -50,6 +51,7 @@ export async function serveDir(dir, port) {
     res.writeHead(200, {
       'content-type': TYPES[extname(file)] ?? 'application/octet-stream',
       'cache-control': 'no-cache',
+      ...extraHeaders,
     });
     res.end(readFileSync(file));
   });
@@ -100,11 +102,24 @@ export async function launchChrome({ width = 390, height = 844 } = {}) {
   await new Promise((resolve) => (ws.onopen = resolve));
   let nextId = 0;
   const pending = new Map();
+  /** Console errors/warnings, uncaught exceptions and browser log entries (such as CSP violations). */
+  const problems = [];
   ws.onmessage = (event) => {
     const message = JSON.parse(event.data);
     if (message.id && pending.has(message.id)) {
       pending.get(message.id)(message);
       pending.delete(message.id);
+    } else if (message.method === 'Runtime.consoleAPICalled') {
+      const { type, args } = message.params;
+      if (type === 'error' || type === 'warning') {
+        problems.push(`console.${type}: ${args.map((a) => a.value ?? a.description).join(' ')}`);
+      }
+    } else if (message.method === 'Runtime.exceptionThrown') {
+      const details = message.params.exceptionDetails;
+      problems.push(`exception: ${details.exception?.description ?? details.text}`);
+    } else if (message.method === 'Log.entryAdded') {
+      const { level, text } = message.params.entry;
+      if (level === 'error' || level === 'warning') problems.push(`log.${level}: ${text}`);
     }
   };
   const send = (method, params = {}) =>
@@ -116,6 +131,7 @@ export async function launchChrome({ width = 390, height = 844 } = {}) {
 
   await send('Page.enable');
   await send('Runtime.enable');
+  await send('Log.enable');
   await send('Emulation.setDeviceMetricsOverride', {
     width,
     height,
@@ -125,6 +141,7 @@ export async function launchChrome({ width = 390, height = 844 } = {}) {
 
   return {
     send,
+    problems,
     /** Runs JavaScript in the page and returns its (JSON) result; promises are awaited. */
     async evalJs(expression) {
       const reply = await send('Runtime.evaluate', {
