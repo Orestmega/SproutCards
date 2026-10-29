@@ -129,11 +129,19 @@ function MatchGame({
     return () => chrome.setOnClose(null);
   }, [chrome, navigate, deck.id]);
 
-  const tap = useCallback((tileId: string) => {
-    const at = Date.now(); // read outside the updater so the updater stays pure
-    setNow(at);
-    setState((s) => pickTile(s, tileId, at));
-  }, []);
+  const tap = useCallback(
+    (tileId: string) => {
+      const at = Date.now();
+      const next = pickTile(state, tileId, at);
+      setNow(at);
+      setState(next);
+      // Sprout cheers a found pair and winces at a wrong one
+      if (next.matched.length > state.matched.length)
+        chrome.react(isMatchFinished(next) ? 'celebrate' : 'happy');
+      else if (next.mistakes > state.mistakes) chrome.react('oops');
+    },
+    [state, chrome],
+  );
 
   if (state.tiles.length < 4) {
     return (
@@ -149,7 +157,7 @@ function MatchGame({
     return (
       <SummaryView
         deckId={deck.id}
-        mood="happy"
+        mood={isBest || state.mistakes === 0 ? 'celebrate' : 'happy'}
         message={isBest && previousBest !== null ? t('match.newBest') : t('match.done')}
         headline={t('match.seconds', { seconds: formatSeconds(total) })}
         stats={[

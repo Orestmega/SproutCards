@@ -1,10 +1,20 @@
 import { useState } from 'react';
 import { useLiveQuery } from 'dexie-react-hooks';
+import { Link } from 'react-router-dom';
 import type { Deck, Direction } from '../../core/types';
 import { useI18n } from '../../i18n';
+import type { MessageKey } from '../../i18n';
 import { useRepo } from '../AppProviders';
-import { ButtonLink } from '../components/Button';
 import { CheckField } from '../components/Fields';
+import { Icon } from '../components/Icons';
+import type { IconName } from '../components/Icons';
+
+const MODES: { path: string; title: MessageKey; desc: MessageKey; icon: IconName }[] = [
+  { path: 'learn', title: 'study.learn', desc: 'study.learnDesc', icon: 'learn' },
+  { path: 'flip', title: 'study.flip', desc: 'study.flipDesc', icon: 'flip' },
+  { path: 'test', title: 'study.quiz', desc: 'study.quizDesc', icon: 'test' },
+  { path: 'match', title: 'study.match', desc: 'study.matchDesc', icon: 'match' },
+];
 
 /** "Study" section of the deck screen: choose the direction, then a mode. */
 export function StudyPanel({
@@ -61,19 +71,24 @@ export function StudyPanel({
               onChange={setStarredOnly}
             />
           )}
-          <div className="stack">
-            <ButtonLink to={`${base}/learn${query}`} block>
-              {t('study.learn')}
-            </ButtonLink>
-            <ButtonLink to={`${base}/flip${query}`} variant="secondary" block>
-              {t('study.flip')}
-            </ButtonLink>
-            <ButtonLink to={`${base}/test${query}`} variant="secondary" block>
-              {t('study.quiz')}
-            </ButtonLink>
-            <ButtonLink to={`${base}/match${query}`} variant="secondary" block>
-              {t('study.match')}
-            </ButtonLink>
+          <div className="modes">
+            {MODES.map((mode) => (
+              <Link
+                key={mode.path}
+                to={`${base}/${mode.path}${query}`}
+                className={mode.path === 'learn' ? 'mode mode--main' : 'mode'}
+                aria-describedby={`mode-desc-${mode.path}`}
+              >
+                <span className={`mode__icon mode__icon--${mode.icon}`}>
+                  <Icon name={mode.icon} />
+                </span>
+                <span className="mode__title">{t(mode.title)}</span>
+                {/* read as the link's description, so the link's name stays just the mode */}
+                <span className="mode__desc" id={`mode-desc-${mode.path}`} aria-hidden="true">
+                  {t(mode.desc)}
+                </span>
+              </Link>
+            ))}
           </div>
         </>
       )}

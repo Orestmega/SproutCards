@@ -18,7 +18,7 @@ export function ProgressBar({ value, label, top }: ProgressBarProps) {
       aria-valuemax={100}
       aria-valuenow={percent}
     >
-      <div className="progress__fill" style={{ width: `${percent}%` }} />
+      <div className="progress__fill" data-empty={percent === 0} style={{ width: `${percent}%` }} />
     </div>
   );
 }

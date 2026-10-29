@@ -16,6 +16,8 @@ language codes (`en`, `uk`, `de`, `pt-BR`…). The interface is available in Ukr
   <img src="docs/screenshots/deck.png" width="190" alt="A deck with study modes and cards">
   <img src="docs/screenshots/catalog.png" width="190" alt="Catalog of ready-made decks">
   <img src="docs/screenshots/settings.png" width="190" alt="Settings: language, install, offline status">
+  <img src="docs/screenshots/sprout-combo.png" width="190" alt="Sprout cheers three right answers in a row">
+  <img src="docs/screenshots/sprout-celebrate.png" width="190" alt="Sprout celebrates a finished Match game with confetti">
 </p>
 
 ## What it does
@@ -26,6 +28,10 @@ language codes (`en`, `uk`, `de`, `pt-BR`…). The interface is available in Ukr
   matching; then retake only the words you missed, until 100 %), *Match* (a timed pairing game). Star hard words
   and study only those. Both directions (word → translation and back) have separate progress; tests and Match
   do not change the schedule.
+- **Sprout, the mascot,** is animated (breathing, blinking, leaves in the wind) and studies with you: it sits next
+  to the progress bar, is happy about a right answer, says "oops" after a wrong one, cheers "3 in a row!", only
+  "thinks along" during a test (no hints) and celebrates a great result with confetti. Tap it on the home screen.
+  All motion is off when the system asks for reduced motion.
 - **Answer checking:** ignores case, spaces and (optionally) accents; a small typo gives "Almost" with the
   right answer shown instead of a plain "wrong".
 - **Spaced repetition:** fixed intervals of 1, 3, 7, 14 and 30 days. The scheduler sits behind a small

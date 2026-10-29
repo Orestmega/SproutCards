@@ -13,7 +13,7 @@ const ICON: Record<Kind, string> = { success: '✓', error: '✗', warn: '!', in
 export function Notice({ kind = 'info', children }: { kind?: Kind; children: ReactNode }) {
   return (
     <div className={`notice notice--${kind}`} role={kind === 'error' ? 'alert' : 'status'}>
-      <span aria-hidden="true" style={{ fontWeight: 800 }}>
+      <span className="notice__icon" aria-hidden="true">
         {ICON[kind]}
       </span>
       <div>{children}</div>

@@ -10,7 +10,7 @@ html {
 
 body {
   margin: 0;
-  background: var(--color-bg);
+  background: var(--color-page);
   color: var(--color-text);
   font-family: var(--font-body);
   font-size: var(--font-size-md);
@@ -23,6 +23,8 @@ h2,
 h3 {
   margin: 0;
   line-height: 1.2;
+  font-family: var(--font-display);
+  letter-spacing: -0.01em;
 }
 
 h1 {
@@ -73,5 +75,7 @@ textarea {
   *::after {
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
+    /* a looping animation at 0.01 ms would flicker: play every animation once, at most */
+    animation-iteration-count: 1 !important;
   }
 }

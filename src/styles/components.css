@@ -18,6 +18,22 @@
   gap: var(--space-4);
 }
 
+/* a new screen (or a new question, which is a new element) slides in softly */
+.app__main > * {
+  animation: page-in var(--motion-medium) ease-out both;
+}
+
+@keyframes page-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 .page-header {
   display: flex;
   align-items: center;
@@ -40,6 +56,13 @@
   color: var(--color-text);
   text-decoration: none;
   font-size: var(--font-size-lg);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-soft);
+  transition: transform var(--motion-fast);
+}
+
+.back-link:active {
+  transform: scale(0.92);
 }
 
 .section {
@@ -49,9 +72,11 @@
 }
 
 .section__title {
-  font-size: var(--font-size-md);
+  font-size: var(--font-size-sm);
   color: var(--color-text-muted);
-  font-weight: 600;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
 }
 
 .muted {
@@ -75,8 +100,10 @@
   inset: auto 0 0 0;
   height: calc(var(--nav-height) + env(safe-area-inset-bottom));
   padding-bottom: env(safe-area-inset-bottom);
-  background: var(--color-bg);
+  background: rgb(255 255 255 / 92%);
+  backdrop-filter: blur(10px);
   border-top: 1px solid var(--color-border);
+  box-shadow: 0 -6px 20px rgb(29 43 26 / 6%);
   display: flex;
   justify-content: center;
   z-index: 10;
@@ -98,13 +125,34 @@
   min-height: 44px;
   color: var(--color-text-muted);
   text-decoration: none;
-  font-size: var(--font-size-sm);
-  font-weight: 600;
+  font-size: 0.8125rem;
+  font-weight: 700;
+}
+
+/* the active tab: a soft green pill behind the icon (plus green text, so not colour alone: also shape) */
+.nav__pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 30px;
+  border-radius: var(--radius-pill);
+  transition:
+    background var(--motion-fast),
+    transform var(--motion-medium) var(--ease-spring);
 }
 
 .nav__link[aria-current='page'] {
   color: var(--color-primary-text);
-  box-shadow: inset 0 3px 0 var(--color-primary);
+}
+
+.nav__link[aria-current='page'] .nav__pill {
+  background: var(--color-primary-soft);
+  transform: scale(1.06);
+}
+
+.nav__link:active .nav__pill {
+  transform: scale(0.9);
 }
 
 .nav__icon {
@@ -122,12 +170,19 @@
   padding: 0 var(--space-5);
   border: 2px solid transparent;
   border-radius: var(--radius-md);
-  font-weight: 700;
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: 0.01em;
   text-decoration: none;
   cursor: pointer;
   transition:
     transform var(--motion-fast),
-    box-shadow var(--motion-fast);
+    box-shadow var(--motion-fast),
+    filter var(--motion-fast);
+}
+
+.btn:hover:not(:disabled) {
+  filter: brightness(1.08);
 }
 
 .btn:disabled {
@@ -152,13 +207,18 @@
   background: var(--color-bg);
   color: var(--color-text);
   border-color: var(--color-border);
-  box-shadow: 0 var(--edge) 0 var(--color-border);
+  box-shadow: 0 var(--edge) 0 var(--color-edge);
   margin-bottom: var(--edge);
+}
+
+.btn--secondary:hover:not(:disabled) {
+  filter: none;
+  background: var(--color-surface-strong);
 }
 
 .btn--secondary:active:not(:disabled) {
   transform: translateY(var(--edge));
-  box-shadow: 0 0 0 var(--color-border);
+  box-shadow: 0 0 0 var(--color-edge);
 }
 
 .btn--danger {
@@ -198,18 +258,31 @@
   padding: var(--space-3) var(--space-4);
   background: var(--color-bg);
   border: 2px solid var(--color-border);
+  border-bottom-width: var(--edge);
+  border-bottom-color: var(--color-edge);
   border-radius: var(--radius-lg);
   text-align: left;
   font-size: var(--font-size-lg);
+  font-weight: 600;
   cursor: pointer;
+  transition:
+    transform var(--motion-fast),
+    background var(--motion-fast),
+    border-color var(--motion-fast);
 }
 
 .choice:hover:not(:disabled) {
-  background: var(--color-surface);
+  background: var(--color-surface-strong);
+  transform: translateY(-1px);
+}
+
+.choice:active:not(:disabled) {
+  transform: translateY(2px);
 }
 
 .choice[aria-pressed='true'] {
   border-color: var(--color-primary);
+  border-bottom-color: var(--color-primary-dark);
   background: var(--color-primary-soft);
 }
 
@@ -217,35 +290,102 @@
 .choice.choice--correct,
 .choice.choice--correct[aria-pressed='true'] {
   border-color: var(--color-correct);
-  background: #e6f3e7;
+  background: var(--color-correct-soft);
+  animation: pop 360ms var(--ease-spring);
 }
 
 .choice.choice--wrong,
 .choice.choice--wrong[aria-pressed='true'] {
   border-color: var(--color-wrong);
-  background: #fbe9e9;
+  background: var(--color-wrong-soft);
+  animation: shake 360ms ease-in-out;
+}
+
+.choice__mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-pill);
+  font-weight: 800;
+  color: var(--color-on-ink);
+  background: var(--color-correct);
+}
+
+.choice--wrong .choice__mark {
+  background: var(--color-wrong);
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(1);
+  }
+  45% {
+    transform: scale(1.035);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes shake {
+  20%,
+  60% {
+    transform: translateX(-5px);
+  }
+  40%,
+  80% {
+    transform: translateX(5px);
+  }
 }
 
 /* ---------- Progress bar ---------- */
 .progress {
-  height: 10px;
+  height: 12px;
   background: var(--color-surface-strong);
   border-radius: var(--radius-pill);
   overflow: hidden;
 }
 
 .progress__fill {
+  position: relative;
   height: 100%;
-  background: var(--color-primary-dark);
+  min-width: 12px;
+  background: linear-gradient(90deg, var(--color-primary-dark), var(--color-primary));
   border-radius: var(--radius-pill);
-  transition: width var(--motion-fast);
+  transition: width 500ms var(--ease-spring);
 }
 
+/* a light stripe on the fill, like a shine */
+.progress__fill::after {
+  content: '';
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  top: 3px;
+  height: 3px;
+  border-radius: var(--radius-pill);
+  background: rgb(255 255 255 / 35%);
+}
+
+.progress__fill[data-empty='true'] {
+  min-width: 0;
+}
+
+.progress__fill[data-empty='true']::after {
+  display: none;
+}
+
+/* the study screens: a thicker bar between the close button and Sprout */
 .progress--top {
-  position: sticky;
-  top: 0;
-  z-index: 5;
-  border-radius: 0;
+  flex: 1;
+  height: 16px;
+}
+
+.progress--top .progress__fill::after {
+  top: 4px;
+  height: 4px;
 }
 
 /* ---------- Lists ---------- */
@@ -267,12 +407,52 @@
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
+  box-shadow: 0 2px 0 var(--color-edge);
   color: inherit;
   text-decoration: none;
+  transition:
+    transform var(--motion-fast),
+    box-shadow var(--motion-fast);
 }
 
-a.list-row:hover {
-  background: var(--color-surface-strong);
+a.list-row:hover,
+.list-row--split:has(.list-row__link:hover) {
+  transform: translateY(-1px);
+  box-shadow:
+    0 3px 0 var(--color-edge),
+    var(--shadow-soft);
+}
+
+a.list-row:active {
+  transform: translateY(1px);
+  box-shadow: 0 1px 0 var(--color-edge);
+}
+
+.chevron {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-lg);
+  transition: transform var(--motion-fast);
+}
+
+a.list-row:hover .chevron,
+.list-row__link:hover .chevron {
+  transform: translateX(3px);
+}
+
+/* A coloured square with the deck's first letter (decoration: the name is next to it). */
+.deck-avatar {
+  flex: none;
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  font-family: var(--font-display);
+  font-size: var(--font-size-lg);
+  font-weight: 800;
+  color: var(--color-text);
+  box-shadow: inset 0 -3px 0 rgb(0 0 0 / 8%);
 }
 
 .list-row__main {
@@ -311,7 +491,7 @@ a.list-row:hover {
 }
 
 .badge--warn {
-  background: #fdf0d8;
+  background: var(--color-almost-soft);
   color: var(--color-almost);
 }
 
@@ -350,6 +530,14 @@ a.list-row:hover {
   background: var(--color-bg);
   border: 2px solid var(--color-border);
   border-radius: var(--radius-md);
+  transition:
+    border-color var(--motion-fast),
+    box-shadow var(--motion-fast);
+}
+
+.input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 4px var(--color-primary-soft);
 }
 
 fieldset legend {
@@ -387,18 +575,58 @@ textarea.input {
   background: var(--color-surface);
   display: flex;
   gap: var(--space-3);
+  animation: notice-in var(--motion-medium) var(--ease-spring);
+}
+
+.notice__icon {
+  flex: none;
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-pill);
+  background: var(--color-text-muted);
+  color: var(--color-on-ink);
+  font-weight: 800;
 }
 
 .notice--success {
   border-color: var(--color-correct);
+  background: var(--color-correct-soft);
+}
+
+.notice--success .notice__icon {
+  background: var(--color-correct);
 }
 
 .notice--error {
   border-color: var(--color-wrong);
+  background: var(--color-wrong-soft);
+}
+
+.notice--error .notice__icon {
+  background: var(--color-wrong);
 }
 
 .notice--warn {
   border-color: var(--color-almost);
+  background: var(--color-almost-soft);
+}
+
+.notice--warn .notice__icon {
+  background: var(--color-almost);
+}
+
+@keyframes notice-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 .notice__list {
@@ -420,6 +648,10 @@ textarea.input {
   background: var(--color-surface);
   border: 2px solid var(--color-border);
   border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+  font-weight: 600;
+  animation: bubble-in 420ms var(--ease-spring) both;
+  transform-origin: left center;
 }
 
 .bubble::before {
@@ -435,8 +667,276 @@ textarea.input {
   transform: translateY(-50%) rotate(45deg);
 }
 
+@keyframes bubble-in {
+  from {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 .mascot {
   flex: none;
+  overflow: visible;
+}
+
+/*
+ * Sprout's motion. Origins are in the picture's own units (viewBox 0 0 120 120).
+ * Idle: breathing, blinking, leaves in the wind. Reactions: a short animation of `.mascot__actor`,
+ * replayed whenever the component gets a new `reaction` number.
+ */
+.mascot__torso,
+.mascot__sprout,
+.mascot__eyes,
+.mascot__arm,
+.mascot__actor,
+.mascot__shadow,
+.mascot__dots,
+.mascot__drop {
+  transform-box: view-box;
+}
+
+.mascot__torso {
+  animation: mascot-breathe 3.2s ease-in-out infinite;
+}
+
+.mascot__sprout {
+  transform-origin: 60px 22px;
+  animation: mascot-sway 2.6s ease-in-out infinite alternate;
+}
+
+.mascot__eyes {
+  transform-origin: 60px 72px;
+  animation: mascot-blink 4.8s infinite;
+}
+
+.mascot__arm--right {
+  transform-origin: 92px 80px;
+  animation: mascot-wave 1.1s ease-in-out infinite alternate;
+}
+
+.mascot__arm--left {
+  transform-origin: 28px 80px;
+  animation: mascot-wave-left 1.1s ease-in-out infinite alternate;
+}
+
+.mascot__actor {
+  transform-origin: 60px 112px;
+}
+
+.mascot--happy .mascot__actor {
+  animation: mascot-hop 520ms var(--ease-spring);
+}
+
+.mascot--celebrate .mascot__actor {
+  animation: mascot-jump 760ms ease-out;
+}
+
+.mascot--oops .mascot__actor {
+  animation: mascot-wobble 480ms ease-in-out;
+}
+
+.mascot--encouraging .mascot__actor {
+  animation: mascot-nod 600ms ease-in-out;
+}
+
+.mascot--thinking .mascot__actor {
+  animation: mascot-tilt 3.4s ease-in-out infinite;
+}
+
+.mascot__sparkle {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: mascot-twinkle 1.2s ease-in-out infinite;
+}
+
+.mascot__dots circle {
+  animation: mascot-dot 1.5s ease-in-out infinite;
+}
+
+.mascot__dots circle:nth-child(2) {
+  animation-delay: 200ms;
+}
+
+.mascot__dots circle:nth-child(3) {
+  animation-delay: 400ms;
+}
+
+.mascot__drop {
+  animation: mascot-drop 1.6s ease-in infinite;
+}
+
+@keyframes mascot-breathe {
+  50% {
+    transform: translateY(-1.6px);
+  }
+}
+
+@keyframes mascot-sway {
+  from {
+    transform: rotate(-7deg);
+  }
+  to {
+    transform: rotate(7deg);
+  }
+}
+
+@keyframes mascot-blink {
+  0%,
+  92%,
+  100% {
+    transform: scaleY(1);
+  }
+  95% {
+    transform: scaleY(0.1);
+  }
+}
+
+@keyframes mascot-wave {
+  from {
+    transform: rotate(-10deg);
+  }
+  to {
+    transform: rotate(14deg);
+  }
+}
+
+@keyframes mascot-wave-left {
+  from {
+    transform: rotate(10deg);
+  }
+  to {
+    transform: rotate(-14deg);
+  }
+}
+
+@keyframes mascot-hop {
+  0% {
+    transform: none;
+  }
+  30% {
+    transform: translateY(-10px) scale(1.02, 0.98);
+  }
+  60% {
+    transform: translateY(0) scale(1.06, 0.94);
+  }
+  100% {
+    transform: none;
+  }
+}
+
+@keyframes mascot-jump {
+  0% {
+    transform: scale(1.06, 0.92);
+  }
+  35% {
+    transform: translateY(-18px) rotate(-6deg);
+  }
+  60% {
+    transform: translateY(-18px) rotate(6deg);
+  }
+  85% {
+    transform: translateY(0) scale(1.06, 0.94);
+  }
+  100% {
+    transform: none;
+  }
+}
+
+@keyframes mascot-wobble {
+  20% {
+    transform: rotate(-7deg);
+  }
+  45% {
+    transform: rotate(6deg);
+  }
+  70% {
+    transform: rotate(-3deg);
+  }
+  100% {
+    transform: none;
+  }
+}
+
+@keyframes mascot-nod {
+  40% {
+    transform: translateY(3px) scale(1.02, 0.97);
+  }
+  100% {
+    transform: none;
+  }
+}
+
+@keyframes mascot-tilt {
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+  50% {
+    transform: rotate(-4deg);
+  }
+}
+
+@keyframes mascot-twinkle {
+  0%,
+  100% {
+    transform: scale(0.6);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.15);
+    opacity: 1;
+  }
+}
+
+@keyframes mascot-dot {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes mascot-drop {
+  0% {
+    transform: translateY(-2px);
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(6px);
+    opacity: 0;
+  }
+}
+
+/* reduced motion: Sprout stands still (and stays fully visible) */
+@media (prefers-reduced-motion: reduce) {
+  .mascot *,
+  .bubble {
+    animation: none !important;
+  }
+}
+
+/* Sprout as a button (home screen: tap to pat) */
+.mascot-btn {
+  flex: none;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: transform var(--motion-fast);
+}
+
+.mascot-btn:active {
+  transform: scale(0.94);
 }
 
 /* ---------- Stats ---------- */
@@ -451,13 +951,196 @@ textarea.input {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
+  box-shadow: 0 2px 0 var(--color-edge);
   display: flex;
   flex-direction: column;
+  gap: 2px;
 }
 
 .stat__value {
+  font-family: var(--font-display);
   font-size: var(--font-size-xl);
   font-weight: 800;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+
+/* a small round icon on top of a stat tile (decoration: the label says what the number is) */
+.stat__icon {
+  width: 32px;
+  height: 32px;
+  margin-bottom: var(--space-1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+}
+
+.stat__icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.stat__icon--due {
+  background: #e3effc;
+  color: #1f5fa8;
+}
+
+.stat__icon--streak {
+  background: #ffeadb;
+  color: #c2410c;
+}
+
+.stat__icon--cards {
+  background: var(--color-primary-soft);
+  color: var(--color-primary-text);
+}
+
+/* a streak that is alive gets a little flicker */
+.stat__icon--alive svg {
+  transform-origin: 50% 90%;
+  animation: flame 1.4s ease-in-out infinite alternate;
+}
+
+@keyframes flame {
+  from {
+    transform: scale(1) rotate(-3deg);
+  }
+  to {
+    transform: scale(1.12) rotate(3deg);
+  }
+}
+
+/* ---------- Home: greeting card ---------- */
+.hero {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border-radius: var(--radius-lg);
+  background:
+    radial-gradient(circle at 85% 20%, rgb(255 255 255 / 70%) 0 18%, transparent 19%),
+    linear-gradient(135deg, #e9f6e1 0%, #d3ecc5 100%);
+  border: 1px solid var(--color-primary-edge);
+  box-shadow: 0 var(--edge) 0 var(--color-primary-edge);
+  overflow: hidden;
+}
+
+.hero__text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.hero__greet {
+  font-family: var(--font-display);
+  font-size: var(--font-size-xl);
+  font-weight: 800;
+  line-height: 1.15;
+}
+
+.hero__message {
+  font-weight: 600;
+  animation: page-in var(--motion-medium) ease-out both;
+}
+
+/* ---------- Deck screen: study modes as tiles ---------- */
+.modes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+}
+
+.mode {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-height: 112px;
+  padding: var(--space-3) var(--space-4) var(--space-4);
+  background: var(--color-bg);
+  border: 2px solid var(--color-border);
+  border-bottom-width: var(--edge);
+  border-bottom-color: var(--color-edge);
+  border-radius: var(--radius-lg);
+  color: var(--color-text);
+  text-decoration: none;
+  transition: transform var(--motion-fast);
+}
+
+.mode:hover {
+  transform: translateY(-2px);
+}
+
+.mode:active {
+  transform: translateY(2px);
+}
+
+.mode__icon {
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  transition: transform var(--motion-medium) var(--ease-spring);
+}
+
+.mode:hover .mode__icon {
+  transform: rotate(-8deg) scale(1.08);
+}
+
+.mode__icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+.mode__title {
+  font-family: var(--font-display);
+  font-size: var(--font-size-lg);
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.mode__desc {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  line-height: 1.3;
+}
+
+/* the main mode: the dark face of the primary button */
+.mode--main {
+  background: var(--color-ink);
+  border-color: var(--color-ink);
+  border-bottom-color: var(--color-ink-edge);
+  color: var(--color-on-ink);
+}
+
+.mode--main .mode__desc {
+  color: #d5e2cf; /* 11:1 on the dark face */
+}
+
+.mode__icon--learn {
+  background: var(--color-primary);
+  color: var(--color-ink);
+}
+
+.mode__icon--flip {
+  background: #e3effc;
+  color: #1f5fa8;
+}
+
+.mode__icon--test {
+  background: #f3e8fd;
+  color: #6b2fa3;
+}
+
+.mode__icon--match {
+  background: #ffeadb;
+  color: #c2410c;
 }
 
 .stats--two {
@@ -471,6 +1154,7 @@ textarea.input {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
+  box-shadow: 0 2px 0 var(--color-edge);
 }
 
 .chart__bars {
@@ -500,8 +1184,16 @@ textarea.input {
   width: 100%;
   max-width: 22px;
   min-height: 2px;
-  background: var(--color-primary-dark);
-  border-radius: 4px 4px 0 0;
+  background: linear-gradient(180deg, var(--color-primary), var(--color-primary-dark));
+  border-radius: 6px 6px 2px 2px;
+  transform-origin: bottom;
+  animation: bar-grow 600ms var(--ease-spring) both;
+}
+
+@keyframes bar-grow {
+  from {
+    transform: scaleY(0);
+  }
 }
 
 .chart__bar--empty {
@@ -543,7 +1235,7 @@ textarea.input {
   margin-inline: auto;
   z-index: 20;
   background: var(--color-bg);
-  box-shadow: 0 6px 20px rgba(13, 20, 12, 0.18);
+  box-shadow: var(--shadow-float);
 }
 
 .banner p {
@@ -570,8 +1262,24 @@ textarea.input {
   box-shadow: 0 10px 40px rgb(0 0 0 / 25%);
 }
 
+.dialog[open] {
+  animation: dialog-in var(--motion-medium) var(--ease-spring);
+}
+
 .dialog::backdrop {
-  background: rgb(0 0 0 / 45%);
+  background: rgb(13 20 12 / 45%);
+  backdrop-filter: blur(2px);
+}
+
+@keyframes dialog-in {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 .dialog__actions {
@@ -607,14 +1315,105 @@ textarea.input {
   top: 0;
   z-index: 5;
   padding-top: env(safe-area-inset-top);
-  background: var(--color-bg);
+  background: rgb(244 248 239 / 92%);
+  backdrop-filter: blur(10px);
 }
 
+/* close button · progress bar · Sprout */
 .study__bar {
   display: flex;
+  align-items: center;
+  gap: var(--space-2);
   max-width: var(--content-width);
   margin: 0 auto;
-  padding: var(--space-1) var(--space-2) 0;
+  padding: var(--space-2) var(--space-3);
+}
+
+.study__bar .icon-btn {
+  flex: none;
+  background: var(--color-surface);
+  box-shadow: var(--shadow-soft);
+  transition: transform var(--motion-fast);
+}
+
+.study__bar .icon-btn:active {
+  transform: scale(0.92);
+}
+
+/* ✓ ≈ ✗ in the list of test answers (the text next to it says the same for screen readers) */
+.result-mark {
+  flex: none;
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-pill);
+  color: var(--color-on-ink);
+  font-weight: 800;
+}
+
+.result-mark--correct {
+  background: var(--color-correct);
+}
+
+.result-mark--almost {
+  background: var(--color-almost);
+}
+
+.result-mark--wrong {
+  background: var(--color-wrong);
+}
+
+.buddy {
+  position: relative;
+  flex: none;
+  width: 52px;
+  height: 52px;
+}
+
+/* what Sprout says during a session ("3 in a row!"), a small bubble below it */
+.buddy__say {
+  position: absolute;
+  top: calc(100% + 2px);
+  right: 0;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-pill);
+  background: var(--color-ink);
+  color: var(--color-on-ink);
+  font-family: var(--font-display);
+  font-size: var(--font-size-sm);
+  font-weight: 800;
+  white-space: nowrap;
+  box-shadow: var(--shadow-float);
+  animation: say 1800ms ease-in-out both;
+  pointer-events: none;
+}
+
+@keyframes say {
+  0% {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.8);
+  }
+  12% {
+    opacity: 1;
+    transform: none;
+  }
+  85% {
+    opacity: 1;
+    transform: none;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* without motion the bubble just stays until Sprout says something else */
+  .buddy__say {
+    animation: none;
+  }
 }
 
 /* study screens have no bottom navigation, so less space is reserved at the bottom */
@@ -633,6 +1432,9 @@ textarea.input {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
+  box-shadow:
+    0 var(--edge) 0 var(--color-edge),
+    var(--shadow-soft);
   text-align: center;
 }
 
@@ -642,8 +1444,10 @@ textarea.input {
   justify-content: center;
   gap: var(--space-2);
   flex-wrap: wrap;
-  font-size: 2rem;
+  font-family: var(--font-display);
+  font-size: 2.25rem;
   font-weight: 800;
+  letter-spacing: -0.01em;
   overflow-wrap: anywhere;
 }
 
@@ -679,9 +1483,99 @@ textarea.input {
 
 .headline {
   text-align: center;
+  font-family: var(--font-display);
   font-size: 3rem;
   font-weight: 800;
   line-height: 1;
+  animation: pop-in 600ms var(--ease-spring) both;
+}
+
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---------- Result: a ring around the score ---------- */
+.score {
+  position: relative;
+  width: 168px;
+  height: 168px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.score__ring {
+  position: absolute;
+  inset: 0;
+  transform: rotate(-90deg);
+}
+
+.score__track {
+  stroke: var(--color-surface-strong);
+}
+
+.score__value {
+  stroke: var(--color-primary-dark);
+  stroke-linecap: round;
+  transition: stroke-dashoffset 900ms ease-out;
+  animation: ring-fill 1100ms ease-out both;
+}
+
+@keyframes ring-fill {
+  from {
+    stroke-dashoffset: var(--ring-length);
+  }
+}
+
+.score .headline {
+  font-size: 2.75rem;
+}
+
+/* ---------- Confetti (decoration for a great result) ---------- */
+.confetti {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 30;
+}
+
+.confetti__piece {
+  position: absolute;
+  top: -16px;
+  width: 9px;
+  height: 14px;
+  border-radius: 2px;
+  opacity: 0;
+  animation: confetti-fall var(--fall, 2.2s) ease-in var(--delay, 0s) both;
+}
+
+@keyframes confetti-fall {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) rotate(0);
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--drift, 0), 105vh) rotate(var(--spin, 540deg));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .confetti {
+    display: none;
+  }
 }
 
 .flip {
@@ -701,21 +1595,50 @@ textarea.input {
   padding: var(--space-5) var(--space-4);
   background: var(--color-bg);
   border: 2px solid var(--color-border);
+  border-bottom-width: var(--edge);
+  border-bottom-color: var(--color-edge);
   border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
   cursor: pointer;
   text-align: center;
-  animation: card-in var(--motion-fast) ease-out;
+  /* a different animation name for each side restarts the turn whenever the side changes */
+  animation: turn-front 420ms var(--ease-spring);
 }
 
 .flip-card--back {
   background: var(--color-primary-soft);
   border-color: var(--color-primary);
+  border-bottom-color: var(--color-primary-dark);
+  animation-name: turn-back;
 }
 
 .flip-card__text {
-  font-size: 2rem;
+  font-family: var(--font-display);
+  font-size: 2.25rem;
   font-weight: 800;
   overflow-wrap: anywhere;
+}
+
+@keyframes turn-front {
+  from {
+    transform: perspective(800px) rotateY(-80deg);
+    opacity: 0.4;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+@keyframes turn-back {
+  from {
+    transform: perspective(800px) rotateY(80deg);
+    opacity: 0.4;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
 }
 
 .flip-answer {
@@ -752,11 +1675,13 @@ textarea.input {
 }
 
 /* Segmented control (two or three exclusive options side by side). */
+/* a row of pills on a soft track; the chosen one is a white raised pill (shape + weight, not colour alone) */
 .seg {
   display: flex;
-  border: 2px solid var(--color-border);
+  gap: var(--space-1);
+  padding: var(--space-1);
+  background: var(--color-surface-strong);
   border-radius: var(--radius-md);
-  overflow: hidden;
 }
 
 .seg__btn {
@@ -764,20 +1689,25 @@ textarea.input {
   min-height: 44px;
   padding: 0 var(--space-3);
   border: 0;
-  background: var(--color-bg);
-  font-weight: 600;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--color-text-muted);
+  font-weight: 700;
   font-size: var(--font-size-sm);
   cursor: pointer;
-}
-
-.seg__btn + .seg__btn {
-  border-left: 2px solid var(--color-border);
+  transition:
+    background var(--motion-fast),
+    box-shadow var(--motion-fast),
+    color var(--motion-fast);
 }
 
 .seg__btn[aria-checked='true'] {
-  background: var(--color-primary-soft);
+  background: var(--color-bg);
   color: var(--color-primary-text);
   font-weight: 800;
+  box-shadow:
+    0 2px 0 var(--color-edge),
+    var(--shadow-soft);
 }
 
 /* ---------- Star, split list rows ---------- */
@@ -788,6 +1718,19 @@ textarea.input {
 
 .star--on {
   color: var(--color-almost);
+  animation: star-pop 420ms var(--ease-spring);
+}
+
+@keyframes star-pop {
+  0% {
+    transform: scale(0.6) rotate(-30deg);
+  }
+  60% {
+    transform: scale(1.25) rotate(8deg);
+  }
+  100% {
+    transform: none;
+  }
 }
 
 /* A list row with a link and a button side by side (a button cannot sit inside a link). */
@@ -851,32 +1794,59 @@ textarea.input {
   gap: var(--space-2);
   background: var(--color-bg);
   border: 2px solid var(--color-border);
-  border-bottom-width: 4px;
+  border-bottom-width: var(--edge);
+  border-bottom-color: var(--color-edge);
   border-radius: var(--radius-md);
   font: inherit;
   font-size: var(--font-size-md);
+  font-weight: 600;
   text-align: center;
   overflow-wrap: anywhere;
   cursor: pointer;
   color: var(--color-text);
+  transition:
+    transform var(--motion-fast) var(--ease-spring),
+    background var(--motion-fast),
+    border-color var(--motion-fast);
+}
+
+.tile:active:not(:disabled) {
+  transform: scale(0.96);
 }
 
 .tile[aria-pressed='true'] {
   border-color: var(--color-primary-dark);
   background: var(--color-primary-soft);
   font-weight: 800;
+  transform: translateY(-2px);
 }
 
 .tile--matched {
   border-style: dashed;
-  background: var(--color-surface);
+  background: var(--color-surface-strong);
   color: var(--color-text-muted);
   cursor: default;
+  animation: matched 420ms var(--ease-spring);
 }
 
 .tile--wrong {
   border-color: var(--color-wrong);
+  background: var(--color-wrong-soft);
   animation: tile-shake 300ms ease-in-out;
+}
+
+@keyframes matched {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.06);
+    background: var(--color-correct-soft);
+    border-color: var(--color-correct);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 .tile__badge {

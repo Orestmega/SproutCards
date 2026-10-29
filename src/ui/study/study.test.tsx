@@ -583,7 +583,9 @@ describe('Match game', () => {
     // a wrong pair first: a mistake, both tiles marked
     await user.click(tile('apple'));
     await user.click(tile('вода'));
-    expect(screen.getByRole('status')).toHaveTextContent('Mistakes: 1');
+    // two live regions on screen: the mistake counter and Sprout in the top bar
+    const counter = screen.getAllByRole('status').find((el) => /Mistakes/.test(el.textContent));
+    expect(counter).toHaveTextContent('Mistakes: 1');
     expect(screen.getAllByText('not a pair')).toHaveLength(2);
 
     for (const [term, translation] of WORDS) {
@@ -737,5 +739,110 @@ describe('Deck screen study panel and speech', () => {
       Reflect.deleteProperty(window, 'speechSynthesis');
       Reflect.deleteProperty(window, 'SpeechSynthesisUtterance');
     }
+  });
+});
+
+/** The mood of Sprout in the study top bar. */
+const buddyMood = () => document.querySelector('.buddy .mascot')?.getAttribute('data-mood');
+
+describe('Sprout during study', () => {
+  it('Learn: happy after a right answer, "oops" after a wrong one, cheers 3 in a row', async () => {
+    const user = userEvent.setup();
+    const { deck } = await seedDeck();
+    open(`/decks/${deck.id}/learn`);
+    await screen.findByText('Choose the translation');
+    expect(buddyMood()).toBe('normal');
+
+    await answerCurrent(user, false);
+    expect(buddyMood()).toBe('oops');
+    await user.click(await screen.findByRole('button', { name: 'Continue' }));
+    expect(buddyMood()).toBe('normal');
+
+    await answerCurrent(user);
+    expect(buddyMood()).toBe('happy');
+    await user.click(await screen.findByRole('button', { name: 'Continue' }));
+    await answerCurrent(user);
+    await user.click(await screen.findByRole('button', { name: 'Continue' }));
+    expect(screen.queryByText('3 in a row!')).not.toBeInTheDocument();
+    await answerCurrent(user);
+    expect(buddyMood()).toBe('celebrate');
+    // said in the live region of the top bar, so screen readers hear it too
+    expect(screen.getByText('3 in a row!').closest('[role="status"]')).not.toBeNull();
+  });
+
+  it('Learn: an honest "I don\'t know" gets encouragement, not a sad face', async () => {
+    const user = userEvent.setup();
+    const { deck } = await seedDeck();
+    open(`/decks/${deck.id}/learn`);
+    await screen.findByText('Choose the translation');
+    await user.click(screen.getByRole('button', { name: 'I don’t know' }));
+    expect(buddyMood()).toBe('encouraging');
+  });
+
+  it('Learn: a perfect session ends with a celebration and a score ring', async () => {
+    const user = userEvent.setup();
+    const { deck } = await seedDeck();
+    open(`/decks/${deck.id}/learn`);
+    await screen.findByText('Choose the translation');
+    await playLearnPerfectly(user);
+    expect(await screen.findByText('100%')).toBeInTheDocument();
+    expect(document.querySelector('.score')).not.toBeNull();
+    expect(document.querySelector('.confetti')).toHaveAttribute('aria-hidden', 'true');
+    expect(buddyMood()).toBe('celebrate');
+  });
+
+  it('Quiz: Sprout only thinks along (no hint about right or wrong), then shows the grade', async () => {
+    const user = userEvent.setup();
+    const { deck } = await seedDeck();
+    open(`/decks/${deck.id}/test`);
+    await startQuiz(user, ['Multiple choice']);
+    await screen.findByText('Question 1 of 3');
+    expect(buddyMood()).toBe('thinking');
+    await answerQuizQuestion(user, false, false); // a wrong answer
+    expect(buddyMood()).toBe('thinking');
+    await answerQuizQuestion(user, false, false);
+    await answerQuizQuestion(user, true, false);
+    expect(await screen.findByText('0%')).toBeInTheDocument();
+    expect(buddyMood()).toBe('encouraging');
+    expect(document.querySelector('.confetti')).toBeNull(); // no party for 0 %
+  });
+
+  it('Flashcards: happy on "know", encouraging on "don\'t know"', async () => {
+    const user = userEvent.setup();
+    const { deck } = await seedDeck();
+    open(`/decks/${deck.id}/flip`);
+    await user.click(await screen.findByRole('button', { name: /Show answer/ }));
+    await user.click(screen.getByRole('button', { name: /^✓/ }));
+    expect(buddyMood()).toBe('happy');
+    await user.click(await screen.findByRole('button', { name: /Show answer/ }));
+    await user.click(screen.getByRole('button', { name: /^✗/ }));
+    expect(buddyMood()).toBe('encouraging');
+  });
+
+  it('Match: happy on a pair, "oops" on a wrong one', async () => {
+    const user = userEvent.setup();
+    const { deck } = await seedDeck();
+    open(`/decks/${deck.id}/match`);
+    await screen.findByText(/Tap a word, then its translation/);
+    const tile = (text: string) => screen.getByRole('button', { name: new RegExp(`^${text}`) });
+    await user.click(tile('apple'));
+    await user.click(tile('вода'));
+    expect(buddyMood()).toBe('oops');
+    await user.click(tile('apple'));
+    await user.click(tile('яблуко'));
+    expect(buddyMood()).toBe('happy');
+  });
+});
+
+describe('Deck screen: mode tiles', () => {
+  it('each mode is a link named by the mode, with a short description', async () => {
+    const { deck } = await seedDeck();
+    open(`/decks/${deck.id}`);
+    expect(await screen.findByRole('link', { name: 'Learn' })).toHaveAccessibleDescription(
+      'Choose, then type the answer',
+    );
+    expect(screen.getByRole('link', { name: 'Match' })).toHaveAccessibleDescription(
+      'Pair them against the clock',
+    );
   });
 });

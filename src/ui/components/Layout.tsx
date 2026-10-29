@@ -48,7 +48,9 @@ export function AppLayout() {
         <div className="nav__inner">
           {NAV.map((item) => (
             <NavLink key={item.to} to={item.to} end={item.end} className="nav__link">
-              <NavIcon path={ICONS[item.icon]} />
+              <span className="nav__pill">
+                <NavIcon path={ICONS[item.icon]} />
+              </span>
               <span>{t(item.label)}</span>
             </NavLink>
           ))}

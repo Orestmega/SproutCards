@@ -8,6 +8,7 @@ import {
   quizToLogs,
 } from '../../core/quiz';
 import type { Quiz, QuizAnswer, QuizResult, QuizUnit } from '../../core/quiz';
+import { moodForScore } from '../../core/cheer';
 import type { CardSide } from '../../core/types';
 import { useI18n } from '../../i18n';
 import { useApp } from '../AppProviders';
@@ -170,6 +171,12 @@ function QuizRun({
     [chrome, index, result, quiz],
   );
 
+  // A test gives no feedback until the end, so Sprout only thinks along; at the end it shows the grade.
+  const percent = result?.percent ?? null;
+  useEffect(() => {
+    chrome.react(percent === null ? 'thinking' : moodForScore(percent / 100));
+  }, [chrome, percent]);
+
   useEffect(() => {
     chrome.setOnClose(() => {
       if (result || answers.length === 0) navigate(`/decks/${deck.id}`);
@@ -201,7 +208,8 @@ function QuizRun({
     return (
       <SummaryView
         deckId={deck.id}
-        mood={result.grade === 'excellent' || result.grade === 'good' ? 'happy' : 'encouraging'}
+        mood={moodForScore(result.percent / 100)}
+        score={result.percent / 100}
         message={t(`quiz.grade.${result.grade}`)}
         headline={`${result.percent}%`}
         stats={[
@@ -227,7 +235,7 @@ function QuizRun({
             <ul className="list">
               {result.items.map((item, i) => (
                 <li key={i} className="list-row">
-                  <span aria-hidden="true">
+                  <span className={`result-mark result-mark--${item.result}`} aria-hidden="true">
                     {item.result === 'correct' ? '✓' : item.result === 'almost' ? '≈' : '✗'}
                   </span>
                   <span className="list-row__main">

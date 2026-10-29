@@ -1,7 +1,9 @@
 import { createContext, useContext, useMemo, useState } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
+import type { MascotMood } from '../../core/cheer';
 import type { MessageKey } from '../../i18n';
 import { useI18n } from '../../i18n';
+import { Mascot } from '../components/Mascot';
 import { ProgressBar } from '../components/ProgressBar';
 
 interface StudyChrome {
@@ -9,6 +11,11 @@ interface StudyChrome {
   setProgress: (value: number) => void;
   /** Close button handler; set by the active screen (it may need to save first). */
   setOnClose: (handler: (() => void) | null) => void;
+  /**
+   * Sprout in the top bar reacts: a new mood with its short animation, and optionally a few words
+   * ("3 in a row!") that are also announced to screen readers.
+   */
+  react: (mood: MascotMood, say?: string) => void;
 }
 
 const ChromeContext = createContext<StudyChrome | null>(null);
@@ -19,7 +26,6 @@ export function useStudyChrome(): StudyChrome {
   return value;
 }
 
-/** Focused frame for study screens: progress bar on top, a close button, no bottom navigation. */
 const MODE_TITLES: Record<string, MessageKey> = {
   learn: 'study.learn',
   flip: 'study.flip',
@@ -27,11 +33,20 @@ const MODE_TITLES: Record<string, MessageKey> = {
   match: 'study.match',
 };
 
+interface Buddy {
+  mood: MascotMood;
+  /** Grows with every reaction, so the same mood twice still replays its animation. */
+  reaction: number;
+  say: string | null;
+}
+
+/** Focused frame for study screens: close button, progress bar and Sprout on top, no bottom navigation. */
 export function StudyLayout() {
   const { t } = useI18n();
   const mode = useLocation().pathname.split('/').pop() ?? '';
   const [progress, setProgress] = useState(0);
   const [onClose, setOnClose] = useState<(() => void) | null>(null);
+  const [buddy, setBuddy] = useState<Buddy>({ mood: 'normal', reaction: 0, say: null });
 
   // Stable object: screens list it in effect dependencies, a new one every render would loop.
   const chrome = useMemo<StudyChrome>(
@@ -39,6 +54,7 @@ export function StudyLayout() {
       setProgress,
       // wrap in a function: `setState(fn)` would call `fn` as an updater
       setOnClose: (handler) => setOnClose(() => handler),
+      react: (mood, say) => setBuddy((b) => ({ mood, reaction: b.reaction + 1, say: say ?? null })),
     }),
     [],
   );
@@ -47,7 +63,6 @@ export function StudyLayout() {
     <ChromeContext.Provider value={chrome}>
       <div className="app study">
         <header className="study__top">
-          <ProgressBar value={progress} label={t('study.progress')} top />
           <div className="study__bar">
             <button
               type="button"
@@ -57,6 +72,16 @@ export function StudyLayout() {
             >
               <span aria-hidden="true">✕</span>
             </button>
+            <ProgressBar value={progress} label={t('study.progress')} top />
+            {/* the live region exists from the start, so what Sprout says is announced */}
+            <div className="buddy" role="status">
+              <Mascot mood={buddy.mood} size={52} reaction={buddy.reaction} />
+              {buddy.say && (
+                <span className="buddy__say" key={buddy.reaction}>
+                  {buddy.say}
+                </span>
+              )}
+            </div>
           </div>
         </header>
         <main className="app__main" id="main">

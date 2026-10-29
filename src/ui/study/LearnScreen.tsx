@@ -11,6 +11,7 @@ import {
   summarize,
 } from '../../core/learn';
 import type { Feedback, LearnState, Question } from '../../core/learn';
+import { moodForScore, reactTo } from '../../core/cheer';
 import { createFixedIntervalScheduler } from '../../core/scheduler';
 import type { CardSide, Direction } from '../../core/types';
 import { useI18n } from '../../i18n';
@@ -70,6 +71,7 @@ function LearnSession({ data, onRestart }: { data: StudyData; onRestart: () => v
   const [picked, setPicked] = useState<string | null>(null);
   const [saveState, setSaveState] = useState<SaveState>('saving');
   const [confirmLeave, setConfirmLeave] = useState(false);
+  const [combo, setCombo] = useState(0); // correct answers in a row, for Sprout's cheers
   const saved = useRef(false);
 
   const finished = !answered && isFinished(state);
@@ -101,6 +103,12 @@ function LearnSession({ data, onRestart }: { data: StudyData; onRestart: () => v
 
   useEffect(() => chrome.setProgress(progressFraction(state)), [chrome, state]);
 
+  // at the end Sprout in the top bar shows the same mood as the result screen
+  const accuracy = finished ? summarize(state).accuracy : null;
+  useEffect(() => {
+    if (accuracy !== null) chrome.react(moodForScore(accuracy));
+  }, [chrome, accuracy]);
+
   // The close button: leave at once if nothing was answered or the session is over, else ask first.
   useEffect(() => {
     chrome.setOnClose(() => {
@@ -116,8 +124,14 @@ function LearnSession({ data, onRestart }: { data: StudyData; onRestart: () => v
       const result = submitAnswer(state, input, Date.now());
       setState(result.state);
       setAnswered({ question: state.current, input, feedback: result.feedback });
+      const reaction = reactTo(combo, result.feedback.result, input === null);
+      setCombo(reaction.combo);
+      chrome.react(
+        reaction.mood,
+        reaction.milestone ? t('buddy.combo', { count: reaction.combo }) : undefined,
+      );
     },
-    [state, answered],
+    [state, answered, combo, chrome, t],
   );
 
   const pickOption = useCallback(
@@ -139,11 +153,11 @@ function LearnSession({ data, onRestart }: { data: StudyData; onRestart: () => v
   if (finished) {
     const summary = summarize(state);
     const weakIds = new Set(summary.outcomes.filter((o) => o.mistakes > 0).map((o) => o.cardId));
-    const mood = summary.accuracy >= 0.7 ? 'happy' : 'encouraging';
     return (
       <SummaryView
         deckId={deck.id}
-        mood={mood}
+        mood={moodForScore(summary.accuracy)}
+        score={summary.accuracy}
         message={t(summary.accuracy >= 0.7 ? 'learn.summaryGood' : 'learn.summaryKeepGoing')}
         headline={`${Math.round(summary.accuracy * 100)}%`}
         stats={[
@@ -220,6 +234,7 @@ function LearnSession({ data, onRestart }: { data: StudyData; onRestart: () => v
           onContinue={() => {
             setAnswered(null);
             setPicked(null);
+            chrome.react('normal');
           }}
         />
       )}

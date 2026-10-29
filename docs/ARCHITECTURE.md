@@ -217,6 +217,14 @@ database created at version 1 with a version-2 class and checks the data survive
 - Destructive actions (delete deck/card) use `ConfirmDialog` (native `<dialog>`). Forms show errors next to
   the field and keep what the user typed; a failed save shows a message and changes nothing.
 - Design tokens are CSS custom properties in `src/styles/tokens.css`; see `docs/DESIGN.md`.
+- **Sprout reacts** (`core/cheer.ts`, pure, tested): `reactTo(combo, outcome, skipped)` gives the mood after an
+  answer and the "in a row" count (a right answer adds one, "almost" keeps it, a wrong one resets; cheers at 3,
+  5, 10, …); `moodForScore` picks the result mood (celebrate from 90 %, happy from 70 %, else encouraging);
+  `dayPart` picks the home greeting. `StudyLayout` shows Sprout in the top bar and gives screens
+  `chrome.react(mood, say?)`; what Sprout says goes into a `role="status"` region that exists from the start.
+  Learn reacts per answer, Flashcards per "know / don't know", Match per pair; a test shows only `thinking`
+  until the end, so Sprout never hints whether an answer was right. The animation is pure CSS: a new
+  `reaction` number re-mounts the moving SVG group, which replays its keyframes.
 
 ## Testing
 
@@ -243,5 +251,5 @@ The build in `dist/` is plain static files with relative paths: any static host 
 server, a database or an API key. `public/_headers` (Cloudflare Pages, Netlify) sets security headers
 (Content-Security-Policy locked to the app's own origin: no third-party requests exist), long caching for hashed
 files and `no-cache` for `index.html`, `sw.js` and the manifest (otherwise users could be stuck on an old version).
-GitHub Pages cannot set headers; the app works there without them. `.github/workflows/deploy-pages.yml` can publish
-to GitHub Pages but runs only when started by hand. Walkthrough and hosting comparison: `docs/IPHONE_TEST.md`.
+GitHub Pages cannot set headers; the app works there without them. `.github/workflows/deploy-pages.yml` publishes
+to GitHub Pages after every push to `main` (and can be started by hand). Walkthrough and hosting comparison: `docs/IPHONE_TEST.md`.

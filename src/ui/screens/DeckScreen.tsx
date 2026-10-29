@@ -136,7 +136,9 @@ export function DeckScreen() {
                   {!card.reviewed && (
                     <span className="badge badge--warn">{t('card.unchecked')}</span>
                   )}
-                  <span aria-hidden="true">›</span>
+                  <span className="chevron" aria-hidden="true">
+                    ›
+                  </span>
                 </Link>
                 <StarButton cardId={card.id} term={card.term} starred={card.starred === true} />
               </li>

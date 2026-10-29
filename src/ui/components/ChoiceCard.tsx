@@ -31,7 +31,11 @@ export function ChoiceCard({
       disabled={disabled}
     >
       <span style={{ flex: 1 }}>{children}</span>
-      {mark && <span aria-hidden="true">{mark}</span>}
+      {mark && (
+        <span className="choice__mark" aria-hidden="true">
+          {mark}
+        </span>
+      )}
     </button>
   );
 }

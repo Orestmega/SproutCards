@@ -13,6 +13,7 @@ import {
   summarizeFlip,
 } from '../../core/flip';
 import type { FlipState } from '../../core/flip';
+import { moodForScore } from '../../core/cheer';
 import { createFixedIntervalScheduler } from '../../core/scheduler';
 import { selectSessionCards } from '../../core/selection';
 import { useI18n } from '../../i18n';
@@ -100,11 +101,15 @@ function FlipSession({ data, onRestart }: { data: StudyData; onRestart: () => vo
     return () => chrome.setOnClose(null);
   }, [chrome, finished, state.results.length, navigate, deck.id]);
 
-  const answer = useCallback((known: boolean) => {
-    const now = Date.now(); // read outside the updater so the updater stays pure
-    setState((s) => answerFlip(s, known, now));
-    setFlipped(false);
-  }, []);
+  const answer = useCallback(
+    (known: boolean) => {
+      const now = Date.now(); // read outside the updater so the updater stays pure
+      setState((s) => answerFlip(s, known, now));
+      setFlipped(false);
+      chrome.react(known ? 'happy' : 'encouraging');
+    },
+    [chrome],
+  );
 
   // Arrow keys: ← "don't know", → "know" (only once the card is turned over).
   useEffect(() => {
@@ -130,7 +135,7 @@ function FlipSession({ data, onRestart }: { data: StudyData; onRestart: () => vo
     return (
       <>
         <h2 className="visually-hidden">{t('flip.roundEnd.title', { round: state.round })}</h2>
-        <MascotBubble mood="encouraging">
+        <MascotBubble mood="encouraging" size={96}>
           <strong>{t('flip.roundEnd.title', { round: state.round })}</strong>
           <br />
           {t('flip.roundEnd.counts', {
@@ -153,7 +158,7 @@ function FlipSession({ data, onRestart }: { data: StudyData; onRestart: () => vo
     return (
       <SummaryView
         deckId={deck.id}
-        mood={ratio >= 0.7 ? 'happy' : 'encouraging'}
+        mood={moodForScore(ratio)}
         message={t(ratio >= 0.7 ? 'learn.summaryGood' : 'learn.summaryKeepGoing')}
         stats={[
           { label: t('flip.statKnown'), value: summary.known },
