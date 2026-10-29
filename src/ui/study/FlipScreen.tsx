@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   answerFlip,
+  continueFlip,
   currentFlipCard,
   flipFace,
   flipProgress,
@@ -19,6 +20,8 @@ import { useApp } from '../AppProviders';
 import { Button } from '../components/Button';
 import { ConfirmDialog } from '../components/ConfirmDialog';
 import { SpeakButton } from '../components/SpeakButton';
+import { StarButton } from '../components/StarButton';
+import { MascotBubble } from '../components/Mascot';
 import { useStudyChrome } from './StudyLayout';
 import { SummaryView } from './SummaryView';
 import type { SaveState } from './SummaryView';
@@ -52,7 +55,7 @@ export function FlipScreen() {
 }
 
 function FlipSession({ data, onRestart }: { data: StudyData; onRestart: () => void }) {
-  const { t } = useI18n();
+  const { t, tp } = useI18n();
   const { repo } = useApp();
   const chrome = useStudyChrome();
   const navigate = useNavigate();
@@ -122,10 +125,31 @@ function FlipSession({ data, onRestart }: { data: StudyData; onRestart: () => vo
     navigate(`/decks/${deck.id}`);
   }
 
+  if (state.phase === 'roundEnd') {
+    const summary = summarizeFlip(state);
+    return (
+      <>
+        <h2 className="visually-hidden">{t('flip.roundEnd.title', { round: state.round })}</h2>
+        <MascotBubble mood="encouraging">
+          <strong>{t('flip.roundEnd.title', { round: state.round })}</strong>
+          <br />
+          {t('flip.roundEnd.counts', {
+            known: summary.known,
+            total: summary.total,
+            learning: summary.stillLearning,
+          })}
+        </MascotBubble>
+        <Button block onClick={() => setState((s) => continueFlip(s))} autoFocus>
+          {tp('flip.roundEnd.continue', state.missed.length)}
+        </Button>
+      </>
+    );
+  }
+
   if (finished) {
     const summary = summarizeFlip(state);
-    const weak = state.cards.filter((c) => summary.unknownCardIds.includes(c.id));
-    const ratio = summary.total === 0 ? 1 : summary.known / summary.total;
+    const weak = state.cards.filter((c) => summary.struggledCardIds.includes(c.id));
+    const ratio = summary.total === 0 ? 1 : 1 - summary.struggledCardIds.length / summary.total;
     return (
       <SummaryView
         deckId={deck.id}
@@ -133,7 +157,8 @@ function FlipSession({ data, onRestart }: { data: StudyData; onRestart: () => vo
         message={t(ratio >= 0.7 ? 'learn.summaryGood' : 'learn.summaryKeepGoing')}
         stats={[
           { label: t('flip.statKnown'), value: summary.known },
-          { label: t('flip.statUnknown'), value: summary.unknown },
+          { label: t('flip.statRounds'), value: summary.rounds },
+          { label: t('flip.statStruggled'), value: summary.struggledCardIds.length },
         ]}
         weak={weak}
         saveState={saveState}
@@ -155,7 +180,13 @@ function FlipSession({ data, onRestart }: { data: StudyData; onRestart: () => vo
   return (
     <>
       <p className="muted" aria-live="polite">
-        {t('flip.counter', { n: state.results.length + 1, total: state.cards.length })}
+        {state.round === 1
+          ? t('flip.counter', { n: state.position + 1, total: state.order.length })
+          : t('flip.counterRound', {
+              round: state.round,
+              n: state.position + 1,
+              total: state.order.length,
+            })}
       </p>
 
       <div className="flip">
@@ -175,6 +206,7 @@ function FlipSession({ data, onRestart }: { data: StudyData; onRestart: () => vo
           </span>
         </button>
         <SpeakButton text={face.front} lang={frontLang} />
+        <StarButton cardId={card.id} term={card.term} starred={card.starred === true} />
       </div>
 
       {flipped && (

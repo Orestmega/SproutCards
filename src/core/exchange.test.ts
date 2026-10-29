@@ -267,3 +267,26 @@ describe('remapBundleIds', () => {
     expect(JSON.stringify(b)).toBe(snapshot);
   });
 });
+
+describe('starred cards', () => {
+  it('a star survives export and import; an unstarred card stays without the field', () => {
+    const original = bundle();
+    original.cards[0] = { ...original.cards[0]!, starred: true };
+    const parsed = parseExchange(serializeDeck(original), NOW);
+    if (!parsed.ok) throw new Error('should parse');
+    expect(parsed.value[0]!.cards[0]!.starred).toBe(true);
+    expect('starred' in parsed.value[0]!.cards[1]!).toBe(false);
+  });
+
+  it('files from before stars existed still import', () => {
+    const parsed = parseExchange(serializeDeck(bundle()), NOW);
+    expect(parsed.ok).toBe(true);
+  });
+
+  it('a star that is not true or false is refused', () => {
+    const json = JSON.parse(serializeDeck(bundle()));
+    json.cards[0].starred = 'yes';
+    const parsed = parseExchange(JSON.stringify(json), NOW);
+    expect(parsed.ok).toBe(false);
+  });
+});

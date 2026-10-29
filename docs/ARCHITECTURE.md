@@ -65,13 +65,33 @@ A pure state machine: `startSession` → repeated `submitAnswer` → `summarize`
   session) are not scheduled.
 - `selection.ts` picks due and new cards for a session.
 
-## Other study modes (`flip.ts`, `quiz.ts`, `voice.ts`)
+## Other study modes (`flip.ts`, `quiz.ts`, `match.ts`, `voice.ts`)
 
-- **Flashcards** (`flip.ts`): one pass, each card once. "Know" is scheduled as `correct`, "don't know" as
-  `wrong`, immediately and per card (an interrupted session keeps what was answered).
-- **Quiz** (`quiz.ts`): up to 20 questions built with the same `buildExercise` as Learn, every third one
-  typed, the rest multiple choice. No feedback until the end. Points: correct 1, `almost` 0.5, wrong 0;
-  grade thresholds 90 / 70 / 50 %. A quiz never changes review dates; it only writes the review log.
+- **Flashcards** (`flip.ts`): **rounds until everything is known.** Each card is shown once per round; at the end
+  of a round the cards marked "don't know" become the next round (new order), and so on until none is left
+  (state `phase`: `card` / `roundEnd` / `done`; `continueFlip` starts the next round). The progress bar is the share of
+  cards whose latest answer is "know". Scheduling is **once per card** at the end (or on leaving): a card that was
+  ever marked "don't know" counts as `wrong`, otherwise `correct` (same rule as Learn). Every answer of every
+  round goes to the review log. Round end screen: "You know 12 of 20. Still learning: 8".
+- **Quiz / test** (`quiz.ts`, screens `QuizSetup`, `QuizScreen`, `quizParts.tsx`): a settings screen first (number of
+  questions 5 / 10 / 20 / all; kinds of questions on or off, at least one; remembered in `localStorage`). Four
+  kinds: **multiple choice** and **typing** (`buildExercise`, as in Learn), **true/false** ("is this a correct
+  pair?"; the false pairing takes the answer of another card) and **matching** (up to 5 pairs on one screen;
+  tap an item on the left, then its pair; linked pairs show the same number on both tiles). Cards are dealt to
+  the enabled kinds in turn; matching takes a block of cards first (at least a pair; texts that clash are asked
+  another way). Every card is one graded item (a matching screen with 4 pairs = 4 items). No feedback until the
+  end. Points: correct 1, `almost` 0.5, wrong 0; grades at 90 / 70 / 50 %. **Retake the mistakes:** `missedCardIds`
+  (every card not fully right) feeds a new quiz of only those words (`QuizConfig.restrictTo`; wrong options still
+  come from the whole deck), repeatable until 100 %. A quiz never changes review dates; it only writes the log.
+- **Match** (`match.ts`, `MatchScreen`): a timed game on a board of up to 6 pairs (word tile + translation tile,
+  clashing texts skipped). Tap two tiles; a wrong pair is a mistake and is marked ✗ for a moment; the clock starts
+  at the first tap and stops at the last pair. Result: time, mistakes, best time (per deck and direction, in
+  `localStorage`). Only the review log is written (a card with no wrong try = `correct`); the schedule is not
+  changed.
+- **Stars** (`Card.starred`, `repo.setStarred`, `StarButton`): mark hard words on the deck list or while studying
+  flashcards. "Only starred cards" in the study panel adds `?starred=1`; `StudyGate` then filters the loaded
+  cards, so Learn, flashcards, test and Match all work on the starred ones only. The field is optional (no
+  migration) and part of the export/import format (`starred`, only when true).
 - **Session cards** (`selection.ts`): due cards (most overdue first) then new cards, at most
   `SESSION_SIZE` = 20 per session. New cards are limited by the `newCardsPerDay` setting minus the number of
   cards first studied today (`Progress.firstSeenAt`, counted across decks and directions).

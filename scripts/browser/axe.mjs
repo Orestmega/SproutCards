@@ -28,6 +28,7 @@ const routes = [
   `${deck}/learn`,
   `${deck}/flip`,
   `${deck}/test`,
+  `${deck}/match`,
 ];
 let violations = 0;
 for (const route of routes) {

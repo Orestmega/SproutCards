@@ -30,6 +30,9 @@ const FlipScreen = lazy(() =>
 const LearnScreen = lazy(() =>
   import('./study/LearnScreen').then((m) => ({ default: m.LearnScreen })),
 );
+const MatchScreen = lazy(() =>
+  import('./study/MatchScreen').then((m) => ({ default: m.MatchScreen })),
+);
 const QuizScreen = lazy(() =>
   import('./study/QuizScreen').then((m) => ({ default: m.QuizScreen })),
 );
@@ -59,6 +62,7 @@ export function AppRoutes() {
           <Route path="decks/:deckId/learn" element={<LearnScreen />} />
           <Route path="decks/:deckId/flip" element={<FlipScreen />} />
           <Route path="decks/:deckId/test" element={<QuizScreen />} />
+          <Route path="decks/:deckId/match" element={<MatchScreen />} />
         </Route>
       </Routes>
     </Suspense>

@@ -210,6 +210,9 @@ function parseCards(raw: unknown, deckId: string, c: Collector, now: number): Ca
     if (item.reviewed !== undefined && typeof item.reviewed !== 'boolean') {
       c.error('invalid_value', `${path}.reviewed`, 'must be true or false');
     }
+    if (item.starred !== undefined && typeof item.starred !== 'boolean') {
+      c.error('invalid_value', `${path}.starred`, 'must be true or false');
+    }
     const createdAt = readTimestamp(item, 'createdAt', path, c, now);
     if (id !== undefined) {
       if (ids.has(id)) c.error('duplicate_id', `${path}.id`, `duplicate card id "${id}"`);
@@ -226,6 +229,7 @@ function parseCards(raw: unknown, deckId: string, c: Collector, now: number): Ca
       createdAt,
     };
     if (notes !== undefined && notes !== '') card.notes = notes;
+    if (item.starred === true) card.starred = true;
     out.push(card);
   });
   return out;

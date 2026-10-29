@@ -102,7 +102,7 @@ function isStudyable(card: Card): boolean {
   return card.term.trim() !== '' && card.translations.some((t) => t.trim() !== '');
 }
 
-function sideTexts(card: Card, side: CardSide): string[] {
+export function sideTexts(card: Card, side: CardSide): string[] {
   const texts = side === 'term' ? [card.term] : card.translations;
   return texts.map((t) => t.trim()).filter((t) => t !== '');
 }

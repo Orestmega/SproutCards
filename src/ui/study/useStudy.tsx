@@ -40,19 +40,26 @@ type Loaded =
   | { status: 'error' }
   | { status: 'ready'; data: StudyData };
 
-/** Reads the study options from the URL: `?dir=backward` and `?all=1` (practice every card). */
-export function useStudyParams(): { deckId: string; direction: Direction; practice: boolean } {
+/** Reads the study options from the URL: `?dir=backward`, `?all=1` (practice every card), `?starred=1`. */
+export function useStudyParams(): {
+  deckId: string;
+  direction: Direction;
+  practice: boolean;
+  /** Study only the cards with a star. */
+  starred: boolean;
+} {
   const { deckId = '' } = useParams();
   const [params] = useSearchParams();
   return {
     deckId,
     direction: params.get('dir') === 'backward' ? 'backward' : 'forward',
     practice: params.get('all') === '1',
+    starred: params.get('starred') === '1',
   };
 }
 
 /** Loads the data once. To start over, remount the component that calls this (change its `key`). */
-function useStudyData(deckId: string, newCardsPerDay: number): Loaded {
+function useStudyData(deckId: string, newCardsPerDay: number, starredOnly: boolean): Loaded {
   const { repo } = useApp();
   const [loaded, setLoaded] = useState<Loaded>({ status: 'loading' });
 
@@ -69,7 +76,7 @@ function useStudyData(deckId: string, newCardsPerDay: number): Loaded {
       ]);
       const data: StudyData = {
         deck,
-        cards,
+        cards: starredOnly ? cards.filter((c) => c.starred === true) : cards,
         progress,
         newBudget: Math.max(0, newCardsPerDay - newToday),
         now,
@@ -82,7 +89,7 @@ function useStudyData(deckId: string, newCardsPerDay: number): Loaded {
     return () => {
       cancelled = true;
     };
-  }, [repo, deckId, newCardsPerDay]);
+  }, [repo, deckId, newCardsPerDay, starredOnly]);
 
   return loaded;
 }
@@ -119,8 +126,8 @@ export function StudyGate({
 }) {
   const { t } = useI18n();
   const { settings } = useApp();
-  const { direction, practice } = useStudyParams();
-  const loaded = useStudyData(deckId, settings.newCardsPerDay);
+  const { direction, practice, starred } = useStudyParams();
+  const loaded = useStudyData(deckId, settings.newCardsPerDay, starred);
 
   if (loaded.status === 'loading') return null;
   if (loaded.status === 'missing') return <NotFoundScreen />;
@@ -132,6 +139,13 @@ export function StudyGate({
     );
   }
   const { data } = loaded;
+  if (data.cards.length === 0 && starred) {
+    return (
+      <EmptyState title={t('study.noStarred.title')} text={t('study.noStarred.text')}>
+        <ButtonLink to={`/decks/${deckId}`}>{t('study.noStarred.back')}</ButtonLink>
+      </EmptyState>
+    );
+  }
   if (data.cards.length === 0) {
     return (
       <EmptyState title={t('study.noCards.title')} text={t('study.noCards.text')}>
@@ -149,7 +163,9 @@ export function StudyGate({
         text={t('study.nothingDue.text')}
         mood="happy"
       >
-        <ButtonLink to={`/decks/${deckId}/${mode}?dir=${direction}&all=1`}>
+        <ButtonLink
+          to={`/decks/${deckId}/${mode}?dir=${direction}&all=1${starred ? '&starred=1' : ''}`}
+        >
           {t('study.practiceAll')}
         </ButtonLink>
         <ButtonLink to={`/decks/${deckId}`} variant="secondary">

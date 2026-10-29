@@ -115,6 +115,12 @@ export function createRepo(
       if (updated === 0) throw new Error(`Card ${id} not found`);
     },
 
+    /** Stars or un-stars a card; nothing else about it changes. */
+    async setStarred(id: string, starred: boolean): Promise<void> {
+      const updated = await db.cards.update(id, { starred });
+      if (updated === 0) throw new Error(`Card ${id} not found`);
+    },
+
     getCard(id: string): Promise<Card | undefined> {
       return db.cards.get(id);
     },

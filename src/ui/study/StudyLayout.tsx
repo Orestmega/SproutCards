@@ -24,6 +24,7 @@ const MODE_TITLES: Record<string, MessageKey> = {
   learn: 'study.learn',
   flip: 'study.flip',
   test: 'study.quiz',
+  match: 'study.match',
 };
 
 export function StudyLayout() {

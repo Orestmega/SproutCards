@@ -12,6 +12,7 @@ import { Button, ButtonLink } from '../components/Button';
 import { ConfirmDialog } from '../components/ConfirmDialog';
 import { IssueList } from '../components/IssueList';
 import { PageHeader } from '../components/Layout';
+import { StarButton } from '../components/StarButton';
 import { EmptyState, Notice } from '../components/Notice';
 import { downloadText, readTextFile, safeFileName } from '../files';
 import { StudyPanel } from '../study/StudyPanel';
@@ -111,7 +112,11 @@ export function DeckScreen() {
         {t('deck.addCard')}
       </ButtonLink>
 
-      <StudyPanel deck={deck} cardCount={cards.length} />
+      <StudyPanel
+        deck={deck}
+        cardCount={cards.length}
+        starredCount={cards.filter((c) => c.starred).length}
+      />
 
       <section className="section" aria-labelledby="deck-cards">
         <h2 className="section__title" id="deck-cards">
@@ -122,8 +127,8 @@ export function DeckScreen() {
         ) : (
           <ul className="list">
             {cards.map((card) => (
-              <li key={card.id}>
-                <Link to={`/decks/${deckId}/cards/${card.id}`} className="list-row">
+              <li key={card.id} className="list-row list-row--split">
+                <Link to={`/decks/${deckId}/cards/${card.id}`} className="list-row__link">
                   <span className="list-row__main">
                     <span className="list-row__title">{card.term}</span>
                     <span className="muted">{card.translations.join('; ')}</span>
@@ -133,6 +138,7 @@ export function DeckScreen() {
                   )}
                   <span aria-hidden="true">›</span>
                 </Link>
+                <StarButton cardId={card.id} term={card.term} starred={card.starred === true} />
               </li>
             ))}
           </ul>

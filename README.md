@@ -21,8 +21,11 @@ language codes (`en`, `uk`, `de`, `pt-BR`…). The interface is available in Ukr
 ## What it does
 
 - **Study modes:** *Learn* (multiple choice, then typing, then the reverse direction; mistakes come back a few
-  cards later), *Flashcards* (flip and answer "I know / I don't know"), *Quiz* (graded, does not change the
-  schedule). Both directions (word → translation and back) have separate progress.
+  cards later), *Flashcards* (flip and answer "I know / I don't know"; missed cards come back in new rounds until
+  all are known), *Test* (choose the number of questions and the kinds: multiple choice, typing, true/false,
+  matching; then retake only the words you missed, until 100 %), *Match* (a timed pairing game). Star hard words
+  and study only those. Both directions (word → translation and back) have separate progress; tests and Match
+  do not change the schedule.
 - **Answer checking:** ignores case, spaces and (optionally) accents; a small typo gives "Almost" with the
   right answer shown instead of a plain "wrong".
 - **Spaced repetition:** fixed intervals of 1, 3, 7, 14 and 30 days. The scheduler sits behind a small

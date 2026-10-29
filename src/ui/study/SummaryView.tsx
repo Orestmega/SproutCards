@@ -21,6 +21,8 @@ export function SummaryView({
   onRetrySave,
   onAgain,
   againLabel,
+  onRetryMissed,
+  retryMissedLabel,
   extra,
 }: {
   deckId: string;
@@ -35,6 +37,9 @@ export function SummaryView({
   onRetrySave: () => void;
   onAgain?: () => void;
   againLabel?: string;
+  /** "Practise only what you got wrong": shown first, as the main action, when there were mistakes. */
+  onRetryMissed?: () => void;
+  retryMissedLabel?: string;
   extra?: ReactNode;
 }) {
   const { t } = useI18n();
@@ -67,6 +72,23 @@ export function SummaryView({
         </Notice>
       )}
 
+      {/* the next steps come first: after a long list of answers they would be out of sight */}
+      <div className="stack">
+        {onRetryMissed && (
+          <Button block onClick={onRetryMissed}>
+            {retryMissedLabel}
+          </Button>
+        )}
+        {onAgain && (
+          <Button block variant={onRetryMissed ? 'secondary' : 'primary'} onClick={onAgain}>
+            {againLabel ?? t('study.again')}
+          </Button>
+        )}
+        <ButtonLink to={`/decks/${deckId}`} variant="secondary" block>
+          {t('study.backToDeck')}
+        </ButtonLink>
+      </div>
+
       {extra}
 
       {weak.length > 0 && (
@@ -88,17 +110,6 @@ export function SummaryView({
           </ul>
         </section>
       )}
-
-      <div className="stack">
-        {onAgain && (
-          <Button block onClick={onAgain}>
-            {againLabel ?? t('study.again')}
-          </Button>
-        )}
-        <ButtonLink to={`/decks/${deckId}`} variant="secondary" block>
-          {t('study.backToDeck')}
-        </ButtonLink>
-      </div>
     </>
   );
 }

@@ -43,6 +43,8 @@ export interface Card {
   notes?: string;
   /** `false` for machine-generated or otherwise unverified content. */
   reviewed: boolean;
+  /** Marked by the user as hard or important; "only starred" study uses it. Absent = not starred. */
+  starred?: boolean;
   createdAt: number;
 }
 
@@ -76,7 +78,7 @@ export function progressId(cardId: string, direction: Direction): string {
   return `${cardId}:${direction}`;
 }
 
-export type StudyMode = 'flip' | 'learn' | 'test';
+export type StudyMode = 'flip' | 'learn' | 'test' | 'match';
 
 /** `almost` = a small typo: shown with the right answer, but not counted as fully correct. */
 export type ReviewResult = 'correct' | 'almost' | 'wrong';

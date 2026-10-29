@@ -4,12 +4,22 @@ import type { Deck, Direction } from '../../core/types';
 import { useI18n } from '../../i18n';
 import { useRepo } from '../AppProviders';
 import { ButtonLink } from '../components/Button';
+import { CheckField } from '../components/Fields';
 
 /** "Study" section of the deck screen: choose the direction, then a mode. */
-export function StudyPanel({ deck, cardCount }: { deck: Deck; cardCount: number }) {
+export function StudyPanel({
+  deck,
+  cardCount,
+  starredCount,
+}: {
+  deck: Deck;
+  cardCount: number;
+  starredCount: number;
+}) {
   const { t, tp, languageName } = useI18n();
   const repo = useRepo();
   const [direction, setDirection] = useState<Direction>('forward');
+  const [starredOnly, setStarredOnly] = useState(false);
   const due = useLiveQuery(async () => {
     const now = Date.now();
     return (await repo.listProgress(deck.id, direction)).filter((p) => p.dueAt <= now).length;
@@ -17,7 +27,7 @@ export function StudyPanel({ deck, cardCount }: { deck: Deck; cardCount: number 
 
   const from = languageName(deck.learningLang);
   const to = languageName(deck.translationLang);
-  const query = `?dir=${direction}`;
+  const query = `?dir=${direction}${starredOnly ? '&starred=1' : ''}`;
   const base = `/decks/${deck.id}`;
 
   return (
@@ -44,6 +54,13 @@ export function StudyPanel({ deck, cardCount }: { deck: Deck; cardCount: number 
       ) : (
         <>
           {due !== undefined && due > 0 && <p className="muted">{tp('count.due', due)}</p>}
+          {starredCount > 0 && (
+            <CheckField
+              label={t('study.starredOnly', { count: starredCount })}
+              checked={starredOnly}
+              onChange={setStarredOnly}
+            />
+          )}
           <div className="stack">
             <ButtonLink to={`${base}/learn${query}`} block>
               {t('study.learn')}
@@ -53,6 +70,9 @@ export function StudyPanel({ deck, cardCount }: { deck: Deck; cardCount: number 
             </ButtonLink>
             <ButtonLink to={`${base}/test${query}`} variant="secondary" block>
               {t('study.quiz')}
+            </ButtonLink>
+            <ButtonLink to={`${base}/match${query}`} variant="secondary" block>
+              {t('study.match')}
             </ButtonLink>
           </div>
         </>

@@ -779,3 +779,157 @@ textarea.input {
   color: var(--color-primary-text);
   font-weight: 800;
 }
+
+/* ---------- Star, split list rows ---------- */
+.star {
+  flex: none;
+  color: var(--color-text-muted);
+}
+
+.star--on {
+  color: var(--color-almost);
+}
+
+/* A list row with a link and a button side by side (a button cannot sit inside a link). */
+.list-row--split {
+  padding: 0 var(--space-2) 0 0;
+}
+
+.list-row__link {
+  flex: 1;
+  min-width: 0;
+  min-height: 56px;
+  padding: var(--space-2) 0 var(--space-2) var(--space-4);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ---------- Test: true/false, matching ---------- */
+.statement {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  text-align: center;
+  font-size: var(--font-size-xl);
+  font-weight: 800;
+  overflow-wrap: anywhere;
+}
+
+.statement__equals {
+  font-size: var(--font-size-lg);
+  color: var(--color-text-muted);
+}
+
+.pairs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+}
+
+.pairs__col {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+/* ---------- Tiles (Match game, matching questions) ---------- */
+.tile {
+  position: relative;
+  width: 100%;
+  min-height: 64px;
+  padding: var(--space-2) var(--space-3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  background: var(--color-bg);
+  border: 2px solid var(--color-border);
+  border-bottom-width: 4px;
+  border-radius: var(--radius-md);
+  font: inherit;
+  font-size: var(--font-size-md);
+  text-align: center;
+  overflow-wrap: anywhere;
+  cursor: pointer;
+  color: var(--color-text);
+}
+
+.tile[aria-pressed='true'] {
+  border-color: var(--color-primary-dark);
+  background: var(--color-primary-soft);
+  font-weight: 800;
+}
+
+.tile--matched {
+  border-style: dashed;
+  background: var(--color-surface);
+  color: var(--color-text-muted);
+  cursor: default;
+}
+
+.tile--wrong {
+  border-color: var(--color-wrong);
+  animation: tile-shake 300ms ease-in-out;
+}
+
+.tile__badge {
+  flex: none;
+  min-width: 24px;
+  height: 24px;
+  padding: 0 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-pill);
+  background: var(--color-ink);
+  color: var(--color-on-ink);
+  font-size: var(--font-size-sm);
+  font-weight: 800;
+}
+
+@keyframes tile-shake {
+  25% {
+    transform: translateX(-4px);
+  }
+  75% {
+    transform: translateX(4px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tile--wrong {
+    animation: none;
+  }
+}
+
+.tiles {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+}
+
+.timer {
+  font-size: var(--font-size-xl);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.hud {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-3);
+}
+
+.options-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
