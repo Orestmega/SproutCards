@@ -1,8 +1,10 @@
-# Publishes the site to GitHub Pages. PREPARED, NOT ACTIVE: it runs only when someone starts it by hand
-# (Actions tab -> "Deploy to GitHub Pages" -> Run workflow), and only after Pages is switched on in the
-# repository settings (Settings -> Pages -> Source: GitHub Actions). See docs/IPHONE_TEST.md.
+# Publishes the site to GitHub Pages on every push to main (and by hand: Actions tab -> "Deploy to
+# GitHub Pages" -> Run workflow). Needs Pages switched on in the repository settings
+# (Settings -> Pages -> Source: GitHub Actions). See docs/IPHONE_TEST.md.
 name: Deploy to GitHub Pages
 on:
+  push:
+    branches: [main]
   workflow_dispatch:
 permissions:
   contents: read

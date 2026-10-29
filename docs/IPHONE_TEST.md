@@ -12,8 +12,8 @@ service worker, і офлайн-режим та встановлення пер�
 
 - Збірка: `npm run build` створює теку `dist/` (це і є весь сайт, лише статичні файли).
 - Конфігурація для хостингів: `public/_headers` (заголовки безпеки й кешування для Cloudflare Pages і
-  Netlify), `.github/workflows/deploy-pages.yml` (публікація на GitHub Pages; запускається **лише вручну**
-  і лише після того, як ви ввімкнете Pages у налаштуваннях репозиторію), `public/.nojekyll`.
+  Netlify), `.github/workflows/deploy-pages.yml` (публікація на GitHub Pages; запускається **автоматично після кожного push у main** і вручну
+  після того, як ввімкнено Pages у налаштуваннях репозиторію), `public/.nojekyll`.
 - Шляхи в збірці відносні, тому сайт працює і з кореня домену, і з підпапки (`user.github.io/sproutcards/`).
 
 ## Крок 1. Оберіть, де викласти сайт (безкоштовні варіанти)
@@ -43,7 +43,7 @@ service worker, і офлайн-режим та встановлення пер�
 
 Для Cloudflare Pages: створіть проєкт типу «Direct Upload» і завантажте ту ж теку `dist`.
 Для GitHub Pages: у репозиторії Settings → Pages → Source: «GitHub Actions», потім вкладка Actions →
-«Deploy to GitHub Pages» → Run workflow.
+«Deploy to GitHub Pages» (запускається сам після кожного push у main; за потреби Run workflow).
 
 ## Крок 3. Встановіть на iPhone
 
