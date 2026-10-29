@@ -315,6 +315,8 @@ export const uk: Record<Keys, string> & Record<string, string> = {
   'pwa.dismiss': 'Добре',
   'settings.app': 'Застосунок на цьому пристрої',
   'settings.app.install': 'Встановити застосунок',
+  'settings.app.native':
+    'Це встановлений застосунок. Він працює без інтернету, а твої колоди зберігаються на цьому телефоні. Час від часу роби резервні копії.',
   'settings.app.installed': 'Встановлено на цьому пристрої.',
   'settings.app.ios':
     'На iPhone чи iPad: відкрий цю сторінку в Safari, натисни «Поділитися», потім «На початковий екран».',

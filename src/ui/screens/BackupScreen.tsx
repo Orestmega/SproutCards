@@ -27,7 +27,11 @@ export function BackupScreen() {
     try {
       const bundles = await repo.exportAll();
       const day = new Date().toISOString().slice(0, 10);
-      downloadText(`sproutcards-backup-${day}.json`, serializeBackup(bundles), 'application/json');
+      await downloadText(
+        `sproutcards-backup-${day}.json`,
+        serializeBackup(bundles),
+        'application/json',
+      );
       setResult(null);
     } catch {
       setResult({ kind: 'error', text: t('common.exportFailed') });

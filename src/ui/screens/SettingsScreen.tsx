@@ -85,24 +85,31 @@ export function SettingsScreen() {
         <h2 className="section__title" id="settings-app">
           {t('settings.app')}
         </h2>
-        {pwa.installed && <p>{t('settings.app.installed')}</p>}
+        {pwa.native && <p>{t('settings.app.native')}</p>}
+        {pwa.installed && !pwa.native && <p>{t('settings.app.installed')}</p>}
         {pwa.canInstall && (
           <Button onClick={() => void pwa.install()}>{t('settings.app.install')}</Button>
         )}
         {pwa.needsIosInstructions && <p>{t('settings.app.ios')}</p>}
-        <p>
-          {pwa.offlineActive
-            ? t('settings.app.offlineOn')
-            : pwa.offlineUnavailable
-              ? t('settings.app.offlineUnavailable')
-              : t('settings.app.offlineOff')}
-        </p>
-        {pwa.storagePersistent !== null && (
-          <p>
-            {pwa.storagePersistent ? t('settings.app.storageOk') : t('settings.app.storageRisk')}
-          </p>
+        {!pwa.native && (
+          <>
+            <p>
+              {pwa.offlineActive
+                ? t('settings.app.offlineOn')
+                : pwa.offlineUnavailable
+                  ? t('settings.app.offlineUnavailable')
+                  : t('settings.app.offlineOff')}
+            </p>
+            {pwa.storagePersistent !== null && (
+              <p>
+                {pwa.storagePersistent
+                  ? t('settings.app.storageOk')
+                  : t('settings.app.storageRisk')}
+              </p>
+            )}
+            <p className="muted">{t('settings.app.reminders')}</p>
+          </>
         )}
-        <p className="muted">{t('settings.app.reminders')}</p>
       </section>
 
       <section className="section" aria-labelledby="settings-data">

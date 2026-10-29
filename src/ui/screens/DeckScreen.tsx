@@ -37,7 +37,7 @@ export function DeckScreen() {
   async function exportJson() {
     try {
       const bundle = await repo.exportDeck(deckId);
-      downloadText(
+      await downloadText(
         `${safeFileName(bundle.deck.name)}.json`,
         serializeDeck(bundle),
         'application/json',
@@ -47,9 +47,13 @@ export function DeckScreen() {
     }
   }
 
-  function exportCsv() {
+  async function exportCsv() {
     if (!deck || !cards) return;
-    downloadText(`${safeFileName(deck.name)}.csv`, cardsToCsv(cards), 'text/csv');
+    try {
+      await downloadText(`${safeFileName(deck.name)}.csv`, cardsToCsv(cards), 'text/csv');
+    } catch {
+      setMessage({ kind: 'error', text: t('common.exportFailed') });
+    }
   }
 
   async function importCsv(event: ChangeEvent<HTMLInputElement>) {
@@ -146,7 +150,12 @@ export function DeckScreen() {
           <Button variant="secondary" small onClick={exportJson}>
             {t('deck.exportJson')}
           </Button>
-          <Button variant="secondary" small onClick={exportCsv} disabled={cards.length === 0}>
+          <Button
+            variant="secondary"
+            small
+            onClick={() => void exportCsv()}
+            disabled={cards.length === 0}
+          >
             {t('deck.exportCsv')}
           </Button>
           <Button variant="secondary" small onClick={() => fileInput.current?.click()}>

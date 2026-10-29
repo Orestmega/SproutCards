@@ -295,6 +295,8 @@ export const en = {
   'pwa.dismiss': 'OK',
   'settings.app': 'App on this device',
   'settings.app.install': 'Install the app',
+  'settings.app.native':
+    'This is the installed app. It works without internet, and your decks are stored on this phone. Make backups now and then.',
   'settings.app.installed': 'Installed on this device.',
   'settings.app.ios':
     'On iPhone or iPad: open this page in Safari, tap Share, then “Add to Home Screen”.',

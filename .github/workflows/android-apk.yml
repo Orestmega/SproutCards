@@ -1,0 +1,41 @@
+# Builds an installable Android app file (.apk) in the cloud, so nothing has to be installed on a PC.
+# Runs only when started by hand: Actions tab -> "Build Android app" -> Run workflow.
+# When it is green, open the run and download the artifact "sproutcards-android-apk" (a zip with app-debug.apk).
+#
+# This is a DEBUG build: it is signed with a key that GitHub creates anew for every run, so Android treats each
+# build as a different app: to install a newer file, first back up your decks in the app, uninstall the old
+# one, install the new one, import the backup. See docs/NATIVE_APPS.md.
+name: Build Android app
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm run test
+      # builds the web app and copies it into the Android project
+      - run: npm run cap:sync
+      - name: Build the debug apk
+        working-directory: android
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug --no-daemon
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sproutcards-android-apk
+          path: android/app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error

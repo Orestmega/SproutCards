@@ -59,6 +59,7 @@ this code is not part of the production build).
 | `npm run preview` | serves `dist/` locally, to try the installable/offline version |
 | `npm run lint` · `npm run typecheck` · `npm run test` | the checks that must pass before every commit |
 | `npm run format` | Prettier |
+| `npm run cap:sync` | builds the site and copies it into the Android and iOS projects |
 | `npm run check:offline` | real Chrome: offline start and update without data loss (after `npm run build`) |
 | `npm run check:headers` | real Chrome: the hosting headers (incl. Content-Security-Policy) do not break the built app |
 | `npm run check:a11y` | real Chrome: axe-core accessibility rules on 12 screens (with `npm run dev` running) |
@@ -104,6 +105,19 @@ Verified (commands and results are in [JOURNAL.md](JOURNAL.md)):
 **Not verified** (be sceptical until it is): iPhone and Safari (installing, offline, speech, storage), real
 Android devices, Firefox, screen readers, speech with a real Ukrainian voice, behaviour after months of real
 use. A step-by-step iPhone check is in [docs/IPHONE_TEST.md](docs/IPHONE_TEST.md).
+
+## Phone apps (Android, iPhone)
+
+The same code is also packaged as native apps with [Capacitor](https://capacitorjs.com) (`android/`, `ios/`):
+
+- **Android:** run the "Build Android app" GitHub Actions workflow by hand and download the `.apk`; no Java or
+  Android SDK is needed on your PC. It is a debug build for the owner and friends, not a store release.
+- **iPhone:** the project exists but needs a Mac with Xcode and a paid Apple Developer account to build and
+  install; it has **never been built** (no Mac available). Use the PWA on iPhone meanwhile.
+- In the apps, files are saved through the system share sheet and speech uses the phone's engine.
+
+Details, limits and install steps: [docs/NATIVE_APPS.md](docs/NATIVE_APPS.md) (Ukrainian). **Not verified on a
+real phone yet.**
 
 ## Limits
 

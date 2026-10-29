@@ -2,9 +2,10 @@
 // Shapes are drawn as signed-distance functions and anti-aliased by supersampling.
 // Run: node scripts/make-icons.ts
 // Writes public/icon-192.png, icon-512.png (rounded, transparent corners), icon-maskable-512.png and
-// apple-touch-icon.png (full-bleed, no transparency: the OS applies its own mask).
+// apple-touch-icon.png (full-bleed, no transparency: the OS applies its own mask), and, when the native
+// projects exist, the Android launcher icons and launch screens and the iOS icon and launch screens.
 import { deflateSync } from 'node:zlib';
-import { writeFileSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 
 type Rgb = readonly [number, number, number];
 type Distance = (x: number, y: number) => number; // < 0 inside the shape
@@ -72,39 +73,83 @@ function artwork(): Layer[] {
   ];
 }
 
-const SAMPLES = 4; // 4 x 4 samples per pixel
+/** How the 512 x 512 picture is placed on a canvas. */
+interface Placement {
+  /** Side of the picture in canvas pixels. */
+  size: number;
+  /** Top-left corner of the picture on the canvas. */
+  x: number;
+  y: number;
+  /** Cut the picture to a rounded square or a circle (the corners become transparent / canvas colour). */
+  clip: 'none' | 'rounded' | 'circle';
+  /** Draw the green background square. False gives only the foreground (Android adaptive icons). */
+  withBackground: boolean;
+  /** Canvas colour outside the picture; null = transparent. */
+  canvas: Rgb | null;
+  /** Samples per pixel side inside the picture (anti-aliasing); 1 for big flat canvases. */
+  samples: number;
+}
 
-function render(size: number, rounded: boolean): Buffer {
-  const scale = 512 / size;
+const rounded = roundedRect(0, 0, 512, 512, 112);
+const circle: Distance = (x, y) => Math.hypot(x - 256, y - 256) - 256;
+
+function render(width: number, height: number, p: Placement): Buffer {
   const layers = artwork();
-  const corners = roundedRect(0, 0, 512, 512, 112);
-  const raw = Buffer.alloc((size * 4 + 1) * size);
-  for (let py = 0; py < size; py++) {
-    raw[py * (size * 4 + 1)] = 0; // filter: none
-    for (let px = 0; px < size; px++) {
+  const clip = p.clip === 'rounded' ? rounded : p.clip === 'circle' ? circle : null;
+  const scale = 512 / p.size;
+  const raw = Buffer.alloc((width * 4 + 1) * height);
+  const total = p.samples * p.samples;
+  for (let py = 0; py < height; py++) {
+    raw[py * (width * 4 + 1)] = 0; // filter: none
+    for (let px = 0; px < width; px++) {
       let r = 0;
       let g = 0;
       let b = 0;
       let a = 0;
-      for (let sy = 0; sy < SAMPLES; sy++) {
-        for (let sx = 0; sx < SAMPLES; sx++) {
-          const x = (px + (sx + 0.5) / SAMPLES) * scale;
-          const y = (py + (sy + 0.5) / SAMPLES) * scale;
-          if (rounded && corners(x, y) > 0) continue; // transparent corner
-          let color = GREEN;
-          for (const layer of layers) if (layer.shape(x, y) <= 0) color = layer.color;
-          r += color[0];
-          g += color[1];
-          b += color[2];
-          a += 1;
+      const inside = px >= p.x - 1 && px <= p.x + p.size && py >= p.y - 1 && py <= p.y + p.size;
+      if (!inside) {
+        if (p.canvas) {
+          r = p.canvas[0] * total;
+          g = p.canvas[1] * total;
+          b = p.canvas[2] * total;
+          a = total;
+        }
+      } else {
+        for (let sy = 0; sy < p.samples; sy++) {
+          for (let sx = 0; sx < p.samples; sx++) {
+            const x = (px - p.x + (sx + 0.5) / p.samples) * scale;
+            const y = (py - p.y + (sy + 0.5) / p.samples) * scale;
+            const outsideArt = x < 0 || y < 0 || x > 512 || y > 512 || (clip && clip(x, y) > 0);
+            let color: Rgb | null = outsideArt ? p.canvas : p.withBackground ? GREEN : p.canvas;
+            if (!outsideArt)
+              for (const layer of layers) if (layer.shape(x, y) <= 0) color = layer.color;
+            if (!color) continue; // transparent sample
+            r += color[0];
+            g += color[1];
+            b += color[2];
+            a += 1;
+          }
         }
       }
-      const at = py * (size * 4 + 1) + 1 + px * 4;
+      const at = py * (width * 4 + 1) + 1 + px * 4;
       if (a > 0) raw.set([Math.round(r / a), Math.round(g / a), Math.round(b / a)], at);
-      raw[at + 3] = Math.round((255 * a) / (SAMPLES * SAMPLES));
+      raw[at + 3] = Math.round((255 * a) / total);
     }
   }
-  return encodePng(size, raw);
+  return encodePng(width, height, raw);
+}
+
+/** The picture filling a square canvas. */
+function square(size: number, clip: Placement['clip']): Buffer {
+  return render(size, size, {
+    size,
+    x: 0,
+    y: 0,
+    clip,
+    withBackground: true,
+    canvas: null,
+    samples: 4,
+  });
 }
 
 function crc32(buf: Buffer): number {
@@ -125,10 +170,10 @@ function chunk(type: string, data: Buffer): Buffer {
   return Buffer.concat([len, body, crc]);
 }
 
-function encodePng(size: number, raw: Buffer): Buffer {
+function encodePng(width: number, height: number, raw: Buffer): Buffer {
   const ihdr = Buffer.alloc(13);
-  ihdr.writeUInt32BE(size, 0);
-  ihdr.writeUInt32BE(size, 4);
+  ihdr.writeUInt32BE(width, 0);
+  ihdr.writeUInt32BE(height, 4);
   ihdr[8] = 8; // bit depth
   ihdr[9] = 6; // RGBA
   return Buffer.concat([
@@ -139,9 +184,86 @@ function encodePng(size: number, raw: Buffer): Buffer {
   ]);
 }
 
-const out = (name: string) => new URL(`../public/${name}`, import.meta.url);
-writeFileSync(out('icon-192.png'), render(192, true));
-writeFileSync(out('icon-512.png'), render(512, true));
-writeFileSync(out('icon-maskable-512.png'), render(512, false));
-writeFileSync(out('apple-touch-icon.png'), render(180, false));
+const WHITE_CANVAS: Rgb = [0xff, 0xff, 0xff];
+const out = (path: string) => new URL(`../${path}`, import.meta.url);
+const write = (path: string, data: Buffer) => writeFileSync(out(path), data);
+
+// ---- web / PWA ----
+write('public/icon-192.png', square(192, 'rounded'));
+write('public/icon-512.png', square(512, 'rounded'));
+write('public/icon-maskable-512.png', square(512, 'none'));
+write('public/apple-touch-icon.png', square(180, 'none'));
+
+// ---- Android app (only if the project was created with `npx cap add android`) ----
+const androidRes = 'android/app/src/main/res';
+if (existsSync(out(androidRes))) {
+  const densities = { mdpi: 1, hdpi: 1.5, xhdpi: 2, xxhdpi: 3, xxxhdpi: 4 } as const;
+  for (const [name, factor] of Object.entries(densities)) {
+    const dir = `${androidRes}/mipmap-${name}`;
+    const legacy = Math.round(48 * factor); // old launchers: a finished square / round icon
+    const layer = Math.round(108 * factor); // adaptive icon layer; only the middle 66 dp is always visible
+    write(`${dir}/ic_launcher.png`, square(legacy, 'rounded'));
+    write(`${dir}/ic_launcher_round.png`, square(legacy, 'circle'));
+    const art = Math.round(layer * 0.93);
+    write(
+      `${dir}/ic_launcher_foreground.png`,
+      render(layer, layer, {
+        size: art,
+        x: Math.round((layer - art) / 2),
+        y: Math.round((layer - art) / 2),
+        clip: 'none',
+        withBackground: false,
+        canvas: null,
+        samples: 4,
+      }),
+    );
+  }
+  // the adaptive icon background is a colour resource
+  writeFileSync(
+    out(`${androidRes}/values/ic_launcher_background.xml`),
+    [
+      '<?xml version="1.0" encoding="utf-8"?>',
+      '<resources>',
+      '    <color name="ic_launcher_background">#58A83C</color>',
+      '</resources>',
+      '',
+    ].join('\n'),
+  );
+  // launch screens: white with the icon in the middle, same sizes as the files they replace
+  for (const entry of readdirSync(out(androidRes))) {
+    if (!/^drawable(-(land|port)-[a-z]+)?$/.test(entry)) continue;
+    const file = out(`${androidRes}/${entry}/splash.png`);
+    if (existsSync(file)) writeSplash(file);
+  }
+}
+
+// ---- iOS app (only if the project was created with `npx cap add ios`) ----
+const iosAssets = 'ios/App/App/Assets.xcassets';
+if (existsSync(out(iosAssets))) {
+  write(`${iosAssets}/AppIcon.appiconset/AppIcon-512@2x.png`, square(1024, 'none'));
+  for (const name of readdirSync(out(`${iosAssets}/Splash.imageset`))) {
+    if (name.endsWith('.png')) writeSplash(out(`${iosAssets}/Splash.imageset/${name}`));
+  }
+}
+
+/** Replaces a launch image by a white one of the same size with the icon in the middle. */
+function writeSplash(file: URL): void {
+  const header = readFileSync(file);
+  const width = header.readUInt32BE(16);
+  const height = header.readUInt32BE(20);
+  const size = Math.round(Math.min(width, height) * 0.28);
+  writeFileSync(
+    file,
+    render(width, height, {
+      size,
+      x: Math.round((width - size) / 2),
+      y: Math.round((height - size) / 2),
+      clip: 'rounded',
+      withBackground: true,
+      canvas: WHITE_CANVAS,
+      samples: 2,
+    }),
+  );
+}
+
 console.log('icons written');

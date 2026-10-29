@@ -9,6 +9,7 @@ import {
 } from 'react';
 import type { ReactNode } from 'react';
 import { registerSW } from 'virtual:pwa-register';
+import { isNativeApp } from './native';
 
 /** The browser's "install this app" event (Chromium only; not in the TypeScript DOM types). */
 export interface InstallPromptEvent extends Event {
@@ -17,6 +18,8 @@ export interface InstallPromptEvent extends Event {
 }
 
 export interface PwaState {
+  /** Running inside the Android/iOS app: no service worker, no install prompt, files are in the app. */
+  native: boolean;
   /** A new version was downloaded and waits to be activated. */
   updateReady: boolean;
   /** The app was cached for the first time just now (shown once as a message). */
@@ -40,6 +43,7 @@ export interface PwaState {
 }
 
 export const INERT_PWA: PwaState = {
+  native: false,
   updateReady: false,
   offlineReady: false,
   offlineActive: false,
@@ -79,18 +83,20 @@ export function PwaProvider({ children }: { children: ReactNode }) {
   const [updateReady, setUpdateReady] = useState(false);
   const [offlineReady, setOfflineReady] = useState(false);
   const [offlineActive, setOfflineActive] = useState(
-    () => 'serviceWorker' in navigator && navigator.serviceWorker.controller !== null,
+    () =>
+      isNativeApp() ||
+      ('serviceWorker' in navigator && navigator.serviceWorker.controller !== null),
   );
   const [offlineUnavailable, setOfflineUnavailable] = useState(
-    () => !('serviceWorker' in navigator),
+    () => !isNativeApp() && !('serviceWorker' in navigator),
   );
   const [installEvent, setInstallEvent] = useState<InstallPromptEvent | null>(null);
-  const [installed, setInstalled] = useState(() => isStandalone());
+  const [installed, setInstalled] = useState(() => isNativeApp() || isStandalone());
   const [storagePersistent, setStoragePersistent] = useState<boolean | null>(null);
   const updateSW = useRef<(reload?: boolean) => Promise<void>>(async () => undefined);
 
   useEffect(() => {
-    if (!('serviceWorker' in navigator)) return;
+    if (isNativeApp() || !('serviceWorker' in navigator)) return; // the app already contains its files
     updateSW.current = registerSW({
       onNeedRefresh: () => setUpdateReady(true),
       onOfflineReady: () => {
@@ -122,7 +128,7 @@ export function PwaProvider({ children }: { children: ReactNode }) {
   // silently, some only for installed apps, some ask the user; the answer is shown in Settings.
   useEffect(() => {
     const storage = navigator.storage;
-    if (!storage?.persist) return;
+    if (isNativeApp() || !storage?.persist) return;
     let cancelled = false;
     storage
       .persisted()
@@ -147,6 +153,7 @@ export function PwaProvider({ children }: { children: ReactNode }) {
 
   const value = useMemo<PwaState>(
     () => ({
+      native: isNativeApp(),
       updateReady,
       offlineReady,
       offlineActive,

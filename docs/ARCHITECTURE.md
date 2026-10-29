@@ -135,6 +135,26 @@ Keyboard: choice options 1–4, Enter submits/continues, Space/Enter turns a fla
   app on some platforms), the icon shows the number of due reviews as of the last time the app ran. The
   number is not refreshed in the background.
 
+## Native apps (`capacitor.config.ts`, `android/`, `ios/`, `ui/native.ts`)
+
+Capacitor wraps the same `dist/` build in an Android/iOS WebView (`npm run cap:sync` copies it in; the copy is
+git-ignored). App id `app.sproutcards.mobile`. Where a WebView differs from a browser, the code checks
+`isNativeApp()`:
+
+- **Files** (`ui/files.ts`): a WebView cannot download blobs, so the text is written to the app cache
+  (`@capacitor/filesystem`) and the system share sheet opens (`@capacitor/share`). Closing the sheet is not an
+  error; other failures reach the screens' normal "could not create the file" message.
+- **Speech** (`ui/speech.ts`): the phone's engine through `@capacitor-community/text-to-speech`, with the same
+  results ('no_voice', 'error') as the browser path, so the UI messages stay the same.
+- **No service worker, install prompt or storage request** (`ui/pwa.tsx`): the files are inside the app. Settings
+  shows a short description instead.
+- **Safe areas:** `viewport-fit=cover` + `env(safe-area-inset-top)` padding (CSS), status bar icons forced dark
+  (`SystemBars.style: 'LIGHT'`), because the app is always light.
+- The database is the same Dexie/IndexedDB, but inside the app's own WebView: it is **separate** from the website's.
+- Android is built in the cloud (`.github/workflows/android-apk.yml`, Java 21, Gradle) as a debug apk. Debug keys
+  change on every run, so a new apk cannot be installed over an old one (back up, uninstall, install, import).
+- iOS: project generated, never built (no Mac). Details: `docs/NATIVE_APPS.md`.
+
 ## Statistics (`core/stats.ts`, `ui/screens/StatsScreen.tsx`)
 
 Pure functions: `computeStreak`, `dailyCounts` (reviews per local day, zeros included), `accuracy` (share of
