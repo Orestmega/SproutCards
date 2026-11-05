@@ -5,7 +5,7 @@ import { EmptyState } from '../components/Notice';
 export function NotFoundScreen() {
   const { t } = useI18n();
   return (
-    <EmptyState title={t('notFound.title')} text={t('notFound.text')} mood="encouraging">
+    <EmptyState main title={t('notFound.title')} text={t('notFound.text')} mood="encouraging">
       <ButtonLink to="/">{t('notFound.home')}</ButtonLink>
     </EmptyState>
   );

@@ -54,13 +54,30 @@ export async function seedDemoData(db: AppDatabase): Promise<void> {
   }));
   const first = cards[0];
   if (!first) return;
-  const logs = [0, 1, 2].map((daysAgo) => ({
-    at: now - daysAgo * DAY,
-    cardId: first.id,
+  // a bit of everything in the garden: a learned word and one on its way
+  const grown = cards.slice(2, 4).map((card, i) => ({
+    reps: 3 - i,
+    intervalDays: 7,
+    lapses: i,
+    dueAt: now + (i + 2) * DAY,
+    id: progressId(card.id, 'forward'),
+    cardId: card.id,
     deckId: travel.id,
     direction: 'forward' as const,
-    mode: 'learn' as const,
-    result: 'correct' as const,
+    lastReviewedAt: now - DAY,
   }));
+  progress.push(...grown);
+  // days of history with gaps, so the activity map has something to show
+  const days = [0, 1, 2, 3, 5, 6, 8, 12, 13, 15, 20, 21, 22, 29, 36, 43, 44];
+  const logs = days
+    .flatMap((daysAgo) => Array.from({ length: 1 + (daysAgo % 5) }, () => daysAgo))
+    .map((daysAgo) => ({
+      at: now - daysAgo * DAY,
+      cardId: first.id,
+      deckId: travel.id,
+      direction: 'forward' as const,
+      mode: 'learn' as const,
+      result: 'correct' as const,
+    }));
   await repo.saveSession(progress, logs);
 }

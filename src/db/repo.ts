@@ -7,6 +7,8 @@ import type { IdFactory } from '../core/id';
 import { newId } from '../core/id';
 import type { Card, Deck, Direction, Example, Progress, ReviewLog, Settings } from '../core/types';
 import { DEFAULT_SETTINGS } from '../core/types';
+import { growthCounts } from '../core/garden';
+import type { GrowthCounts } from '../core/garden';
 import { countNewSince as countNew } from '../core/selection';
 import type { AppDatabase } from './db';
 
@@ -22,6 +24,8 @@ export interface DeckSummary {
   deck: Deck;
   cardCount: number;
   dueCount: number;
+  /** How many words are at each stage of growth. */
+  growth: GrowthCounts;
 }
 
 /** Raw numbers for the statistics screen; the arithmetic itself lives in `core/stats.ts`. */
@@ -110,6 +114,16 @@ export function createRepo(
       return card;
     },
 
+    /** Several cards at once: all of them are added, or none. */
+    async addNewCards(deckId: string, inputs: readonly NewCard[]): Promise<void> {
+      await db.transaction('rw', [db.decks, db.cards], async () => {
+        if (!(await db.decks.get(deckId))) throw new Error(`Deck ${deckId} not found`);
+        await db.cards.bulkAdd(
+          inputs.map((input) => ({ ...cleanCard(input), id: makeId(), deckId, createdAt: now() })),
+        );
+      });
+    },
+
     async updateCard(id: string, input: NewCard): Promise<void> {
       const updated = await db.cards.update(id, cleanCard(input));
       if (updated === 0) throw new Error(`Card ${id} not found`);
@@ -165,15 +179,18 @@ export function createRepo(
     async deckSummaries(at: number): Promise<DeckSummary[]> {
       const decks = await this.listDecks();
       return Promise.all(
-        decks.map(async (deck) => ({
-          deck,
-          cardCount: await db.cards.where('deckId').equals(deck.id).count(),
-          dueCount: await db.progress
-            .where('deckId')
-            .equals(deck.id)
-            .filter((p) => p.dueAt <= at)
-            .count(),
-        })),
+        decks.map(async (deck) => {
+          const [cardIds, progress] = await Promise.all([
+            db.cards.where('deckId').equals(deck.id).primaryKeys(),
+            db.progress.where('deckId').equals(deck.id).toArray(),
+          ]);
+          return {
+            deck,
+            cardCount: cardIds.length,
+            dueCount: progress.filter((p) => p.dueAt <= at).length,
+            growth: growthCounts(cardIds.map(String), progress),
+          };
+        }),
       );
     },
 

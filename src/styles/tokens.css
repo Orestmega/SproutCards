@@ -1,33 +1,49 @@
 /* Design tokens. Values and rules are documented in docs/DESIGN.md. */
 :root {
-  --color-page: #f4f8ef; /* page background behind the white surfaces */
+  color-scheme: light;
+
+  --color-page: #f5f8f1;
+  --color-page-top: #e6f4dd; /* the page fades from this colour at the top */
   --color-bg: #ffffff; /* faces of buttons, inputs, cards */
   --color-surface: #ffffff;
-  --color-surface-strong: #eaf0e5;
-  --color-border: #dde5d6;
-  --color-edge: #d3dccb; /* the "3D" bottom edge of light surfaces */
-  --color-text: #1d2b1a;
-  --color-text-muted: #55654f;
+  --color-surface-sunken: #f1f5ec; /* tracks, wells inside a card */
+  --color-surface-strong: #e6ede0;
+  --color-border: #e1e9da;
+  --color-edge: #d2dcc9; /* the "3D" bottom edge of light surfaces */
+  --color-text: #14261a;
+  --color-text-muted: #51624f;
   --color-primary: #58a83c;
   --color-primary-dark: #3f8a2a; /* decorative / fills only: 4.3:1 on white */
-  --color-primary-text: #327021; /* green TEXT on light backgrounds: 6.0:1 on white */
-  --color-primary-soft: #e6f3df;
+  --color-primary-text: #2f6b20; /* green TEXT: 6.3:1 on white */
+  --color-primary-soft: #e4f4dc;
   --color-primary-edge: #b9dca9;
-  --color-ink: #1f2a1d;
-  --color-ink-edge: #0d140c;
+  --color-ink: #17291c; /* the dark button */
+  --color-ink-edge: #08120b;
   --color-on-ink: #ffffff;
-  --color-correct: #2e7d32;
-  --color-correct-soft: #e6f3e7;
+  --color-correct: #1f7a3a;
+  --color-correct-soft: #e0f4e4;
   --color-wrong: #c62828;
-  --color-wrong-soft: #fbe9e9;
-  --color-almost: #8f5500;
-  --color-almost-soft: #fdf0d8;
-  --color-gold: #f2c94c;
+  --color-wrong-soft: #fde9e7;
+  --color-almost: #8a5200;
+  --color-almost-soft: #fdf0d3;
+  --color-sun: #ffc83d;
   --color-focus: #1a5fd0;
 
-  --radius-sm: 8px;
-  --radius-md: 14px;
-  --radius-lg: 20px;
+  /* soft chips behind icons */
+  --chip-blue: #e1eefd;
+  --chip-blue-ink: #1b5aa6;
+  --chip-orange: #ffe9da;
+  --chip-orange-ink: #bf3f0a;
+  --chip-violet: #f0e8fd;
+  --chip-violet-ink: #6a2fa6;
+  --chip-yellow: #fdf2c7;
+  --chip-yellow-ink: #7d5c00;
+  --chip-teal: #d9f3ef;
+  --chip-teal-ink: #0d6a60;
+
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
   --radius-pill: 999px;
 
   --space-1: 4px;
@@ -37,21 +53,72 @@
   --space-5: 24px;
   --space-6: 32px;
 
-  --font-body: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  /* rounded letters where the system has them (Apple devices); the usual system font elsewhere */
-  --font-display:
-    ui-rounded, 'SF Pro Rounded', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+  --font-body:
+    'Nunito Variable', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+    sans-serif;
   --font-size-sm: 0.875rem;
   --font-size-md: 1rem;
   --font-size-lg: 1.25rem;
-  --font-size-xl: 1.625rem;
+  --font-size-xl: 1.75rem;
 
-  --edge: 4px; /* thickness of the "3D" bottom edge of buttons and cards */
-  --shadow-soft: 0 1px 2px rgb(29 43 26 / 6%), 0 4px 14px rgb(29 43 26 / 6%);
-  --shadow-float: 0 8px 28px rgb(29 43 26 / 16%);
-  --nav-height: 68px;
-  --content-width: 640px;
-  --motion-fast: 150ms;
+  --edge: 4px; /* thickness of the "3D" bottom edge */
+  --shadow-1: 0 1px 2px rgb(20 38 26 / 5%), 0 6px 18px rgb(20 38 26 / 6%);
+  --shadow-2: 0 2px 4px rgb(20 38 26 / 6%), 0 14px 34px rgb(20 38 26 / 11%);
+  --shadow-float: 0 10px 34px rgb(20 38 26 / 20%);
+  --glass: rgb(255 255 255 / 86%);
+  --nav-height: 64px;
+  --sidebar-width: 236px;
+  --content-width: 680px;
+  --content-width-wide: 1040px;
+  --motion-fast: 140ms;
   --motion-medium: 280ms;
   --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* The dark theme: the same names with other values. Applied by `data-theme` on <html>. */
+:root[data-theme='dark'] {
+  color-scheme: dark;
+
+  --color-page: #0f1a14;
+  --color-page-top: #16291d;
+  --color-bg: #1b2b21;
+  --color-surface: #1b2b21;
+  --color-surface-sunken: #152219;
+  --color-surface-strong: #2a3d30;
+  --color-border: #2d4235;
+  --color-edge: #0b130e;
+  --color-text: #eef6ea;
+  --color-text-muted: #adbfaa;
+  --color-primary: #74d157;
+  --color-primary-dark: #5cbd42;
+  --color-primary-text: #97e37c;
+  --color-primary-soft: #223f2a;
+  --color-primary-edge: #16301e;
+  --color-ink: #d6f5c6;
+  --color-ink-edge: #8cc574;
+  --color-on-ink: #10210f;
+  --color-correct: #74dd90;
+  --color-correct-soft: #173a2a;
+  --color-wrong: #ff948a;
+  --color-wrong-soft: #452221;
+  --color-almost: #ffc56b;
+  --color-almost-soft: #3f3013;
+  --color-focus: #8ab6ff;
+
+  --chip-blue: #1c3350;
+  --chip-blue-ink: #9ccbff;
+  --chip-orange: #472a1b;
+  --chip-orange-ink: #ffb48f;
+  --chip-violet: #352a52;
+  --chip-violet-ink: #cdb4ff;
+  --chip-yellow: #41380f;
+  --chip-yellow-ink: #ffdd78;
+  --chip-teal: #123c38;
+  --chip-teal-ink: #84e6d9;
+
+  --shadow-1: 0 1px 2px rgb(0 0 0 / 30%), 0 6px 18px rgb(0 0 0 / 22%);
+  --shadow-2: 0 2px 4px rgb(0 0 0 / 34%), 0 14px 34px rgb(0 0 0 / 36%);
+  --shadow-float: 0 10px 34px rgb(0 0 0 / 55%);
+  --glass: rgb(27 43 33 / 86%);
 }

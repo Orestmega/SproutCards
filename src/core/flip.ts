@@ -99,6 +99,24 @@ export function answerFlip(state: FlipState, known: boolean, now: number): FlipS
   };
 }
 
+/** True when the last answer can be taken back: it was given in the current round. */
+export function canUndoFlip(state: FlipState): boolean {
+  return state.phase !== 'done' && state.position > 0;
+}
+
+/** Takes back the last answer of this round: that card is shown again, nothing of it remains. */
+export function undoFlip(state: FlipState): FlipState {
+  const last = state.results.at(-1);
+  if (!last || !canUndoFlip(state)) return state;
+  return {
+    ...state,
+    results: state.results.slice(0, -1),
+    missed: last.known ? state.missed : state.missed.slice(0, -1),
+    position: state.position - 1,
+    phase: 'card',
+  };
+}
+
 /** Starts the next round with the cards that were marked "don't know", in a new order. */
 export function continueFlip(state: FlipState, rng: Rng = Math.random): FlipState {
   if (state.phase !== 'roundEnd') return state;

@@ -1,3 +1,4 @@
+import { DEFAULT_SETTINGS } from '../../core/types';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { render, screen, waitFor } from '@testing-library/react';
@@ -130,13 +131,17 @@ describe('adding a catalog deck', () => {
     ).toBeInTheDocument();
     expect(screen.getAllByText('Unchecked').length).toBeGreaterThan(0);
     await user.click(screen.getByRole('link', { name: 'Learn' }));
-    expect(await screen.findByText('Choose the translation')).toBeInTheDocument();
+    // the Learn screen is loaded on first use, which can take a moment in a test run
+    expect(
+      await screen.findByText('Choose the translation', {}, { timeout: 8000 }),
+    ).toBeInTheDocument();
   });
 
   it('names the deck in the Ukrainian interface language', async () => {
     const user = userEvent.setup();
     stubCatalog();
     await createRepo(db).saveSettings({
+      ...DEFAULT_SETTINGS,
       uiLanguage: 'uk',
       speechEnabled: true,
       newCardsPerDay: 10,

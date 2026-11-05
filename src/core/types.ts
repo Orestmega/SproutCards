@@ -97,12 +97,24 @@ export interface ReviewLog {
 
 export type UiLanguage = 'uk' | 'en';
 
+export type ThemeChoice = 'system' | 'light' | 'dark';
+
 export interface Settings {
   uiLanguage: UiLanguage;
   speechEnabled: boolean;
   newCardsPerDay: number;
   /** When true, `e` and `é` are the same when checking typed answers. */
   ignoreDiacritics: boolean;
+  /** Colours of the app; `system` follows the device. */
+  theme: ThemeChoice;
+  /** Answers per day that count as today's goal. */
+  dailyGoal: number;
+  /** Short sounds for right and wrong answers. */
+  soundEnabled: boolean;
+  /** A short vibration on answers, where the device can do it. */
+  hapticsEnabled: boolean;
+  /** Read the word aloud as soon as it is shown. */
+  autoSpeak: boolean;
 }
 
 export const DEFAULT_SETTINGS: Settings = {
@@ -110,4 +122,9 @@ export const DEFAULT_SETTINGS: Settings = {
   speechEnabled: true,
   newCardsPerDay: 10,
   ignoreDiacritics: true,
+  theme: 'system',
+  dailyGoal: 20,
+  soundEnabled: true,
+  hapticsEnabled: true,
+  autoSpeak: false,
 };

@@ -1,5 +1,6 @@
 import {
   answerFlip,
+  canUndoFlip,
   continueFlip,
   currentFlipCard,
   flipFace,
@@ -9,6 +10,7 @@ import {
   isFlipFinished,
   startFlip,
   summarizeFlip,
+  undoFlip,
 } from './flip';
 import type { FlipState } from './flip';
 import { seededRng } from './random';
@@ -18,6 +20,35 @@ import { makeCard, sampleCards } from './testUtils';
 const NOW = new Date(2026, 5, 10, 12).getTime();
 const scheduler = createFixedIntervalScheduler();
 const rng = () => seededRng(1);
+
+describe('undoFlip', () => {
+  it('takes back the last answer, known or not', () => {
+    const start = startFlip(sampleCards(), 'forward');
+    const first = currentFlipCard(start);
+    expect(canUndoFlip(start)).toBe(false);
+    const missed = answerFlip(start, false, NOW);
+    const undone = undoFlip(missed);
+    expect(currentFlipCard(undone)?.id).toBe(first?.id);
+    expect(undone.results).toEqual([]);
+    expect(undone.missed).toEqual([]);
+
+    const known = undoFlip(answerFlip(start, true, NOW));
+    expect(known).toMatchObject({ position: 0, missed: [], results: [] });
+  });
+
+  it('works from the end of a round, but not across rounds or after the end', () => {
+    let state = startFlip(sampleCards().slice(0, 1), 'forward');
+    state = answerFlip(state, false, NOW);
+    expect(state.phase).toBe('roundEnd');
+    expect(undoFlip(state)).toMatchObject({ phase: 'card', position: 0, missed: [] });
+
+    state = continueFlip(state, rng());
+    expect(canUndoFlip(state)).toBe(false); // the new round has no answers yet
+    state = answerFlip(state, true, NOW);
+    expect(state.phase).toBe('done');
+    expect(undoFlip(state)).toBe(state);
+  });
+});
 
 /** Answers the current card of every round as `known(cardId, round)` says, until the session ends. */
 function play(state: FlipState, known: (id: string, round: number) => boolean): FlipState {

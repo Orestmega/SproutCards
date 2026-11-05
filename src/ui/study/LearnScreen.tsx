@@ -18,9 +18,10 @@ import { useI18n } from '../../i18n';
 import { useApp } from '../AppProviders';
 import { Button } from '../components/Button';
 import { ConfirmDialog } from '../components/ConfirmDialog';
-import { Notice } from '../components/Notice';
 import { SpeakButton } from '../components/SpeakButton';
 import { ChoiceList, instructionKey, TypingForm } from './parts';
+import { useCue } from '../cues';
+import { speak } from '../speech';
 import { useStudyChrome } from './StudyLayout';
 import { SummaryView } from './SummaryView';
 import type { SaveState } from './SummaryView';
@@ -56,6 +57,7 @@ function LearnSession({ data, onRestart }: { data: StudyData; onRestart: () => v
   const { t, tp, languageName } = useI18n();
   const { repo, settings } = useApp();
   const chrome = useStudyChrome();
+  const cue = useCue();
   const navigate = useNavigate();
   const { direction, practice } = useStudyParams();
   const { deck } = data;
@@ -101,6 +103,17 @@ function LearnSession({ data, onRestart }: { data: StudyData; onRestart: () => v
 
   useWarnBeforeUnload(!finished && state.events.length > 0);
 
+  // read the prompt aloud as it appears, if the user asked for that
+  const promptText = answered ? null : (state.current?.prompt ?? null);
+  const promptLang =
+    state.current?.promptSide === 'translation' ? deck.translationLang : deck.learningLang;
+  const answersSoFar = state.events.length;
+  useEffect(() => {
+    if (promptText && settings.autoSpeak && settings.speechEnabled) {
+      void speak(promptText, promptLang);
+    }
+  }, [promptText, promptLang, answersSoFar, settings.autoSpeak, settings.speechEnabled]);
+
   useEffect(() => chrome.setProgress(progressFraction(state)), [chrome, state]);
 
   // at the end Sprout in the top bar shows the same mood as the result screen
@@ -130,8 +143,9 @@ function LearnSession({ data, onRestart }: { data: StudyData; onRestart: () => v
         reaction.mood,
         reaction.milestone ? t('buddy.combo', { count: reaction.combo }) : undefined,
       );
+      cue(reaction.milestone ? 'combo' : result.feedback.result);
     },
-    [state, answered, combo, chrome, t],
+    [state, answered, combo, chrome, t, cue],
   );
 
   const pickOption = useCallback(
@@ -218,6 +232,7 @@ function LearnSession({ data, onRestart }: { data: StudyData; onRestart: () => v
             onSubmit={(text) => answer(text)}
             onSkip={() => answer(null)}
             skipLabel={t('learn.dontKnow')}
+            hintFor={shown.acceptable[0]}
           />
         )
       )}
@@ -275,27 +290,34 @@ function FeedbackPanel({
           ? t('learn.dontKnowFeedback')
           : t('learn.wrong');
   return (
-    <>
-      <Notice kind={kind}>
-        <strong>{title}</strong>
-        {feedback.result !== 'correct' && (
-          <>
-            <p lang={answerLang}>
-              {t('learn.correctAnswer')}: <strong>{feedback.expected}</strong>{' '}
-              <SpeakButton text={feedback.expected} lang={answerLang} />
-            </p>
-            {question.kind === 'typing' && input && input.trim() !== '' && (
-              <p className="muted">
-                {t('learn.yourAnswer')}: {input}
-              </p>
+    <div className={`sheet sheet--${kind}`}>
+      <div className="sheet__inner">
+        <div className="sheet__head" role={kind === 'error' ? 'alert' : 'status'}>
+          <span className="notice__icon" aria-hidden="true">
+            {kind === 'success' ? '✓' : kind === 'warn' ? '≈' : '✗'}
+          </span>
+          <div>
+            <p className="sheet__title">{title}</p>
+            {feedback.result !== 'correct' && (
+              <>
+                <p lang={answerLang}>
+                  {t('learn.correctAnswer')}: <strong>{feedback.expected}</strong>{' '}
+                  <SpeakButton text={feedback.expected} lang={answerLang} />
+                </p>
+                {question.kind === 'typing' && input && input.trim() !== '' && (
+                  <p className="muted">
+                    {t('learn.yourAnswer')}: {input}
+                  </p>
+                )}
+              </>
             )}
-          </>
-        )}
-        {feedback.passed && <p>{t('learn.cardDone')}</p>}
-      </Notice>
-      <Button block onClick={onContinue} autoFocus>
-        {t('learn.continue')}
-      </Button>
-    </>
+            {feedback.passed && <p>{t('learn.cardDone')}</p>}
+          </div>
+        </div>
+        <Button block onClick={onContinue} autoFocus>
+          {t('learn.continue')}
+        </Button>
+      </div>
+    </div>
   );
 }

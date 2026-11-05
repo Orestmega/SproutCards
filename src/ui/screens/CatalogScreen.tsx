@@ -8,6 +8,7 @@ import { useApp, useRepo } from '../AppProviders';
 import { catalogUrl, fetchCatalogDeck, fetchCatalogIndex } from '../catalog';
 import type { CatalogFailure } from '../catalog';
 import { Button } from '../components/Button';
+import { DeckAvatar } from '../components/DeckCard';
 import { PageHeader } from '../components/Layout';
 import { Notice } from '../components/Notice';
 
@@ -133,18 +134,23 @@ function CatalogList({ index }: { index: CatalogIndex }) {
         </Notice>
       )}
 
-      <ul className="list">
+      <ul className="deck-grid">
         {index.decks.map((entry) => {
           const existing = added?.get(entry.id);
           return (
-            <li key={entry.id} className="list-row" style={{ alignItems: 'flex-start' }}>
-              <div className="list-row__main" style={{ gap: 'var(--space-2)' }}>
-                <span className="list-row__head">
-                  <span className="list-row__title">{localize(entry.title, language)}</span>
-                  {!entry.reviewed && (
-                    <span className="badge badge--warn">{t('catalog.unchecked')}</span>
-                  )}
-                </span>
+            <li key={entry.id}>
+              <div className="catalog-card">
+                <div className="catalog-card__top">
+                  <DeckAvatar id={entry.id} name={localize(entry.title, language)} />
+                  <span className="list-row__main">
+                    <span className="deck-card__name">{localize(entry.title, language)}</span>
+                    {!entry.reviewed && (
+                      <span>
+                        <span className="badge badge--warn">{t('catalog.unchecked')}</span>
+                      </span>
+                    )}
+                  </span>
+                </div>
                 <span>{localize(entry.description, language)}</span>
                 <span className="muted">
                   {languageName(entry.learningLang)} → {languageName(entry.translationLang)} ·{' '}

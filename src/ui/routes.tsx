@@ -15,6 +15,9 @@ import { StudyLayout } from './study/StudyLayout';
 const BackupScreen = lazy(() =>
   import('./screens/BackupScreen').then((m) => ({ default: m.BackupScreen })),
 );
+const BulkAddScreen = lazy(() =>
+  import('./screens/BulkAddScreen').then((m) => ({ default: m.BulkAddScreen })),
+);
 const CatalogScreen = lazy(() =>
   import('./screens/CatalogScreen').then((m) => ({ default: m.CatalogScreen })),
 );
@@ -49,6 +52,7 @@ export function AppRoutes() {
           <Route path="decks/:deckId" element={<DeckScreen />} />
           <Route path="decks/:deckId/edit" element={<DeckFormScreen />} />
           <Route path="decks/:deckId/cards/new" element={<CardFormScreen />} />
+          <Route path="decks/:deckId/cards/bulk" element={<BulkAddScreen />} />
           <Route path="decks/:deckId/cards/:cardId" element={<CardFormScreen />} />
           <Route path="catalog" element={<CatalogScreen />} />
           <Route path="stats" element={<StatsScreen />} />

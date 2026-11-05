@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   answerFlip,
+  canUndoFlip,
   continueFlip,
   currentFlipCard,
   flipFace,
@@ -11,6 +12,7 @@ import {
   isFlipFinished,
   startFlip,
   summarizeFlip,
+  undoFlip,
 } from '../../core/flip';
 import type { FlipState } from '../../core/flip';
 import { moodForScore } from '../../core/cheer';
@@ -20,10 +22,14 @@ import { useI18n } from '../../i18n';
 import { useApp } from '../AppProviders';
 import { Button } from '../components/Button';
 import { ConfirmDialog } from '../components/ConfirmDialog';
+import { Icon } from '../components/Icons';
 import { SpeakButton } from '../components/SpeakButton';
 import { StarButton } from '../components/StarButton';
 import { MascotBubble } from '../components/Mascot';
+import { useCue } from '../cues';
+import { speak } from '../speech';
 import { useStudyChrome } from './StudyLayout';
+import { SwipeCard } from './SwipeCard';
 import { SummaryView } from './SummaryView';
 import type { SaveState } from './SummaryView';
 import { pickSessionCards, StudyGate, useStudyParams } from './useStudy';
@@ -57,8 +63,9 @@ export function FlipScreen() {
 
 function FlipSession({ data, onRestart }: { data: StudyData; onRestart: () => void }) {
   const { t, tp } = useI18n();
-  const { repo } = useApp();
+  const { repo, settings } = useApp();
   const chrome = useStudyChrome();
+  const cue = useCue();
   const navigate = useNavigate();
   const { direction, practice } = useStudyParams();
   const { deck } = data;
@@ -107,9 +114,30 @@ function FlipSession({ data, onRestart }: { data: StudyData; onRestart: () => vo
       setState((s) => answerFlip(s, known, now));
       setFlipped(false);
       chrome.react(known ? 'happy' : 'encouraging');
+      cue(known ? 'correct' : 'almost');
     },
-    [chrome],
+    [chrome, cue],
   );
+
+  const turn = useCallback(() => {
+    setFlipped((f) => !f);
+    cue('flip');
+  }, [cue]);
+
+  const undo = useCallback(() => {
+    setState((s) => undoFlip(s));
+    setFlipped(false);
+    chrome.react('normal');
+  }, [chrome]);
+
+  // read the word aloud as it appears, if the user asked for that
+  const spokenFront = card ? flipFace(card, direction).front : null;
+  const spokenLang = direction === 'forward' ? deck.learningLang : deck.translationLang;
+  useEffect(() => {
+    if (spokenFront && settings.autoSpeak && settings.speechEnabled) {
+      void speak(spokenFront, spokenLang);
+    }
+  }, [spokenFront, spokenLang, state.position, settings.autoSpeak, settings.speechEnabled]);
 
   // Arrow keys: ← "don't know", → "know" (only once the card is turned over).
   useEffect(() => {
@@ -147,6 +175,9 @@ function FlipSession({ data, onRestart }: { data: StudyData; onRestart: () => vo
         <Button block onClick={() => setState((s) => continueFlip(s))} autoFocus>
           {tp('flip.roundEnd.continue', state.missed.length)}
         </Button>
+        <Button block variant="secondary" onClick={undo}>
+          {t('flip.undo')}
+        </Button>
       </>
     );
   }
@@ -179,75 +210,109 @@ function FlipSession({ data, onRestart }: { data: StudyData; onRestart: () => vo
   if (!card) return null;
 
   const face = flipFace(card, direction);
+  const left = state.order.length - state.position;
   const frontLang = direction === 'forward' ? deck.learningLang : deck.translationLang;
   const backLang = direction === 'forward' ? deck.translationLang : deck.learningLang;
 
   return (
     <>
-      <p className="muted" aria-live="polite">
-        {state.round === 1
-          ? t('flip.counter', { n: state.position + 1, total: state.order.length })
-          : t('flip.counterRound', {
-              round: state.round,
-              n: state.position + 1,
-              total: state.order.length,
-            })}
-      </p>
-
-      <div className="flip">
-        <button
-          type="button"
-          className={flipped ? 'flip-card flip-card--back' : 'flip-card'}
-          onClick={() => setFlipped((f) => !f)}
-          aria-expanded={flipped}
-        >
-          <span className="flip-card__text" lang={frontLang}>
-            {face.front}
-          </span>
-          {!flipped && <span className="muted">{t('flip.tapHint')}</span>}
-          {/* the accessible name is the card text plus this action, so the word is still read out */}
-          <span className="visually-hidden">
-            {flipped ? t('flip.hideAnswer') : t('flip.showAnswer')}
-          </span>
-        </button>
-        <SpeakButton text={face.front} lang={frontLang} />
-        <StarButton cardId={card.id} term={card.term} starred={card.starred === true} />
+      <div className="fc-bar">
+        <p className="muted" aria-live="polite">
+          {state.round === 1
+            ? t('flip.counter', { n: state.position + 1, total: state.order.length })
+            : t('flip.counterRound', {
+                round: state.round,
+                n: state.position + 1,
+                total: state.order.length,
+              })}
+        </p>
+        {canUndoFlip(state) && (
+          <button type="button" className="icon-btn" aria-label={t('flip.undo')} onClick={undo}>
+            <Icon name="undo" />
+          </button>
+        )}
       </div>
 
-      {flipped && (
-        <section className="flip-answer" aria-live="polite" lang={backLang}>
-          <ul className="flip-answer__list">
-            {face.back.map((text, i) => (
-              <li key={i}>
-                {text} <SpeakButton text={text} lang={backLang} />
-              </li>
-            ))}
-          </ul>
-          {card.examples.length > 0 && (
-            <ul className="muted flip-answer__examples">
-              {card.examples.map((e, i) => (
-                <li key={i}>
-                  {e.text}
-                  {e.translation ? ` — ${e.translation}` : ''}
-                </li>
-              ))}
-            </ul>
-          )}
-          {card.notes && <p className="muted">{card.notes}</p>}
-        </section>
-      )}
+      <div className={left <= 1 ? 'fc-stage fc-stage--last' : 'fc-stage'}>
+        {/* a new key per answer: the next card arrives fresh, unturned */}
+        <SwipeCard
+          key={`${state.round}-${state.position}`}
+          enabled={flipped}
+          onSwipe={answer}
+          knowLabel={t('flip.stampKnow')}
+          learnLabel={t('flip.stampLearn')}
+        >
+          <div className="fc__tools">
+            <SpeakButton text={face.front} lang={frontLang} />
+            <StarButton cardId={card.id} term={card.term} starred={card.starred === true} />
+          </div>
+          <div className={flipped ? 'fc__inner fc__inner--flipped' : 'fc__inner'}>
+            <button
+              type="button"
+              className="fc__face fc__face--front"
+              onClick={turn}
+              aria-expanded={flipped}
+            >
+              <span className="flip-card__text" lang={frontLang}>
+                {face.front}
+              </span>
+              <span className="muted">{t('flip.tapHint')}</span>
+              {/* the accessible name is the card text plus this action, so the word is still read out */}
+              <span className="visually-hidden">{t('flip.showAnswer')}</span>
+            </button>
+            <section className="fc__face fc__face--back" aria-live="polite" lang={backLang}>
+              {flipped && (
+                <>
+                  <p className="muted" lang={frontLang}>
+                    {face.front}
+                  </p>
+                  <ul className="flip-answer__list">
+                    {face.back.map((text, i) => (
+                      <li key={i}>
+                        {text} <SpeakButton text={text} lang={backLang} />
+                      </li>
+                    ))}
+                  </ul>
+                  {card.examples.length > 0 && (
+                    <ul className="muted flip-answer__examples">
+                      {card.examples.map((e, i) => (
+                        <li key={i}>
+                          {e.text}
+                          {e.translation ? ` — ${e.translation}` : ''}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                  {card.notes && <p className="muted">{card.notes}</p>}
+                  <button type="button" className="fc-turn" onClick={turn}>
+                    {t('flip.hideAnswer')}
+                  </button>
+                </>
+              )}
+            </section>
+          </div>
+        </SwipeCard>
+      </div>
 
-      {flipped && (
-        <div className="row">
-          <Button variant="secondary" onClick={() => answer(false)}>
-            ✗ {t('flip.dontKnow')}
-          </Button>
-          <Button onClick={() => answer(true)} autoFocus>
-            ✓ {t('flip.know')}
-          </Button>
-        </div>
+      {flipped ? (
+        <>
+          <div className="fc-actions">
+            <Button variant="secondary" onClick={() => answer(false)}>
+              ✗ {t('flip.dontKnow')}
+            </Button>
+            <Button onClick={() => answer(true)} autoFocus>
+              ✓ {t('flip.know')}
+            </Button>
+          </div>
+          <p className="muted" style={{ textAlign: 'center' }}>
+            {t('flip.swipeHint')}
+          </p>
+        </>
+      ) : (
+        <p className="muted" style={{ textAlign: 'center' }}>
+          {t('flip.keysHint')}
+        </p>
       )}
-      <p className="muted">{t('flip.keysHint')}</p>
 
       {confirmLeave && (
         <ConfirmDialog

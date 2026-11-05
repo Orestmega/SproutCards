@@ -1,3 +1,4 @@
+import { useId } from 'react';
 import type { ReactNode } from 'react';
 import type { MascotMood } from '../../core/cheer';
 
@@ -25,6 +26,8 @@ const LEAF_LIGHT = '#7bc15e';
  * that move are separate groups (`mascot__sprout`, `mascot__eyes`, ...) animated in components.css.
  */
 export function Mascot({ mood = 'normal', size = 96, label, reaction = 0 }: MascotProps) {
+  // a gradient needs an id that is unique on the page and safe inside url(#...)
+  const bodyId = useId().replace(/[^a-zA-Z0-9]/g, '');
   const armsUp = mood === 'celebrate';
   const waving = mood === 'encouraging' || armsUp;
   return (
@@ -39,6 +42,13 @@ export function Mascot({ mood = 'normal', size = 96, label, reaction = 0 }: Masc
       aria-hidden={label ? undefined : true}
       focusable="false"
     >
+      <defs>
+        <radialGradient id={bodyId} cx="40%" cy="30%" r="80%">
+          <stop offset="0%" stopColor="#8fd46e" />
+          <stop offset="60%" stopColor={LEAF} />
+          <stop offset="100%" stopColor="#459130" />
+        </radialGradient>
+      </defs>
       <ellipse
         className="mascot__shadow"
         cx="60"
@@ -98,8 +108,25 @@ export function Mascot({ mood = 'normal', size = 96, label, reaction = 0 }: Masc
           {armsUp && <Arm side="left" />}
 
           {/* body */}
-          <ellipse cx="60" cy="78" rx="36" ry="31" fill={LEAF} stroke={LINE} strokeWidth="3" />
-          <ellipse cx="60" cy="88" rx="22" ry="16" fill={LEAF_LIGHT} opacity="0.55" />
+          <ellipse
+            cx="60"
+            cy="78"
+            rx="36"
+            ry="31"
+            fill={`url(#${bodyId})`}
+            stroke={LINE}
+            strokeWidth="3"
+          />
+          <ellipse cx="60" cy="90" rx="22" ry="15" fill={LEAF_LIGHT} opacity="0.5" />
+          <ellipse
+            cx="43"
+            cy="58"
+            rx="9"
+            ry="4.5"
+            fill="#ffffff"
+            opacity="0.35"
+            transform="rotate(-24 43 58)"
+          />
 
           {(mood === 'happy' || mood === 'celebrate') && (
             <>
@@ -135,6 +162,14 @@ function Arm({ side }: { side: 'left' | 'right' }) {
 }
 
 function Eyes({ mood }: { mood: MascotMood }): ReactNode {
+  if (mood === 'sleepy') {
+    return (
+      <g stroke={INK} strokeWidth="3.5" strokeLinecap="round" fill="none">
+        <path d="M40 71 Q46 77 52 71" />
+        <path d="M68 71 Q74 77 80 71" />
+      </g>
+    );
+  }
   if (mood === 'happy' || mood === 'celebrate') {
     // closed, smiling eyes
     return (
@@ -197,6 +232,7 @@ function Mouth({ mood }: { mood: MascotMood }): ReactNode {
     );
   }
   if (mood === 'oops') return <ellipse cx="60" cy="89" rx="4.5" ry="5.5" fill={INK} />;
+  if (mood === 'sleepy') return <ellipse cx="60" cy="88" rx="3" ry="3.6" fill={INK} />;
   const d =
     mood === 'encouraging'
       ? 'M52 87 Q60 92 68 87'
@@ -208,6 +244,20 @@ function Mouth({ mood }: { mood: MascotMood }): ReactNode {
 
 /** Small things around Sprout: thought dots, sparkles, a drop of sweat. */
 function Extras({ mood }: { mood: MascotMood }): ReactNode {
+  if (mood === 'sleepy') {
+    return (
+      <g
+        className="mascot__dots"
+        stroke="#9db58f"
+        strokeWidth="2.4"
+        fill="none"
+        strokeLinecap="round"
+      >
+        <path d="M90 44 h6 l-6 7 h6" />
+        <path d="M101 30 h8 l-8 9 h8" />
+      </g>
+    );
+  }
   if (mood === 'thinking') {
     return (
       <g className="mascot__dots" fill="#9db58f">

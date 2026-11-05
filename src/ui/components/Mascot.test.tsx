@@ -5,7 +5,15 @@ import { AppDatabase } from '../../db/db';
 import { Mascot } from './Mascot';
 import type { MascotMood } from './Mascot';
 
-const MOODS: MascotMood[] = ['normal', 'happy', 'encouraging', 'thinking', 'oops', 'celebrate'];
+const MOODS: MascotMood[] = [
+  'normal',
+  'happy',
+  'encouraging',
+  'thinking',
+  'oops',
+  'celebrate',
+  'sleepy',
+];
 
 describe('Mascot', () => {
   it.each(MOODS)('draws the "%s" mood', (mood) => {

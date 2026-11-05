@@ -3,16 +3,25 @@ import { useLiveQuery } from 'dexie-react-hooks';
 import { Link } from 'react-router-dom';
 import { dayPart, nextLine } from '../../core/cheer';
 import type { MascotMood } from '../../core/cheer';
+import { growthCounts, GROWTH_STAGES } from '../../core/garden';
+import type { GrowthCounts } from '../../core/garden';
+import { pickOfTheDay } from '../../core/habit';
 import { computeStreak } from '../../core/stats';
 import { useI18n } from '../../i18n';
 import type { MessageKey } from '../../i18n';
 import { useRepo } from '../AppProviders';
 import { ButtonLink } from '../components/Button';
-import { DeckRow } from '../components/DeckRow';
+import { DeckCard } from '../components/DeckCard';
+import { GardenScene } from '../components/GardenScene';
 import { Icon } from '../components/Icons';
+import { Logo } from '../components/Layout';
 import { Mascot } from '../components/Mascot';
+import { SpeakButton } from '../components/SpeakButton';
+import { TodayCard } from '../components/TodayCard';
 
 const DAY_MS = 86_400_000;
+/** The list on the home screen stays short; the rest is on the Decks tab. */
+const HOME_DECKS = 4;
 
 /** What Sprout says when patted, one after another. */
 const PAT_LINES = [
@@ -23,22 +32,31 @@ const PAT_LINES = [
   'mascot.line.4',
 ] as const satisfies readonly MessageKey[];
 
+function addGrowth(all: readonly GrowthCounts[]): GrowthCounts {
+  const total = growthCounts([], []);
+  for (const counts of all) for (const stage of GROWTH_STAGES) total[stage] += counts[stage];
+  return total;
+}
+
 export function HomeScreen() {
-  const { t, tp } = useI18n();
+  const { t, tp, languageName } = useI18n();
   const repo = useRepo();
   const summaries = useLiveQuery(() => repo.deckSummaries(Date.now()), [repo]);
-  const streak = useLiveQuery(async () => {
-    const now = Date.now();
-    const logs = await repo.listLogs(now - 400 * DAY_MS);
-    return computeStreak(
-      logs.map((log) => log.at),
-      now,
-    );
+  const logTimes = useLiveQuery(async () => {
+    const logs = await repo.listLogs(Date.now() - 400 * DAY_MS);
+    return logs.map((log) => log.at);
   }, [repo]);
   const due = summaries?.reduce((sum, s) => sum + s.dueCount, 0);
-  const [hour] = useState(() => new Date().getHours());
+  const [now] = useState(() => Date.now());
   const [pats, setPats] = useState(0);
   const [line, setLine] = useState(-1); // -1: the usual message, not a pat line
+
+  // a word from a deck that has cards; the same one all day
+  const wordDeck = pickOfTheDay(summaries?.filter((s) => s.cardCount > 0) ?? [], now)?.deck;
+  const word = useLiveQuery(
+    async () => (wordDeck ? pickOfTheDay(await repo.listCards(wordDeck.id), now) : undefined),
+    [repo, wordDeck?.id, now],
+  );
 
   // Where the system supports it, the installed app's icon shows the number of due reviews.
   // It is refreshed only while the app runs; a web app cannot wake itself up to update it.
@@ -52,22 +70,26 @@ export function HomeScreen() {
     update?.catch(() => undefined);
   }, [due]);
 
-  if (!summaries || due === undefined || streak === undefined) return null;
+  if (!summaries || due === undefined || !logTimes) return null;
 
+  const part = dayPart(new Date(now).getHours());
+  const streak = computeStreak(logTimes, now);
   const cards = summaries.reduce((sum, s) => sum + s.cardCount, 0);
+  const growth = addGrowth(summaries.map((s) => s.growth));
 
-  // the deck with the most reviews waiting
-  const dueDeck = summaries
-    .filter((s) => s.dueCount > 0)
-    .sort((a, b) => b.dueCount - a.dueCount)[0];
+  // the deck with the most reviews waiting, else one with words not studied yet
+  const dueDeck = [...summaries]
+    .sort((a, b) => b.dueCount - a.dueCount)
+    .find((s) => s.dueCount > 0);
+  const freshDeck = summaries.find((s) => s.growth.seed > 0);
 
-  let mood: MascotMood = 'normal';
+  let mood: MascotMood = part === 'night' ? 'sleepy' : 'normal';
   let message = t('home.welcome');
   if (summaries.length > 0 && due > 0) {
     mood = 'encouraging';
     message = tp('home.dueMessage', due);
   } else if (cards > 0) {
-    mood = 'happy';
+    if (part !== 'night') mood = 'happy';
     message = t('home.nothingDue');
   } else if (summaries.length > 0) {
     message = t('home.addCardsMessage');
@@ -82,91 +104,110 @@ export function HomeScreen() {
   return (
     <>
       <h1 className="visually-hidden">{t('nav.home')}</h1>
-      <div className="hero">
-        <div className="hero__text">
-          <p className="hero__greet">{t(`home.greeting.${dayPart(hour)}`)}</p>
-          <div aria-live="polite">
-            {/* a new key replays the appearing animation for each new line */}
-            <p className="hero__message" key={line}>
-              {message}
-            </p>
-          </div>
-        </div>
-        <button
-          type="button"
-          className="mascot-btn"
-          aria-label={t('mascot.pat')}
-          onClick={() => {
-            setPats((p) => p + 1);
-            setLine((l) => nextLine(l, PAT_LINES.length));
-          }}
+
+      <div className="home-top">
+        <Logo />
+        <Link
+          to="/stats"
+          className={streak > 0 ? 'streak-chip streak-chip--alive' : 'streak-chip'}
+          aria-label={t('home.streakLabel', { count: streak })}
         >
-          <Mascot mood={mood} size={112} reaction={pats} />
-        </button>
+          <Icon name="flame" />
+          {streak}
+        </Link>
       </div>
 
-      {dueDeck && (
-        <ButtonLink to={`/decks/${dueDeck.deck.id}`} block>
-          {t('home.review', { name: dueDeck.deck.name })}
-        </ButtonLink>
-      )}
+      <div className="home-grid">
+        <div className="home-grid__main">
+          <GardenScene part={part} growth={growth}>
+            <div className="garden__say">
+              <p className="garden__greet">{t(`home.greeting.${part}`)}</p>
+              <div aria-live="polite">
+                {/* a new key replays the appearing animation for each new line */}
+                <p className="garden__message" key={line}>
+                  {message}
+                </p>
+              </div>
+            </div>
+            <button
+              type="button"
+              className="mascot-btn garden__sprout"
+              aria-label={t('mascot.pat')}
+              onClick={() => {
+                setPats((p) => p + 1);
+                setLine((l) => nextLine(l, PAT_LINES.length));
+              }}
+            >
+              <Mascot mood={mood} size={124} reaction={pats} />
+            </button>
+          </GardenScene>
 
-      <div className="stats" role="group" aria-label={t('home.stats')}>
-        <div className="stat">
-          <span className="stat__icon stat__icon--due">
-            <Icon name="clock" />
-          </span>
-          <span className="stat__value">{due}</span>
-          <span className="muted">{t('home.statDue')}</span>
+          {dueDeck ? (
+            <ButtonLink to={`/decks/${dueDeck.deck.id}/learn`} block>
+              {t('home.review', { name: dueDeck.deck.name })}
+            </ButtonLink>
+          ) : (
+            freshDeck && (
+              <ButtonLink to={`/decks/${freshDeck.deck.id}/learn`} block>
+                {t('home.learnNew', { name: freshDeck.deck.name })}
+              </ButtonLink>
+            )
+          )}
         </div>
-        <div className="stat">
-          <span
-            className={
-              streak > 0
-                ? 'stat__icon stat__icon--streak stat__icon--alive'
-                : 'stat__icon stat__icon--streak'
-            }
-          >
-            <Icon name="flame" />
-          </span>
-          <span className="stat__value">{streak}</span>
-          <span className="muted">{t('home.statStreak')}</span>
+
+        <div className="home-grid__side">
+          <TodayCard times={logTimes} now={now} />
+
+          {word && wordDeck && (
+            <section className="card wotd" aria-labelledby="wotd-title">
+              <h2 className="wotd__label" id="wotd-title">
+                {t('home.wordOfDay')}
+              </h2>
+              <p className="wotd__word">
+                <span lang={wordDeck.learningLang}>{word.term}</span>
+                <SpeakButton text={word.term} lang={wordDeck.learningLang} />
+              </p>
+              <p className="muted" lang={wordDeck.translationLang}>
+                {word.translations.join('; ')}
+              </p>
+              <p className="muted">
+                {wordDeck.name} · {languageName(wordDeck.learningLang)}
+              </p>
+            </section>
+          )}
         </div>
-        <div className="stat">
-          <span className="stat__icon stat__icon--cards">
-            <Icon name="cards" />
-          </span>
-          <span className="stat__value">{cards}</span>
-          <span className="muted">{t('home.statCards')}</span>
+
+        <div className="home-grid__decks">
+          <section className="section" aria-labelledby="home-decks">
+            <div className="section__head">
+              <h2 className="section__title" id="home-decks">
+                {t('home.decks')}
+              </h2>
+              {summaries.length > 0 && (
+                <Link className="section__link" to="/decks">
+                  {t('home.allDecks')}
+                </Link>
+              )}
+            </div>
+            {summaries.length === 0 ? (
+              <>
+                <ButtonLink to="/catalog" block>
+                  {t('decks.catalog')}
+                </ButtonLink>
+                <ButtonLink to="/decks/new" variant="secondary" block>
+                  {t('decks.new')}
+                </ButtonLink>
+              </>
+            ) : (
+              <ul className="deck-grid">
+                {summaries.slice(0, HOME_DECKS).map((s) => (
+                  <DeckCard key={s.deck.id} summary={s} />
+                ))}
+              </ul>
+            )}
+          </section>
         </div>
       </div>
-
-      <Link to="/stats">{t('home.statistics')}</Link>
-
-      <section className="section" aria-labelledby="home-decks">
-        <h2 className="section__title" id="home-decks">
-          {t('home.decks')}
-        </h2>
-        {summaries.length === 0 ? (
-          <>
-            <ButtonLink to="/decks/new" block>
-              {t('decks.new')}
-            </ButtonLink>
-            <ButtonLink to="/catalog" variant="secondary" block>
-              {t('decks.catalog')}
-            </ButtonLink>
-          </>
-        ) : (
-          <>
-            <ul className="list">
-              {summaries.map((s) => (
-                <DeckRow key={s.deck.id} summary={s} />
-              ))}
-            </ul>
-            <Link to="/decks">{t('home.allDecks')}</Link>
-          </>
-        )}
-      </section>
     </>
   );
 }

@@ -1,6 +1,7 @@
 import { useId, useState } from 'react';
 import type { InputHTMLAttributes, TextareaHTMLAttributes } from 'react';
 import { useI18n } from '../../i18n';
+import { Icon } from './Icons';
 
 interface FieldShellProps {
   label: string;
@@ -45,6 +46,31 @@ export function TextField(props: TextFieldProps) {
           {error}
         </span>
       )}
+    </div>
+  );
+}
+
+/** A search box: the label is for screen readers and doubles as the placeholder. */
+export function SearchField({
+  label,
+  value,
+  onChange,
+}: {
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+}) {
+  return (
+    <div className="search">
+      <Icon name="search" />
+      <input
+        className="input"
+        type="search"
+        aria-label={label}
+        placeholder={label}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+      />
     </div>
   );
 }

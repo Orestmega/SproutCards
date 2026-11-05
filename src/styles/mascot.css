@@ -1,0 +1,240 @@
+/*
+ * Sprout's motion. Origins are in the picture's own units (viewBox 0 0 120 120).
+ * Idle: breathing, blinking, leaves in the wind. Reactions: a short animation of `.mascot__actor`,
+ * replayed whenever the component gets a new `reaction` number.
+ */
+.mascot__torso,
+.mascot__sprout,
+.mascot__eyes,
+.mascot__arm,
+.mascot__actor,
+.mascot__shadow,
+.mascot__dots,
+.mascot__drop {
+  transform-box: view-box;
+}
+
+.mascot__torso {
+  animation: mascot-breathe 3.2s ease-in-out infinite;
+}
+
+.mascot__sprout {
+  transform-origin: 60px 22px;
+  animation: mascot-sway 2.6s ease-in-out infinite alternate;
+}
+
+.mascot__eyes {
+  transform-origin: 60px 72px;
+  animation: mascot-blink 4.8s infinite;
+}
+
+.mascot__arm--right {
+  transform-origin: 92px 80px;
+  animation: mascot-wave 1.1s ease-in-out infinite alternate;
+}
+
+.mascot__arm--left {
+  transform-origin: 28px 80px;
+  animation: mascot-wave-left 1.1s ease-in-out infinite alternate;
+}
+
+.mascot__actor {
+  transform-origin: 60px 112px;
+}
+
+.mascot--happy .mascot__actor {
+  animation: mascot-hop 520ms var(--ease-spring);
+}
+
+.mascot--celebrate .mascot__actor {
+  animation: mascot-jump 760ms ease-out;
+}
+
+.mascot--oops .mascot__actor {
+  animation: mascot-wobble 480ms ease-in-out;
+}
+
+.mascot--encouraging .mascot__actor {
+  animation: mascot-nod 600ms ease-in-out;
+}
+
+.mascot--thinking .mascot__actor {
+  animation: mascot-tilt 3.4s ease-in-out infinite;
+}
+
+.mascot__sparkle {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: mascot-twinkle 1.2s ease-in-out infinite;
+}
+
+.mascot__dots > * {
+  animation: mascot-dot 1.5s ease-in-out infinite;
+}
+
+.mascot__dots > :nth-child(2) {
+  animation-delay: 200ms;
+}
+
+.mascot__dots > :nth-child(3) {
+  animation-delay: 400ms;
+}
+
+.mascot__drop {
+  animation: mascot-drop 1.6s ease-in infinite;
+}
+
+@keyframes mascot-breathe {
+  50% {
+    transform: translateY(-1.6px);
+  }
+}
+
+@keyframes mascot-sway {
+  from {
+    transform: rotate(-7deg);
+  }
+  to {
+    transform: rotate(7deg);
+  }
+}
+
+@keyframes mascot-blink {
+  0%,
+  92%,
+  100% {
+    transform: scaleY(1);
+  }
+  95% {
+    transform: scaleY(0.1);
+  }
+}
+
+@keyframes mascot-wave {
+  from {
+    transform: rotate(-10deg);
+  }
+  to {
+    transform: rotate(14deg);
+  }
+}
+
+@keyframes mascot-wave-left {
+  from {
+    transform: rotate(10deg);
+  }
+  to {
+    transform: rotate(-14deg);
+  }
+}
+
+@keyframes mascot-hop {
+  0% {
+    transform: none;
+  }
+  30% {
+    transform: translateY(-10px) scale(1.02, 0.98);
+  }
+  60% {
+    transform: translateY(0) scale(1.06, 0.94);
+  }
+  100% {
+    transform: none;
+  }
+}
+
+@keyframes mascot-jump {
+  0% {
+    transform: scale(1.06, 0.92);
+  }
+  35% {
+    transform: translateY(-18px) rotate(-6deg);
+  }
+  60% {
+    transform: translateY(-18px) rotate(6deg);
+  }
+  85% {
+    transform: translateY(0) scale(1.06, 0.94);
+  }
+  100% {
+    transform: none;
+  }
+}
+
+@keyframes mascot-wobble {
+  20% {
+    transform: rotate(-7deg);
+  }
+  45% {
+    transform: rotate(6deg);
+  }
+  70% {
+    transform: rotate(-3deg);
+  }
+  100% {
+    transform: none;
+  }
+}
+
+@keyframes mascot-nod {
+  40% {
+    transform: translateY(3px) scale(1.02, 0.97);
+  }
+  100% {
+    transform: none;
+  }
+}
+
+@keyframes mascot-tilt {
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+  50% {
+    transform: rotate(-4deg);
+  }
+}
+
+@keyframes mascot-twinkle {
+  0%,
+  100% {
+    transform: scale(0.6);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.15);
+    opacity: 1;
+  }
+}
+
+@keyframes mascot-dot {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes mascot-drop {
+  0% {
+    transform: translateY(-2px);
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(6px);
+    opacity: 0;
+  }
+}
+
+/* reduced motion: Sprout stands still (and stays fully visible) */
+@media (prefers-reduced-motion: reduce) {
+  .mascot *,
+  .bubble {
+    animation: none !important;
+  }
+}

@@ -14,6 +14,7 @@ import { useI18n } from '../../i18n';
 import { useApp } from '../AppProviders';
 import { ButtonLink } from '../components/Button';
 import { EmptyState } from '../components/Notice';
+import { useCue } from '../cues';
 import { useStudyChrome } from './StudyLayout';
 import { SummaryView } from './SummaryView';
 import type { SaveState } from './SummaryView';
@@ -65,6 +66,7 @@ function MatchGame({
   const { t } = useI18n();
   const { repo, settings } = useApp();
   const chrome = useStudyChrome();
+  const cue = useCue();
   const navigate = useNavigate();
   const { direction } = useStudyParams();
   const { deck } = data;
@@ -136,11 +138,15 @@ function MatchGame({
       setNow(at);
       setState(next);
       // Sprout cheers a found pair and winces at a wrong one
-      if (next.matched.length > state.matched.length)
+      if (next.matched.length > state.matched.length) {
         chrome.react(isMatchFinished(next) ? 'celebrate' : 'happy');
-      else if (next.mistakes > state.mistakes) chrome.react('oops');
+        cue('correct');
+      } else if (next.mistakes > state.mistakes) {
+        chrome.react('oops');
+        cue('wrong');
+      }
     },
-    [state, chrome],
+    [state, chrome, cue],
   );
 
   if (state.tiles.length < 4) {

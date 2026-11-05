@@ -1,12 +1,20 @@
+import { useEffect } from 'react';
 import type { CSSProperties, ReactNode } from 'react';
+import { useLiveQuery } from 'dexie-react-hooks';
 import { Link } from 'react-router-dom';
+import { todayCount } from '../../core/habit';
+import { startOfDayPlus } from '../../core/scheduler';
 import type { Card } from '../../core/types';
 import { useI18n } from '../../i18n';
+import { useApp } from '../AppProviders';
 import { Button, ButtonLink } from '../components/Button';
 import { Confetti } from '../components/Confetti';
+import { CountUp } from '../components/CountUp';
 import { MascotBubble } from '../components/Mascot';
 import type { MascotMood } from '../components/Mascot';
 import { Notice } from '../components/Notice';
+import { ProgressBar } from '../components/ProgressBar';
+import { useCue } from '../cues';
 
 export type SaveState = 'saving' | 'saved' | 'error';
 
@@ -40,6 +48,31 @@ function ScoreRing({ score, children }: { score: number; children: ReactNode }) 
         />
       </svg>
       {children}
+    </div>
+  );
+}
+
+/** How far today's goal is now: the answers of this session are already counted. */
+function GoalStrip() {
+  const { t } = useI18n();
+  const { repo, settings } = useApp();
+  const count = useLiveQuery(async () => {
+    const now = Date.now();
+    const logs = await repo.listLogs(startOfDayPlus(now, 0));
+    return todayCount(
+      logs.map((log) => log.at),
+      now,
+    );
+  }, [repo]);
+  if (count === undefined) return null;
+  const goal = settings.dailyGoal;
+  const label = t(count >= goal ? 'summary.goalDone' : 'summary.goal', { count, goal });
+  return (
+    <div className="goal-strip">
+      <div className="goal-strip__main">
+        <p>{label}</p>
+        <ProgressBar value={count / goal} label={label} />
+      </div>
     </div>
   );
 }
@@ -81,6 +114,8 @@ export function SummaryView({
   extra?: ReactNode;
 }) {
   const { t } = useI18n();
+  const cue = useCue();
+  useEffect(() => cue('finish'), [cue]);
   return (
     <>
       <h2 className="visually-hidden">{t('study.summary')}</h2>
@@ -96,18 +131,22 @@ export function SummaryView({
         ) : (
           <ScoreRing score={score}>
             <p className="headline" aria-live="polite">
-              {headline}
+              <CountUp text={headline} />
             </p>
           </ScoreRing>
         ))}
       <div className="stats" role="group" aria-label={t('study.summary')}>
         {stats.map((s) => (
           <div className="stat" key={s.label}>
-            <span className="stat__value">{s.value}</span>
+            <span className="stat__value">
+              <CountUp text={String(s.value)} />
+            </span>
             <span className="muted">{s.label}</span>
           </div>
         ))}
       </div>
+
+      <GoalStrip />
 
       {saveState === 'error' && (
         <Notice kind="error">

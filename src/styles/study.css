@@ -1,0 +1,838 @@
+/* ---------- Study frame ---------- */
+.study__top {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  padding-top: env(safe-area-inset-top);
+  background: var(--glass);
+  backdrop-filter: blur(14px);
+}
+
+/* close button · progress bar · Sprout */
+.study__bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: var(--space-1) var(--space-3);
+}
+
+/* study screens have no navigation, so less space is reserved at the bottom */
+.study .app__main {
+  padding-top: var(--space-4);
+  padding-bottom: calc(var(--space-6) + 148px + env(safe-area-inset-bottom));
+}
+
+/* ---------- Progress bar ---------- */
+.progress {
+  height: 12px;
+  background: var(--color-surface-strong);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+}
+
+.progress__fill {
+  position: relative;
+  height: 100%;
+  min-width: 12px;
+  background: linear-gradient(90deg, var(--color-primary-dark), var(--color-primary));
+  border-radius: var(--radius-pill);
+  transition: width 520ms var(--ease-spring);
+}
+
+/* a light stripe on the fill, like a shine */
+.progress__fill::after {
+  content: '';
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  top: 3px;
+  height: 3px;
+  border-radius: var(--radius-pill);
+  background: rgb(255 255 255 / 40%);
+}
+
+.progress__fill[data-empty='true'] {
+  min-width: 0;
+}
+
+.progress__fill[data-empty='true']::after {
+  display: none;
+}
+
+.progress--top {
+  flex: 1;
+  height: 16px;
+}
+
+.progress--top .progress__fill::after {
+  top: 4px;
+  height: 4px;
+}
+
+/* ---------- Sprout next to the bar ---------- */
+.study__bar .icon-btn {
+  background: var(--color-surface);
+  box-shadow: var(--shadow-1);
+}
+
+.buddy {
+  position: relative;
+  flex: none;
+  width: 52px;
+  height: 52px;
+}
+
+/* what Sprout says during a session ("3 in a row!"), a small bubble below it */
+.buddy__say {
+  position: absolute;
+  top: calc(100% + 2px);
+  right: 0;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-pill);
+  background: var(--color-ink);
+  color: var(--color-on-ink);
+  font-size: var(--font-size-sm);
+  font-weight: 900;
+  white-space: nowrap;
+  box-shadow: var(--shadow-float);
+  animation: say 1800ms ease-in-out both;
+  pointer-events: none;
+}
+
+@keyframes say {
+  0% {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.8);
+  }
+  12%,
+  85% {
+    opacity: 1;
+    transform: none;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+
+/* ---------- Question ---------- */
+.prompt {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-5) var(--space-4);
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-2);
+  text-align: center;
+}
+
+.prompt__text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  font-size: 2.25rem;
+  font-weight: 900;
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+  overflow-wrap: anywhere;
+}
+
+.input--big {
+  min-height: 60px;
+  font-size: var(--font-size-lg);
+  text-align: center;
+}
+
+/* ---------- Big answer options ---------- */
+.choice {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 64px;
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-bg);
+  border: 2px solid var(--color-border);
+  border-bottom-width: var(--edge);
+  border-bottom-color: var(--color-edge);
+  border-radius: var(--radius-lg);
+  text-align: left;
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  line-height: 1.2;
+  cursor: pointer;
+  transition:
+    transform var(--motion-fast),
+    background var(--motion-fast),
+    border-color var(--motion-fast);
+}
+
+.choice:hover:not(:disabled) {
+  border-color: var(--color-primary);
+  border-bottom-color: var(--color-primary-dark);
+  transform: translateY(-1px);
+}
+
+.choice:active:not(:disabled) {
+  transform: translateY(2px);
+}
+
+.choice:disabled {
+  cursor: default;
+}
+
+.choice[aria-pressed='true'] {
+  border-color: var(--color-primary);
+  border-bottom-color: var(--color-primary-dark);
+  background: var(--color-primary-soft);
+}
+
+/* After the answer: higher specificity than the "selected" style so a wrong pick is not green. */
+.choice.choice--correct,
+.choice.choice--correct[aria-pressed='true'] {
+  border-color: var(--color-correct);
+  background: var(--color-correct-soft);
+  animation: pop 380ms var(--ease-spring);
+}
+
+.choice.choice--wrong,
+.choice.choice--wrong[aria-pressed='true'] {
+  border-color: var(--color-wrong);
+  background: var(--color-wrong-soft);
+  animation: shake 360ms ease-in-out;
+}
+
+/* the options that are neither right nor picked step back */
+.stack:has(.choice--correct) .choice:not(.choice--correct, .choice--wrong) {
+  opacity: 0.55;
+}
+
+.choice__num {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  margin-right: var(--space-3);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-sunken);
+  font-size: var(--font-size-sm);
+  font-weight: 900;
+  color: var(--color-text-muted);
+}
+
+.choice__mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: var(--radius-pill);
+  font-size: 1rem;
+  font-weight: 900;
+  color: var(--color-bg);
+  background: var(--color-correct);
+}
+
+.choice--wrong .choice__mark {
+  background: var(--color-wrong);
+}
+
+@keyframes pop {
+  45% {
+    transform: scale(1.04);
+  }
+}
+
+@keyframes shake {
+  20%,
+  60% {
+    transform: translateX(-6px);
+  }
+  40%,
+  80% {
+    transform: translateX(6px);
+  }
+}
+
+/* ---------- The answer sheet: rises from the bottom after an answer ---------- */
+.sheet {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 15;
+  padding: var(--space-4) var(--space-4) calc(var(--space-4) + env(safe-area-inset-bottom));
+  background: var(--color-surface);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  box-shadow: var(--shadow-float);
+  animation: sheet-in 340ms var(--ease-out) both;
+}
+
+.sheet--success {
+  background: var(--color-correct-soft);
+}
+.sheet--error {
+  background: var(--color-wrong-soft);
+}
+.sheet--warn {
+  background: var(--color-almost-soft);
+}
+
+.sheet__inner {
+  max-width: calc(var(--content-width) - 2 * var(--space-4));
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.sheet__head {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+
+.sheet__title {
+  font-size: 1.25rem;
+  font-weight: 900;
+  line-height: 1.2;
+}
+
+.sheet .notice__icon {
+  width: 32px;
+  height: 32px;
+  background: var(--color-text-muted);
+}
+
+.sheet--success .notice__icon {
+  background: var(--color-correct);
+}
+.sheet--error .notice__icon {
+  background: var(--color-wrong);
+}
+.sheet--warn .notice__icon {
+  background: var(--color-almost);
+}
+
+@keyframes sheet-in {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: none;
+  }
+}
+
+/* the typing hint */
+.hint {
+  text-align: center;
+  font-size: var(--font-size-lg);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: var(--color-primary-text);
+  animation: pop 300ms var(--ease-spring);
+}
+
+/* ---------- Flashcards: a real card that turns and can be swiped ---------- */
+.fc-stage {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  perspective: 1200px;
+}
+
+/* the cards waiting behind */
+.fc-stage::before,
+.fc-stage::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-1);
+}
+
+.fc-stage::before {
+  transform: translateY(16px) scale(0.92);
+  opacity: 0.45;
+}
+
+.fc-stage::after {
+  transform: translateY(8px) scale(0.96);
+  opacity: 0.75;
+}
+
+.fc-stage--last::before,
+.fc-stage--last::after {
+  display: none;
+}
+
+.fc {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  min-height: 320px;
+  touch-action: pan-y; /* a vertical move still scrolls the page */
+  user-select: none;
+  animation: fc-in 320ms var(--ease-spring);
+}
+
+@keyframes fc-in {
+  from {
+    transform: translateY(12px) scale(0.95);
+    opacity: 0;
+  }
+}
+
+.fc--drag {
+  animation: none;
+}
+
+.fc--settle {
+  transition: transform 300ms var(--ease-spring);
+}
+
+.fc--away {
+  transition:
+    transform 240ms ease-in,
+    opacity 240ms ease-in;
+  opacity: 0;
+}
+
+.fc__inner {
+  position: relative;
+  min-height: inherit;
+  transform-style: preserve-3d;
+  transition: transform 520ms var(--ease-out);
+}
+
+.fc__inner--flipped {
+  transform: rotateY(180deg);
+}
+
+.fc__face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  width: 100%;
+  padding: var(--space-5) var(--space-4);
+  border: 0;
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-2);
+  text-align: center;
+  color: var(--color-text);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  overflow: auto;
+}
+
+.fc__face--front {
+  cursor: pointer;
+}
+
+.fc__face--back {
+  transform: rotateY(180deg);
+  background: var(--color-primary-soft);
+}
+
+/* a hidden side must not take the keyboard focus */
+.fc__inner--flipped .fc__face--front,
+.fc__inner:not(.fc__inner--flipped) .fc__face--back {
+  visibility: hidden;
+  transition: visibility 0s 260ms;
+}
+
+.fc__tools {
+  position: absolute;
+  top: var(--space-2);
+  right: var(--space-2);
+  z-index: 2;
+  display: flex;
+}
+
+.fc__tools--left {
+  right: auto;
+  left: var(--space-2);
+}
+
+.flip-card__text {
+  font-size: 2.5rem;
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  overflow-wrap: anywhere;
+}
+
+.flip-answer__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 1.75rem;
+  font-weight: 900;
+  line-height: 1.2;
+}
+
+.flip-answer__list li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+}
+
+.flip-answer__examples {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-align: center;
+}
+
+.fc-turn {
+  border: 0;
+  background: transparent;
+  color: var(--color-primary-text);
+  font-weight: 800;
+  font-size: var(--font-size-sm);
+  min-height: 36px;
+  padding: 0 var(--space-3);
+  cursor: pointer;
+}
+
+/* KNOW / LEARN stamps while swiping */
+.stamp {
+  position: absolute;
+  top: var(--space-5);
+  z-index: 3;
+  padding: var(--space-1) var(--space-3);
+  border: 3px solid currentcolor;
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  font-size: 1.125rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+
+.stamp--know {
+  left: var(--space-4);
+  color: var(--color-correct);
+  transform: rotate(-10deg);
+}
+
+.stamp--learn {
+  right: var(--space-4);
+  color: var(--color-almost);
+  transform: rotate(10deg);
+}
+
+.fc-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+}
+
+.fc-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  min-height: 44px;
+}
+
+/* ---------- Test: true/false, matching ---------- */
+.statement {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  text-align: center;
+  font-size: var(--font-size-xl);
+  font-weight: 900;
+  overflow-wrap: anywhere;
+}
+
+.statement__equals {
+  font-size: var(--font-size-lg);
+  color: var(--color-text-muted);
+}
+
+.pairs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+}
+
+.pairs__col {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.options-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+/* ---------- Tiles (Match game, matching questions) ---------- */
+.tiles {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+}
+
+.tile {
+  position: relative;
+  width: 100%;
+  min-height: 72px;
+  padding: var(--space-2) var(--space-3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  background: var(--color-bg);
+  border: 2px solid var(--color-border);
+  border-bottom-width: var(--edge);
+  border-bottom-color: var(--color-edge);
+  border-radius: var(--radius-md);
+  font: inherit;
+  font-size: 1.0625rem;
+  font-weight: 800;
+  line-height: 1.2;
+  text-align: center;
+  overflow-wrap: anywhere;
+  cursor: pointer;
+  color: var(--color-text);
+  transition:
+    transform var(--motion-fast) var(--ease-spring),
+    background var(--motion-fast),
+    border-color var(--motion-fast);
+}
+
+.tile:active:not(:disabled) {
+  transform: scale(0.96);
+}
+
+.tile[aria-pressed='true'] {
+  border-color: var(--color-primary-dark);
+  background: var(--color-primary-soft);
+  transform: translateY(-2px);
+}
+
+.tile--matched {
+  border-style: dashed;
+  background: var(--color-surface-sunken);
+  color: var(--color-text-muted);
+  cursor: default;
+  animation: matched 420ms var(--ease-spring);
+}
+
+.tile--wrong {
+  border-color: var(--color-wrong);
+  background: var(--color-wrong-soft);
+  animation: shake 300ms ease-in-out;
+}
+
+@keyframes matched {
+  40% {
+    transform: scale(1.06);
+    background: var(--color-correct-soft);
+    border-color: var(--color-correct);
+  }
+}
+
+.tile__badge {
+  flex: none;
+  min-width: 24px;
+  height: 24px;
+  padding: 0 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-pill);
+  background: var(--color-ink);
+  color: var(--color-on-ink);
+  font-size: var(--font-size-sm);
+  font-weight: 900;
+}
+
+.timer {
+  font-size: var(--font-size-xl);
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+}
+
+.hud {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-3);
+}
+
+/* ---------- Result ---------- */
+.headline {
+  text-align: center;
+  font-size: 3rem;
+  font-weight: 900;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  animation: pop-in 600ms var(--ease-spring) both;
+}
+
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.score {
+  position: relative;
+  width: 168px;
+  height: 168px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.score__ring {
+  position: absolute;
+  inset: 0;
+  transform: rotate(-90deg);
+}
+
+.score__track {
+  stroke: var(--color-surface-strong);
+}
+
+.score__value {
+  stroke: var(--color-primary-dark);
+  stroke-linecap: round;
+  animation: ring-fill 1100ms var(--ease-out) both;
+}
+
+@keyframes ring-fill {
+  from {
+    stroke-dashoffset: var(--ring-length);
+  }
+}
+
+.score .headline {
+  font-size: 2.75rem;
+}
+
+.result-mark {
+  flex: none;
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-pill);
+  color: var(--color-bg);
+  font-weight: 900;
+}
+
+.result-mark--correct {
+  background: var(--color-correct);
+}
+.result-mark--almost {
+  background: var(--color-almost);
+}
+.result-mark--wrong {
+  background: var(--color-wrong);
+}
+
+/* today's goal on the result screen */
+.goal-strip {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-1);
+  font-weight: 700;
+}
+
+.goal-strip .progress {
+  margin-top: var(--space-1);
+}
+
+.goal-strip__main {
+  flex: 1;
+  min-width: 0;
+}
+
+/* ---------- Confetti (decoration for a great result) ---------- */
+.confetti {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 30;
+}
+
+.confetti__piece {
+  position: absolute;
+  top: -16px;
+  width: 9px;
+  height: 14px;
+  border-radius: 2px;
+  opacity: 0;
+  animation: confetti-fall var(--fall, 2.2s) ease-in var(--delay, 0s) both;
+}
+
+@keyframes confetti-fall {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) rotate(0);
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--drift, 0), 105vh) rotate(var(--spin, 540deg));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .confetti {
+    display: none;
+  }
+
+  .buddy__say,
+  .fc,
+  .sheet {
+    animation: none;
+  }
+
+  .fc__inner {
+    transition: none;
+  }
+}
+
+.fc-actions .btn {
+  padding-inline: var(--space-2);
+  font-size: 1rem;
+}

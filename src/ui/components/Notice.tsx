@@ -26,16 +26,19 @@ export function EmptyState({
   text,
   mood = 'normal',
   children,
+  main,
 }: {
   title: string;
   text?: string;
   mood?: MascotMood;
   children?: ReactNode;
+  /** This message is the whole page: its title is the page's main heading. */
+  main?: boolean;
 }) {
   return (
     <div className="empty">
       <Mascot mood={mood} size={104} />
-      <h2>{title}</h2>
+      {main ? <h1>{title}</h1> : <h2>{title}</h2>}
       {text && <p className="muted">{text}</p>}
       {children}
     </div>

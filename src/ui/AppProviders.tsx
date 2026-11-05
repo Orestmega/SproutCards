@@ -9,6 +9,7 @@ import type { Repo } from '../db/repo';
 import { I18nProvider, useI18n } from '../i18n';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { Mascot } from './components/Mascot';
+import { applyTheme, rememberTheme } from './theme';
 
 /** Interface language guessed from the browser, used until the user chooses one. */
 export function detectUiLanguage(browserLanguage: string | undefined): UiLanguage {
@@ -77,6 +78,13 @@ export function AppProviders({ db, children }: { db: AppDatabase; children: Reac
   useEffect(() => {
     document.documentElement.lang = settings?.uiLanguage ?? browserLanguage;
   }, [settings?.uiLanguage, browserLanguage]);
+
+  const themeChoice = settings?.theme;
+  useEffect(() => {
+    if (!themeChoice) return;
+    rememberTheme(themeChoice);
+    return applyTheme(themeChoice);
+  }, [themeChoice]);
 
   if (openState === 'failed') {
     return (

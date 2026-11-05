@@ -175,9 +175,11 @@ describe('statistics', () => {
   it('shows an empty state before any studying', async () => {
     renderAt('/stats');
     expect(await screen.findByText('No statistics yet')).toBeInTheDocument();
+    // what can be reached is visible from the start
+    expect(screen.getByRole('heading', { name: 'Achievements' })).toBeInTheDocument();
   });
 
-  it('shows streak, learned words, total reviews, accuracy, the chart and deck progress', async () => {
+  it('shows the garden, streaks, reviews, accuracy, activity, forecast, achievements and decks', async () => {
     const repo = createRepo(db);
     const deck = await repo.createDeck({
       name: 'Travel',
@@ -217,16 +219,26 @@ describe('statistics', () => {
     const value = (label: string) =>
       within(numbers).getByText(label).parentElement?.querySelector('.stat__value')?.textContent;
     expect(value('Day streak')).toBe('1');
-    expect(value('Words learned')).toBe('1');
+    expect(value('Longest streak')).toBe('1');
     expect(value('Reviews in total')).toBe('3');
     expect(value('Correct, last 7 days')).toBe('67%');
 
-    // the chart has a text version for screen readers: today has 3 reviews
-    const chart = screen.getByRole('figure', { name: /over the last 14 days/ });
-    expect(within(chart).getAllByRole('listitem')).toHaveLength(14);
-    expect(within(chart).getAllByRole('listitem').at(-1)).toHaveTextContent(/: 3$/);
+    // the heatmap has a text version for screen readers: only today has reviews
+    const days = screen.getByRole('list', { name: /over the last 126 days/ });
+    expect(within(days).getAllByRole('listitem')).toHaveLength(1);
+    expect(within(days).getByRole('listitem')).toHaveTextContent(/: 3$/);
 
-    expect(screen.getByText('1 learned, 0 in progress, 1 new')).toBeInTheDocument();
+    // the garden: one word in bloom, one seed
+    expect(screen.getByRole('heading', { name: 'Your garden' })).toBeInTheDocument();
+    expect(screen.getAllByText('Seeds: 1 · Sprouts: 0 · Leaves: 0 · Blooms: 1')).toHaveLength(1);
+
+    // the forecast counts the word due tomorrow
+    expect(screen.getByRole('heading', { name: 'Reviews, next 7 days' })).toBeInTheDocument();
+
+    // achievements are worked out from the same data
+    expect(screen.getByText('First step').closest('.ach')).toHaveClass('ach--done');
+    expect(screen.getByText('First flower').closest('.ach')).toHaveClass('ach--done');
+    expect(screen.getByText('A full week').closest('.ach')).not.toHaveClass('ach--done');
   });
 });
 

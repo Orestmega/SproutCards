@@ -3,7 +3,8 @@
  * the mood for a final score and the greeting for the time of day. Pure rules, no React, no browser.
  */
 
-export type MascotMood = 'normal' | 'happy' | 'encouraging' | 'thinking' | 'oops' | 'celebrate';
+export type MascotMood =
+  'normal' | 'happy' | 'encouraging' | 'thinking' | 'oops' | 'celebrate' | 'sleepy';
 
 export type AnswerOutcome = 'correct' | 'almost' | 'wrong';
 

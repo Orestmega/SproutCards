@@ -13,6 +13,8 @@ export default defineConfig({
       registerType: 'prompt',
       includeAssets: ['favicon.svg', 'apple-touch-icon.png'],
       workbox: {
+        // the app's own font is part of the app: it must work offline too
+        globPatterns: ['**/*.{js,css,html,woff2}'],
         // single-page app: any navigation falls back to the cached index.html when offline
         navigateFallback: 'index.html',
         cleanupOutdatedCaches: true,

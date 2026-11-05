@@ -1,0 +1,121 @@
+import type { ReactNode } from 'react';
+import type { DayPart } from '../../core/cheer';
+import { gardenPlots } from '../../core/garden';
+import type { GrowthCounts } from '../../core/garden';
+import { PlantArt } from './Plant';
+
+/** Where plants stand in the picture: [x, y of the plant's foot, size], back row first. */
+const PLOTS: [number, number, number][] = [
+  [132, 176, 30],
+  [176, 170, 28],
+  [92, 186, 32],
+  [216, 178, 32],
+  [46, 198, 38],
+  [150, 206, 38],
+  [254, 192, 34],
+  [100, 222, 44],
+  [204, 216, 42],
+];
+
+const STARS = [
+  [30, 26],
+  [78, 62],
+  [120, 18],
+  [168, 48],
+  [214, 22],
+  [262, 56],
+  [306, 16],
+  [352, 44],
+  [384, 22],
+];
+
+function Cloud({ x, y, scale, second }: { x: number; y: number; scale: number; second?: boolean }) {
+  return (
+    <g transform={`translate(${x} ${y}) scale(${scale})`}>
+      <path
+        className={second ? 'garden__cloud garden__cloud--2' : 'garden__cloud'}
+        d="M12 26a10 10 0 0 1 2-20 14 14 0 0 1 26-2 11 11 0 0 1 16 10 8 8 0 0 1-2 12z"
+      />
+    </g>
+  );
+}
+
+/**
+ * The home picture: the sky follows the time of day, the plants are the user's own words (see
+ * `gardenPlots`). `children` are drawn on top (Sprout and its words). The picture itself is decoration.
+ */
+export function GardenScene({
+  part,
+  growth,
+  children,
+}: {
+  part: DayPart;
+  growth: GrowthCounts;
+  children: ReactNode;
+}) {
+  const plots = gardenPlots(growth, PLOTS.length);
+  const dark = part === 'night';
+  return (
+    <div className={`garden garden--${part}`} data-part={part}>
+      {/* the sky has its own layer: on a wide screen the hills are cropped, the sun must not be */}
+      <svg
+        className="garden__sky"
+        viewBox="0 0 400 110"
+        preserveAspectRatio="xMaxYMin meet"
+        aria-hidden="true"
+        focusable="false"
+      >
+        {dark && (
+          <g>
+            {STARS.map(([x, y], i) => (
+              <circle key={i} className="garden__star" cx={x} cy={y} r={i % 3 === 0 ? 1.8 : 1.2} />
+            ))}
+          </g>
+        )}
+        {dark ? (
+          <g className="garden__sun">
+            <circle cx="330" cy="50" r="24" fill="#f4f1d0" />
+            <circle cx="340" cy="44" r="20" fill="#16264f" />
+          </g>
+        ) : (
+          <g className="garden__sun">
+            <circle cx="330" cy="54" r="38" fill="#fff6c9" opacity="0.65" />
+            <circle cx="330" cy="54" r="24" fill="#ffc83d" />
+          </g>
+        )}
+        <Cloud x={40} y={30} scale={0.9} />
+        <Cloud x={190} y={58} scale={0.6} second />
+      </svg>
+      <svg
+        className="garden__scene"
+        viewBox="0 0 400 240"
+        preserveAspectRatio="xMidYMax slice"
+        aria-hidden="true"
+        focusable="false"
+      >
+        <path className="garden__hill--1" d="M0 150 Q80 104 180 138 T400 118 V240 H0 Z" />
+        <path className="garden__hill--2" d="M0 182 Q120 134 240 168 T400 152 V240 H0 Z" />
+        <path className="garden__hill--3" d="M0 214 Q140 168 280 196 T400 186 V240 H0 Z" />
+
+        {plots.map((stage, i) => {
+          const [x, y, size] = PLOTS[i] as [number, number, number];
+          return (
+            <svg
+              key={i}
+              x={x - size / 2}
+              y={y - size}
+              width={size}
+              height={size}
+              viewBox="0 0 32 32"
+            >
+              <g className="garden__plant">
+                <PlantArt stage={stage} />
+              </g>
+            </svg>
+          );
+        })}
+      </svg>
+      {children}
+    </div>
+  );
+}

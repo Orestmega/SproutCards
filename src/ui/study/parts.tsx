@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import type { FormEvent } from 'react';
+import { maxHintLetters, revealHint } from '../../core/hint';
 import type { Question } from '../../core/learn';
 import { useI18n } from '../../i18n';
 import { Button } from '../components/Button';
@@ -82,6 +83,7 @@ export function TypingForm({
   skipLabel,
   initial = '',
   onChange,
+  hintFor,
 }: {
   /** id of the element that holds the instruction (used as the input's accessible name). */
   labelId: string;
@@ -91,8 +93,12 @@ export function TypingForm({
   skipLabel?: string;
   initial?: string;
   onChange?: (text: string) => void;
+  /** The answer; when given, a button reveals its letters one by one (Learn only, never in a test). */
+  hintFor?: string;
 }) {
+  const { t } = useI18n();
   const [text, setText] = useState(initial);
+  const [hintLetters, setHintLetters] = useState(0);
   function submit(event: FormEvent) {
     event.preventDefault();
     onSubmit(text);
@@ -113,9 +119,24 @@ export function TypingForm({
         autoComplete="off"
         spellCheck={false}
       />
+      {hintLetters > 0 && hintFor !== undefined && (
+        <p className="hint" aria-live="polite">
+          {revealHint(hintFor, hintLetters)}
+        </p>
+      )}
       <Button type="submit" block>
         {submitLabel}
       </Button>
+      {hintFor !== undefined && (
+        <Button
+          variant="secondary"
+          block
+          disabled={hintLetters >= maxHintLetters(hintFor)}
+          onClick={() => setHintLetters((n) => n + 1)}
+        >
+          {t('learn.hint')}
+        </Button>
+      )}
       {onSkip && (
         <Button variant="secondary" block onClick={onSkip}>
           {skipLabel}
