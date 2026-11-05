@@ -312,6 +312,10 @@ export const uk: Record<Keys, string> & Record<string, string> = {
   'sources.ai.title': 'Переклади слів: написав ШІ, не перевірено',
   'sources.ai.text':
     'Переклади слів і фраз у готових колодах написав ШІ-помічник. Людина їх не перевіряла, тому вони можуть містити помилки або не охоплювати інших значень. Такі картки позначено «Не перевірено». Самі слова обрано за частотою в реченнях Tatoeba.',
+  'sources.font.title': 'Шрифт: Nunito',
+  'sources.font.text':
+    'Інтерфейс використовує шрифт Nunito (автори: The Nunito Project Authors) за ліцензією SIL Open Font License 1.1. Шрифт зберігається всередині застосунку.',
+  'sources.font.license': 'SIL Open Font License 1.1',
   'sources.app.title': 'Застосунок',
   'sources.app.text':
     'SproutCards — програма з відкритим кодом за ліцензією MIT. У ній немає трекерів, вона нікуди не надсилає дані; твої колоди лишаються на твоєму пристрої.',

@@ -292,6 +292,10 @@ export const en = {
   'sources.ai.title': 'Word translations: written by AI, not checked',
   'sources.ai.text':
     'The translations of the words and phrases in the ready-made decks were written by an AI assistant. A human has not checked them, so they can contain mistakes or miss other meanings. These cards are marked “Not checked”. The words themselves were chosen by how often they occur in Tatoeba sentences.',
+  'sources.font.title': 'Font: Nunito',
+  'sources.font.text':
+    'The interface uses the Nunito font by The Nunito Project Authors, under the SIL Open Font License 1.1. It is stored inside the app.',
+  'sources.font.license': 'SIL Open Font License 1.1',
   'sources.app.title': 'The app',
   'sources.app.text':
     'SproutCards is open source software under the MIT license. It has no trackers and sends no data anywhere; your decks stay on your device.',

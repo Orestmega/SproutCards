@@ -156,9 +156,11 @@
   gap: var(--space-1);
 }
 
+/* the width follows the label: "Налаштування" needs more room than "Колоди" */
 .nav__link {
-  flex: 1;
+  flex: 1 1 auto;
   min-width: 0;
+  padding-inline: 6px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -167,7 +169,7 @@
   border-radius: 18px;
   color: var(--color-text-muted);
   text-decoration: none;
-  font-size: 0.75rem;
+  font-size: 0.71875rem;
   font-weight: 800;
   transition:
     background var(--motion-fast),
@@ -215,7 +217,6 @@
   }
 
   .app--shell .app__main {
-    position: relative;
     max-width: var(--content-width-wide);
     padding: var(--space-6) var(--space-6) var(--space-6);
   }
@@ -1020,16 +1021,25 @@ textarea.input {
   min-height: 40px;
 }
 
-/* big screens: the side panel has the logo; the streak goes up into the top corner */
-@media (min-width: 960px) {
-  .home-top {
-    position: absolute;
-    top: var(--space-5);
-    right: var(--space-6);
-  }
+/* phones show the logo here, big screens have it in the side panel and show the page title */
+.home-top__title {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+}
 
+@media (min-width: 960px) {
   .home-top .logo {
     display: none;
+  }
+
+  .home-top__title {
+    position: static;
+    width: auto;
+    height: auto;
+    clip: auto;
   }
 }
 

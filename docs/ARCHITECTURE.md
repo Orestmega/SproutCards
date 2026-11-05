@@ -203,6 +203,20 @@ Everything that touches several tables (delete deck, save session, import) runs 
 with only the changed stores and an `.upgrade()` function. `repo.test.ts` contains a test that opens a
 database created at version 1 with a version-2 class and checks the data survived.
 
+## Garden, habit and achievements (`garden.ts`, `habit.ts`, `achievements.ts`)
+
+Nothing here is stored: everything is computed from `Progress` and `ReviewLog`, so there was no schema change and
+old backups keep working. `growthStage(reps)` maps a card to seed / sprout / leaf / bloom; `gardenPlots` picks what
+stands on the plots of the picture. `habit.ts` gives today's count, the week, the longest streak, heatmap weeks
+and the review forecast. `evaluateAchievements` turns facts (reviews, streak, blooms, decks, modes used) into a list
+with progress. No XP or points on purpose: the measure of success is words learned, not time spent.
+
+Other pure helpers: `bulk.ts` (paste a list of words; separators are tried in order, duplicates are reported),
+`hint.ts` (letters of a typed answer), `undoFlip` in `flip.ts` (takes back one answer of the current round).
+
+New settings (`theme`, `dailyGoal`, `soundEnabled`, `hapticsEnabled`, `autoSpeak`) need no migration:
+`getSettings` merges saved values over the defaults.
+
 ## UI (`src/ui`)
 
 - `App` = `AppProviders` (opens the database, loads settings, provides repository and UI language,
@@ -216,7 +230,15 @@ database created at version 1 with a version-2 class and checks the data survive
   key, all plural forms and the same placeholders as `en`.
 - Destructive actions (delete deck/card) use `ConfirmDialog` (native `<dialog>`). Forms show errors next to
   the field and keep what the user typed; a failed save shows a message and changes nothing.
-- Design tokens are CSS custom properties in `src/styles/tokens.css`; see `docs/DESIGN.md`.
+- Design tokens are CSS custom properties in `src/styles/tokens.css`; see `docs/DESIGN.md`. Styles:
+  `base.css` (font, reset), `components.css`, `study.css`, `mascot.css`.
+- Theme (`ui/theme.ts`): the choice is in the settings; a copy in `localStorage` is applied in `main.tsx` before the
+  first paint, because the database opens later. `system` follows the device through `matchMedia`.
+- Sounds and vibration (`ui/cues.ts`): notes synthesised with Web Audio, so no audio files; every failure is
+  swallowed, an extra must never break a session.
+- `SwipeCard` uses pointer events and leaves a mostly vertical move to the page (`touch-action: pan-y`). It is a
+  shortcut only: the buttons and arrow keys remain.
+- `CountUp` keeps the real text in the page for screen readers and paints the moving digits from an attribute.
 - **Sprout reacts** (`core/cheer.ts`, pure, tested): `reactTo(combo, outcome, skipped)` gives the mood after an
   answer and the "in a row" count (a right answer adds one, "almost" keeps it, a wrong one resets; cheers at 3,
   5, 10, …); `moodForScore` picks the result mood (celebrate from 90 %, happy from 70 %, else encouraging);

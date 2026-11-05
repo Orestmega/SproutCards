@@ -26,6 +26,14 @@ The raw files are kept in `data-cache/` (git-ignored, not published). Only the d
   forms were left out because they have no clean one-word translation.
 - **Travel deck** words and phrases were chosen and translated by the same AI assistant (unchecked).
 
+## Font
+
+The interface font is **Nunito** (variable, Latin, Latin Extended and Cyrillic subsets), by The Nunito Project
+Authors, from the npm package `@fontsource-variable/nunito` 5.3.0, installed 2026-11-05. Licence: SIL Open Font
+License 1.1 (read in `node_modules/@fontsource-variable/nunito/LICENSE`). The OFL allows bundling the font with
+an app, also commercially; the font files are not sold on their own and the name is unchanged. The font is served
+from the app itself: no request to Google Fonts or anyone else. Credited on the "Sources and licenses" screen.
+
 ## Licence terms that apply
 
 - **Tatoeba sentences: CC BY 2.0 FR** (https://creativecommons.org/licenses/by/2.0/fr/). Reuse is allowed

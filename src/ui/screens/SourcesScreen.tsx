@@ -86,6 +86,18 @@ export function SourcesScreen() {
         <p>{t('sources.ai.text')}</p>
       </section>
 
+      <section className="section" aria-labelledby="src-font">
+        <h2 className="section__title" id="src-font">
+          {t('sources.font.title')}
+        </h2>
+        <p>{t('sources.font.text')}</p>
+        <p>
+          <a href="https://openfontlicense.org/" target="_blank" rel="noopener noreferrer">
+            {t('sources.font.license')}
+          </a>
+        </p>
+      </section>
+
       <section className="section" aria-labelledby="src-app">
         <h2 className="section__title" id="src-app">
           {t('sources.app.title')}

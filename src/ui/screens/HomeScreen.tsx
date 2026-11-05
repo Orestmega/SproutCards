@@ -103,10 +103,9 @@ export function HomeScreen() {
 
   return (
     <>
-      <h1 className="visually-hidden">{t('nav.home')}</h1>
-
       <div className="home-top">
         <Logo />
+        <h1 className="home-top__title">{t('nav.home')}</h1>
         <Link
           to="/stats"
           className={streak > 0 ? 'streak-chip streak-chip--alive' : 'streak-chip'}

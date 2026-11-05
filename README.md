@@ -16,8 +16,12 @@ language codes (`en`, `uk`, `de`, `pt-BR`…). The interface is available in Ukr
   <img src="docs/screenshots/deck.png" width="190" alt="A deck with study modes and cards">
   <img src="docs/screenshots/catalog.png" width="190" alt="Catalog of ready-made decks">
   <img src="docs/screenshots/settings.png" width="190" alt="Settings: language, install, offline status">
-  <img src="docs/screenshots/sprout-combo.png" width="190" alt="Sprout cheers three right answers in a row">
+  <img src="docs/screenshots/swipe.png" width="190" alt="A flashcard being swiped to answer">
+  <img src="docs/screenshots/dark.png" width="190" alt="The home screen in the dark theme">
   <img src="docs/screenshots/sprout-celebrate.png" width="190" alt="Sprout celebrates a finished Match game with confetti">
+</p>
+<p>
+  <img src="docs/screenshots/desktop.png" width="770" alt="The app on a big screen, with a side panel">
 </p>
 
 ## What it does
@@ -28,6 +32,12 @@ language codes (`en`, `uk`, `de`, `pt-BR`…). The interface is available in Ukr
   matching; then retake only the words you missed, until 100 %), *Match* (a timed pairing game). Star hard words
   and study only those. Both directions (word → translation and back) have separate progress; tests and Match
   do not change the schedule.
+- **The word garden:** every word grows from a seed to a bloom as you review it. The home screen shows your garden,
+  with a sky that follows the time of day.
+- **A daily habit:** a daily goal, the week at a glance, streaks, an activity heatmap, a forecast of coming reviews,
+  achievements and a word of the day. No points: the measure is words learned.
+- **Made for daily use:** swipeable 3D flashcards with undo, letter hints, paste a whole list of words, search and
+  filters, sounds and vibration, automatic reading aloud, light and dark themes, a side panel on big screens.
 - **Sprout, the mascot,** is animated (breathing, blinking, leaves in the wind) and studies with you: it sits next
   to the progress bar, is happy about a right answer, says "oops" after a wrong one, cheers "3 in a row!", only
   "thinks along" during a test (no hints) and celebrates a great result with confetti. Tap it on the home screen.

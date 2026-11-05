@@ -35,7 +35,10 @@ await browser.reload(1500);
 const deckHref = await browser.evalJs(
   "document.querySelector('a[href*=\"/decks/\"]')?.getAttribute('href')",
 );
-const deck = String(deckHref).replace(/^#?\/?/, '');
+// the first such link can be the home screen's main button, which goes straight to Learn
+const deck = String(deckHref)
+  .replace(/^#?\/?/, '')
+  .replace(/\/learn.*$/, '');
 
 await shot('home', '');
 await shot('deck', deck);

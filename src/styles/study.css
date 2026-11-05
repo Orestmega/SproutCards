@@ -1,4 +1,9 @@
 /* ---------- Study frame ---------- */
+/* a swiped card flies past the edge of the screen: that must not add a scrollbar */
+.study {
+  overflow-x: clip;
+}
+
 .study__top {
   position: sticky;
   top: 0;
