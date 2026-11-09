@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { VARIETIES } from '../../core/gardenLife';
 import { computeStreak } from '../../core/stats';
 import { bestStreak } from '../../core/habit';
 import {
@@ -37,11 +36,8 @@ export function ProfileScreen() {
   const { plants, decks, times, achievements } = garden;
   const blooms = plants.filter((p) => p.stage === 'bloom').length;
   const rank = gardenRank(blooms);
-  const found = new Set(plants.filter((p) => p.stage === 'bloom').map((p) => p.variety));
-  const choices: AvatarId[] = [
-    'sprout',
-    ...VARIETIES.map((v) => v.id).filter((id) => found.has(id)),
-  ];
+  // every kind of flower opened in the garden can be the picture
+  const choices: AvatarId[] = ['sprout', ...garden.unlocked];
   const since = memberSince(
     times,
     decks.map((d) => d.createdAt),

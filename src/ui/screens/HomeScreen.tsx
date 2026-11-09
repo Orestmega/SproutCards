@@ -3,7 +3,6 @@ import { useLiveQuery } from 'dexie-react-hooks';
 import { Link } from 'react-router-dom';
 import { dayPart, nextLine } from '../../core/cheer';
 import type { MascotMood } from '../../core/cheer';
-import { scenePlants } from '../../core/garden';
 import { pickOfTheDay } from '../../core/habit';
 import { computeStreak } from '../../core/stats';
 import { useI18n } from '../../i18n';
@@ -18,7 +17,9 @@ import { Logo } from '../components/Layout';
 import { Mascot } from '../components/Mascot';
 import { SpeakButton } from '../components/SpeakButton';
 import { TodayCard } from '../components/TodayCard';
-import { useGarden } from '../garden';
+import { showcasePlants, useGarden } from '../garden';
+import { listSnapshots } from '../resume';
+import { snapshotProgress } from '../../core/resume';
 
 const DAY_MS = 86_400_000;
 /** The list on the home screen stays short; the rest is on the Decks tab. */
@@ -70,6 +71,13 @@ export function HomeScreen() {
   if (!summaries || due === undefined || !logTimes) return null;
 
   const part = dayPart(new Date(now).getHours());
+  // unfinished Learn sessions of decks that still exist
+  const resumeList = listSnapshots()
+    .flatMap((snapshot) => {
+      const deck = summaries.find((s) => s.deck.id === snapshot.deckId)?.deck;
+      return deck ? [{ snapshot, deck, ...snapshotProgress(snapshot) }] : [];
+    })
+    .slice(0, 2);
   const streak = computeStreak(logTimes, now);
   const cards = summaries.reduce((sum, s) => sum + s.cardCount, 0);
 
@@ -121,7 +129,7 @@ export function HomeScreen() {
         <div className="home-grid__main">
           <GardenScene
             part={part}
-            plants={scenePlants(garden?.plants ?? [], 9)}
+            plants={showcasePlants(garden, 9)}
             decorations={garden?.decorations.filter((d) => d.earned).map((d) => d.id)}
             health={garden?.health}
           >
@@ -150,6 +158,27 @@ export function HomeScreen() {
               <Mascot mood={mood} size={124} reaction={pats} />
             </button>
           </GardenScene>
+
+          {resumeList.map(({ snapshot, deck, percent, total }) => (
+            <Link
+              key={`${deck.id}-${snapshot.direction}`}
+              to={`/decks/${deck.id}/learn?dir=${snapshot.direction}&resume=1`}
+              className="resume-card"
+            >
+              <span className="resume-card__icon" aria-hidden="true">
+                <Icon name="learn" />
+              </span>
+              <span className="list-row__main">
+                <span className="list-row__title">
+                  {t('resume.continueDeck', { name: deck.name })}
+                </span>
+                <span className="muted">{t('resume.progress', { percent, total })}</span>
+              </span>
+              <span className="chevron" aria-hidden="true">
+                ›
+              </span>
+            </Link>
+          ))}
 
           {dueDeck ? (
             <ButtonLink to={`/decks/${dueDeck.deck.id}/learn`} block>

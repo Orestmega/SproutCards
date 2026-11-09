@@ -215,7 +215,8 @@ export const en = {
   'learn.cardsLearned_other': '{count} cards learned in this session.',
   'learn.practiceNote': 'This was practice: review dates did not change.',
   'learn.leave.title': 'Leave this session?',
-  'learn.leave.text': 'Cards you have already finished are saved. The rest stay as they were.',
+  'learn.leave.text':
+    'Finished words are saved. You can continue this session later from the deck or the home screen.',
   'learn.leave.confirm': 'Leave',
 
   'flip.counter': 'Card {n} of {total}',
@@ -521,7 +522,7 @@ export const en = {
   'garden.rule.wilt':
     'Without study the garden gets thirsty after a day and wilts after two. Your words are never lost: a few answers bring it back.',
   'garden.rule.flowers':
-    'Each learned word blooms as its own kind of flower. About one in seven is rare: a sunflower, a rose, an orchid or a lily.',
+    'New kinds of flower open with goals: learned words, days in a row. Every open kind can be planted on your plots: tap a plot to choose.',
   'garden.rule.golden': 'A word you answer right {reps} times in a row turns into a golden flower.',
   'garden.rule.decor':
     'Achievements add decorations: butterflies, a birdhouse, a pond, an apple tree and more.',
@@ -594,4 +595,27 @@ export const en = {
   'rank.florist': 'Florist',
   'rank.master': 'Garden master',
   'rank.botanist': 'Botanist',
+  'resume.continue': 'Continue where you stopped',
+  'resume.continueDeck': 'Continue learning: {name}',
+  'resume.progress': '{percent}% done · {total} words in the session',
+  'garden.plots': 'Plots of your garden',
+  'garden.plotsHint':
+    'Tap a plot to see its word, choose its flower or plant another word ({n} plots).',
+  'garden.plot.empty': 'Empty plot {n}: plant a word',
+  'garden.plot.plant': 'Plant on a plot',
+  'garden.plot.replace': 'Plant another word here',
+  'garden.plot.remove': 'Take off the plot',
+  'garden.picker.title': 'Plant a word',
+  'garden.picker.hint': 'It grows on the plot as you learn it.',
+  'garden.kind': 'Grows as',
+  'garden.kindLater': 'Once it blooms you can choose its flower.',
+  'garden.collectionHint':
+    'New kinds of flower open with goals. Every open kind can be planted on your plots.',
+  'garden.nextFlower': 'Next: {flower} —',
+  'garden.opened': 'Open',
+  'garden.unlock.blooms_one': 'learn {count} more word',
+  'garden.unlock.blooms_other': 'learn {count} more words',
+  'garden.unlock.streak_one': 'study {count} day in a row (best: {now})',
+  'garden.unlock.streak_other': 'study {count} days in a row (best: {now})',
+  'garden.unlock.golden': 'answer a word right {reps} times in a row',
 } as const;

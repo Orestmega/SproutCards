@@ -4,19 +4,28 @@ import { useCallback, useState } from 'react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { evaluateAchievements } from '../core/achievements';
 import type { AchievementState } from '../core/achievements';
-import { growthStage } from '../core/garden';
+import { growthStage, scenePlants } from '../core/garden';
 import type { GrowthStage } from '../core/garden';
 import {
+  cleanShowcase,
   decorations,
   flowerVariety,
+  GOLDEN_REPS,
   gardenHealth,
   rarityOf,
+  unlockedVarieties,
   wateringDay,
 } from '../core/gardenLife';
-import type { DecorationState, GardenHealth, VarietyId } from '../core/gardenLife';
+import type {
+  DecorationState,
+  GardenHealth,
+  ShowcasePlot,
+  UnlockFacts,
+  VarietyId,
+} from '../core/gardenLife';
 import { bestStreak, todayCount } from '../core/habit';
 import type { Card, Deck } from '../core/types';
-import { useRepo } from './AppProviders';
+import { useRepo, useSettings } from './AppProviders';
 
 export interface GardenPlant {
   card: Card;
@@ -39,12 +48,18 @@ export interface Garden {
   answersToday: number;
   achievements: AchievementState[];
   decorations: DecorationState[];
+  /** What opens new kinds of flower, and the kinds open now. */
+  facts: UnlockFacts;
+  unlocked: VarietyId[];
+  /** The user's plots (empty when the picture is filled automatically). */
+  showcase: ShowcasePlot[];
 }
 
 const RANK = { golden: 2, rare: 1, common: 0 } as const;
 
 export function useGarden(now: number): Garden | undefined {
   const repo = useRepo();
+  const { gardenShowcase } = useSettings();
   return useLiveQuery(async () => {
     const { decks, cards, progress, logs } = await repo.gardenSnapshot();
     const deckById = new Map(decks.map((d) => [d.id, d]));
@@ -56,12 +71,23 @@ export function useGarden(now: number): Garden | undefined {
         dueAt: Math.min(seen?.dueAt ?? Infinity, p.dueAt),
       });
     }
+    const times = logs.map((log) => log.at);
+    // the kinds of flower open now depend on learned words, the best streak and long-known words
+    const reps = [...best.values()].map((r) => r.reps);
+    const facts: UnlockFacts = {
+      blooms: reps.filter((r) => growthStage(r) === 'bloom').length,
+      bestStreak: bestStreak(times),
+      goldenWords: reps.filter((r) => r >= GOLDEN_REPS).length,
+    };
+    const unlocked = unlockedVarieties(facts);
+    const showcase = cleanShowcase(gardenShowcase, new Set(cards.map((c) => c.id)));
+    const chosen = new Map(showcase.map((p) => [p.cardId, p.variety]));
     const plants = cards.flatMap((card): GardenPlant[] => {
       const deck = deckById.get(card.deckId);
       if (!deck) return [];
       const record = best.get(card.id);
       const stage = growthStage(record?.reps);
-      const variety = flowerVariety(card.id, record?.reps ?? 0);
+      const variety = flowerVariety(card.id, record?.reps ?? 0, unlocked, chosen.get(card.id));
       return [
         {
           card,
@@ -74,10 +100,9 @@ export function useGarden(now: number): Garden | undefined {
         },
       ];
     });
-    const times = logs.map((log) => log.at);
     const achievements = evaluateAchievements({
       totalReviews: logs.length,
-      bestStreak: bestStreak(times),
+      bestStreak: facts.bestStreak,
       blooms: plants.filter((p) => p.stage === 'bloom').length,
       decks: decks.length,
       modesUsed: new Set(logs.map((log) => log.mode)).size,
@@ -90,8 +115,11 @@ export function useGarden(now: number): Garden | undefined {
       answersToday: todayCount(times, now),
       achievements,
       decorations: decorations(achievements),
+      facts,
+      unlocked,
+      showcase,
     };
-  }, [repo, now]);
+  }, [repo, now, gardenShowcase]);
 }
 
 const WATERED_KEY = 'sproutcards.watered';
@@ -121,4 +149,15 @@ export function useWatering(): [number | null, (now: number) => void] {
     }
   }, []);
   return [day, water];
+}
+
+/**
+ * The plants on the plots of the picture: the user's own choice, or (until they plant anything) the
+ * most grown words picked automatically. Each plot shows its word's stage and flower.
+ */
+export function showcasePlants(garden: Garden | undefined, slots: number): GardenPlant[] {
+  if (!garden) return [];
+  const byId = new Map(garden.plants.map((p) => [p.card.id, p]));
+  const chosen = garden.showcase.flatMap((plot) => byId.get(plot.cardId) ?? []);
+  return (chosen.length > 0 ? chosen : scenePlants(garden.plants, slots)).slice(0, slots);
 }

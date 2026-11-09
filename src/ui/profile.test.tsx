@@ -1,7 +1,6 @@
 import { render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { App } from '../App';
-import { flowerVariety } from '../core/gardenLife';
 import { AppDatabase } from '../db/db';
 import { createRepo } from '../db/repo';
 
@@ -76,9 +75,9 @@ describe('profile', () => {
     expect(screen.getByText('English', { selector: 'li' })).toBeInTheDocument();
   });
 
-  it('saves a cleaned name and a picture chosen from the flowers already found', async () => {
+  it('saves a cleaned name and a picture chosen from the kinds of flower opened', async () => {
     const user = userEvent.setup();
-    const { repo, apple } = await seed();
+    const { repo } = await seed();
     open('/profile');
     const field = await screen.findByRole('textbox', { name: 'Name' });
     await user.type(field, '   Olena    K  ');
@@ -87,9 +86,9 @@ describe('profile', () => {
     expect(await screen.findByRole('heading', { name: 'Olena K' })).toBeInTheDocument();
 
     const pictures = screen.getByRole('radiogroup', { name: 'Picture' });
-    // Sprout and the one flower grown so far
+    // Sprout and the daisy (open from the start; the tulip needs 2 learned words)
     expect(within(pictures).getAllByRole('radio')).toHaveLength(2);
-    const flower = flowerVariety(apple.id, 2);
+    const flower = 'daisy';
     const [, flowerChoice] = within(pictures).getAllByRole('radio') as [HTMLElement, HTMLElement];
     await user.click(flowerChoice);
     await waitFor(async () => expect((await repo.getSettings()).avatar).toBe(flower));

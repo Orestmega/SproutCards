@@ -7,67 +7,129 @@ import type { AchievementId, AchievementState } from './achievements';
 
 export type Rarity = 'common' | 'rare' | 'golden';
 
+/** What opens a kind of flower: learned words (flowers), days in a row, or a word known for long. */
+export interface Unlock {
+  blooms?: number;
+  streak?: number;
+  /** A word answered right `GOLDEN_REPS` times in a row. */
+  golden?: true;
+}
+
 export interface Variety {
   id: string;
   rarity: Rarity;
+  unlock: Unlock;
 }
 
-/** Ids are translation keys (`flower.<id>`); the drawing is in `ui/components/Plant.tsx`. */
+/**
+ * Ids are translation keys (`flower.<id>`); the drawing is in `ui/components/Plant.tsx`. The order is
+ * the order in which they open: there is always a clear next goal.
+ */
 export const VARIETIES = [
-  { id: 'daisy', rarity: 'common' },
-  { id: 'tulip', rarity: 'common' },
-  { id: 'bellflower', rarity: 'common' },
-  { id: 'poppy', rarity: 'common' },
-  { id: 'lavender', rarity: 'common' },
-  { id: 'cornflower', rarity: 'common' },
-  { id: 'marigold', rarity: 'common' },
-  { id: 'violet', rarity: 'common' },
-  { id: 'daffodil', rarity: 'common' },
-  { id: 'forgetmenot', rarity: 'common' },
-  { id: 'sunflower', rarity: 'rare' },
-  { id: 'rose', rarity: 'rare' },
-  { id: 'orchid', rarity: 'rare' },
-  { id: 'lily', rarity: 'rare' },
-  { id: 'golden', rarity: 'golden' },
+  { id: 'daisy', rarity: 'common', unlock: {} },
+  { id: 'tulip', rarity: 'common', unlock: { blooms: 2 } },
+  { id: 'bellflower', rarity: 'common', unlock: { blooms: 4 } },
+  { id: 'poppy', rarity: 'common', unlock: { blooms: 6 } },
+  { id: 'lavender', rarity: 'common', unlock: { blooms: 9 } },
+  { id: 'cornflower', rarity: 'common', unlock: { blooms: 12 } },
+  { id: 'marigold', rarity: 'common', unlock: { blooms: 16 } },
+  { id: 'violet', rarity: 'common', unlock: { blooms: 20 } },
+  { id: 'daffodil', rarity: 'common', unlock: { blooms: 25 } },
+  { id: 'forgetmenot', rarity: 'common', unlock: { blooms: 30 } },
+  { id: 'sunflower', rarity: 'rare', unlock: { streak: 3 } },
+  { id: 'rose', rarity: 'rare', unlock: { streak: 7 } },
+  { id: 'orchid', rarity: 'rare', unlock: { blooms: 50 } },
+  { id: 'lily', rarity: 'rare', unlock: { streak: 30 } },
+  { id: 'golden', rarity: 'golden', unlock: { golden: true } },
 ] as const satisfies readonly Variety[];
 
 export type VarietyId = (typeof VARIETIES)[number]['id'];
 
-/** Correct reviews in a row after which a word turns into a golden flower: remembered for months. */
+/** Correct reviews in a row after which a word can be a golden flower: remembered for months. */
 export const GOLDEN_REPS = 5;
-/** Out of 100: how many learned words become a rare flower. */
-const RARE_CHANCE = 15;
 
-/** A small stable hash: the same word always gets the same flower, on every device. */
+export interface UnlockFacts {
+  blooms: number;
+  bestStreak: number;
+  /** Words with at least `GOLDEN_REPS` right answers in a row. */
+  goldenWords: number;
+}
+
+export function isUnlocked(unlock: Unlock, facts: UnlockFacts): boolean {
+  if (unlock.blooms !== undefined && facts.blooms < unlock.blooms) return false;
+  if (unlock.streak !== undefined && facts.bestStreak < unlock.streak) return false;
+  if (unlock.golden && facts.goldenWords === 0) return false;
+  return true;
+}
+
+/** The kinds of flower the user can grow now, in the order of `VARIETIES`. */
+export function unlockedVarieties(facts: UnlockFacts): VarietyId[] {
+  return VARIETIES.filter((v) => isUnlocked(v.unlock, facts)).map((v) => v.id);
+}
+
+/** The closest kind still closed (the next goal), or null when all are open. */
+export function nextVariety(facts: UnlockFacts): (typeof VARIETIES)[number] | null {
+  return VARIETIES.find((v) => !isUnlocked(v.unlock, facts)) ?? null;
+}
+
+/** A small stable hash: the same word gets the same flower on every device. */
 function hash(text: string): number {
   let h = 2166136261;
   for (const char of text) h = Math.imul(h ^ char.charCodeAt(0), 16777619) >>> 0;
   return h;
 }
 
-/** The flower of a learned word. */
-export function flowerVariety(cardId: string, reps: number): VarietyId {
-  if (reps >= GOLDEN_REPS) return 'golden';
-  const h = hash(cardId);
-  const rare: VarietyId[] = ['sunflower', 'rose', 'orchid', 'lily'];
-  const common: VarietyId[] = [
-    'daisy',
-    'tulip',
-    'bellflower',
-    'poppy',
-    'lavender',
-    'cornflower',
-    'marigold',
-    'violet',
-    'daffodil',
-    'forgetmenot',
-  ];
-  if (h % 100 < RARE_CHANCE) return rare[(h >>> 11) % rare.length] ?? 'sunflower';
-  return common[(h >>> 7) % common.length] ?? 'daisy';
+/** Only a word known for long can be golden. */
+export function canGrowAs(variety: VarietyId, reps: number): boolean {
+  return variety !== 'golden' || reps >= GOLDEN_REPS;
+}
+
+/**
+ * The flower of a learned word: the kind the user planted it as (`chosen`), if allowed; else a golden
+ * flower for a word known for long; else one of the opened kinds, picked by a stable hash.
+ */
+export function flowerVariety(
+  cardId: string,
+  reps: number,
+  unlocked: readonly VarietyId[],
+  chosen?: VarietyId,
+): VarietyId {
+  if (chosen && unlocked.includes(chosen) && canGrowAs(chosen, reps)) return chosen;
+  if (reps >= GOLDEN_REPS && unlocked.includes('golden')) return 'golden';
+  const pool = unlocked.filter((id) => id !== 'golden');
+  if (pool.length === 0) return 'daisy';
+  return pool[hash(cardId) % pool.length] ?? 'daisy';
 }
 
 export function rarityOf(id: VarietyId): Rarity {
   return VARIETIES.find((v) => v.id === id)?.rarity ?? 'common';
+}
+
+/** How many plots the garden picture has: the user chooses what grows on them. */
+export const SHOWCASE_SIZE = 15;
+
+export interface ShowcasePlot {
+  cardId: string;
+  variety: VarietyId;
+}
+
+/**
+ * The user's plots as they can be shown: plots of deleted words are dropped, a word appears once,
+ * and there are never more than `SHOWCASE_SIZE` plots.
+ */
+export function cleanShowcase(
+  plots: readonly ShowcasePlot[],
+  cardIds: ReadonlySet<string>,
+): ShowcasePlot[] {
+  const seen = new Set<string>();
+  const result: ShowcasePlot[] = [];
+  for (const plot of plots) {
+    if (!cardIds.has(plot.cardId) || seen.has(plot.cardId)) continue;
+    seen.add(plot.cardId);
+    result.push(plot);
+    if (result.length === SHOWCASE_SIZE) break;
+  }
+  return result;
 }
 
 /**

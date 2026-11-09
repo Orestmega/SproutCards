@@ -233,7 +233,8 @@ export const uk: Record<Keys, string> & Record<string, string> = {
   'learn.cardsLearned_other': 'Вивчено {count} картки в цій сесії.',
   'learn.practiceNote': 'Це було тренування: дати повторення не змінилися.',
   'learn.leave.title': 'Вийти із сесії?',
-  'learn.leave.text': 'Картки, які ти вже завершив(ла), збережуться. Решта лишиться як була.',
+  'learn.leave.text':
+    'Завершені слова збережуться. Продовжити сесію можна пізніше з екрана колоди або з головної.',
   'learn.leave.confirm': 'Вийти',
 
   'flip.counter': 'Картка {n} з {total}',
@@ -550,7 +551,7 @@ export const uk: Record<Keys, string> & Record<string, string> = {
   'garden.rule.wilt':
     'Без навчання сад через день хоче пити, а через два в’яне. Слова не зникають ніколи: кілька відповідей повертають саду життя.',
   'garden.rule.flowers':
-    'Кожне вивчене слово розквітає своїм сортом. Приблизно кожне сьоме — рідкісне: соняшник, троянда, орхідея або лілія.',
+    'Нові сорти відкриваються за цілі: вивчені слова, дні поспіль. Кожен відкритий сорт можна посадити на своїх ділянках: торкнись ділянки й обери.',
   'garden.rule.golden':
     'Слово, на яке ти правильно відповів {reps} разів поспіль, стає золотою квіткою.',
   'garden.rule.decor': 'Досягнення додають прикраси: метеликів, шпаківню, ставок, яблуню та інші.',
@@ -632,4 +633,31 @@ export const uk: Record<Keys, string> & Record<string, string> = {
   'rank.florist': 'Флорист',
   'rank.master': 'Майстер саду',
   'rank.botanist': 'Ботанік',
+  'resume.continue': 'Продовжити з місця, де зупинився',
+  'resume.continueDeck': 'Продовжити вчити: {name}',
+  'resume.progress': 'Пройдено {percent}% · слів у сесії: {total}',
+  'garden.plots': 'Ділянки твого саду',
+  'garden.plotsHint':
+    'Торкнись ділянки, щоб побачити слово, обрати його квітку чи посадити інше слово ({n} ділянок).',
+  'garden.plot.empty': 'Порожня ділянка {n}: посади слово',
+  'garden.plot.plant': 'Посадити на ділянку',
+  'garden.plot.replace': 'Посадити тут інше слово',
+  'garden.plot.remove': 'Прибрати з ділянки',
+  'garden.picker.title': 'Посади слово',
+  'garden.picker.hint': 'Воно ростиме на ділянці, поки ти його вчиш.',
+  'garden.kind': 'Росте як',
+  'garden.kindLater': 'Коли слово розквітне, можна буде обрати його квітку.',
+  'garden.collectionHint':
+    'Нові сорти відкриваються за цілі. Кожен відкритий сорт можна садити на своїх ділянках.',
+  'garden.nextFlower': 'Далі: {flower} —',
+  'garden.opened': 'Відкрито',
+  'garden.unlock.blooms_one': 'вивчи ще {count} слово',
+  'garden.unlock.blooms_few': 'вивчи ще {count} слова',
+  'garden.unlock.blooms_many': 'вивчи ще {count} слів',
+  'garden.unlock.blooms_other': 'вивчи ще {count} слова',
+  'garden.unlock.streak_one': 'вчись {count} день поспіль (найкраще: {now})',
+  'garden.unlock.streak_few': 'вчись {count} дні поспіль (найкраще: {now})',
+  'garden.unlock.streak_many': 'вчись {count} днів поспіль (найкраще: {now})',
+  'garden.unlock.streak_other': 'вчись {count} дня поспіль (найкраще: {now})',
+  'garden.unlock.golden': 'відповідай на слово правильно {reps} разів поспіль',
 };

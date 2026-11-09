@@ -17,10 +17,10 @@ const ICONS = {
     'M12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7zM12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9 7 7M17 17l2.1 2.1M4.9 19.1 7 17M17 7l2.1-2.1',
 } as const;
 
-function NavIcon({ path }: { path: string }) {
+function NavIcon({ path, name }: { path: string; name: string }) {
   return (
     <svg
-      className="nav__icon"
+      className={`nav__icon nav__icon--${name}`}
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
@@ -71,7 +71,7 @@ export function AppLayout() {
           {NAV.map((item) => (
             <NavLink key={item.to} to={item.to} end={item.end} className="nav__link">
               <span className="nav__pill">
-                <NavIcon path={ICONS[item.icon]} />
+                <NavIcon path={ICONS[item.icon]} name={item.icon} />
               </span>
               <span>{t(item.label)}</span>
             </NavLink>

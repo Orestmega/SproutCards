@@ -2396,3 +2396,189 @@ textarea.input {
     padding-top: var(--space-3);
   }
 }
+
+/* ---------- Continue a session ---------- */
+.resume-card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, var(--color-primary-soft), var(--color-surface));
+  box-shadow:
+    0 var(--edge) 0 var(--color-primary-edge),
+    var(--shadow-1);
+  margin-bottom: var(--edge);
+  color: inherit;
+  font-weight: 500;
+  text-decoration: none;
+  transition: transform var(--motion-fast);
+}
+
+.resume-card:hover {
+  transform: translateY(-2px);
+}
+
+.resume-card__icon {
+  flex: none;
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  background: var(--color-primary);
+  color: #10210f;
+}
+
+.resume-card__icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* ---------- Garden plots and the flower collection ---------- */
+.garden__plot {
+  cursor: pointer;
+  outline: none;
+}
+
+.garden__plot:hover .garden__plant,
+.garden__plot:focus-visible .garden__plant {
+  filter: brightness(1.12) drop-shadow(0 0 3px #ffffff) drop-shadow(0 0 2px #1a5fd0);
+}
+
+.garden__plot--empty .garden__plant {
+  opacity: 0.85;
+}
+
+.garden--big .garden__sprout {
+  pointer-events: none;
+}
+
+.next-flower {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  background: var(--chip-yellow);
+  color: var(--chip-yellow-ink);
+  font-weight: 700;
+}
+
+.next-flower strong {
+  color: var(--color-text);
+}
+
+.kind-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+}
+
+.plant-dialog__plot {
+  margin-top: var(--space-3);
+}
+
+.plant-picker {
+  width: min(92vw, 460px);
+}
+
+.picker-list {
+  list-style: none;
+  margin: var(--space-3) 0 0;
+  padding: 0;
+  max-height: 50vh;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.picker-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  border: 0;
+  border-radius: var(--radius-md);
+  background: var(--color-surface-sunken);
+  text-align: left;
+  cursor: pointer;
+}
+
+.picker-item:hover {
+  background: var(--color-primary-soft);
+}
+
+/* ---------- Tab icons come alive when their tab is opened ---------- */
+.nav__icon {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.nav__link[aria-current='page'] .nav__icon--home {
+  animation: icon-hop 520ms var(--ease-spring);
+}
+
+.nav__link[aria-current='page'] .nav__icon--decks {
+  animation: icon-flip 600ms var(--ease-out);
+}
+
+.nav__link[aria-current='page'] .nav__icon--garden {
+  transform-origin: 50% 100%;
+  animation: icon-grow 600ms var(--ease-spring);
+}
+
+.nav__link[aria-current='page'] .nav__icon--progress {
+  transform-origin: 50% 100%;
+  animation: icon-rise 560ms var(--ease-spring);
+}
+
+.nav__link[aria-current='page'] .nav__icon--settings {
+  animation: icon-spin 800ms var(--ease-out);
+}
+
+.nav__link:hover .nav__icon--settings {
+  animation: icon-spin 800ms var(--ease-out);
+}
+
+@keyframes icon-hop {
+  40% {
+    transform: translateY(-5px) scale(1.06, 0.94);
+  }
+  70% {
+    transform: translateY(0) scale(0.96, 1.04);
+  }
+}
+
+@keyframes icon-flip {
+  from {
+    transform: perspective(60px) rotateY(-180deg);
+  }
+}
+
+@keyframes icon-grow {
+  from {
+    transform: scale(0.4, 0.1);
+  }
+}
+
+@keyframes icon-rise {
+  from {
+    transform: scaleY(0.2);
+  }
+}
+
+@keyframes icon-spin {
+  from {
+    transform: rotate(-180deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav__icon {
+    animation: none !important;
+  }
+}

@@ -47,6 +47,8 @@ export function useStudyParams(): {
   practice: boolean;
   /** Study only the cards with a star. */
   starred: boolean;
+  /** Continue the unfinished Learn session of this deck and direction. */
+  resume: boolean;
 } {
   const { deckId = '' } = useParams();
   const [params] = useSearchParams();
@@ -55,6 +57,7 @@ export function useStudyParams(): {
     direction: params.get('dir') === 'backward' ? 'backward' : 'forward',
     practice: params.get('all') === '1',
     starred: params.get('starred') === '1',
+    resume: params.get('resume') === '1',
   };
 }
 

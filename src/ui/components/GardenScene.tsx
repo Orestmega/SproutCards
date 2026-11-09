@@ -86,6 +86,22 @@ export interface ScenePlant {
   variety: VarietyId;
 }
 
+/** An empty plot: dug soil with a little "+" (only when plots can be tapped). */
+function EmptyPlot() {
+  return (
+    <g>
+      <ellipse cx="16" cy="28.4" rx="11.5" ry="3.8" fill="#8a6041" opacity="0.75" />
+      <circle cx="16" cy="19" r="6" fill="#ffffff" opacity="0.55" />
+      <path
+        d="M16 15.5 V22.5 M12.5 19 H19.5"
+        stroke="#3f8a2a"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+    </g>
+  );
+}
+
 /**
  * The garden picture: the sky follows the time of day, the plants are the user's own words, the
  * decorations are earned with achievements, and a garden left alone for a while droops (`health`).
@@ -98,11 +114,18 @@ export function GardenScene({
   health = 'fresh',
   raining = false,
   big = false,
+  onPlot,
+  plotLabel,
+  label,
   children,
 }: {
   part: DayPart;
-  /** In drawing order; extra plants beyond the plots are not drawn (see `scenePlants`). */
-  plants: readonly ScenePlant[];
+  /** In drawing order, one per plot; `null` is an empty plot. Extra plants are not drawn. */
+  plants: readonly (ScenePlant | null)[];
+  /** Makes every plot a button (the garden screen); the picture is then a labelled group. */
+  onPlot?: (index: number) => void;
+  plotLabel?: (index: number) => string;
+  label?: string;
   decorations?: readonly DecorationId[];
   health?: GardenHealth;
   raining?: boolean;
@@ -155,7 +178,9 @@ export function GardenScene({
         className="garden__scene"
         viewBox="0 0 400 240"
         preserveAspectRatio="xMidYMax slice"
-        aria-hidden="true"
+        role={onPlot ? 'group' : undefined}
+        aria-label={onPlot ? label : undefined}
+        aria-hidden={onPlot ? undefined : true}
         focusable="false"
       >
         {has('rainbow') && <Decor id="rainbow" />}
@@ -167,21 +192,36 @@ export function GardenScene({
         <path className="garden__hill--3" d="M0 214 Q140 168 280 196 T400 186 V240 H0 Z" />
         {has('pond') && <Decor id="pond" />}
 
-        {plants.slice(0, plots.length).map((plant, i) => {
-          const [x, y, size] = plots[i] as Plot;
-          return (
-            <svg
-              key={i}
-              x={x - size / 2}
-              y={y - size}
-              width={size}
-              height={size}
-              viewBox="0 0 32 32"
-            >
+        {plots.map(([x, y, size], i) => {
+          const plant = plants[i] ?? null;
+          if (!plant && !onPlot) return null;
+          const art = (
+            <svg x={x - size / 2} y={y - size} width={size} height={size} viewBox="0 0 32 32">
+              {/* a bigger invisible target makes small plants easy to tap */}
+              {onPlot && <rect x="-4" y="-4" width="40" height="40" fill="transparent" />}
               <g className="garden__plant">
-                <PlantArt stage={plant.stage} variety={plant.variety} />
+                {plant ? <PlantArt stage={plant.stage} variety={plant.variety} /> : <EmptyPlot />}
               </g>
             </svg>
+          );
+          if (!onPlot) return <g key={i}>{art}</g>;
+          return (
+            <g
+              key={i}
+              className={plant ? 'garden__plot' : 'garden__plot garden__plot--empty'}
+              role="button"
+              tabIndex={0}
+              aria-label={plotLabel?.(i)}
+              onClick={() => onPlot(i)}
+              onKeyDown={(event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                  event.preventDefault();
+                  onPlot(i);
+                }
+              }}
+            >
+              {art}
+            </g>
           );
         })}
         {has('fence') && <Decor id="fence" />}

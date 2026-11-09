@@ -14,6 +14,7 @@ import type { Feedback, LearnState, Question } from '../../core/learn';
 import { moodForScore, reactTo } from '../../core/cheer';
 import { growthGain } from '../../core/garden';
 import type { GrowthGain } from '../../core/garden';
+import { isResumable, markSaved, unsaved, withCurrentCards } from '../../core/resume';
 import { createFixedIntervalScheduler } from '../../core/scheduler';
 import type { CardSide, Direction } from '../../core/types';
 import { useI18n } from '../../i18n';
@@ -23,6 +24,7 @@ import { ConfirmDialog } from '../components/ConfirmDialog';
 import { SpeakButton } from '../components/SpeakButton';
 import { ChoiceList, instructionKey, TypingForm } from './parts';
 import { useCue } from '../cues';
+import { clearSnapshot, readSnapshot, writeSnapshot } from '../resume';
 import { speak } from '../speech';
 import { useStudyChrome } from './StudyLayout';
 import { SummaryView } from './SummaryView';
@@ -61,16 +63,30 @@ function LearnSession({ data, onRestart }: { data: StudyData; onRestart: () => v
   const chrome = useStudyChrome();
   const cue = useCue();
   const navigate = useNavigate();
-  const { direction, practice } = useStudyParams();
+  const { direction, practice, resume } = useStudyParams();
   const { deck } = data;
 
-  const [state, setState] = useState<LearnState>(() => {
+  // A session left half-way can be continued (`?resume=1`); practice sessions are not kept.
+  const [start] = useState(() => {
+    const snapshot = resume && !practice ? readSnapshot(deck.id, direction) : null;
+    if (isResumable(snapshot, deck.id, direction, data.cards, data.now)) {
+      return {
+        state: withCurrentCards(snapshot.state, data.cards),
+        saved: { cards: snapshot.savedCardIds, events: snapshot.savedEvents },
+      };
+    }
     const cards = pickSessionCards(data, direction, practice);
-    return startSession(cards, direction, {
-      ...DEFAULT_LEARN_CONFIG,
-      ignoreDiacritics: settings.ignoreDiacritics,
-    });
+    return {
+      state: startSession(cards, direction, {
+        ...DEFAULT_LEARN_CONFIG,
+        ignoreDiacritics: settings.ignoreDiacritics,
+      }),
+      saved: { cards: [] as string[], events: 0 },
+    };
   });
+  const [state, setState] = useState<LearnState>(start.state);
+  /** What earlier visits of this session already stored (so nothing is stored twice). */
+  const stored = useRef(start.saved);
   const [answered, setAnswered] = useState<Answered | null>(null);
   const [picked, setPicked] = useState<string | null>(null);
   const [saveState, setSaveState] = useState<SaveState>('saving');
@@ -86,17 +102,52 @@ function LearnSession({ data, onRestart }: { data: StudyData; onRestart: () => v
   const save = useCallback(async () => {
     setSaveState('saving');
     try {
-      const progress = practice
+      const now = Date.now();
+      const all = practice
         ? [] // practising ahead of schedule must not move the review dates
-        : applySessionToProgress(state, data.progress, scheduler, Date.now());
-      setGrown(growthGain(data.progress, progress));
-      await repo.saveSession(progress, sessionToLogs(state));
+        : applySessionToProgress(state, data.progress, scheduler, now);
+      const rest = unsaved(all, sessionToLogs(state), stored.current.cards, stored.current.events);
+      setGrown(growthGain(data.progress, rest.progress));
+      await repo.saveSession(rest.progress, rest.logs);
+      if (isFinished(state) || practice) {
+        clearSnapshot(deck.id, direction);
+      } else {
+        // left half-way: what is done is stored; the snapshot remembers it for next time
+        const marked = markSaved(
+          {
+            version: 1,
+            deckId: deck.id,
+            direction,
+            state,
+            savedCardIds: stored.current.cards,
+            savedEvents: stored.current.events,
+            savedAt: now,
+          },
+          now,
+        );
+        stored.current = { cards: marked.savedCardIds, events: marked.savedEvents };
+        writeSnapshot(marked);
+      }
       setSaveState('saved');
     } catch {
       saved.current = false;
       setSaveState('error');
     }
-  }, [state, data.progress, practice, repo]);
+  }, [state, data.progress, practice, repo, deck.id, direction]);
+
+  // Keep a snapshot after every answer, so the session can be continued even if the tab is closed.
+  useEffect(() => {
+    if (practice || state.events.length === 0 || isFinished(state)) return;
+    writeSnapshot({
+      version: 1,
+      deckId: deck.id,
+      direction,
+      state,
+      savedCardIds: stored.current.cards,
+      savedEvents: stored.current.events,
+      savedAt: Date.now(),
+    });
+  }, [state, practice, deck.id, direction]);
 
   // Save once, when the last card is done.
   useEffect(() => {

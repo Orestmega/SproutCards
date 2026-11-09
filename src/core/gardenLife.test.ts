@@ -1,10 +1,15 @@
 import { evaluateAchievements } from './achievements';
 import {
+  canGrowAs,
+  cleanShowcase,
   decorations,
   flowerVariety,
   GOLDEN_REPS,
   gardenHealth,
+  nextVariety,
   rarityOf,
+  SHOWCASE_SIZE,
+  unlockedVarieties,
   VARIETIES,
   wateringDay,
   wateringState,
@@ -13,24 +18,65 @@ import {
 const NOW = new Date(2026, 2, 11, 15).getTime();
 const day = (offset: number, hour = 10) => new Date(2026, 2, 11 + offset, hour).getTime();
 
+describe('unlocking flowers', () => {
+  const none = { blooms: 0, bestStreak: 0, goldenWords: 0 };
+
+  it('a daisy is open from the start; the next kind is a clear goal', () => {
+    expect(unlockedVarieties(none)).toEqual(['daisy']);
+    expect(nextVariety(none)?.id).toBe('tulip');
+  });
+
+  it('learned words, days in a row and a word known for long open more kinds', () => {
+    expect(unlockedVarieties({ ...none, blooms: 4 })).toEqual(['daisy', 'tulip', 'bellflower']);
+    expect(unlockedVarieties({ ...none, bestStreak: 7 })).toEqual(['daisy', 'sunflower', 'rose']);
+    expect(unlockedVarieties({ ...none, goldenWords: 1 })).toContain('golden');
+    expect(nextVariety({ blooms: 999, bestStreak: 999, goldenWords: 1 })).toBeNull();
+  });
+});
+
 describe('flowerVariety', () => {
-  it('the same word always becomes the same flower', () => {
-    expect(flowerVariety('card-1', 3)).toBe(flowerVariety('card-1', 4));
+  const open = ['daisy', 'tulip', 'bellflower', 'golden'] as const;
+
+  it('the same word always gets the same open kind', () => {
+    const a = flowerVariety('card-1', 2, [...open]);
+    expect(a).toBe(flowerVariety('card-1', 3, [...open]));
+    expect(['daisy', 'tulip', 'bellflower']).toContain(a);
   });
 
-  it('a word remembered for a long time turns golden', () => {
-    expect(flowerVariety('card-1', GOLDEN_REPS)).toBe('golden');
+  it('the kind the user planted wins, if it is open and allowed', () => {
+    expect(flowerVariety('card-1', 2, [...open], 'tulip')).toBe('tulip');
+    expect(flowerVariety('card-1', 2, [...open], 'rose')).not.toBe('rose'); // not open
+    expect(flowerVariety('card-1', 2, [...open], 'golden')).not.toBe('golden'); // not known long enough
+    expect(flowerVariety('card-1', GOLDEN_REPS, [...open], 'golden')).toBe('golden');
+  });
+
+  it('a word known for long is golden once golden flowers are open', () => {
+    expect(flowerVariety('card-1', GOLDEN_REPS, [...open])).toBe('golden');
+    expect(flowerVariety('card-1', GOLDEN_REPS, ['daisy'])).toBe('daisy');
     expect(rarityOf('golden')).toBe('golden');
+    expect(canGrowAs('golden', 1)).toBe(false);
   });
 
-  it('most words get a common flower, about one in seven a rare one, and every kind appears', () => {
-    const ids = Array.from({ length: 2000 }, (_, i) => flowerVariety(`id-${i}`, 3));
-    const rare = ids.filter((id) => rarityOf(id) === 'rare').length;
-    expect(rare).toBeGreaterThan(200);
-    expect(rare).toBeLessThan(400);
-    for (const variety of VARIETIES.filter((v) => v.rarity !== 'golden')) {
-      expect(ids).toContain(variety.id);
-    }
+  it('every kind can be grown once it is open', () => {
+    const all = VARIETIES.map((v) => v.id).filter((id) => id !== 'golden');
+    const kinds = new Set(Array.from({ length: 2000 }, (_, i) => flowerVariety(`id-${i}`, 2, all)));
+    expect(kinds.size).toBe(all.length);
+  });
+});
+
+describe('cleanShowcase', () => {
+  it('drops deleted words and repeats, and keeps at most the plot count', () => {
+    const plots = [
+      { cardId: 'a', variety: 'daisy' as const },
+      { cardId: 'gone', variety: 'tulip' as const },
+      { cardId: 'a', variety: 'rose' as const },
+      ...Array.from({ length: 30 }, (_, i) => ({ cardId: `c${i}`, variety: 'daisy' as const })),
+    ];
+    const ids = new Set(['a', ...Array.from({ length: 30 }, (_, i) => `c${i}`)]);
+    const clean = cleanShowcase(plots, ids);
+    expect(clean).toHaveLength(SHOWCASE_SIZE);
+    expect(clean[0]).toEqual({ cardId: 'a', variety: 'daisy' });
+    expect(clean.some((p) => p.cardId === 'gone')).toBe(false);
   });
 });
 

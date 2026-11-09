@@ -1,5 +1,5 @@
 // Domain types shared by the pure core, the storage layer and the UI.
-import type { VarietyId } from './gardenLife';
+import type { ShowcasePlot, VarietyId } from './gardenLife';
 // Nothing here depends on React or on browser APIs.
 
 /** BCP 47 language code, e.g. `en`, `uk`, `de`, `pt-BR`. The app never hard-codes a language pair. */
@@ -120,6 +120,8 @@ export interface Settings {
   profileName: string;
   /** The profile picture: Sprout or a flower found in the garden. */
   avatar: 'sprout' | VarietyId;
+  /** What grows on the plots of the garden picture, chosen by the user (empty = chosen automatically). */
+  gardenShowcase: ShowcasePlot[];
 }
 
 export const DEFAULT_SETTINGS: Settings = {
@@ -134,4 +136,5 @@ export const DEFAULT_SETTINGS: Settings = {
   autoSpeak: false,
   profileName: '',
   avatar: 'sprout',
+  gardenShowcase: [],
 };

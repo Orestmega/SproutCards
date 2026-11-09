@@ -7,6 +7,8 @@ import type { MessageKey } from '../../i18n';
 import { useRepo } from '../AppProviders';
 import { CheckField } from '../components/Fields';
 import { Icon } from '../components/Icons';
+import { snapshotProgress } from '../../core/resume';
+import { readSnapshot } from '../resume';
 import type { IconName } from '../components/Icons';
 
 const MODES: { path: string; title: MessageKey; desc: MessageKey; icon: IconName }[] = [
@@ -35,6 +37,8 @@ export function StudyPanel({
     return (await repo.listProgress(deck.id, direction)).filter((p) => p.dueAt <= now).length;
   }, [repo, deck.id, direction]);
 
+  const snapshot = readSnapshot(deck.id, direction);
+  const resumable = snapshot && snapshot.state.current !== null ? snapshotProgress(snapshot) : null;
   const from = languageName(deck.learningLang);
   const to = languageName(deck.translationLang);
   const query = `?dir=${direction}${starredOnly ? '&starred=1' : ''}`;
@@ -70,6 +74,22 @@ export function StudyPanel({
               checked={starredOnly}
               onChange={setStarredOnly}
             />
+          )}
+          {resumable && (
+            <Link to={`${base}/learn?dir=${direction}&resume=1`} className="resume-card">
+              <span className="resume-card__icon" aria-hidden="true">
+                <Icon name="learn" />
+              </span>
+              <span className="list-row__main">
+                <span className="list-row__title">{t('resume.continue')}</span>
+                <span className="muted">
+                  {t('resume.progress', { percent: resumable.percent, total: resumable.total })}
+                </span>
+              </span>
+              <span className="chevron" aria-hidden="true">
+                ›
+              </span>
+            </Link>
           )}
           <div className="modes">
             {MODES.map((mode) => (

@@ -284,6 +284,41 @@ describe('Learn: limits and edge cases', () => {
     expect(await db.reviewLogs.count()).toBe(1); // but the answer is in the history
   });
 
+  it('a session left half-way can be continued later; nothing is stored twice', async () => {
+    const user = userEvent.setup();
+    const { repo, deck } = await seedDeck();
+    const first = open(`/decks/${deck.id}/learn`);
+    await screen.findByText('Choose the translation');
+    await answerCurrent(user);
+    await user.click(await screen.findByRole('button', { name: 'Continue' }));
+    await answerCurrent(user);
+    await user.click(await screen.findByRole('button', { name: 'Continue' }));
+    // leave: the dialog says it can be continued
+    await user.click(screen.getByRole('button', { name: 'Close' }));
+    expect(await screen.findByText(/You can continue this session later/)).toBeInTheDocument();
+    await user.click(screen.getByRole('button', { name: 'Leave' }));
+    await screen.findByRole('heading', { name: 'Test deck' });
+    await waitFor(async () => expect(await db.reviewLogs.count()).toBe(2));
+    first.unmount();
+
+    // the deck and the home screen offer to continue
+    const home = open('/');
+    expect(
+      await screen.findByRole('link', { name: /Continue learning: Test deck/ }),
+    ).toBeInTheDocument();
+    home.unmount();
+    open(`/decks/${deck.id}`);
+    await user.click(await screen.findByRole('link', { name: /Continue where you stopped/ }));
+    await screen.findByText(/Choose the|Type the/);
+    const answers = await playLearnPerfectly(user);
+    expect(answers).toBe(7); // 9 answers in the whole session, 2 were given before leaving
+    await waitFor(async () => expect(await db.reviewLogs.count()).toBe(9));
+    await waitFor(async () => expect(await repo.listProgress(deck.id)).toHaveLength(3));
+    for (const p of await repo.listProgress(deck.id)) expect(p.reps).toBe(1);
+    // finished: nothing left to continue
+    expect(localStorage.getItem(`sproutcards.learn.${deck.id}.forward`)).toBeNull();
+  });
+
   it('closing before answering leaves at once', async () => {
     const user = userEvent.setup();
     const { deck } = await seedDeck();
