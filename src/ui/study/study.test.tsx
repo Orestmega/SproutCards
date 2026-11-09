@@ -787,6 +787,9 @@ describe('Sprout during study', () => {
     await playLearnPerfectly(user);
     expect(await screen.findByText('100%')).toBeInTheDocument();
     expect(document.querySelector('.score')).not.toBeNull();
+    // three new words answered cleanly: three seeds became leaves
+    const grew = screen.getByRole('heading', { name: 'Grew in your garden' }).closest('section');
+    expect(grew).toHaveTextContent('Leaves: 3');
     expect(document.querySelector('.confetti')).toHaveAttribute('aria-hidden', 'true');
     expect(buddyMood()).toBe('celebrate');
   });

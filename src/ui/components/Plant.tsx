@@ -140,6 +140,74 @@ function Flower({ variety }: { variety: VarietyId }) {
           <path d="M10.6 12 C12 15.4 20 15.4 21.4 12" fill="none" />
         </g>
       );
+    case 'marigold':
+      return (
+        <g>
+          <Ring count={12} rx={1.9} ry={3.2} distance={4.2} fill="#ff9d2e" stroke="#d96f00" />
+          <Ring count={8} rx={1.6} ry={2.4} distance={2.2} fill="#ffc04d" stroke="#d96f00" />
+          <circle cx="16" cy="10" r="1.6" fill="#b85a00" />
+        </g>
+      );
+    case 'violet':
+      return (
+        <g>
+          <Ring count={5} rx={3} ry={3.6} distance={3.2} fill="#8b5cf6" stroke="#5b34c4" />
+          <circle cx="16" cy="10" r="1.8" fill="#ffd23f" stroke="#c99400" strokeWidth="0.6" />
+        </g>
+      );
+    case 'daffodil':
+      return (
+        <g>
+          <Ring count={6} rx={2.6} ry={4.2} distance={4} fill="#fff2a8" stroke="#d9b93a" />
+          <circle cx="16" cy="10" r="3.2" fill="#ff9d2e" stroke="#d96f00" strokeWidth="0.8" />
+          <circle cx="16" cy="10" r="1.4" fill="#ffc04d" />
+        </g>
+      );
+    case 'forgetmenot':
+      return (
+        <g>
+          <Ring count={5} rx={2.8} ry={2.8} distance={3.4} fill="#8fd0ff" stroke="#4a94d6" />
+          <circle cx="16" cy="10" r="1.9" fill="#fff4c2" stroke="#e0a800" strokeWidth="0.8" />
+        </g>
+      );
+    case 'orchid':
+      return (
+        <g>
+          <Ring count={3} rx={2.4} ry={5.2} distance={4.4} fill="#fbd3ee" stroke="#d06bb0" />
+          <ellipse
+            cx="10.6"
+            cy="11"
+            rx="4.4"
+            ry="3.2"
+            fill="#f4a6dc"
+            stroke="#d06bb0"
+            strokeWidth="0.7"
+          />
+          <ellipse
+            cx="21.4"
+            cy="11"
+            rx="4.4"
+            ry="3.2"
+            fill="#f4a6dc"
+            stroke="#d06bb0"
+            strokeWidth="0.7"
+          />
+          <ellipse cx="16" cy="12" rx="2.4" ry="3.2" fill="#c0268f" />
+          <circle cx="16" cy="10" r="1.2" fill="#ffd23f" />
+        </g>
+      );
+    case 'lily':
+      return (
+        <g>
+          <Ring count={6} rx={2.2} ry={5.4} distance={4.6} fill="#fff0f5" stroke="#e68fb0" />
+          <g stroke="#e0a800" strokeWidth="0.8" strokeLinecap="round">
+            <path d="M16 10 L14 6.5 M16 10 L18 6.5 M16 10 L16 6" />
+          </g>
+          <circle cx="14" cy="6.3" r="0.9" fill="#c2571a" />
+          <circle cx="18" cy="6.3" r="0.9" fill="#c2571a" />
+          <circle cx="16" cy="5.8" r="0.9" fill="#c2571a" />
+        </g>
+      );
     case 'golden':
       return (
         <g>

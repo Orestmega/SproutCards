@@ -140,7 +140,7 @@ export function HomeScreen() {
                 setLine((l) => nextLine(l, PAT_LINES.length));
               }}
             >
-              <Mascot mood={mood} size={124} reaction={pats} watch />
+              <Mascot mood={mood} size={124} reaction={pats} />
             </button>
           </GardenScene>
 

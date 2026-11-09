@@ -239,43 +239,10 @@
   }
 }
 
-/* ---------- Stage 13: a livelier Sprout ---------- */
-.mascot__look,
+/* ---------- Extra moves ---------- */
 .mascot__leaf,
-.mascot__shine,
 .mascot__zzz > * {
   transform-box: view-box;
-}
-
-/* now and then Sprout looks around by itself */
-.mascot__look {
-  animation: mascot-look 9s ease-in-out infinite;
-}
-
-/* where it watches you, the pupils follow the pointer instead */
-.mascot--watch .mascot__look {
-  animation: none;
-  transform: translate(var(--look-x, 0), var(--look-y, 0));
-  transition: transform 160ms ease-out;
-}
-
-@keyframes mascot-look {
-  0%,
-  38%,
-  100% {
-    transform: none;
-  }
-  42%,
-  52% {
-    transform: translate(-2.2px, 0.4px);
-  }
-  58%,
-  68% {
-    transform: translate(2.2px, -0.6px);
-  }
-  72% {
-    transform: none;
-  }
 }
 
 /* breathing has a little squash and stretch */
@@ -287,22 +254,6 @@
 
 .mascot__torso {
   transform-origin: 60px 110px;
-}
-
-.mascot__shine {
-  transform-origin: 40px 58px;
-  animation: mascot-shine 4.5s ease-in-out infinite;
-}
-
-@keyframes mascot-shine {
-  50% {
-    opacity: 0.65;
-    transform: rotate(-28deg) scale(0.92);
-  }
-  0%,
-  100% {
-    transform: rotate(-28deg);
-  }
 }
 
 /* happy: the leaves flap; celebrating: the sprout spins round once */
@@ -346,7 +297,7 @@
   }
 }
 
-/* asleep: the z's float up and fade, one after the other */
+/* asleep: slow breathing, the z's float up and fade, one after the other */
 .mascot--sleepy .mascot__torso {
   animation-duration: 5s;
 }
@@ -387,11 +338,5 @@
   }
   75% {
     transform: rotate(-2deg);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .mascot--watch .mascot__look {
-    transition: none;
   }
 }

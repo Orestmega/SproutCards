@@ -12,6 +12,8 @@ import {
 } from '../../core/learn';
 import type { Feedback, LearnState, Question } from '../../core/learn';
 import { moodForScore, reactTo } from '../../core/cheer';
+import { growthGain } from '../../core/garden';
+import type { GrowthGain } from '../../core/garden';
 import { createFixedIntervalScheduler } from '../../core/scheduler';
 import type { CardSide, Direction } from '../../core/types';
 import { useI18n } from '../../i18n';
@@ -72,6 +74,7 @@ function LearnSession({ data, onRestart }: { data: StudyData; onRestart: () => v
   const [answered, setAnswered] = useState<Answered | null>(null);
   const [picked, setPicked] = useState<string | null>(null);
   const [saveState, setSaveState] = useState<SaveState>('saving');
+  const [grown, setGrown] = useState<GrowthGain | null>(null);
   const [confirmLeave, setConfirmLeave] = useState(false);
   const [combo, setCombo] = useState(0); // correct answers in a row, for Sprout's cheers
   const saved = useRef(false);
@@ -86,6 +89,7 @@ function LearnSession({ data, onRestart }: { data: StudyData; onRestart: () => v
       const progress = practice
         ? [] // practising ahead of schedule must not move the review dates
         : applySessionToProgress(state, data.progress, scheduler, Date.now());
+      setGrown(growthGain(data.progress, progress));
       await repo.saveSession(progress, sessionToLogs(state));
       setSaveState('saved');
     } catch {
@@ -181,6 +185,7 @@ function LearnSession({ data, onRestart }: { data: StudyData; onRestart: () => v
         ]}
         weak={Object.values(state.cards).filter((c) => weakIds.has(c.id))}
         saveState={saveState}
+        grown={grown}
         onRetrySave={() => {
           saved.current = true;
           void save();

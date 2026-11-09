@@ -85,12 +85,7 @@ export function GardenScreen() {
         big
       >
         <div className="garden__sprout">
-          <Mascot
-            mood={raining ? 'celebrate' : MOOD[health]}
-            size={112}
-            reaction={reaction}
-            watch
-          />
+          <Mascot mood={raining ? 'celebrate' : MOOD[health]} size={112} reaction={reaction} />
         </div>
         <p className={`garden__health garden__health--${health}`}>{t(`garden.health.${health}`)}</p>
       </GardenScene>

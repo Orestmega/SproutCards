@@ -2,18 +2,46 @@
  * The word garden: every word grows from a seed to a bloom as it is reviewed correctly.
  * It is only a way of showing `Progress.reps` (no extra data is stored).
  */
-import { LEARNED_REPS } from './stats';
 
 export const GROWTH_STAGES = ['seed', 'sprout', 'leaf', 'bloom'] as const;
 export type GrowthStage = (typeof GROWTH_STAGES)[number];
 
 export type GrowthCounts = Record<GrowthStage, number>;
 
-/** `undefined` reps: never studied. A bloom is a learned word (see `LEARNED_REPS`). */
+/** Right reviews in a row after which a word blooms. */
+export const BLOOM_REPS = 2;
+
+/**
+ * Every successful step is visible: never studied = seed; studied but with a mistake = sprout;
+ * answered cleanly once = leaf; right again at the next review = bloom.
+ */
 export function growthStage(reps: number | undefined): GrowthStage {
   if (reps === undefined) return 'seed';
-  if (reps >= LEARNED_REPS) return 'bloom';
-  return reps >= 2 ? 'leaf' : 'sprout';
+  if (reps >= BLOOM_REPS) return 'bloom';
+  return reps >= 1 ? 'leaf' : 'sprout';
+}
+
+export type GrowthGain = Record<'sprout' | 'leaf' | 'bloom', number>;
+
+/**
+ * What a study session grew: how many words moved UP to each stage. `existing` is the progress before
+ * the session, `updated` the records the session wrote (same ids replace the old ones).
+ */
+export function growthGain(
+  existing: readonly { id: string; cardId: string; reps: number }[],
+  updated: readonly { id: string; cardId: string; reps: number }[],
+): GrowthGain {
+  const before = bestRepsByCard(existing);
+  const merged = new Map(existing.map((p) => [p.id, p]));
+  for (const p of updated) merged.set(p.id, p);
+  const after = bestRepsByCard([...merged.values()]);
+  const gain: GrowthGain = { sprout: 0, leaf: 0, bloom: 0 };
+  for (const cardId of new Set(updated.map((p) => p.cardId))) {
+    const from = GROWTH_STAGES.indexOf(growthStage(before.get(cardId)));
+    const stage = growthStage(after.get(cardId));
+    if (stage !== 'seed' && GROWTH_STAGES.indexOf(stage) > from) gain[stage]++;
+  }
+  return gain;
 }
 
 /** The best number of correct reviews in a row per card: the stronger direction decides. */

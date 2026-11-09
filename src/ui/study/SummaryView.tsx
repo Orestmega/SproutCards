@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import type { CSSProperties, ReactNode } from 'react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { Link } from 'react-router-dom';
+import type { GrowthGain } from '../../core/garden';
 import { todayCount } from '../../core/habit';
 import { startOfDayPlus } from '../../core/scheduler';
 import type { Card } from '../../core/types';
@@ -13,6 +14,7 @@ import { CountUp } from '../components/CountUp';
 import { MascotBubble } from '../components/Mascot';
 import type { MascotMood } from '../components/Mascot';
 import { Notice } from '../components/Notice';
+import { Plant } from '../components/Plant';
 import { ProgressBar } from '../components/ProgressBar';
 import { useCue } from '../cues';
 
@@ -92,6 +94,7 @@ export function SummaryView({
   onRetryMissed,
   retryMissedLabel,
   extra,
+  grown,
   score,
 }: {
   deckId: string;
@@ -112,6 +115,8 @@ export function SummaryView({
   onRetryMissed?: () => void;
   retryMissedLabel?: string;
   extra?: ReactNode;
+  /** What this session grew in the garden (words that reached a higher stage). */
+  grown?: GrowthGain | null;
 }) {
   const { t } = useI18n();
   const cue = useCue();
@@ -147,6 +152,31 @@ export function SummaryView({
       </div>
 
       <GoalStrip />
+
+      {grown && grown.sprout + grown.leaf + grown.bloom > 0 && (
+        <section className="goal-strip grown" aria-labelledby="grown-title">
+          <div className="goal-strip__main">
+            <h3 className="grown__title" id="grown-title">
+              {t('summary.grown')}
+            </h3>
+            <ul className="grown__list">
+              {(['bloom', 'leaf', 'sprout'] as const).map(
+                (stage) =>
+                  grown[stage] > 0 && (
+                    <li key={stage}>
+                      <Plant stage={stage} size={36} />
+                      <span aria-hidden="true">+{grown[stage]}</span>
+                      <span className="visually-hidden">
+                        {t(`growth.${stage}`)}: {grown[stage]}
+                      </span>
+                    </li>
+                  ),
+              )}
+            </ul>
+          </div>
+          <Link to="/garden">{t('garden.open')}</Link>
+        </section>
+      )}
 
       {saveState === 'error' && (
         <Notice kind="error">

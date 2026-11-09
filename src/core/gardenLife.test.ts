@@ -23,11 +23,11 @@ describe('flowerVariety', () => {
     expect(rarityOf('golden')).toBe('golden');
   });
 
-  it('most words get a common flower, about one in ten a rare one, and every kind appears', () => {
+  it('most words get a common flower, about one in seven a rare one, and every kind appears', () => {
     const ids = Array.from({ length: 2000 }, (_, i) => flowerVariety(`id-${i}`, 3));
     const rare = ids.filter((id) => rarityOf(id) === 'rare').length;
-    expect(rare).toBeGreaterThan(120);
-    expect(rare).toBeLessThan(300);
+    expect(rare).toBeGreaterThan(200);
+    expect(rare).toBeLessThan(400);
     for (const variety of VARIETIES.filter((v) => v.rarity !== 'golden')) {
       expect(ids).toContain(variety.id);
     }

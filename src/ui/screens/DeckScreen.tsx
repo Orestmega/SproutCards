@@ -5,6 +5,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { cardsToCsv, parseCsvCards } from '../../core/csv';
 import type { ImportIssue } from '../../core/exchange';
 import { bestRepsByCard, growthCounts, growthStage } from '../../core/garden';
+import { flowerVariety } from '../../core/gardenLife';
 import { serializeDeck } from '../../core/exchange';
 import { newId } from '../../core/id';
 import { useI18n } from '../../i18n';
@@ -197,6 +198,7 @@ export function DeckScreen() {
                 <Link to={`/decks/${deckId}/cards/${card.id}`} className="list-row__link">
                   <Plant
                     stage={growthStage(bestReps.get(card.id))}
+                    variety={flowerVariety(card.id, bestReps.get(card.id) ?? 0)}
                     label={t(`growth.one.${growthStage(bestReps.get(card.id))}`)}
                   />
                   <span className="list-row__main">

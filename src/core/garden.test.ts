@@ -3,6 +3,7 @@ import {
   gardenPlots,
   gardenShare,
   growthCounts,
+  growthGain,
   growthStage,
   scenePlants,
 } from './garden';
@@ -11,8 +12,8 @@ describe('growthStage', () => {
   it('goes from seed to bloom with correct reviews in a row', () => {
     expect(growthStage(undefined)).toBe('seed');
     expect(growthStage(0)).toBe('sprout'); // studied, but the last answer was a mistake
-    expect(growthStage(1)).toBe('sprout');
-    expect(growthStage(2)).toBe('leaf');
+    expect(growthStage(1)).toBe('leaf');
+    expect(growthStage(2)).toBe('bloom');
     expect(growthStage(3)).toBe('bloom');
     expect(growthStage(9)).toBe('bloom');
   });
@@ -23,7 +24,7 @@ describe('growthCounts', () => {
     const progress = [
       { cardId: 'a', reps: 1 },
       { cardId: 'a', reps: 3 },
-      { cardId: 'b', reps: 2 },
+      { cardId: 'b', reps: 1 },
     ];
     expect(bestRepsByCard(progress).get('a')).toBe(3);
     expect(growthCounts(['a', 'b', 'c'], progress)).toEqual({
@@ -52,6 +53,26 @@ describe('gardenPlots', () => {
     const plots = gardenPlots({ seed: 100, sprout: 0, leaf: 0, bloom: 1 }, 5);
     expect(plots[0]).toBe('bloom');
     expect(plots.filter((p) => p === 'seed')).toHaveLength(4);
+  });
+});
+
+describe('growthGain', () => {
+  const p = (cardId: string, reps: number, direction = 'forward') => ({
+    id: `${cardId}:${direction}`,
+    cardId,
+    reps,
+  });
+
+  it('counts the words that moved up, by their new stage', () => {
+    const before = [p('a', 1), p('b', 0)];
+    const after = [p('a', 2), p('b', 1), p('c', 1), p('d', 0)];
+    expect(growthGain(before, after)).toEqual({ sprout: 1, leaf: 2, bloom: 1 });
+  });
+
+  it('a word that stayed or fell back is not growth; the other direction still counts', () => {
+    const before = [p('a', 2), p('b', 1), p('c', 2, 'backward')];
+    const after = [p('a', 3), p('b', 0), p('c', 1)];
+    expect(growthGain(before, after)).toEqual({ sprout: 0, leaf: 0, bloom: 0 });
   });
 });
 

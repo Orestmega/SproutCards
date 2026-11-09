@@ -87,7 +87,7 @@ describe('garden screen', () => {
       within(section).getByRole('link', { name: 'Plant: learn new words' }),
     ).toBeInTheDocument();
     expect(
-      within(section).getByRole('button', { name: 'pear: Sprout: just started' }),
+      within(section).getByRole('button', { name: 'pear: Leaf: one clean answer, almost there' }),
     ).toBeInTheDocument();
 
     await user.click(within(section).getByRole('button', { name: /^apple: Bloom: learned \(/ }));
@@ -104,8 +104,8 @@ describe('garden screen', () => {
     open('/garden');
     const heading = await screen.findByRole('heading', { name: 'Flower collection' });
     const collection = heading.closest('section') as HTMLElement;
-    expect(within(collection).getByText('1 of 9')).toBeInTheDocument();
-    expect(within(collection).getAllByText('Not found yet')).toHaveLength(8);
+    expect(within(collection).getByText('1 of 15')).toBeInTheDocument();
+    expect(within(collection).getAllByText('Not found yet')).toHaveLength(14);
   });
 
   it('watering opens once the goal is reached and stays done for the day', async () => {

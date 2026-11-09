@@ -16,6 +16,8 @@ import {
 } from '../../core/flip';
 import type { FlipState } from '../../core/flip';
 import { moodForScore } from '../../core/cheer';
+import { growthGain } from '../../core/garden';
+import type { GrowthGain } from '../../core/garden';
 import { createFixedIntervalScheduler } from '../../core/scheduler';
 import { selectSessionCards } from '../../core/selection';
 import { useI18n } from '../../i18n';
@@ -75,6 +77,7 @@ function FlipSession({ data, onRestart }: { data: StudyData; onRestart: () => vo
   );
   const [flipped, setFlipped] = useState(false);
   const [saveState, setSaveState] = useState<SaveState>('saving');
+  const [grown, setGrown] = useState<GrowthGain | null>(null);
   const [confirmLeave, setConfirmLeave] = useState(false);
   const saved = useRef(false);
   const finished = isFlipFinished(state);
@@ -84,6 +87,7 @@ function FlipSession({ data, onRestart }: { data: StudyData; onRestart: () => vo
     setSaveState('saving');
     try {
       const progress = practice ? [] : flipToProgress(state, data.progress, scheduler);
+      setGrown(growthGain(data.progress, progress));
       await repo.saveSession(progress, flipToLogs(state));
       setSaveState('saved');
     } catch {
@@ -198,6 +202,7 @@ function FlipSession({ data, onRestart }: { data: StudyData; onRestart: () => vo
         ]}
         weak={weak}
         saveState={saveState}
+        grown={grown}
         onRetrySave={() => {
           saved.current = true;
           void save();

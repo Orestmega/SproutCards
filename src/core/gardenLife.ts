@@ -20,17 +20,23 @@ export const VARIETIES = [
   { id: 'poppy', rarity: 'common' },
   { id: 'lavender', rarity: 'common' },
   { id: 'cornflower', rarity: 'common' },
+  { id: 'marigold', rarity: 'common' },
+  { id: 'violet', rarity: 'common' },
+  { id: 'daffodil', rarity: 'common' },
+  { id: 'forgetmenot', rarity: 'common' },
   { id: 'sunflower', rarity: 'rare' },
   { id: 'rose', rarity: 'rare' },
+  { id: 'orchid', rarity: 'rare' },
+  { id: 'lily', rarity: 'rare' },
   { id: 'golden', rarity: 'golden' },
 ] as const satisfies readonly Variety[];
 
 export type VarietyId = (typeof VARIETIES)[number]['id'];
 
 /** Correct reviews in a row after which a word turns into a golden flower: remembered for months. */
-export const GOLDEN_REPS = 6;
+export const GOLDEN_REPS = 5;
 /** Out of 100: how many learned words become a rare flower. */
-const RARE_CHANCE = 10;
+const RARE_CHANCE = 15;
 
 /** A small stable hash: the same word always gets the same flower, on every device. */
 function hash(text: string): number {
@@ -43,8 +49,19 @@ function hash(text: string): number {
 export function flowerVariety(cardId: string, reps: number): VarietyId {
   if (reps >= GOLDEN_REPS) return 'golden';
   const h = hash(cardId);
-  const rare: VarietyId[] = ['sunflower', 'rose'];
-  const common: VarietyId[] = ['daisy', 'tulip', 'bellflower', 'poppy', 'lavender', 'cornflower'];
+  const rare: VarietyId[] = ['sunflower', 'rose', 'orchid', 'lily'];
+  const common: VarietyId[] = [
+    'daisy',
+    'tulip',
+    'bellflower',
+    'poppy',
+    'lavender',
+    'cornflower',
+    'marigold',
+    'violet',
+    'daffodil',
+    'forgetmenot',
+  ];
   if (h % 100 < RARE_CHANCE) return rare[(h >>> 11) % rare.length] ?? 'sunflower';
   return common[(h >>> 7) % common.length] ?? 'daisy';
 }
