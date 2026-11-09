@@ -20,7 +20,7 @@
 
 /* a new screen (or a new question, which is a new element) slides in softly */
 .app__main > * {
-  animation: page-in var(--motion-medium) var(--ease-out) both;
+  animation: page-in var(--motion-medium) var(--ease-out) backwards; /* "backwards": once played, it must not hold `transform` (that would block hover lifts) */
 }
 
 @keyframes page-in {
@@ -399,7 +399,7 @@
 .list > li,
 .deck-grid > li,
 .ach-grid > li {
-  animation: page-in var(--motion-medium) var(--ease-out) both;
+  animation: page-in var(--motion-medium) var(--ease-out) backwards;
 }
 
 .list > li:nth-child(2),
@@ -962,7 +962,7 @@ textarea.input {
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-1);
   font-weight: 700;
-  animation: bubble-in 420ms var(--ease-spring) both;
+  animation: bubble-in 420ms var(--ease-spring) backwards;
   transform-origin: left center;
 }
 
@@ -1258,7 +1258,7 @@ textarea.input {
   font-weight: 700;
   color: var(--color-text-muted);
   line-height: 1.3;
-  animation: page-in var(--motion-medium) var(--ease-out) both;
+  animation: page-in var(--motion-medium) var(--ease-out) backwards;
 }
 
 @media (min-width: 640px) {
@@ -2266,4 +2266,32 @@ textarea.input {
     animation: none;
     transform: rotate(8deg);
   }
+}
+
+/* the garden in fields (one per language) and beds (one per deck) */
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.field-group__name {
+  font-size: 1.0625rem;
+  font-weight: 900;
+}
+
+.seed-bag {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-sunken);
+}
+
+.seed-bag__text {
+  flex: 1;
+  min-width: 8rem;
+  font-weight: 800;
 }

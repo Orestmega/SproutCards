@@ -80,9 +80,11 @@ describe('garden screen', () => {
     open('/garden');
     const beds = await screen.findByRole('heading', { name: 'Beds' });
     const section = beds.closest('section') as HTMLElement;
-    expect(within(section).getAllByRole('button')).toHaveLength(3);
+    // what grows is a plant to tap; the word not studied yet waits in the bag of seeds
+    expect(within(section).getAllByRole('button')).toHaveLength(2);
+    expect(within(section).getByText('1 seed in the bag')).toBeInTheDocument();
     expect(
-      within(section).getByRole('button', { name: 'plum: Seed: not studied yet' }),
+      within(section).getByRole('link', { name: 'Plant: learn new words' }),
     ).toBeInTheDocument();
     expect(
       within(section).getByRole('button', { name: 'pear: Sprout: just started' }),
@@ -133,6 +135,25 @@ describe('garden screen', () => {
     expect(await screen.findByText('Wilting: a few answers bring it back')).toBeInTheDocument();
     expect(document.querySelector('.garden')).toHaveAttribute('data-health', 'wilted');
     expect((await repo.listProgress(deck.id)).map((p) => p.reps).sort()).toEqual([1, 3]);
+  });
+
+  it('has a field for each language being learned, and can show just one', async () => {
+    const user = userEvent.setup();
+    const { repo } = await seed();
+    const german = await repo.createDeck({
+      name: 'Deutsch',
+      learningLang: 'de',
+      translationLang: 'uk',
+    });
+    await repo.addCard(german.id, { term: 'Apfel', translations: ['яблуко'] });
+    open('/garden');
+    expect(await screen.findByRole('heading', { name: /English field/ })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /German field/ })).toBeInTheDocument();
+    await user.click(screen.getByRole('button', { name: 'German' }));
+    expect(screen.queryByRole('heading', { name: /English field/ })).not.toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Deutsch' })).toBeInTheDocument();
+    await user.click(screen.getByRole('button', { name: 'All languages' }));
+    expect(screen.getByRole('heading', { name: /English field/ })).toBeInTheDocument();
   });
 
   it('an empty garden points to the catalog', async () => {

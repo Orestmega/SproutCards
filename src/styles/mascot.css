@@ -238,3 +238,160 @@
     animation: none !important;
   }
 }
+
+/* ---------- Stage 13: a livelier Sprout ---------- */
+.mascot__look,
+.mascot__leaf,
+.mascot__shine,
+.mascot__zzz > * {
+  transform-box: view-box;
+}
+
+/* now and then Sprout looks around by itself */
+.mascot__look {
+  animation: mascot-look 9s ease-in-out infinite;
+}
+
+/* where it watches you, the pupils follow the pointer instead */
+.mascot--watch .mascot__look {
+  animation: none;
+  transform: translate(var(--look-x, 0), var(--look-y, 0));
+  transition: transform 160ms ease-out;
+}
+
+@keyframes mascot-look {
+  0%,
+  38%,
+  100% {
+    transform: none;
+  }
+  42%,
+  52% {
+    transform: translate(-2.2px, 0.4px);
+  }
+  58%,
+  68% {
+    transform: translate(2.2px, -0.6px);
+  }
+  72% {
+    transform: none;
+  }
+}
+
+/* breathing has a little squash and stretch */
+@keyframes mascot-breathe {
+  50% {
+    transform: translateY(-1.8px) scale(1.01, 0.99);
+  }
+}
+
+.mascot__torso {
+  transform-origin: 60px 110px;
+}
+
+.mascot__shine {
+  transform-origin: 40px 58px;
+  animation: mascot-shine 4.5s ease-in-out infinite;
+}
+
+@keyframes mascot-shine {
+  50% {
+    opacity: 0.65;
+    transform: rotate(-28deg) scale(0.92);
+  }
+  0%,
+  100% {
+    transform: rotate(-28deg);
+  }
+}
+
+/* happy: the leaves flap; celebrating: the sprout spins round once */
+.mascot__leaf--right {
+  transform-origin: 60px 9px;
+}
+
+.mascot__leaf--left {
+  transform-origin: 60px 12px;
+}
+
+.mascot--happy .mascot__leaf--right,
+.mascot--celebrate .mascot__leaf--right {
+  animation: leaf-flap 0.5s ease-in-out 3 alternate;
+}
+
+.mascot--happy .mascot__leaf--left,
+.mascot--celebrate .mascot__leaf--left {
+  animation: leaf-flap-left 0.5s ease-in-out 3 alternate;
+}
+
+@keyframes leaf-flap {
+  to {
+    transform: rotate(-18deg);
+  }
+}
+
+@keyframes leaf-flap-left {
+  to {
+    transform: rotate(18deg);
+  }
+}
+
+.mascot--celebrate .mascot__sprout {
+  animation: sprout-spin 0.9s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes sprout-spin {
+  from {
+    transform: rotate(-360deg);
+  }
+}
+
+/* asleep: the z's float up and fade, one after the other */
+.mascot--sleepy .mascot__torso {
+  animation-duration: 5s;
+}
+
+.mascot__zzz > * {
+  animation: mascot-z 3s ease-in infinite;
+}
+
+.mascot__zzz > :nth-child(2) {
+  animation-delay: 1.5s;
+}
+
+@keyframes mascot-z {
+  0% {
+    opacity: 0;
+    transform: translate(0, 4px);
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(6px, -10px);
+  }
+}
+
+/* a finger or mouse over Sprout: it wiggles, as if it were ticklish */
+.mascot-btn:hover .mascot__actor {
+  animation: mascot-tickle 0.6s ease-in-out;
+}
+
+@keyframes mascot-tickle {
+  25% {
+    transform: rotate(-4deg) scale(1.03, 0.97);
+  }
+  50% {
+    transform: rotate(3deg) scale(0.98, 1.02);
+  }
+  75% {
+    transform: rotate(-2deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mascot--watch .mascot__look {
+    transition: none;
+  }
+}

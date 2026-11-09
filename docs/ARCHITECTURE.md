@@ -217,6 +217,9 @@ the daily goal is reached; the watered day is kept in `localStorage` by `ui/gard
 achievement). `scenePlants` in `garden.ts` picks the real plants for the picture, special flowers first.
 `ui/garden.ts` (`useGarden`) reads everything in one `repo.gardenSnapshot()` and builds the plant list.
 
+`gardenBeds.ts` (`gardenFields`): one field per learning language, one bed per deck; a bed lists only growing
+words and counts the rest as seeds, so the garden scales to many languages and big decks.
+
 Other pure helpers: `bulk.ts` (paste a list of words; separators are tried in order, duplicates are reported),
 `hint.ts` (letters of a typed answer), `undoFlip` in `flip.ts` (takes back one answer of the current round).
 
@@ -244,6 +247,11 @@ New settings (`theme`, `dailyGoal`, `soundEnabled`, `hapticsEnabled`, `autoSpeak
   swallowed, an extra must never break a session.
 - `SwipeCard` uses pointer events and leaves a mostly vertical move to the page (`touch-action: pan-y`). It is a
   shortcut only: the buttons and arrow keys remain.
+- `Mascot` is drawn with gradients and a clip path for volume; `watch` makes the pupils follow the pointer by
+  writing CSS variables in a `pointermove` handler (one `requestAnimationFrame` per move, no re-render). Hover and
+  idle animations are pure CSS in `mascot.css`.
+- The appearing animation of screen elements uses `animation-fill-mode: backwards`: with `both` a finished
+  animation keeps holding `transform` and blocks the hover lift of buttons placed directly on the page.
 - `CountUp` keeps the real text in the page for screen readers and paints the moving digits from an attribute.
 - **Sprout reacts** (`core/cheer.ts`, pure, tested): `reactTo(combo, outcome, skipped)` gives the mood after an
   answer and the "in a row" count (a right answer adds one, "almost" keeps it, a wrong one resets; cheers at 3,

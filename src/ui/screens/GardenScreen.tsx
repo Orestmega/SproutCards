@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { dayPart } from '../../core/cheer';
 import type { MascotMood } from '../../core/cheer';
 import { growthCounts, scenePlants } from '../../core/garden';
+import { gardenFields } from '../../core/gardenBeds';
 import { GOLDEN_REPS, rarityOf, VARIETIES, wateringState } from '../../core/gardenLife';
 import type { VarietyId } from '../../core/gardenLife';
 import { useI18n } from '../../i18n';
@@ -22,6 +23,8 @@ import { useGarden, useWatering } from '../garden';
 import type { GardenPlant } from '../garden';
 
 const RAIN_MS = 2600;
+/** Plants shown per bed; a huge deck shows the most grown ones and a count of the rest. */
+const BED_LIMIT = 60;
 const MOOD: Record<string, MascotMood> = {
   new: 'normal',
   fresh: 'happy',
@@ -31,7 +34,7 @@ const MOOD: Record<string, MascotMood> = {
 
 /** The garden in full: the picture, today's watering, every word as a plant, flowers and decorations. */
 export function GardenScreen() {
-  const { t, tp } = useI18n();
+  const { t, tp, languageName } = useI18n();
   const { dailyGoal } = useSettings();
   const cue = useCue();
   const [now] = useState(() => Date.now());
@@ -40,6 +43,7 @@ export function GardenScreen() {
   const [raining, setRaining] = useState(false);
   const [reaction, setReaction] = useState(0);
   const [selected, setSelected] = useState<GardenPlant | null>(null);
+  const [lang, setLang] = useState('all');
 
   useEffect(() => {
     if (!raining) return;
@@ -54,6 +58,12 @@ export function GardenScreen() {
   const found = new Set(plants.filter((p) => p.stage === 'bloom').map((p) => p.variety));
   const earned = decorations.filter((d) => d.earned).map((d) => d.id);
   const studyDeck = decks.find((d) => plants.some((p) => p.deck.id === d.id));
+  const fields = gardenFields(plants);
+  // a language that is no longer learned falls back to "all"
+  const shownLang = fields.some((field) => field.lang === lang) ? lang : 'all';
+  const shownFields = shownLang === 'all' ? fields : fields.filter((x) => x.lang === shownLang);
+  const scene =
+    shownLang === 'all' ? plants : plants.filter((p) => p.deck.learningLang === shownLang);
 
   function onWater() {
     water(now);
@@ -68,14 +78,19 @@ export function GardenScreen() {
 
       <GardenScene
         part={part}
-        plants={scenePlants(plants, 15)}
+        plants={scenePlants(scene, 15)}
         decorations={earned}
         health={raining ? 'fresh' : health}
         raining={raining}
         big
       >
         <div className="garden__sprout">
-          <Mascot mood={raining ? 'celebrate' : MOOD[health]} size={112} reaction={reaction} />
+          <Mascot
+            mood={raining ? 'celebrate' : MOOD[health]}
+            size={112}
+            reaction={reaction}
+            watch
+          />
         </div>
         <p className={`garden__health garden__health--${health}`}>{t(`garden.health.${health}`)}</p>
       </GardenScene>
@@ -128,35 +143,70 @@ export function GardenScreen() {
               {t('garden.beds')}
             </h2>
             <p className="muted">{t('garden.bedsHint')}</p>
-            {decks.map((deck) => {
-              const own = plants.filter((p) => p.deck.id === deck.id);
-              if (own.length === 0) return null;
-              const blooms = own.filter((p) => p.stage === 'bloom').length;
-              return (
-                <div className="card bed" key={deck.id}>
-                  <div className="section__head">
-                    <h3 className="bed__name">{deck.name}</h3>
-                    <span className="muted">
-                      {tp('garden.blooms', blooms)} · {tp('count.cards', own.length)}
-                    </span>
+            {fields.length > 1 && (
+              <div className="chips" role="group" aria-label={t('garden.languages')}>
+                {['all', ...fields.map((field) => field.lang)].map((lang) => (
+                  <button
+                    key={lang}
+                    type="button"
+                    className="chip"
+                    aria-pressed={shownLang === lang}
+                    onClick={() => setLang(lang)}
+                  >
+                    {lang === 'all' ? t('garden.allLanguages') : languageName(lang)}
+                  </button>
+                ))}
+              </div>
+            )}
+            {shownFields.map((field) => (
+              <div className="field-group" key={field.lang}>
+                <h3 className="field-group__name">
+                  {t('garden.field', { language: languageName(field.lang) })}
+                  <span className="muted">
+                    {' '}
+                    · {tp('garden.blooms', field.blooms)} · {tp('garden.growing', field.growing)}
+                  </span>
+                </h3>
+                {field.beds.map((bed) => (
+                  <div className="card bed" key={bed.deckId}>
+                    <div className="section__head">
+                      <h4 className="bed__name">{bed.deckName}</h4>
+                      <span className="muted">{tp('garden.blooms', bed.blooms)}</span>
+                    </div>
+                    {bed.growing.length > 0 ? (
+                      <ul className="bed__plants">
+                        {bed.growing.slice(0, BED_LIMIT).map((plant) => (
+                          <li key={plant.card.id}>
+                            <button
+                              type="button"
+                              className="bed__plant"
+                              aria-label={`${plant.card.term}: ${plantName(plant, t)}`}
+                              onClick={() => setSelected(plant)}
+                            >
+                              <Plant stage={plant.stage} variety={plant.variety} size={40} />
+                            </button>
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p className="muted">{t('garden.bedEmpty')}</p>
+                    )}
+                    {bed.growing.length > BED_LIMIT && (
+                      <p className="muted">{tp('garden.more', bed.growing.length - BED_LIMIT)}</p>
+                    )}
+                    {bed.seeds > 0 && (
+                      <div className="seed-bag">
+                        <Plant stage="seed" size={36} />
+                        <span className="seed-bag__text">{tp('garden.seeds', bed.seeds)}</span>
+                        <ButtonLink to={`/decks/${bed.deckId}/learn`} variant="secondary" small>
+                          {t('garden.plantSeeds')}
+                        </ButtonLink>
+                      </div>
+                    )}
                   </div>
-                  <ul className="bed__plants">
-                    {own.map((plant) => (
-                      <li key={plant.card.id}>
-                        <button
-                          type="button"
-                          className="bed__plant"
-                          aria-label={`${plant.card.term}: ${plantName(plant, t)}`}
-                          onClick={() => setSelected(plant)}
-                        >
-                          <Plant stage={plant.stage} variety={plant.variety} size={40} />
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              );
-            })}
+                ))}
+              </div>
+            ))}
           </section>
         </>
       )}

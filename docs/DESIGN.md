@@ -22,7 +22,12 @@ so a screen is written once. The dark theme turns the dark button light (mint fa
 - **Garden screen:** the big picture (15 plots, earned decorations, rain while watering, droop when wilted), the
   watering card, beds per deck (tap a plant for its word), the flower collection (unknown kinds as silhouettes),
   decorations, and the rules in plain words. On Home the whole picture is a link to it ("Open your garden").
-- **Sprout (Stage 12):** a soft drop-shaped body with a radial gradient and a light from the top left, darker
+- **Sprout (Stage 13):** volume from gradients: light from the top left, shade at the bottom right, the page's
+  soft shadow on the head, a shine and a rim light, glassy eyes with white around the pupils. Moves: breathing with
+  a little squash, blinking, looking around by itself, pupils following the pointer on Home and Garden, leaves
+  flapping when happy, the sprout spinning round when celebrating, z's floating up when asleep, a ticklish wiggle
+  on hover.
+- **Sprout (Stage 12, replaced):** a soft drop-shaped body with a radial gradient and a light from the top left, darker
   outline, resting arms, feet with a highlight, a page with a folded corner, leaves with veins, big eyes with two
   highlights, a light blush always on.
 
