@@ -12,6 +12,7 @@ import {
 import type { MatchState } from '../../core/match';
 import { useI18n } from '../../i18n';
 import { useApp } from '../AppProviders';
+import { Burst } from '../components/Burst';
 import { ButtonLink } from '../components/Button';
 import { EmptyState } from '../components/Notice';
 import { useCue } from '../cues';
@@ -218,6 +219,8 @@ function MatchGame({
             >
               {matched && <span aria-hidden="true">✓</span>}
               {wrong && <span aria-hidden="true">✗</span>}
+              {matched && <Burst kind="bloom" />}
+              {wrong && <Burst kind="fall" />}
               <span>{tile.text}</span>
               {matched && <span className="visually-hidden">{t('match.tileMatched')}</span>}
               {wrong && <span className="visually-hidden">{t('match.notPair')}</span>}

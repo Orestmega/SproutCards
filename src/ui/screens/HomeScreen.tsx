@@ -8,10 +8,11 @@ import { pickOfTheDay } from '../../core/habit';
 import { computeStreak } from '../../core/stats';
 import { useI18n } from '../../i18n';
 import type { MessageKey } from '../../i18n';
-import { useRepo } from '../AppProviders';
+import { useRepo, useSettings } from '../AppProviders';
 import { ButtonLink } from '../components/Button';
 import { DeckCard } from '../components/DeckCard';
 import { GardenScene } from '../components/GardenScene';
+import { Avatar } from '../components/Avatar';
 import { Icon } from '../components/Icons';
 import { Logo } from '../components/Layout';
 import { Mascot } from '../components/Mascot';
@@ -35,6 +36,7 @@ const PAT_LINES = [
 export function HomeScreen() {
   const { t, tp, languageName } = useI18n();
   const repo = useRepo();
+  const settings = useSettings();
   const summaries = useLiveQuery(() => repo.deckSummaries(Date.now()), [repo]);
   const logTimes = useLiveQuery(async () => {
     const logs = await repo.listLogs(Date.now() - 400 * DAY_MS);
@@ -100,14 +102,19 @@ export function HomeScreen() {
       <div className="home-top">
         <Logo />
         <h1 className="home-top__title">{t('nav.home')}</h1>
-        <Link
-          to="/stats"
-          className={streak > 0 ? 'streak-chip streak-chip--alive' : 'streak-chip'}
-          aria-label={t('home.streakLabel', { count: streak })}
-        >
-          <Icon name="flame" />
-          {streak}
-        </Link>
+        <div className="home-top__right">
+          <Link
+            to="/stats"
+            className={streak > 0 ? 'streak-chip streak-chip--alive' : 'streak-chip'}
+            aria-label={t('home.streakLabel', { count: streak })}
+          >
+            <Icon name="flame" />
+            {streak}
+          </Link>
+          <Link to="/profile" className="profile-chip" aria-label={t('profile.open')}>
+            <Avatar avatar={settings.avatar} size={40} />
+          </Link>
+        </div>
       </div>
 
       <div className="home-grid">

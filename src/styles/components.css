@@ -2295,3 +2295,104 @@ textarea.input {
   min-width: 8rem;
   font-weight: 800;
 }
+
+/* ---------- Profile ---------- */
+.avatar {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #ffffff, var(--color-primary-soft));
+  box-shadow: inset 0 -3px 0 rgb(0 0 0 / 6%);
+  overflow: hidden;
+}
+
+.home-top__right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.profile-chip {
+  display: inline-flex;
+  border-radius: 50%;
+  box-shadow: var(--shadow-1);
+  transition: transform var(--motion-medium) var(--ease-spring);
+}
+
+.profile-chip:hover {
+  transform: translateY(-2px) rotate(-6deg);
+}
+
+.profile-head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.profile-head__main {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-1);
+}
+
+.profile-head__name {
+  font-size: var(--font-size-xl);
+  overflow-wrap: anywhere;
+}
+
+.profile-langs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex-wrap: wrap;
+}
+
+.profile-langs .chip {
+  cursor: default;
+}
+
+.avatar-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.avatar-choice {
+  padding: 3px;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  transition: transform var(--motion-medium) var(--ease-spring);
+}
+
+.avatar-choice:hover {
+  transform: scale(1.08);
+}
+
+/* the chosen picture has a ring (shape, not only colour) */
+.avatar-choice[aria-checked='true'] {
+  box-shadow: 0 0 0 3px var(--color-primary-dark);
+}
+
+.profile-row {
+  margin-bottom: var(--space-1);
+}
+
+.nav__profile {
+  display: none;
+}
+
+@media (min-width: 960px) {
+  .nav__profile {
+    display: flex;
+    margin-top: auto;
+    border-top: 1px solid var(--color-border);
+    border-radius: 0 0 var(--radius-md) var(--radius-md);
+    padding-top: var(--space-3);
+  }
+}

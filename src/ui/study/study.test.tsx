@@ -66,7 +66,8 @@ async function answerCurrent(user: UserEvent, right = true) {
     const pick = right
       ? buttons.find((b) => b.textContent?.includes(answer))
       : buttons.find((b) => !b.textContent?.includes(ANSWERS.get(prompt) as string));
-    await user.click(pick as HTMLElement);
+    await user.click(pick as HTMLElement); // a tap only chooses the option
+    await user.click(screen.getByRole('button', { name: 'Check' }));
   } else {
     await user.type(screen.getByRole('textbox'), answer);
     await user.click(screen.getByRole('button', { name: 'Check' }));
@@ -152,11 +153,11 @@ describe('Learn: the full cycle', () => {
     );
   });
 
-  it('"I don\'t know" counts as wrong and shows the answer', async () => {
+  it('"I don\'t know" (typing) counts as wrong and shows the answer', async () => {
     const user = userEvent.setup();
-    const { deck } = await seedDeck();
+    const { deck } = await seedDeck([['house', 'будинок']]); // one card: typing right away
     open(`/decks/${deck.id}/learn`);
-    await screen.findByText('Choose the translation');
+    await screen.findByText('Type the translation');
     const prompt = promptText();
     await user.click(screen.getByRole('button', { name: 'I don’t know' }));
     expect(await screen.findByText('No problem, now you know.')).toBeInTheDocument();
@@ -189,6 +190,31 @@ describe('Learn: the full cycle', () => {
     open(`/decks/${deck.id}/learn`);
     await screen.findByText('Choose the translation');
     await user.keyboard('1');
+    // the key only chooses; Enter checks
+    expect(screen.queryByRole('button', { name: 'Continue' })).not.toBeInTheDocument();
+    await user.keyboard('{Enter}');
+    expect(await screen.findByRole('button', { name: 'Continue' })).toBeInTheDocument();
+  });
+
+  it('a tap chooses an option without answering; it can be changed before "Check"', async () => {
+    const user = userEvent.setup();
+    const { deck } = await seedDeck();
+    open(`/decks/${deck.id}/learn`);
+    await screen.findByText('Choose the translation');
+    const check = screen.getByRole('button', { name: 'Check' });
+    expect(check).toBeDisabled();
+    expect(screen.queryByRole('button', { name: 'I don’t know' })).not.toBeInTheDocument();
+    const options = within(screen.getByRole('group', { name: 'Answer options' })).getAllByRole(
+      'button',
+    );
+    const [first, second] = options as [HTMLElement, HTMLElement];
+    await user.click(first);
+    expect(first).toHaveAttribute('aria-pressed', 'true');
+    expect(screen.queryByRole('button', { name: 'Continue' })).not.toBeInTheDocument();
+    await user.click(second);
+    expect(first).toHaveAttribute('aria-pressed', 'false');
+    expect(second).toHaveAttribute('aria-pressed', 'true');
+    await user.click(check);
     expect(await screen.findByRole('button', { name: 'Continue' })).toBeInTheDocument();
   });
 });
@@ -772,9 +798,9 @@ describe('Sprout during study', () => {
 
   it('Learn: an honest "I don\'t know" gets encouragement, not a sad face', async () => {
     const user = userEvent.setup();
-    const { deck } = await seedDeck();
+    const { deck } = await seedDeck([['house', 'будинок']]); // typing: "I don't know" is there
     open(`/decks/${deck.id}/learn`);
-    await screen.findByText('Choose the translation');
+    await screen.findByText('Type the translation');
     await user.click(screen.getByRole('button', { name: 'I don’t know' }));
     expect(buddyMood()).toBe('encouraging');
   });

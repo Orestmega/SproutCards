@@ -24,6 +24,7 @@ import { useI18n } from '../../i18n';
 import { useApp } from '../AppProviders';
 import { Button } from '../components/Button';
 import { ConfirmDialog } from '../components/ConfirmDialog';
+import { Burst } from '../components/Burst';
 import { Icon } from '../components/Icons';
 import { SpeakButton } from '../components/SpeakButton';
 import { StarButton } from '../components/StarButton';
@@ -76,6 +77,8 @@ function FlipSession({ data, onRestart }: { data: StudyData; onRestart: () => vo
     startFlip(pickSessionCards(data, direction, practice), direction),
   );
   const [flipped, setFlipped] = useState(false);
+  // the last answer, for its little garden effect (a new number plays it again)
+  const [burst, setBurst] = useState({ n: 0, known: true });
   const [saveState, setSaveState] = useState<SaveState>('saving');
   const [grown, setGrown] = useState<GrowthGain | null>(null);
   const [confirmLeave, setConfirmLeave] = useState(false);
@@ -117,6 +120,7 @@ function FlipSession({ data, onRestart }: { data: StudyData; onRestart: () => vo
       const now = Date.now(); // read outside the updater so the updater stays pure
       setState((s) => answerFlip(s, known, now));
       setFlipped(false);
+      setBurst((b) => ({ n: b.n + 1, known }));
       chrome.react(known ? 'happy' : 'encouraging');
       cue(known ? 'correct' : 'almost');
     },
@@ -239,6 +243,7 @@ function FlipSession({ data, onRestart }: { data: StudyData; onRestart: () => vo
       </div>
 
       <div className={left <= 1 ? 'fc-stage fc-stage--last' : 'fc-stage'}>
+        {burst.n > 0 && <Burst key={burst.n} kind={burst.known ? 'bloom' : 'fall'} />}
         {/* a new key per answer: the next card arrives fresh, unturned */}
         <SwipeCard
           key={`${state.round}-${state.position}`}

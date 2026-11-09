@@ -1,4 +1,5 @@
 // Domain types shared by the pure core, the storage layer and the UI.
+import type { VarietyId } from './gardenLife';
 // Nothing here depends on React or on browser APIs.
 
 /** BCP 47 language code, e.g. `en`, `uk`, `de`, `pt-BR`. The app never hard-codes a language pair. */
@@ -115,6 +116,10 @@ export interface Settings {
   hapticsEnabled: boolean;
   /** Read the word aloud as soon as it is shown. */
   autoSpeak: boolean;
+  /** The name on the local profile ('' = none given). */
+  profileName: string;
+  /** The profile picture: Sprout or a flower found in the garden. */
+  avatar: 'sprout' | VarietyId;
 }
 
 export const DEFAULT_SETTINGS: Settings = {
@@ -127,4 +132,6 @@ export const DEFAULT_SETTINGS: Settings = {
   soundEnabled: true,
   hapticsEnabled: true,
   autoSpeak: false,
+  profileName: '',
+  avatar: 'sprout',
 };

@@ -152,13 +152,26 @@ function LearnSession({ data, onRestart }: { data: StudyData; onRestart: () => v
     [state, answered, combo, chrome, t, cue],
   );
 
+  // A tap only chooses an option (it can still be changed); "Check" or Enter gives the answer.
   const pickOption = useCallback(
     (option: string) => {
+      if (answered) return;
       setPicked(option);
-      answer(option);
     },
-    [answer],
+    [answered],
   );
+
+  const choiceReady = !answered && picked !== null && state.current?.kind === 'choice';
+  useEffect(() => {
+    if (!choiceReady) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key !== 'Enter' || event.repeat) return;
+      event.preventDefault(); // Enter on a focused option must not also re-click it
+      answer(picked);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [choiceReady, picked, answer]);
 
   async function leaveAndSave() {
     if (!saved.current) {
@@ -242,8 +255,8 @@ function LearnSession({ data, onRestart }: { data: StudyData; onRestart: () => v
         )
       )}
       {shown.kind === 'choice' && !answered && (
-        <Button variant="secondary" block onClick={() => answer(null)}>
-          {t('learn.dontKnow')}
+        <Button block disabled={picked === null} onClick={() => answer(picked)}>
+          {t('learn.check')}
         </Button>
       )}
 

@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { Burst } from './Burst';
 
 interface ChoiceCardProps {
   children: ReactNode;
@@ -31,6 +32,9 @@ export function ChoiceCard({
       disabled={disabled}
     >
       <span style={{ flex: 1 }}>{children}</span>
+      {/* petals only reward the user's own right pick; showing the right answer after a mistake does not bloom */}
+      {state === 'correct' && selected && <Burst kind="bloom" />}
+      {state === 'wrong' && <Burst kind="fall" />}
       {mark && (
         <span className="choice__mark" aria-hidden="true">
           {mark}

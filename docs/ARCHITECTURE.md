@@ -220,6 +220,9 @@ achievement). `scenePlants` in `garden.ts` picks the real plants for the picture
 `gardenBeds.ts` (`gardenFields`): one field per learning language, one bed per deck; a bed lists only growing
 words and counts the rest as seeds, so the garden scales to many languages and big decks.
 
+`profile.ts`: `gardenRank` (rank by learned words), `activeDays`, `memberSince`, `learnedLanguages`, `cleanName`.
+The profile itself is two settings (`profileName`, `avatar`): no account and no migration.
+
 Other pure helpers: `bulk.ts` (paste a list of words; separators are tried in order, duplicates are reported),
 `hint.ts` (letters of a typed answer), `undoFlip` in `flip.ts` (takes back one answer of the current round).
 

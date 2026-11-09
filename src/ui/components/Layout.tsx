@@ -2,6 +2,8 @@ import type { ReactNode } from 'react';
 import { Link, NavLink, Outlet } from 'react-router-dom';
 import { useI18n } from '../../i18n';
 import type { MessageKey } from '../../i18n';
+import { useSettings } from '../AppProviders';
+import { Avatar } from './Avatar';
 import { Mascot } from './Mascot';
 import { PwaBanner } from './PwaBanner';
 
@@ -54,6 +56,7 @@ const NAV: { to: string; label: MessageKey; icon: keyof typeof ICONS; end?: bool
 /** Page frame with the bottom navigation (hidden on focused screens such as study sessions). */
 export function AppLayout() {
   const { t } = useI18n();
+  const settings = useSettings();
   return (
     <div className="app app--shell">
       <main className="app__main" id="main">
@@ -74,6 +77,11 @@ export function AppLayout() {
             </NavLink>
           ))}
         </div>
+        {/* big screens only: the profile at the bottom of the side panel */}
+        <NavLink to="/profile" className="nav__link nav__profile">
+          <Avatar avatar={settings.avatar} size={32} />
+          <span>{settings.profileName || t('nav.profile')}</span>
+        </NavLink>
       </nav>
     </div>
   );

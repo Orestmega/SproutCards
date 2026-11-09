@@ -24,6 +24,9 @@ const CatalogScreen = lazy(() =>
 const SourcesScreen = lazy(() =>
   import('./screens/SourcesScreen').then((m) => ({ default: m.SourcesScreen })),
 );
+const ProfileScreen = lazy(() =>
+  import('./screens/ProfileScreen').then((m) => ({ default: m.ProfileScreen })),
+);
 const GardenScreen = lazy(() =>
   import('./screens/GardenScreen').then((m) => ({ default: m.GardenScreen })),
 );
@@ -60,6 +63,7 @@ export function AppRoutes() {
           <Route path="catalog" element={<CatalogScreen />} />
           <Route path="stats" element={<StatsScreen />} />
           <Route path="garden" element={<GardenScreen />} />
+          <Route path="profile" element={<ProfileScreen />} />
           <Route path="sources" element={<SourcesScreen />} />
           <Route path="backup" element={<BackupScreen />} />
           <Route path="settings" element={<SettingsScreen />} />

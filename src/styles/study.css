@@ -877,3 +877,151 @@
 .grown__list li:nth-child(3) {
   animation-delay: 300ms;
 }
+
+/* ---------- Garden-style effects: petals for a right answer, a falling leaf for a mistake ---------- */
+.choice,
+.tile {
+  position: relative;
+}
+
+.burst {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 0;
+  height: 0;
+  z-index: 4;
+  pointer-events: none;
+}
+
+.choice .burst {
+  left: auto;
+  right: 34px;
+}
+
+.burst__petal {
+  position: absolute;
+  left: -4px;
+  top: -6px;
+  width: 9px;
+  height: 12px;
+  border-radius: 60% 60% 60% 0;
+  box-shadow: 0 0 0 1px rgb(0 0 0 / 6%);
+  opacity: 0;
+  animation: petal-fly 760ms var(--ease-out) forwards;
+}
+
+.burst__petal--leaf {
+  width: 11px;
+  height: 9px;
+  border-radius: 0 80% 0 80%;
+}
+
+@keyframes petal-fly {
+  0% {
+    opacity: 1;
+    transform: rotate(var(--a)) translateY(0) scale(0.3);
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: rotate(var(--a)) translateY(calc(var(--d) * -1)) rotate(140deg) scale(1);
+  }
+}
+
+.burst__leaf {
+  position: absolute;
+  left: -7px;
+  top: -5px;
+  width: 15px;
+  height: 10px;
+  border-radius: 0 80% 0 80%;
+  background: #c9a24a;
+  box-shadow: inset -2px -2px 0 rgb(0 0 0 / 12%);
+  opacity: 0;
+  animation: leaf-fall 1.2s ease-in forwards;
+}
+
+.burst__leaf--2 {
+  background: #a8b85a;
+  animation-delay: 120ms;
+}
+
+@keyframes leaf-fall {
+  0% {
+    opacity: 1;
+    transform: translate(var(--x), -8px) rotate(0);
+  }
+  35% {
+    transform: translate(calc(var(--x) + 10px), 10px) rotate(70deg);
+  }
+  70% {
+    opacity: 1;
+    transform: translate(calc(var(--x) - 6px), 28px) rotate(150deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(calc(var(--x) + 8px), 48px) rotate(230deg);
+  }
+}
+
+/* the chosen option: a sprout grows out of its number */
+.choice[aria-pressed='true']:not(.choice--correct, .choice--wrong) .choice__num {
+  background: var(--color-surface);
+  box-shadow: inset 0 0 0 2px var(--color-primary);
+}
+
+.sprout-badge {
+  transform-origin: 50% 100%;
+  animation: badge-grow 420ms var(--ease-spring);
+}
+
+.sprout-badge__leaf {
+  transform-box: fill-box;
+  transform-origin: 0% 100%;
+  animation: badge-leaf 500ms var(--ease-spring) 120ms backwards;
+}
+
+.sprout-badge__leaf--left {
+  transform-origin: 100% 100%;
+}
+
+@keyframes badge-grow {
+  from {
+    transform: scale(0.2, 0);
+  }
+}
+
+@keyframes badge-leaf {
+  from {
+    transform: scale(0);
+  }
+}
+
+/* a little leaf rides at the end of the progress bar */
+.progress--top .progress__fill:not([data-empty='true'])::before {
+  content: '';
+  position: absolute;
+  right: 4px;
+  top: 50%;
+  width: 9px;
+  height: 9px;
+  border-radius: 0 80% 0 80%;
+  background: #e2f7d2;
+  transform: translateY(-50%) rotate(-25deg);
+  animation: leaf-bob 1.6s ease-in-out infinite alternate;
+}
+
+@keyframes leaf-bob {
+  to {
+    transform: translateY(-50%) rotate(15deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .burst {
+    display: none;
+  }
+}

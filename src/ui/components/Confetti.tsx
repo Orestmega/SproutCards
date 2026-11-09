@@ -1,6 +1,7 @@
 import type { CSSProperties } from 'react';
 
-const COLORS = ['#58a83c', '#f2c94c', '#7bc15e', '#4f8fd6', '#e8737a', '#b07cd8'];
+/** A shower of petals and leaves, the garden's own confetti. */
+const COLORS = ['#ff8fa8', '#ffc83d', '#7bc15e', '#ffffff', '#58a83c', '#ffb3c4', '#b07cd8'];
 const PIECES = 36;
 
 /** Positions are fixed (not random) so a render is predictable; they still look scattered. */
@@ -13,7 +14,8 @@ const pieces = Array.from({ length: PIECES }, (_, i) => {
     '--fall': `${1.8 + ((i * 13) % 10) / 10}s`,
     '--drift': `${((i * 53) % 120) - 60}px`,
     '--spin': `${360 + ((i * 97) % 540)}deg`,
-    borderRadius: i % 3 === 0 ? '50%' : '2px',
+    // a leaf (pointed at two corners) or a petal (round with one point)
+    borderRadius: i % 3 === 0 ? '0 80% 0 80%' : '60% 60% 60% 0',
   } as CSSProperties;
 });
 

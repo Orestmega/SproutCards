@@ -4,6 +4,7 @@ import { maxHintLetters, revealHint } from '../../core/hint';
 import type { Question } from '../../core/learn';
 import { useI18n } from '../../i18n';
 import { Button } from '../components/Button';
+import { SproutBadge } from '../components/Burst';
 import { ChoiceCard } from '../components/ChoiceCard';
 
 /** Instruction line above a question, e.g. "Choose the translation". */
@@ -60,7 +61,7 @@ export function ChoiceList({
             onClick={() => onPick(option)}
           >
             <span className="choice__num" aria-hidden="true">
-              {i + 1}
+              {picked === option && !reveal ? <SproutBadge /> : i + 1}
             </span>
             {option}
             {isRight && option === correct && (

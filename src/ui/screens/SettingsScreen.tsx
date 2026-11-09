@@ -1,8 +1,10 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { GOAL_OPTIONS } from '../../core/habit';
 import type { Settings, ThemeChoice, UiLanguage } from '../../core/types';
 import { UI_LANGUAGES, useI18n } from '../../i18n';
 import { useApp } from '../AppProviders';
+import { Avatar } from '../components/Avatar';
 import { Button, ButtonLink } from '../components/Button';
 import { CheckField, TextField } from '../components/Fields';
 import { PageHeader } from '../components/Layout';
@@ -34,6 +36,17 @@ export function SettingsScreen() {
     <>
       <PageHeader title={t('settings.title')} />
       {saveFailed && <Notice kind="error">{t('common.saveFailed')}</Notice>}
+
+      <Link to="/profile" className="list-row profile-row">
+        <Avatar avatar={settings.avatar} size={44} />
+        <span className="list-row__main">
+          <span className="list-row__title">{settings.profileName || t('profile.noName')}</span>
+          <span className="muted">{t('settings.profile')}</span>
+        </span>
+        <span className="chevron" aria-hidden="true">
+          ›
+        </span>
+      </Link>
 
       <section className="section" aria-labelledby="settings-look">
         <h2 className="section__title" id="settings-look">
