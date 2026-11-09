@@ -1,11 +1,14 @@
 import type { ReactNode } from 'react';
 import type { DayPart } from '../../core/cheer';
-import { gardenPlots } from '../../core/garden';
-import type { GrowthCounts } from '../../core/garden';
+import type { GrowthStage } from '../../core/garden';
+import type { DecorationId, GardenHealth, VarietyId } from '../../core/gardenLife';
+import { DecorationArt } from './Decoration';
 import { PlantArt } from './Plant';
 
-/** Where plants stand in the picture: [x, y of the plant's foot, size], back row first. */
-const PLOTS: [number, number, number][] = [
+type Plot = [x: number, y: number, size: number];
+
+/** Where plants stand in the picture: x, y of the plant's foot, size; back row first. */
+const PLOTS: Plot[] = [
   [132, 176, 30],
   [176, 170, 28],
   [92, 186, 32],
@@ -16,6 +19,28 @@ const PLOTS: [number, number, number][] = [
   [100, 222, 44],
   [204, 216, 42],
 ];
+
+/** The bigger garden screen has room for more. */
+const PLOTS_BIG: Plot[] = [
+  ...PLOTS,
+  [292, 172, 28],
+  [60, 166, 26],
+  [330, 186, 32],
+  [24, 222, 40],
+  [302, 214, 40],
+  [354, 226, 44],
+];
+
+/** Where each decoration stands: x of its centre, y of its foot, size. `back`: behind the hills. */
+const DECOR_PLACES: Record<DecorationId, Plot> = {
+  rainbow: [96, 152, 170],
+  tree: [40, 168, 64],
+  beehive: [372, 152, 40],
+  birdhouse: [300, 160, 46],
+  butterflies: [196, 118, 48],
+  pond: [256, 240, 84],
+  fence: [36, 242, 64],
+};
 
 const STARS = [
   [30, 26],
@@ -40,23 +65,56 @@ function Cloud({ x, y, scale, second }: { x: number; y: number; scale: number; s
   );
 }
 
+function Decor({ id }: { id: DecorationId }) {
+  const [x, y, size] = DECOR_PLACES[id];
+  return (
+    <svg
+      x={x - size / 2}
+      y={y - size}
+      width={size}
+      height={size}
+      viewBox="0 0 48 48"
+      className="garden__decor"
+    >
+      <DecorationArt id={id} />
+    </svg>
+  );
+}
+
+export interface ScenePlant {
+  stage: GrowthStage;
+  variety: VarietyId;
+}
+
 /**
- * The home picture: the sky follows the time of day, the plants are the user's own words (see
- * `gardenPlots`). `children` are drawn on top (Sprout and its words). The picture itself is decoration.
+ * The garden picture: the sky follows the time of day, the plants are the user's own words, the
+ * decorations are earned with achievements, and a garden left alone for a while droops (`health`).
+ * `children` are drawn on top (Sprout and its words). The picture itself is decoration.
  */
 export function GardenScene({
   part,
-  growth,
+  plants,
+  decorations = [],
+  health = 'fresh',
+  raining = false,
+  big = false,
   children,
 }: {
   part: DayPart;
-  growth: GrowthCounts;
-  children: ReactNode;
+  /** In drawing order; extra plants beyond the plots are not drawn (see `scenePlants`). */
+  plants: readonly ScenePlant[];
+  decorations?: readonly DecorationId[];
+  health?: GardenHealth;
+  raining?: boolean;
+  big?: boolean;
+  children?: ReactNode;
 }) {
-  const plots = gardenPlots(growth, PLOTS.length);
+  const plots = big ? PLOTS_BIG : PLOTS;
   const dark = part === 'night';
+  const has = (id: DecorationId) => decorations.includes(id);
+  const classes = ['garden', `garden--${part}`, `garden--${health}`, big && 'garden--big'];
   return (
-    <div className={`garden garden--${part}`} data-part={part}>
+    <div className={classes.filter(Boolean).join(' ')} data-part={part} data-health={health}>
       {/* the sky has its own layer: on a wide screen the hills are cropped, the sun must not be */}
       <svg
         className="garden__sky"
@@ -79,8 +137,15 @@ export function GardenScene({
           </g>
         ) : (
           <g className="garden__sun">
-            <circle cx="330" cy="54" r="38" fill="#fff6c9" opacity="0.65" />
-            <circle cx="330" cy="54" r="24" fill="#ffc83d" />
+            <circle
+              className="garden__glow"
+              cx="330"
+              cy="54"
+              r="38"
+              fill="#fff6c9"
+              opacity="0.65"
+            />
+            <circle className="garden__sunball" cx="330" cy="54" r="24" fill="#ffc83d" />
           </g>
         )}
         <Cloud x={40} y={30} scale={0.9} />
@@ -93,12 +158,17 @@ export function GardenScene({
         aria-hidden="true"
         focusable="false"
       >
+        {has('rainbow') && <Decor id="rainbow" />}
         <path className="garden__hill--1" d="M0 150 Q80 104 180 138 T400 118 V240 H0 Z" />
+        {has('tree') && <Decor id="tree" />}
+        {has('beehive') && <Decor id="beehive" />}
+        {has('birdhouse') && <Decor id="birdhouse" />}
         <path className="garden__hill--2" d="M0 182 Q120 134 240 168 T400 152 V240 H0 Z" />
         <path className="garden__hill--3" d="M0 214 Q140 168 280 196 T400 186 V240 H0 Z" />
+        {has('pond') && <Decor id="pond" />}
 
-        {plots.map((stage, i) => {
-          const [x, y, size] = PLOTS[i] as [number, number, number];
+        {plants.slice(0, plots.length).map((plant, i) => {
+          const [x, y, size] = plots[i] as Plot;
           return (
             <svg
               key={i}
@@ -109,12 +179,24 @@ export function GardenScene({
               viewBox="0 0 32 32"
             >
               <g className="garden__plant">
-                <PlantArt stage={stage} />
+                <PlantArt stage={plant.stage} variety={plant.variety} />
               </g>
             </svg>
           );
         })}
+        {has('fence') && <Decor id="fence" />}
+        {has('butterflies') && <Decor id="butterflies" />}
       </svg>
+      {raining && (
+        <div className="garden__rain" aria-hidden="true">
+          {Array.from({ length: 28 }, (_, i) => (
+            <span
+              key={i}
+              style={{ left: `${(i * 37) % 100}%`, animationDelay: `${(i % 7) * 0.12}s` }}
+            />
+          ))}
+        </div>
+      )}
       {children}
     </div>
   );

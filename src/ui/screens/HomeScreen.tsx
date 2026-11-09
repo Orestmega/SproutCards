@@ -3,8 +3,7 @@ import { useLiveQuery } from 'dexie-react-hooks';
 import { Link } from 'react-router-dom';
 import { dayPart, nextLine } from '../../core/cheer';
 import type { MascotMood } from '../../core/cheer';
-import { growthCounts, GROWTH_STAGES } from '../../core/garden';
-import type { GrowthCounts } from '../../core/garden';
+import { scenePlants } from '../../core/garden';
 import { pickOfTheDay } from '../../core/habit';
 import { computeStreak } from '../../core/stats';
 import { useI18n } from '../../i18n';
@@ -18,6 +17,7 @@ import { Logo } from '../components/Layout';
 import { Mascot } from '../components/Mascot';
 import { SpeakButton } from '../components/SpeakButton';
 import { TodayCard } from '../components/TodayCard';
+import { useGarden } from '../garden';
 
 const DAY_MS = 86_400_000;
 /** The list on the home screen stays short; the rest is on the Decks tab. */
@@ -32,12 +32,6 @@ const PAT_LINES = [
   'mascot.line.4',
 ] as const satisfies readonly MessageKey[];
 
-function addGrowth(all: readonly GrowthCounts[]): GrowthCounts {
-  const total = growthCounts([], []);
-  for (const counts of all) for (const stage of GROWTH_STAGES) total[stage] += counts[stage];
-  return total;
-}
-
 export function HomeScreen() {
   const { t, tp, languageName } = useI18n();
   const repo = useRepo();
@@ -50,6 +44,7 @@ export function HomeScreen() {
   const [now] = useState(() => Date.now());
   const [pats, setPats] = useState(0);
   const [line, setLine] = useState(-1); // -1: the usual message, not a pat line
+  const garden = useGarden(now);
 
   // a word from a deck that has cards; the same one all day
   const wordDeck = pickOfTheDay(summaries?.filter((s) => s.cardCount > 0) ?? [], now)?.deck;
@@ -75,7 +70,6 @@ export function HomeScreen() {
   const part = dayPart(new Date(now).getHours());
   const streak = computeStreak(logTimes, now);
   const cards = summaries.reduce((sum, s) => sum + s.cardCount, 0);
-  const growth = addGrowth(summaries.map((s) => s.growth));
 
   // the deck with the most reviews waiting, else one with words not studied yet
   const dueDeck = [...summaries]
@@ -118,7 +112,16 @@ export function HomeScreen() {
 
       <div className="home-grid">
         <div className="home-grid__main">
-          <GardenScene part={part} growth={growth}>
+          <GardenScene
+            part={part}
+            plants={scenePlants(garden?.plants ?? [], 9)}
+            decorations={garden?.decorations.filter((d) => d.earned).map((d) => d.id)}
+            health={garden?.health}
+          >
+            {/* the whole picture opens the garden; Sprout and the bubble sit above this link */}
+            <Link to="/garden" className="garden__open">
+              <span className="garden__open-label">{t('garden.open')}</span>
+            </Link>
             <div className="garden__say">
               <p className="garden__greet">{t(`home.greeting.${part}`)}</p>
               <div aria-live="polite">

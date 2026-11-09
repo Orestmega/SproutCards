@@ -1,4 +1,5 @@
 import { useLiveQuery } from 'dexie-react-hooks';
+import { Link } from 'react-router-dom';
 import { evaluateAchievements } from '../../core/achievements';
 import { GROWTH_STAGES, growthCounts } from '../../core/garden';
 import { bestStreak, heatmapWeeks, reviewForecast } from '../../core/habit';
@@ -111,6 +112,7 @@ export function StatsScreen() {
         <GrowthBar growth={growth} />
         <GrowthLegend growth={growth} />
         <p className="muted">{t('stats.learnedHint')}</p>
+        <Link to="/garden">{t('garden.open')}</Link>
       </section>
 
       <div className="stats stats--two" role="group" aria-label={t('stats.numbers')}>

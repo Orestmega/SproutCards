@@ -214,6 +214,17 @@ export function createRepo(
       return { decks, cardIdsByDeck, progress, logs, totalReviews };
     },
 
+    /** Everything the garden needs in one read: decks, all cards, all progress, all review times. */
+    async gardenSnapshot() {
+      const [decks, cards, progress, logs] = await Promise.all([
+        this.listDecks(),
+        db.cards.toArray(),
+        db.progress.toArray(),
+        db.reviewLogs.toArray(),
+      ]);
+      return { decks, cards, progress, logs };
+    },
+
     // ---- settings ----
     /** @param defaults used for everything not saved yet (e.g. the UI language guessed from the browser) */
     async getSettings(defaults: Settings = DEFAULT_SETTINGS): Promise<Settings> {

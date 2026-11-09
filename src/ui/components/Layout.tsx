@@ -9,6 +9,8 @@ const ICONS = {
   home: 'M4 11 12 4l8 7v9a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1z',
   decks: 'M5 4h12a2 2 0 0 1 2 2v12H7a2 2 0 0 1-2-2zM9 4v14',
   progress: 'M5 20V12M12 20V5M19 20v-9',
+  garden:
+    'M12 21v-8M12 13c-3 0-5-2-5-5 3 0 5 2 5 5zM12 13c0-3 2-5 5-5 0 3-2 5-5 5zM12 9a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5zM6 21h12',
   settings:
     'M12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7zM12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9 7 7M17 17l2.1 2.1M4.9 19.1 7 17M17 7l2.1-2.1',
 } as const;
@@ -44,6 +46,7 @@ export function Logo() {
 const NAV: { to: string; label: MessageKey; icon: keyof typeof ICONS; end?: boolean }[] = [
   { to: '/', label: 'nav.home', icon: 'home', end: true },
   { to: '/decks', label: 'nav.decks', icon: 'decks' },
+  { to: '/garden', label: 'nav.garden', icon: 'garden' },
   { to: '/stats', label: 'nav.progress', icon: 'progress' },
   { to: '/settings', label: 'nav.settings', icon: 'settings' },
 ];

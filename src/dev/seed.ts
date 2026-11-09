@@ -56,7 +56,7 @@ export async function seedDemoData(db: AppDatabase): Promise<void> {
   if (!first) return;
   // a bit of everything in the garden: a learned word and one on its way
   const grown = cards.slice(2, 4).map((card, i) => ({
-    reps: 3 - i,
+    reps: i === 0 ? 6 : 2, // a golden flower and a leaf
     intervalDays: 7,
     lapses: i,
     dueAt: now + (i + 2) * DAY,

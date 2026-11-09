@@ -211,6 +211,12 @@ stands on the plots of the picture. `habit.ts` gives today's count, the week, th
 and the review forecast. `evaluateAchievements` turns facts (reviews, streak, blooms, decks, modes used) into a list
 with progress. No XP or points on purpose: the measure of success is words learned, not time spent.
 
+`gardenLife.ts`: `flowerVariety` (a stable hash of the card id: about 10 % rare; golden from `GOLDEN_REPS`),
+`gardenHealth` (fresh / thirsty / wilted from the last review day; only a picture), `wateringState` (ready once
+the daily goal is reached; the watered day is kept in `localStorage` by `ui/garden.ts`), `decorations` (one per
+achievement). `scenePlants` in `garden.ts` picks the real plants for the picture, special flowers first.
+`ui/garden.ts` (`useGarden`) reads everything in one `repo.gardenSnapshot()` and builds the plant list.
+
 Other pure helpers: `bulk.ts` (paste a list of words; separators are tried in order, duplicates are reported),
 `hint.ts` (letters of a typed answer), `undoFlip` in `flip.ts` (takes back one answer of the current round).
 

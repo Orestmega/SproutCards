@@ -1960,3 +1960,310 @@ textarea.input {
 .count__shown::before {
   content: attr(data-text);
 }
+
+/* ---------- The garden, alive ---------- */
+/* light buttons lift on hover just like the dark ones */
+.btn--secondary:hover:not(:disabled),
+.btn--danger:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 calc(var(--edge) + 1px) 0 var(--color-edge);
+}
+
+.btn--danger:hover:not(:disabled) {
+  box-shadow: 0 calc(var(--edge) + 1px) 0 var(--color-wrong);
+}
+
+.seg__btn:hover:not([aria-checked='true']) {
+  color: var(--color-text);
+  background: rgb(255 255 255 / 45%);
+}
+
+.chip:hover:not([aria-pressed='true']) {
+  border-color: var(--color-text-muted);
+  color: var(--color-text);
+}
+
+/* the home picture is a link to the garden screen; Sprout and the bubble stay clickable above it */
+.garden__open {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+}
+
+.garden__open-label {
+  position: absolute;
+  left: var(--space-3);
+  bottom: var(--space-3);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-pill);
+  background: var(--glass);
+  color: var(--color-text);
+  font-size: var(--font-size-sm);
+  font-weight: 900;
+  box-shadow: var(--shadow-1);
+  transition: transform var(--motion-fast);
+}
+
+.garden__open:hover .garden__open-label {
+  transform: translateY(-2px);
+}
+
+.garden__say,
+.garden__sprout {
+  z-index: 2;
+}
+
+.garden--big {
+  height: 300px;
+}
+
+@media (min-width: 640px) {
+  .garden--big {
+    height: 360px;
+  }
+}
+
+.garden__health {
+  position: absolute;
+  left: var(--space-3);
+  top: var(--space-3);
+  z-index: 2;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-1);
+  font-size: var(--font-size-sm);
+  font-weight: 900;
+}
+
+.garden__health::before {
+  content: '● ';
+  color: var(--color-primary-dark);
+}
+
+.garden__health--thirsty::before {
+  color: var(--color-almost);
+}
+
+.garden__health--wilted::before {
+  color: var(--color-wrong);
+}
+
+/* a thirsty garden fades a little, a wilted one droops; studying brings the colour back */
+.garden--thirsty .garden__plant {
+  filter: saturate(0.65);
+}
+
+.garden--wilted .garden__plant {
+  filter: saturate(0.3) brightness(0.92);
+  animation: plant-droop 4s ease-in-out infinite alternate;
+}
+
+@keyframes plant-droop {
+  from {
+    transform: rotate(6deg) scaleY(0.94);
+  }
+  to {
+    transform: rotate(10deg) scaleY(0.9);
+  }
+}
+
+.garden--evening .garden__sunball {
+  fill: #ff9f4a;
+}
+
+.garden--evening .garden__glow {
+  fill: #ffd2a8;
+}
+
+.garden--morning .garden__sunball {
+  fill: #ffd76a;
+}
+
+.garden__decor .decor__flutter,
+.decor .decor__flutter {
+  animation: flutter 3s ease-in-out infinite alternate;
+}
+
+@keyframes flutter {
+  from {
+    transform: translate(0, 0);
+  }
+  to {
+    transform: translate(6px, -4px);
+  }
+}
+
+.plant__sparkle {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: mascot-twinkle 1.4s ease-in-out infinite;
+}
+
+/* rain while watering */
+.garden__rain {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.garden__rain span {
+  position: absolute;
+  top: -20px;
+  width: 3px;
+  height: 16px;
+  border-radius: 3px;
+  background: linear-gradient(transparent, #6cc2ff);
+  animation: rain 0.9s linear 3;
+}
+
+@keyframes rain {
+  to {
+    transform: translateY(420px);
+  }
+}
+
+/* watering card */
+.water {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+
+.water__can {
+  flex: none;
+  width: 64px;
+  height: 64px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  background: var(--chip-blue);
+}
+
+.water__main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+}
+
+.water__main .progress {
+  width: 100%;
+  margin-top: var(--space-1);
+}
+
+/* beds: one per deck, every word a plant you can tap */
+.bed {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.bed__name {
+  font-size: 1.0625rem;
+  font-weight: 900;
+}
+
+.bed__plants {
+  list-style: none;
+  margin: 0;
+  padding: var(--space-2);
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(48px, 1fr));
+  gap: var(--space-1);
+  border-radius: var(--radius-md);
+  background: linear-gradient(180deg, transparent 55%, rgb(138 96 65 / 16%));
+}
+
+.bed__plant {
+  width: 100%;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  cursor: pointer;
+  transition: transform var(--motion-medium) var(--ease-spring);
+}
+
+.bed__plant:hover {
+  transform: translateY(-3px) scale(1.12);
+  background: var(--color-surface-sunken);
+}
+
+.bed__plant:active {
+  transform: scale(0.92);
+}
+
+/* the flower collection and decorations: what is not found yet is a silhouette */
+.flower--locked .plant,
+.decor-card--locked .decor {
+  filter: grayscale(1) brightness(1.6) contrast(0.35);
+  opacity: 0.55;
+}
+
+:root[data-theme='dark'] .flower--locked .plant,
+:root[data-theme='dark'] .decor-card--locked .decor {
+  filter: grayscale(1) brightness(0.55);
+}
+
+.rarity--rare {
+  background: var(--chip-violet);
+  color: var(--chip-violet-ink);
+}
+
+.rarity--golden {
+  background: var(--chip-yellow);
+  color: var(--chip-yellow-ink);
+}
+
+.flower.ach--done .plant {
+  animation: plant-sway 3s ease-in-out infinite alternate;
+  transform-origin: 50% 100%;
+}
+
+.plant-dialog__top {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.plant-dialog__facts {
+  margin: var(--space-3) 0 0;
+  padding-left: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.garden-rules {
+  margin: 0;
+  padding-left: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .garden__rain {
+    display: none;
+  }
+
+  .plant__sparkle,
+  .decor__flutter {
+    animation: none !important;
+  }
+
+  .garden--wilted .garden__plant {
+    animation: none;
+    transform: rotate(8deg);
+  }
+}

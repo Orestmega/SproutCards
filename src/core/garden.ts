@@ -55,6 +55,31 @@ export function gardenPlots(counts: GrowthCounts, slots: number): GrowthStage[] 
   return plots;
 }
 
+/**
+ * The real plants to draw on `slots` plots: as many of each stage as `gardenPlots` says, the special
+ * ones first (`rank`: higher is drawn first, e.g. a golden flower before a common one).
+ */
+export function scenePlants<P extends { stage: GrowthStage; rank: number }>(
+  plants: readonly P[],
+  slots: number,
+): P[] {
+  const counts: GrowthCounts = { seed: 0, sprout: 0, leaf: 0, bloom: 0 };
+  for (const p of plants) counts[p.stage]++;
+  const byStage = new Map<GrowthStage, P[]>();
+  for (const stage of GROWTH_STAGES) {
+    byStage.set(
+      stage,
+      plants.filter((p) => p.stage === stage).sort((a, b) => b.rank - a.rank),
+    );
+  }
+  const taken = new Map<GrowthStage, number>();
+  return gardenPlots(counts, slots).map((stage) => {
+    const n = taken.get(stage) ?? 0;
+    taken.set(stage, n + 1);
+    return byStage.get(stage)?.[n] as P;
+  });
+}
+
 /** 0..1, how grown a deck is: a seed counts 0, a sprout 1/3, a leaf 2/3, a bloom 1. */
 export function gardenShare(counts: GrowthCounts): number {
   const total = counts.seed + counts.sprout + counts.leaf + counts.bloom;

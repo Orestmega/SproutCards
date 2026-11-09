@@ -1,4 +1,11 @@
-import { bestRepsByCard, gardenPlots, gardenShare, growthCounts, growthStage } from './garden';
+import {
+  bestRepsByCard,
+  gardenPlots,
+  gardenShare,
+  growthCounts,
+  growthStage,
+  scenePlants,
+} from './garden';
 
 describe('growthStage', () => {
   it('goes from seed to bloom with correct reviews in a row', () => {
@@ -45,6 +52,19 @@ describe('gardenPlots', () => {
     const plots = gardenPlots({ seed: 100, sprout: 0, leaf: 0, bloom: 1 }, 5);
     expect(plots[0]).toBe('bloom');
     expect(plots.filter((p) => p === 'seed')).toHaveLength(4);
+  });
+});
+
+describe('scenePlants', () => {
+  it('draws real plants, the special flowers first', () => {
+    const plants = [
+      { id: 'a', stage: 'bloom' as const, rank: 0 },
+      { id: 'b', stage: 'bloom' as const, rank: 2 },
+      { id: 'c', stage: 'seed' as const, rank: 0 },
+    ];
+    expect(scenePlants(plants, 9).map((p) => p.id)).toEqual(['b', 'a', 'c']);
+    expect(scenePlants(plants, 1)).toHaveLength(1);
+    expect(scenePlants([], 9)).toEqual([]);
   });
 });
 

@@ -19,9 +19,16 @@ so a screen is written once. The dark theme turns the dark button light (mint fa
   moon and stars), clouds drift, and up to 9 plots show the user's real words in proportion. The sky is a separate
   layer so a wide screen crops only the hills.
 
+- **Garden screen:** the big picture (15 plots, earned decorations, rain while watering, droop when wilted), the
+  watering card, beds per deck (tap a plant for its word), the flower collection (unknown kinds as silhouettes),
+  decorations, and the rules in plain words. On Home the whole picture is a link to it ("Open your garden").
+- **Sprout (Stage 12):** a soft drop-shaped body with a radial gradient and a light from the top left, darker
+  outline, resting arms, feet with a highlight, a page with a folded corner, leaves with veins, big eyes with two
+  highlights, a light blush always on.
+
 ## Layout
 
-- Phones: a floating tab bar with four tabs (Home, Decks, Progress, Settings). From 960 px a side panel with the
+- Phones: a floating tab bar with five tabs (Home, Decks, Garden, Progress, Settings); a tab's width follows its label. From 960 px a side panel with the
   logo, and wider content: on Home the garden and decks on the left, today's goal and the word of the day on the
   right; deck lists in two columns; study modes in one row; forms stay at a readable width.
 - Study screens: no navigation; top bar with close, thick progress bar and Sprout.
@@ -39,6 +46,7 @@ Pastel chips (blue, orange, violet, yellow, teal) sit behind icons and deck lett
   behind the icon, the chosen segment is a raised white pill, a matched tile is dashed.
 - Contrast of text on its background is at least 4.5:1.
 - Primary button: dark face with a thicker bottom edge (a 4 px solid darker shadow) that shrinks on press.
+  On hover every button (dark or light) lifts by a pixel and its edge grows.
   Secondary buttons, choice cards, tiles, mode tiles and the question card share the same "edge" idea in light
   colours.
 - Choice cards: large, rounded (20 px radius), whole card is the tap target, min height 64 px. A right answer

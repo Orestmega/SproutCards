@@ -34,6 +34,9 @@ language codes (`en`, `uk`, `de`, `pt-BR`…). The interface is available in Ukr
   do not change the schedule.
 - **The word garden:** every word grows from a seed to a bloom as you review it. The home screen shows your garden,
   with a sky that follows the time of day.
+- **A living garden (its own tab):** water it when you reach the daily goal; it gets thirsty and wilts when you skip
+  days (your words are never lost); learned words bloom as different flowers, some rare, some golden; achievements
+  add decorations; tap any plant to see its word.
 - **A daily habit:** a daily goal, the week at a glance, streaks, an activity heatmap, a forecast of coming reviews,
   achievements and a word of the day. No points: the measure is words learned.
 - **Made for daily use:** swipeable 3D flashcards with undo, letter hints, paste a whole list of words, search and
