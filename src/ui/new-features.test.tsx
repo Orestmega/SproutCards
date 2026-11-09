@@ -58,7 +58,7 @@ function logAt(at: number, cardId: string, deckId: string) {
 }
 
 describe('home', () => {
-  it('shows the garden with one plant per word, the goal, the week and the word of the day', async () => {
+  it('shows the garden with the earned flowers, the goal, the week and the word of the day', async () => {
     const { repo, deck, cards } = await seed();
     const first = cards[0];
     if (!first) throw new Error('no card');
@@ -71,7 +71,8 @@ describe('home', () => {
     expect(
       within(screen.getByRole('list', { name: 'This week' })).getAllByRole('listitem'),
     ).toHaveLength(7);
-    expect(document.querySelectorAll('.garden__plant')).toHaveLength(3);
+    // the home picture shows the earned flowers: with nothing learned yet, the daisy
+    expect(document.querySelectorAll('.garden__plant')).toHaveLength(1);
     expect(document.querySelector('.garden')).toHaveAttribute('data-part');
 
     const heading = await screen.findByRole('heading', { name: 'Word of the day' });

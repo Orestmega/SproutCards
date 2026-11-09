@@ -85,16 +85,14 @@ export function canGrowAs(variety: VarietyId, reps: number): boolean {
 }
 
 /**
- * The flower of a learned word: the kind the user planted it as (`chosen`), if allowed; else a golden
- * flower for a word known for long; else one of the opened kinds, picked by a stable hash.
+ * How a learned word looks on its bed: a golden flower for a word known for long (once golden flowers
+ * are open), else one of the open kinds, picked by a stable hash. The kinds themselves are rewards.
  */
 export function flowerVariety(
   cardId: string,
   reps: number,
   unlocked: readonly VarietyId[],
-  chosen?: VarietyId,
 ): VarietyId {
-  if (chosen && unlocked.includes(chosen) && canGrowAs(chosen, reps)) return chosen;
   if (reps >= GOLDEN_REPS && unlocked.includes('golden')) return 'golden';
   const pool = unlocked.filter((id) => id !== 'golden');
   if (pool.length === 0) return 'daisy';
@@ -105,31 +103,23 @@ export function rarityOf(id: VarietyId): Rarity {
   return VARIETIES.find((v) => v.id === id)?.rarity ?? 'common';
 }
 
-/** How many plots the garden picture has: the user chooses what grows on them. */
-export const SHOWCASE_SIZE = 15;
-
-export interface ShowcasePlot {
-  cardId: string;
-  variety: VarietyId;
-}
+/** How many plots the garden picture has. */
+export const PLOT_COUNT = 15;
 
 /**
- * The user's plots as they can be shown: plots of deleted words are dropped, a word appears once,
- * and there are never more than `SHOWCASE_SIZE` plots.
+ * What grows on each plot: a kind of flower the user has earned, or nothing. Flowers are rewards for
+ * goals (see `VARIETIES`), not words: the same kind may grow on many plots. Until the user plants
+ * anything (`saved` is null), each earned kind stands once. A kind that is not open (any more) leaves
+ * its plot empty.
  */
-export function cleanShowcase(
-  plots: readonly ShowcasePlot[],
-  cardIds: ReadonlySet<string>,
-): ShowcasePlot[] {
-  const seen = new Set<string>();
-  const result: ShowcasePlot[] = [];
-  for (const plot of plots) {
-    if (!cardIds.has(plot.cardId) || seen.has(plot.cardId)) continue;
-    seen.add(plot.cardId);
-    result.push(plot);
-    if (result.length === SHOWCASE_SIZE) break;
-  }
-  return result;
+export function gardenPlotsOf(
+  saved: readonly (VarietyId | null)[] | null,
+  unlocked: readonly VarietyId[],
+): (VarietyId | null)[] {
+  return Array.from({ length: PLOT_COUNT }, (_, i) => {
+    const kind = saved ? (saved[i] ?? null) : (unlocked[i] ?? null);
+    return kind && unlocked.includes(kind) ? kind : null;
+  });
 }
 
 /**

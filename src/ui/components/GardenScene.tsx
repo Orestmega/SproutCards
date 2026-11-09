@@ -199,8 +199,12 @@ export function GardenScene({
             <svg x={x - size / 2} y={y - size} width={size} height={size} viewBox="0 0 32 32">
               {/* a bigger invisible target makes small plants easy to tap */}
               {onPlot && <rect x="-4" y="-4" width="40" height="40" fill="transparent" />}
-              <g className="garden__plant">
-                {plant ? <PlantArt stage={plant.stage} variety={plant.variety} /> : <EmptyPlot />}
+              {onPlot && <ellipse className="garden__plot-ring" cx="16" cy="28" rx="14" ry="5" />}
+              {/* a new key (another flower planted) plays the growing animation */}
+              <g className="garden__grow" key={plant ? plant.variety : 'empty'}>
+                <g className="garden__plant">
+                  {plant ? <PlantArt stage={plant.stage} variety={plant.variety} /> : <EmptyPlot />}
+                </g>
               </g>
             </svg>
           );

@@ -3,6 +3,7 @@ import { useLiveQuery } from 'dexie-react-hooks';
 import { Link } from 'react-router-dom';
 import { dayPart, nextLine } from '../../core/cheer';
 import type { MascotMood } from '../../core/cheer';
+import { gardenPlotsOf } from '../../core/gardenLife';
 import { pickOfTheDay } from '../../core/habit';
 import { computeStreak } from '../../core/stats';
 import { useI18n } from '../../i18n';
@@ -17,7 +18,7 @@ import { Logo } from '../components/Layout';
 import { Mascot } from '../components/Mascot';
 import { SpeakButton } from '../components/SpeakButton';
 import { TodayCard } from '../components/TodayCard';
-import { showcasePlants, useGarden } from '../garden';
+import { useGarden } from '../garden';
 import { listSnapshots } from '../resume';
 import { snapshotProgress } from '../../core/resume';
 
@@ -71,6 +72,12 @@ export function HomeScreen() {
   if (!summaries || due === undefined || !logTimes) return null;
 
   const part = dayPart(new Date(now).getHours());
+  // the home picture has room for the first 9 plots of the garden
+  const homePlots = garden
+    ? gardenPlotsOf(settings.gardenPlots, garden.unlocked)
+        .slice(0, 9)
+        .map((kind) => (kind ? { stage: 'bloom' as const, variety: kind } : null))
+    : [];
   // unfinished Learn sessions of decks that still exist
   const resumeList = listSnapshots()
     .flatMap((snapshot) => {
@@ -129,13 +136,13 @@ export function HomeScreen() {
         <div className="home-grid__main">
           <GardenScene
             part={part}
-            plants={showcasePlants(garden, 9)}
+            plants={homePlots}
             decorations={garden?.decorations.filter((d) => d.earned).map((d) => d.id)}
             health={garden?.health}
           >
             {/* the whole picture opens the garden; Sprout and the bubble sit above this link */}
             <Link to="/garden" className="garden__open">
-              <span className="garden__open-label">{t('garden.open')}</span>
+              <span className="visually-hidden">{t('garden.open')}</span>
             </Link>
             <div className="garden__say">
               <p className="garden__greet">{t(`home.greeting.${part}`)}</p>

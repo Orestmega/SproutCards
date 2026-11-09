@@ -522,7 +522,7 @@ export const en = {
   'garden.rule.wilt':
     'Without study the garden gets thirsty after a day and wilts after two. Your words are never lost: a few answers bring it back.',
   'garden.rule.flowers':
-    'New kinds of flower open with goals: learned words, days in a row. Every open kind can be planted on your plots: tap a plot to choose.',
+    'Flowers are rewards: each kind is earned with a goal (learned words, days in a row). Plant earned flowers on the {n} plots of your garden, the same kind on many plots too. Your words grow on the beds below.',
   'garden.rule.golden': 'A word you answer right {reps} times in a row turns into a golden flower.',
   'garden.rule.decor':
     'Achievements add decorations: butterflies, a birdhouse, a pond, an apple tree and more.',
@@ -600,15 +600,9 @@ export const en = {
   'resume.progress': '{percent}% done · {total} words in the session',
   'garden.plots': 'Plots of your garden',
   'garden.plotsHint':
-    'Tap a plot to see its word, choose its flower or plant another word ({n} plots).',
-  'garden.plot.empty': 'Empty plot {n}: plant a word',
-  'garden.plot.plant': 'Plant on a plot',
-  'garden.plot.replace': 'Plant another word here',
+    'Flowers are rewards for your goals. Tap a plot to plant any flower you have earned ({n} plots).',
+  'garden.plot.empty': 'Empty plot {n}: plant a flower',
   'garden.plot.remove': 'Take off the plot',
-  'garden.picker.title': 'Plant a word',
-  'garden.picker.hint': 'It grows on the plot as you learn it.',
-  'garden.kind': 'Grows as',
-  'garden.kindLater': 'Once it blooms you can choose its flower.',
   'garden.collectionHint':
     'New kinds of flower open with goals. Every open kind can be planted on your plots.',
   'garden.nextFlower': 'Next: {flower} —',
@@ -618,4 +612,9 @@ export const en = {
   'garden.unlock.streak_one': 'study {count} day in a row (best: {now})',
   'garden.unlock.streak_other': 'study {count} days in a row (best: {now})',
   'garden.unlock.golden': 'answer a word right {reps} times in a row',
+  'garden.plot.flower': 'Plot {n}: {flower}',
+  'garden.plot.title': 'Plot {n}',
+  'garden.plot.nothing': 'Nothing grows here yet',
+  'garden.plot.plantIt': 'Plant',
+  'garden.plot.more': 'Reach goals to earn more kinds: next is {flower}.',
 } as const;

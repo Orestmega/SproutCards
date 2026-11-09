@@ -1,14 +1,14 @@
 import { evaluateAchievements } from './achievements';
 import {
   canGrowAs,
-  cleanShowcase,
   decorations,
   flowerVariety,
   GOLDEN_REPS,
   gardenHealth,
+  gardenPlotsOf,
   nextVariety,
   rarityOf,
-  SHOWCASE_SIZE,
+  PLOT_COUNT,
   unlockedVarieties,
   VARIETIES,
   wateringDay,
@@ -43,18 +43,12 @@ describe('flowerVariety', () => {
     expect(['daisy', 'tulip', 'bellflower']).toContain(a);
   });
 
-  it('the kind the user planted wins, if it is open and allowed', () => {
-    expect(flowerVariety('card-1', 2, [...open], 'tulip')).toBe('tulip');
-    expect(flowerVariety('card-1', 2, [...open], 'rose')).not.toBe('rose'); // not open
-    expect(flowerVariety('card-1', 2, [...open], 'golden')).not.toBe('golden'); // not known long enough
-    expect(flowerVariety('card-1', GOLDEN_REPS, [...open], 'golden')).toBe('golden');
-  });
-
   it('a word known for long is golden once golden flowers are open', () => {
     expect(flowerVariety('card-1', GOLDEN_REPS, [...open])).toBe('golden');
     expect(flowerVariety('card-1', GOLDEN_REPS, ['daisy'])).toBe('daisy');
     expect(rarityOf('golden')).toBe('golden');
     expect(canGrowAs('golden', 1)).toBe(false);
+    expect(canGrowAs('tulip', 1)).toBe(true);
   });
 
   it('every kind can be grown once it is open', () => {
@@ -64,19 +58,22 @@ describe('flowerVariety', () => {
   });
 });
 
-describe('cleanShowcase', () => {
-  it('drops deleted words and repeats, and keeps at most the plot count', () => {
-    const plots = [
-      { cardId: 'a', variety: 'daisy' as const },
-      { cardId: 'gone', variety: 'tulip' as const },
-      { cardId: 'a', variety: 'rose' as const },
-      ...Array.from({ length: 30 }, (_, i) => ({ cardId: `c${i}`, variety: 'daisy' as const })),
-    ];
-    const ids = new Set(['a', ...Array.from({ length: 30 }, (_, i) => `c${i}`)]);
-    const clean = cleanShowcase(plots, ids);
-    expect(clean).toHaveLength(SHOWCASE_SIZE);
-    expect(clean[0]).toEqual({ cardId: 'a', variety: 'daisy' });
-    expect(clean.some((p) => p.cardId === 'gone')).toBe(false);
+describe('gardenPlotsOf', () => {
+  it('until anything is planted, each earned kind stands once', () => {
+    const plots = gardenPlotsOf(null, ['daisy', 'tulip']);
+    expect(plots).toHaveLength(PLOT_COUNT);
+    expect(plots.slice(0, 3)).toEqual(['daisy', 'tulip', null]);
+  });
+
+  it('keeps what the user planted, the same kind on many plots too; a closed kind leaves a gap', () => {
+    const saved = ['tulip', 'tulip', null, 'rose'] as const;
+    expect(gardenPlotsOf([...saved], ['daisy', 'tulip']).slice(0, 5)).toEqual([
+      'tulip',
+      'tulip',
+      null,
+      null,
+      null,
+    ]);
   });
 });
 

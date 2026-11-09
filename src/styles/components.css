@@ -1238,25 +1238,35 @@ textarea.input {
   left: var(--space-3);
   right: 132px;
   top: var(--space-3);
-  max-width: 400px;
+  max-width: 360px;
   z-index: 2;
   padding: var(--space-2) var(--space-3);
   border-radius: var(--radius-md);
-  border-bottom-left-radius: 4px;
-  background: var(--color-surface);
-  box-shadow: var(--shadow-1);
+  background: rgb(255 255 255 / 62%);
+  border: 1px solid rgb(255 255 255 / 55%);
+  backdrop-filter: blur(8px);
+  color: #14261a;
+}
+
+/* at night and in the evening the plate is dark glass with light text */
+.garden--night .garden__say,
+.garden--evening .garden__say {
+  background: rgb(10 20 44 / 45%);
+  border-color: rgb(255 255 255 / 16%);
+  color: #ffffff;
 }
 
 .garden__greet {
-  font-size: 1.125rem;
-  font-weight: 900;
+  font-size: 1rem;
+  font-weight: 800;
   line-height: 1.2;
 }
 
 .garden__message {
-  font-size: 0.9375rem;
-  font-weight: 700;
-  color: var(--color-text-muted);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: inherit;
+  opacity: 0.88;
   line-height: 1.3;
   animation: page-in var(--motion-medium) var(--ease-out) backwards;
 }
@@ -2442,13 +2452,49 @@ textarea.input {
   outline: none;
 }
 
-.garden__plot:hover .garden__plant,
-.garden__plot:focus-visible .garden__plant {
-  filter: brightness(1.12) drop-shadow(0 0 3px #ffffff) drop-shadow(0 0 2px #1a5fd0);
+/* hovering or focusing a plot lights a soft ring on the ground under it */
+.garden__plot-ring {
+  fill: rgb(255 255 255 / 0%);
+  stroke: rgb(255 255 255 / 0%);
+  stroke-width: 1.4;
+  transition:
+    fill var(--motion-fast),
+    stroke var(--motion-fast);
 }
 
+.garden__plot:hover .garden__plot-ring {
+  fill: rgb(255 255 255 / 28%);
+  stroke: rgb(255 255 255 / 75%);
+}
+
+.garden__plot:focus-visible .garden__plot-ring {
+  fill: rgb(255 255 255 / 35%);
+  stroke: #ffffff;
+  stroke-width: 2.2;
+}
+
+/* a newly planted flower grows out of the ground */
+.garden__grow {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: plot-grow 520ms var(--ease-spring);
+}
+
+@keyframes plot-grow {
+  from {
+    transform: scale(0.2, 0);
+  }
+}
+
+/* empty plots stay quiet until pointed at */
 .garden__plot--empty .garden__plant {
-  opacity: 0.85;
+  opacity: 0.38;
+  transition: opacity var(--motion-fast);
+}
+
+.garden__plot--empty:hover .garden__plant,
+.garden__plot--empty:focus-visible .garden__plant {
+  opacity: 1;
 }
 
 .garden--big .garden__sprout {
@@ -2512,9 +2558,13 @@ textarea.input {
   background: var(--color-primary-soft);
 }
 
-/* ---------- Tab icons come alive when their tab is opened ---------- */
-.nav__icon {
+/* ---------- Tab icons come alive when their tab is opened (not on hover) ---------- */
+.nav__icon,
+.nav__part {
   transform-box: fill-box;
+}
+
+.nav__icon {
   transform-origin: center;
 }
 
@@ -2522,8 +2572,23 @@ textarea.input {
   animation: icon-hop 520ms var(--ease-spring);
 }
 
-.nav__link[aria-current='page'] .nav__icon--decks {
-  animation: icon-flip 600ms var(--ease-out);
+/* the book opens: both pages unfold from the spine */
+.nav__icon--decks .nav__part--1 {
+  transform-origin: 100% 50%;
+}
+
+.nav__icon--decks .nav__part--2 {
+  transform-origin: 0% 50%;
+}
+
+.nav__link[aria-current='page'] .nav__icon--decks .nav__part--1,
+.nav__link[aria-current='page'] .nav__icon--decks .nav__part--2 {
+  animation: page-open 520ms var(--ease-out);
+}
+
+.nav__link[aria-current='page'] .nav__icon--decks .nav__part--2 {
+  animation-delay: 90ms;
+  animation-fill-mode: backwards;
 }
 
 .nav__link[aria-current='page'] .nav__icon--garden {
@@ -2531,16 +2596,21 @@ textarea.input {
   animation: icon-grow 600ms var(--ease-spring);
 }
 
-.nav__link[aria-current='page'] .nav__icon--progress {
+/* the chart fills: first the two side bars, then the middle one */
+.nav__icon--progress .nav__part {
   transform-origin: 50% 100%;
-  animation: icon-rise 560ms var(--ease-spring);
+}
+
+.nav__link[aria-current='page'] .nav__icon--progress .nav__part--1,
+.nav__link[aria-current='page'] .nav__icon--progress .nav__part--3 {
+  animation: icon-rise 420ms var(--ease-out) backwards;
+}
+
+.nav__link[aria-current='page'] .nav__icon--progress .nav__part--2 {
+  animation: icon-rise 460ms var(--ease-spring) 260ms backwards;
 }
 
 .nav__link[aria-current='page'] .nav__icon--settings {
-  animation: icon-spin 800ms var(--ease-out);
-}
-
-.nav__link:hover .nav__icon--settings {
   animation: icon-spin 800ms var(--ease-out);
 }
 
@@ -2553,9 +2623,9 @@ textarea.input {
   }
 }
 
-@keyframes icon-flip {
+@keyframes page-open {
   from {
-    transform: perspective(60px) rotateY(-180deg);
+    transform: scaleX(0.05);
   }
 }
 
@@ -2567,7 +2637,7 @@ textarea.input {
 
 @keyframes icon-rise {
   from {
-    transform: scaleY(0.2);
+    transform: scaleY(0);
   }
 }
 
@@ -2578,7 +2648,72 @@ textarea.input {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .nav__icon {
+  .nav__icon,
+  .nav__part {
     animation: none !important;
+  }
+}
+
+/* ---------- Choosing a flower for a plot ---------- */
+.plot-dialog {
+  width: min(92vw, 440px);
+  text-align: center;
+}
+
+.plot-dialog__preview {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--space-3);
+  min-height: 96px;
+}
+
+.plot-dialog__grow {
+  display: inline-flex;
+  transform-origin: 50% 100%;
+  animation: plot-grow 480ms var(--ease-spring);
+}
+
+.plot-dialog__name {
+  font-size: 1.125rem;
+  font-weight: 900;
+  margin-bottom: var(--space-3);
+}
+
+.plot-dialog .kind-grid {
+  justify-content: center;
+  margin-bottom: var(--space-3);
+}
+
+.kind-choice {
+  width: 56px;
+  height: 56px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid transparent;
+  border-radius: var(--radius-md);
+  background: var(--color-surface-sunken);
+  cursor: pointer;
+  transition:
+    transform var(--motion-medium) var(--ease-spring),
+    border-color var(--motion-fast),
+    background var(--motion-fast);
+}
+
+.kind-choice:hover {
+  transform: translateY(-2px);
+}
+
+/* the chosen kind: a green frame and a light background, at once */
+.kind-choice[aria-checked='true'] {
+  border-color: var(--color-primary-dark);
+  background: var(--color-primary-soft);
+  transform: scale(1.06);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .garden__grow,
+  .plot-dialog__grow {
+    animation: none;
   }
 }
