@@ -38,18 +38,29 @@ export function Mascot({ mood = 'normal', size = 96, label, reaction = 0 }: Masc
       data-mood={mood}
       width={size}
       height={size}
-      viewBox="-3 -7 126 126"
+      viewBox="0 0 120 120"
       role={label ? 'img' : undefined}
       aria-label={label}
       aria-hidden={label ? undefined : true}
       focusable="false"
     >
       <defs>
-        <radialGradient id={`${id}body`} cx="40%" cy="32%" r="75%">
-          <stop offset="0%" stopColor="#b4e88f" />
-          <stop offset="50%" stopColor="#6fc24c" />
-          <stop offset="100%" stopColor="#3d8a2a" />
+        {/* soft cel shading: a darker ball, with a lighter one drawn over it a little up and left */}
+        <radialGradient id={`${id}shade`} cx="50%" cy="45%" r="60%">
+          <stop offset="0%" stopColor="#5fb43f" />
+          <stop offset="100%" stopColor="#3a8528" />
         </radialGradient>
+        <radialGradient id={`${id}body`} cx="40%" cy="32%" r="70%">
+          <stop offset="0%" stopColor="#b9eb94" />
+          <stop offset="55%" stopColor="#79c855" />
+          <stop offset="100%" stopColor="#5cb03d" />
+        </radialGradient>
+        <clipPath id={`${id}clip`}>
+          <circle cx="60" cy="78" r="35" />
+        </clipPath>
+        <filter id={`${id}soft`} x="-10%" y="-10%" width="120%" height="120%">
+          <feGaussianBlur stdDeviation="1.6" />
+        </filter>
         <linearGradient id={`${id}leaf`} x1="0" y1="0" x2="1" y2="1">
           <stop offset="0%" stopColor="#a9e182" />
           <stop offset="100%" stopColor="#56a43a" />
@@ -58,15 +69,11 @@ export function Mascot({ mood = 'normal', size = 96, label, reaction = 0 }: Masc
           <stop offset="0%" stopColor="#5aab3d" />
           <stop offset="100%" stopColor="#357a26" />
         </linearGradient>
-        <linearGradient id={`${id}page`} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#ffffff" />
-          <stop offset="100%" stopColor="#e9efe4" />
-        </linearGradient>
       </defs>
       <ellipse
         className="mascot__shadow"
         cx="60"
-        cy="115"
+        cy="116"
         rx="32"
         ry="4"
         fill={INK}
@@ -80,83 +87,75 @@ export function Mascot({ mood = 'normal', size = 96, label, reaction = 0 }: Masc
           <g key={x} className={`mascot__foot mascot__foot--${i === 0 ? 'left' : 'right'}`}>
             <ellipse
               cx={x}
-              cy="110"
+              cy="111"
               rx="10.5"
               ry="6.5"
               fill={`url(#${id}foot)`}
               stroke={OUTLINE}
               strokeWidth="2.5"
             />
-            <ellipse cx={x - 3} cy="108" rx="4" ry="1.6" fill="#ffffff" opacity="0.3" />
+            <ellipse cx={x - 3} cy="109" rx="4" ry="1.6" fill="#ffffff" opacity="0.3" />
           </g>
         ))}
 
         <g className="mascot__torso">
-          {/* the page sits behind the head, a little tilted, and the sprout grows from its top */}
+          {/* a clean paper document behind the head, a little tilted; the sprout grows from its top */}
           <g className="mascot__page">
-            <g transform="rotate(-8 60 40)">
+            <g transform="rotate(-7 60 38)">
               <path
-                d="M44 13 H70 L79 22 V56 A4 4 0 0 1 75 60 H44 A4 4 0 0 1 40 56 V17 A4 4 0 0 1 44 13 Z"
-                fill={`url(#${id}page)`}
+                d="M47 15 H70 L79 24 V54 A6 6 0 0 1 73 60 H47 A6 6 0 0 1 41 54 V21 A6 6 0 0 1 47 15 Z"
+                fill="#ffffff"
                 stroke={OUTLINE}
                 strokeWidth="2.5"
                 strokeLinejoin="round"
               />
               <path
-                d="M70 13 V22 H79"
-                fill="#dfe8d8"
+                d="M70 15 V21 A3 3 0 0 0 73 24 H79"
+                fill="#e3ebdd"
                 stroke={OUTLINE}
                 strokeWidth="2"
                 strokeLinejoin="round"
               />
               <path
-                d="M46 27 H66 M46 34 H72 M46 41 H64"
-                stroke="#b3c4aa"
-                strokeWidth="2.6"
+                d="M48 24 H70 M48 30 H70 M48 36 H64"
+                stroke="#b5bfb0"
+                strokeWidth="2.8"
                 strokeLinecap="round"
               />
-              {/* the sprout stands upright on the tilted page */}
-              <g transform="rotate(8 58 13)">
+              {/* the sprout stands upright on the tilted page; its two leaves mirror each other */}
+              <g transform="rotate(7 60 15)">
                 <g className="mascot__sprout">
                   <path
-                    d="M58 14 C58 10 58.5 7 58 4.5"
+                    d="M60 17 V10"
                     stroke={OUTLINE}
                     strokeWidth="3"
                     strokeLinecap="round"
                     fill="none"
                   />
-                  <g className="mascot__leaf mascot__leaf--left">
-                    <path
-                      d="M58 8 C53 0 41 -1 36 4 C41 12 52 13 58 8 Z"
-                      fill={`url(#${id}leaf)`}
-                      stroke={OUTLINE}
-                      strokeWidth="2.2"
-                      strokeLinejoin="round"
-                    />
-                    <path
-                      d="M56 7.5 Q48 4 39 4.5"
-                      stroke={OUTLINE}
-                      strokeWidth="1.2"
-                      fill="none"
-                      opacity="0.55"
-                    />
-                  </g>
-                  <g className="mascot__leaf mascot__leaf--right">
-                    <path
-                      d="M58 6 C62 -2 75 -3 81 2 C76 10 65 12 58 6 Z"
-                      fill={`url(#${id}leaf)`}
-                      stroke={OUTLINE}
-                      strokeWidth="2.2"
-                      strokeLinejoin="round"
-                    />
-                    <path
-                      d="M60 5.5 Q69 2 78 2.4"
-                      stroke={OUTLINE}
-                      strokeWidth="1.2"
-                      fill="none"
-                      opacity="0.55"
-                    />
-                  </g>
+                  {(['left', 'right'] as const).map((side) => (
+                    // the mirror is on the outer group: CSS animates the inner one's transform
+                    <g
+                      key={side}
+                      transform={side === 'left' ? 'translate(120 0) scale(-1 1)' : undefined}
+                    >
+                      <g className={`mascot__leaf mascot__leaf--${side}`}>
+                        <path
+                          d="M60 11.5 C63 3.5 76 0.8 84 5.5 C79 14.5 68 17.5 60 11.5 Z"
+                          fill={`url(#${id}leaf)`}
+                          stroke={OUTLINE}
+                          strokeWidth="2.2"
+                          strokeLinejoin="round"
+                        />
+                        <path
+                          d="M62 11 Q71 7 81 6.7"
+                          stroke={OUTLINE}
+                          strokeWidth="1.2"
+                          fill="none"
+                          opacity="0.55"
+                        />
+                      </g>
+                    </g>
+                  ))}
                 </g>
               </g>
             </g>
@@ -166,28 +165,31 @@ export function Mascot({ mood = 'normal', size = 96, label, reaction = 0 }: Masc
           {waving ? <Arm side="right" /> : <RestingArm side="right" fill={body} />}
           {armsUp ? <Arm side="left" /> : <RestingArm side="left" fill={body} />}
 
-          {/* body: one round, glossy ball */}
-          <ellipse cx="60" cy="79" rx="38" ry="33" fill={body} stroke={OUTLINE} strokeWidth="3" />
-          {/* light from the top left, and a soft glow low on the belly */}
-          <ellipse
-            cx="45"
-            cy="60"
-            rx="15"
-            ry="7.5"
-            transform="rotate(-24 45 60)"
-            fill="#ffffff"
-            opacity="0.3"
-          />
-          <circle cx="34" cy="70" r="2.2" fill="#ffffff" opacity="0.4" />
-          <ellipse cx="60" cy="98" rx="22" ry="8" fill="#c3f0a6" opacity="0.25" />
+          {/* body: a plump, perfectly round ball */}
+          <circle cx="60" cy="78" r="35" fill={`url(#${id}shade)`} />
+          <g clipPath={`url(#${id}clip)`}>
+            <circle cx="56" cy="73" r="33" fill={body} filter={`url(#${id}soft)`} />
+            {/* the gloss: a soft light from the top left */}
+            <ellipse
+              cx="44"
+              cy="57"
+              rx="14"
+              ry="7"
+              transform="rotate(-28 44 57)"
+              fill="#ffffff"
+              opacity="0.35"
+            />
+            <circle cx="32" cy="69" r="2.3" fill="#ffffff" opacity="0.45" />
+          </g>
+          <circle cx="60" cy="78" r="35" fill="none" stroke={OUTLINE} strokeWidth="3" />
 
           <g
             className="mascot__cheeks"
             fill="#ff8f9c"
             opacity={mood === 'oops' || mood === 'sleepy' ? 0.55 : 0.9}
           >
-            <ellipse cx="34" cy="86" rx="7.5" ry="4.8" />
-            <ellipse cx="86" cy="86" rx="7.5" ry="4.8" />
+            <ellipse cx="34" cy="85" rx="7" ry="5.6" />
+            <ellipse cx="86" cy="85" rx="7" ry="5.6" />
           </g>
 
           <Eyes mood={mood} />
@@ -205,15 +207,15 @@ export function Mascot({ mood = 'normal', size = 96, label, reaction = 0 }: Masc
 /** A little arm at the side when it is not raised, half hidden behind the body. */
 function RestingArm({ side, fill }: { side: 'left' | 'right'; fill: string }) {
   const right = side === 'right';
-  const x = right ? 98 : 22;
+  const x = right ? 97 : 23;
   return (
     <g className={`mascot__rest mascot__rest--${side}`}>
       <ellipse
         cx={x}
-        cy="88"
+        cy="87"
         rx="7"
         ry="10.5"
-        transform={`rotate(${right ? -24 : 24} ${x} 88)`}
+        transform={`rotate(${right ? -24 : 24} ${x} 87)`}
         fill={fill}
         stroke={OUTLINE}
         strokeWidth="2.5"

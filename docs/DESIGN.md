@@ -22,8 +22,8 @@ so a screen is written once. The dark theme turns the dark button light (mint fa
 - **Garden screen:** the big picture (15 plots, earned decorations, rain while watering, droop when wilted), the
   watering card, beds per deck (tap a plant for its word), the flower collection (unknown kinds as silhouettes),
   decorations, and the rules in plain words. On Home the whole picture is a link to it ("Open your garden").
-- **Sprout (after Stage 19, current, from the owner's reference picture):** one round glossy green ball (light
-  from the top left), a tall white page tilted behind the head with a folded corner, a two-leaf sprout growing
+- **Sprout (after Stage 19, current, from the owner's reference picture):** a plump, perfectly round glossy green ball
+  (soft cel shading: a lighter ball over a darker one, light from the top left; same overall size as the Stage 14 drawing), a tall white page tilted behind the head with a folded corner, three gray lines and rounded corners, a sprout with two mirrored leaves growing
   upright from the page's top, small round arms half behind the body, two little feet below. Default face: closed
   smiling eyes, pink cheeks, an open smile with a tongue. Every part moves on its own: the body breathes with a squash,
   the page rocks, each leaf rustles in its own rhythm, the arms swing, the feet tap in turn, the cheeks glow, the

@@ -1,5 +1,5 @@
 /*
- * Sprout's motion. Origins are in the drawing's own units (a 120 × 120 grid; the viewBox adds a margin around it).
+ * Sprout's motion. Origins are in the drawing's own units (viewBox 0 0 120 120).
  * Idle: breathing, blinking, leaves in the wind. Reactions: a short animation of `.mascot__actor`,
  * replayed whenever the component gets a new `reaction` number.
  */
@@ -19,7 +19,7 @@
 }
 
 .mascot__sprout {
-  transform-origin: 58px 14px;
+  transform-origin: 60px 17px;
   animation: mascot-sway 2.6s ease-in-out infinite alternate;
 }
 
@@ -259,12 +259,13 @@
 }
 
 /* happy: the leaves flap; celebrating: the sprout spins round once */
+/* both leaves are drawn as the right one (the left is its mirror), so they share the origin */
 .mascot__leaf--right {
-  transform-origin: 58px 6px;
+  transform-origin: 60px 11.5px;
 }
 
 .mascot__leaf--left {
-  transform-origin: 58px 8px;
+  transform-origin: 60px 11.5px;
 }
 
 .mascot--happy .mascot__leaf--right,
@@ -274,7 +275,7 @@
 
 .mascot--happy .mascot__leaf--left,
 .mascot--celebrate .mascot__leaf--left {
-  animation: leaf-flap-left 0.5s ease-in-out 3 alternate;
+  animation: leaf-flap 0.5s ease-in-out 3 alternate; /* mirrored: the two flap like wings */
 }
 
 @keyframes leaf-flap {
