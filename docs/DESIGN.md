@@ -22,7 +22,13 @@ so a screen is written once. The dark theme turns the dark button light (mint fa
 - **Garden screen:** the big picture (15 plots, earned decorations, rain while watering, droop when wilted), the
   watering card, beds per deck (tap a plant for its word), the flower collection (unknown kinds as silhouettes),
   decorations, and the rules in plain words. On Home the whole picture is a link to it ("Open your garden").
-- **Sprout (Stage 14, current):** the Stage 12 drawing is back at the owner's request (the Stage 13 one was
+- **Sprout (after Stage 19, current, from the owner's reference picture):** one round glossy green ball (light
+  from the top left), a tall white page tilted behind the head with a folded corner, a two-leaf sprout growing
+  upright from the page's top, small round arms half behind the body, two little feet below. Default face: closed
+  smiling eyes, pink cheeks, an open smile with a tongue. Every part moves on its own: the body breathes with a squash,
+  the page rocks, each leaf rustles in its own rhythm, the arms swing, the feet tap in turn, the cheeks glow, the
+  smile hums, the eyes squeeze shut or glance around. Moods (thinking, oops, encouraging, sleepy) keep their own eyes.
+- **Sprout (Stage 14, replaced after Stage 19):** the Stage 12 drawing is back at the owner's request (the Stage 13 one was
   rejected), and the eyes no longer follow the pointer. Kept from Stage 13: leaves flap when happy, the sprout spins
   when celebrating, z's float when asleep, a wiggle on hover.
 - **Sprout (Stage 13, rejected):** volume from gradients: light from the top left, shade at the bottom right, the page's
