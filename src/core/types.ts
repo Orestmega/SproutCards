@@ -121,10 +121,10 @@ export interface Settings {
   /** The profile picture: Sprout or a flower found in the garden. */
   avatar: 'sprout' | VarietyId;
   /**
-   * The earned flowers on the plots of the garden picture, by plot (`null` = empty plot); `null` as a
-   * whole = nothing planted yet (each earned kind then stands once).
+   * The earned flowers on the plots of the garden picture: a reward id per plot (`null` = empty plot);
+   * `null` as a whole = nothing planted yet (the earned flowers then stand in order).
    */
-  gardenPlots: (VarietyId | null)[] | null;
+  gardenPlots: (string | null)[] | null;
 }
 
 export const DEFAULT_SETTINGS: Settings = {

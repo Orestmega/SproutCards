@@ -36,8 +36,8 @@ export function ProfileScreen() {
   const { plants, decks, times, achievements } = garden;
   const blooms = plants.filter((p) => p.stage === 'bloom').length;
   const rank = gardenRank(blooms);
-  // every kind of flower opened in the garden can be the picture
-  const choices: AvatarId[] = ['sprout', ...garden.unlocked];
+  // every kind of flower found in the garden can be the picture
+  const choices: AvatarId[] = ['sprout', ...garden.found];
   const since = memberSince(
     times,
     decks.map((d) => d.createdAt),

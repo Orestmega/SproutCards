@@ -1,15 +1,17 @@
 import { evaluateAchievements } from './achievements';
 import {
-  canGrowAs,
   decorations,
+  earnedRewards,
+  firstRewardOf,
   flowerVariety,
+  foundKinds,
   GOLDEN_REPS,
   gardenHealth,
   gardenPlotsOf,
-  nextVariety,
-  rarityOf,
+  nextRewards,
   PLOT_COUNT,
-  unlockedVarieties,
+  rarityOf,
+  REWARDS,
   VARIETIES,
   wateringDay,
   wateringState,
@@ -18,62 +20,81 @@ import {
 const NOW = new Date(2026, 2, 11, 15).getTime();
 const day = (offset: number, hour = 10) => new Date(2026, 2, 11 + offset, hour).getTime();
 
-describe('unlocking flowers', () => {
+describe('flowers as rewards', () => {
   const none = { blooms: 0, bestStreak: 0, goldenWords: 0 };
 
-  it('a daisy is open from the start; the next kind is a clear goal', () => {
-    expect(unlockedVarieties(none)).toEqual(['daisy']);
-    expect(nextVariety(none)?.id).toBe('tulip');
+  it('nothing is earned at the start; the first learned word earns the first flower', () => {
+    expect(earnedRewards(none)).toEqual([]);
+    expect(earnedRewards({ ...none, blooms: 1 }).map((r) => r.variety)).toEqual(['daisy']);
+    expect(nextRewards(none)[0]).toMatchObject({ reward: { id: 'blooms-1' }, left: 1 });
   });
 
-  it('learned words, days in a row and a word known for long open more kinds', () => {
-    expect(unlockedVarieties({ ...none, blooms: 4 })).toEqual(['daisy', 'tulip', 'bellflower']);
-    expect(unlockedVarieties({ ...none, bestStreak: 7 })).toEqual(['daisy', 'sunflower', 'rose']);
-    expect(unlockedVarieties({ ...none, goldenWords: 1 })).toContain('golden');
-    expect(nextVariety({ blooms: 999, bestStreak: 999, goldenWords: 1 })).toBeNull();
+  it('every step of a goal is one more flower: words give common kinds, days rare ones', () => {
+    const earned = earnedRewards({ blooms: 20, bestStreak: 7, goldenWords: 1 });
+    expect(earned.filter((r) => r.goal.kind === 'blooms')).toHaveLength(7); // 1 3 5 8 12 16 20
+    expect(earned.filter((r) => r.goal.kind === 'streak').map((r) => r.variety)).toEqual([
+      'sunflower',
+      'rose',
+    ]);
+    expect(earned.filter((r) => r.variety === 'golden')).toHaveLength(1);
+    expect(earned.every((r) => r.goal.kind !== 'blooms' || rarityOf(r.variety) === 'common')).toBe(
+      true,
+    );
+  });
+
+  it('reward ids are unique, and every kind can be earned', () => {
+    expect(new Set(REWARDS.map((r) => r.id)).size).toBe(REWARDS.length);
+    for (const v of VARIETIES) expect(firstRewardOf(v.id), v.id).toBeDefined();
+  });
+
+  it('kinds found are the kinds of the earned flowers', () => {
+    expect(foundKinds(earnedRewards({ ...none, blooms: 3 }))).toEqual(['daisy', 'tulip']);
   });
 });
 
 describe('flowerVariety', () => {
-  const open = ['daisy', 'tulip', 'bellflower', 'golden'] as const;
+  const found = ['daisy', 'tulip', 'bellflower', 'golden'] as const;
 
-  it('the same word always gets the same open kind', () => {
-    const a = flowerVariety('card-1', 2, [...open]);
-    expect(a).toBe(flowerVariety('card-1', 3, [...open]));
+  it('the same word always gets the same found kind', () => {
+    const a = flowerVariety('card-1', 2, [...found]);
+    expect(a).toBe(flowerVariety('card-1', 3, [...found]));
     expect(['daisy', 'tulip', 'bellflower']).toContain(a);
   });
 
-  it('a word known for long is golden once golden flowers are open', () => {
-    expect(flowerVariety('card-1', GOLDEN_REPS, [...open])).toBe('golden');
+  it('a word known for long is golden once a golden flower is found', () => {
+    expect(flowerVariety('card-1', GOLDEN_REPS, [...found])).toBe('golden');
     expect(flowerVariety('card-1', GOLDEN_REPS, ['daisy'])).toBe('daisy');
-    expect(rarityOf('golden')).toBe('golden');
-    expect(canGrowAs('golden', 1)).toBe(false);
-    expect(canGrowAs('tulip', 1)).toBe(true);
-  });
-
-  it('every kind can be grown once it is open', () => {
-    const all = VARIETIES.map((v) => v.id).filter((id) => id !== 'golden');
-    const kinds = new Set(Array.from({ length: 2000 }, (_, i) => flowerVariety(`id-${i}`, 2, all)));
-    expect(kinds.size).toBe(all.length);
+    expect(flowerVariety('card-1', 2, [])).toBe('daisy');
   });
 });
 
 describe('gardenPlotsOf', () => {
-  it('until anything is planted, each earned kind stands once', () => {
-    const plots = gardenPlotsOf(null, ['daisy', 'tulip']);
+  const earned = earnedRewards({ blooms: 5, bestStreak: 0, goldenWords: 0 }); // 3 flowers
+
+  it('until anything is planted, the earned flowers stand in order: no more than earned', () => {
+    const plots = gardenPlotsOf(null, earned);
     expect(plots).toHaveLength(PLOT_COUNT);
-    expect(plots.slice(0, 3)).toEqual(['daisy', 'tulip', null]);
+    expect(plots.filter(Boolean)).toHaveLength(3);
+    expect(plots[0]?.id).toBe('blooms-1');
   });
 
-  it('keeps what the user planted, the same kind on many plots too; a closed kind leaves a gap', () => {
-    const saved = ['tulip', 'tulip', null, 'rose'] as const;
-    expect(gardenPlotsOf([...saved], ['daisy', 'tulip']).slice(0, 5)).toEqual([
-      'tulip',
-      'tulip',
+  it('keeps the plots the user chose; one flower grows on one plot only', () => {
+    const plots = gardenPlotsOf(['blooms-3', 'blooms-3', null, 'blooms-1', 'blooms-99'], earned);
+    expect(plots.slice(0, 5).map((p) => p?.id ?? null)).toEqual([
+      'blooms-3',
       null,
       null,
+      'blooms-1',
       null,
     ]);
+  });
+
+  it('plots the user emptied stay empty', () => {
+    expect(gardenPlotsOf(Array(PLOT_COUNT).fill(null), earned).filter(Boolean)).toHaveLength(0);
+  });
+
+  it('an old or broken choice falls back to the earned flowers', () => {
+    expect(gardenPlotsOf(['daisy', 'tulip'], earned).filter(Boolean)).toHaveLength(3);
   });
 });
 

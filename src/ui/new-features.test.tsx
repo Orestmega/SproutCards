@@ -71,8 +71,8 @@ describe('home', () => {
     expect(
       within(screen.getByRole('list', { name: 'This week' })).getAllByRole('listitem'),
     ).toHaveLength(7);
-    // the home picture shows the earned flowers: with nothing learned yet, the daisy
-    expect(document.querySelectorAll('.garden__plant')).toHaveLength(1);
+    // the home picture shows the earned flowers: nothing is learned yet, so nothing grows there
+    expect(document.querySelectorAll('.garden__plant')).toHaveLength(0);
     expect(document.querySelector('.garden')).toHaveAttribute('data-part');
 
     const heading = await screen.findByRole('heading', { name: 'Word of the day' });

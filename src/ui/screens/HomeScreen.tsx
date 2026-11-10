@@ -74,9 +74,9 @@ export function HomeScreen() {
   const part = dayPart(new Date(now).getHours());
   // the home picture has room for the first 9 plots of the garden
   const homePlots = garden
-    ? gardenPlotsOf(settings.gardenPlots, garden.unlocked)
+    ? gardenPlotsOf(settings.gardenPlots, garden.earned)
         .slice(0, 9)
-        .map((kind) => (kind ? { stage: 'bloom' as const, variety: kind } : null))
+        .map((reward) => (reward ? { stage: 'bloom' as const, variety: reward.variety } : null))
     : [];
   // unfinished Learn sessions of decks that still exist
   const resumeList = listSnapshots()

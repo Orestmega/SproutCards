@@ -551,7 +551,7 @@ export const uk: Record<Keys, string> & Record<string, string> = {
   'garden.rule.wilt':
     'Без навчання сад через день хоче пити, а через два в’яне. Слова не зникають ніколи: кілька відповідей повертають саду життя.',
   'garden.rule.flowers':
-    'Квіти — нагороди: кожен сорт заробляється ціллю (вивчені слова, дні поспіль). Саджай зароблені квіти на {n} ділянках саду, однаковий сорт теж можна багато разів. Твої слова ростуть окремо, на грядках нижче.',
+    'Квіти — нагороди: кожен крок цілі дає одну (вивчені слова: 1, 3, 5, 8, 12, 16, 20…; дні поспіль: 3, 7, 14…). Кожна зароблена квітка росте на одній ділянці, тож сад показує саме те, що ти заробив. Твої слова ростуть на грядках нижче.',
   'garden.rule.golden':
     'Слово, на яке ти правильно відповів {reps} разів поспіль, стає золотою квіткою.',
   'garden.rule.decor': 'Досягнення додають прикраси: метеликів, шпаківню, ставок, яблуню та інші.',
@@ -638,13 +638,12 @@ export const uk: Record<Keys, string> & Record<string, string> = {
   'resume.progress': 'Пройдено {percent}% · слів у сесії: {total}',
   'garden.plots': 'Ділянки твого саду',
   'garden.plotsHint':
-    'Квіти — це нагороди за твої цілі. Торкнись ділянки, щоб посадити будь-яку зароблену квітку ({n} ділянок).',
+    'Кожна досягнута ціль дає одну квітку; кожна росте на одній ділянці. Торкнись ділянки, щоб посадити.',
   'garden.plot.empty': 'Порожня ділянка {n}: посади квітку',
   'garden.plot.remove': 'Прибрати з ділянки',
   'garden.collectionHint':
-    'Нові сорти відкриваються за цілі. Кожен відкритий сорт можна садити на своїх ділянках.',
+    'Кожен крок цілі (вивчені слова, дні поспіль, надовго запам’ятані слова) дає одну квітку свого сорту.',
   'garden.nextFlower': 'Далі: {flower} —',
-  'garden.opened': 'Відкрито',
   'garden.unlock.blooms_one': 'вивчи ще {count} слово',
   'garden.unlock.blooms_few': 'вивчи ще {count} слова',
   'garden.unlock.blooms_many': 'вивчи ще {count} слів',
@@ -653,10 +652,32 @@ export const uk: Record<Keys, string> & Record<string, string> = {
   'garden.unlock.streak_few': 'вчись {count} дні поспіль (найкраще: {now})',
   'garden.unlock.streak_many': 'вчись {count} днів поспіль (найкраще: {now})',
   'garden.unlock.streak_other': 'вчись {count} дня поспіль (найкраще: {now})',
-  'garden.unlock.golden': 'відповідай на слово правильно {reps} разів поспіль',
   'garden.plot.flower': 'Ділянка {n}: {flower}',
   'garden.plot.title': 'Ділянка {n}',
   'garden.plot.nothing': 'Тут поки нічого не росте',
   'garden.plot.plantIt': 'Посадити',
-  'garden.plot.more': 'Виконуй цілі, щоб отримати більше квітів: наступна — {flower}.',
+  'garden.plot.more': 'Наступна квітка: {flower} —',
+  'garden.plotsCount': 'Посаджено {planted} із {earned} зароблених квітів ({n} ділянок).',
+  'garden.plot.free': 'вільних: {count}',
+  'garden.plot.allPlanted': 'Усі зароблені квіти вже посаджено.',
+  'garden.earnedCount_one': 'Зароблено: {count}',
+  'garden.earnedCount_few': 'Зароблено: {count}',
+  'garden.earnedCount_many': 'Зароблено: {count}',
+  'garden.earnedCount_other': 'Зароблено: {count}',
+  'garden.unlock.goldenWords_one':
+    'запам’ятай надовго ще {count} слово ({reps} правильних поспіль)',
+  'garden.unlock.goldenWords_few':
+    'запам’ятай надовго ще {count} слова ({reps} правильних поспіль)',
+  'garden.unlock.goldenWords_many':
+    'запам’ятай надовго ще {count} слів ({reps} правильних поспіль)',
+  'garden.unlock.goldenWords_other':
+    'запам’ятай надовго ще {count} слова ({reps} правильних поспіль)',
+  'flower.peony': 'Півонія',
+  'flower.iris': 'Ірис',
+  'flower.hyacinth': 'Гіацинт',
+  'flower.crocus': 'Крокус',
+  'flower.carnation': 'Гвоздика',
+  'flower.cosmos': 'Космея',
+  'flower.lotus': 'Лотос',
+  'flower.sakura': 'Сакура',
 };

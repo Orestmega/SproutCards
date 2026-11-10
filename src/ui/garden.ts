@@ -12,10 +12,17 @@ import {
   GOLDEN_REPS,
   gardenHealth,
   rarityOf,
-  unlockedVarieties,
+  earnedRewards,
+  foundKinds,
   wateringDay,
 } from '../core/gardenLife';
-import type { DecorationState, GardenHealth, UnlockFacts, VarietyId } from '../core/gardenLife';
+import type {
+  DecorationState,
+  GardenHealth,
+  Reward,
+  RewardFacts,
+  VarietyId,
+} from '../core/gardenLife';
 import { bestStreak, todayCount } from '../core/habit';
 import type { Card, Deck } from '../core/types';
 import { useRepo } from './AppProviders';
@@ -41,9 +48,10 @@ export interface Garden {
   answersToday: number;
   achievements: AchievementState[];
   decorations: DecorationState[];
-  /** What opens new kinds of flower, and the kinds open now. */
-  facts: UnlockFacts;
-  unlocked: VarietyId[];
+  /** What earns flowers; the flowers earned (one per reward); the kinds found among them. */
+  facts: RewardFacts;
+  earned: Reward[];
+  found: VarietyId[];
 }
 
 const RANK = { golden: 2, rare: 1, common: 0 } as const;
@@ -64,18 +72,19 @@ export function useGarden(now: number): Garden | undefined {
     const times = logs.map((log) => log.at);
     // the kinds of flower open now depend on learned words, the best streak and long-known words
     const reps = [...best.values()].map((r) => r.reps);
-    const facts: UnlockFacts = {
+    const facts: RewardFacts = {
       blooms: reps.filter((r) => growthStage(r) === 'bloom').length,
       bestStreak: bestStreak(times),
       goldenWords: reps.filter((r) => r >= GOLDEN_REPS).length,
     };
-    const unlocked = unlockedVarieties(facts);
+    const earned = earnedRewards(facts);
+    const found = foundKinds(earned);
     const plants = cards.flatMap((card): GardenPlant[] => {
       const deck = deckById.get(card.deckId);
       if (!deck) return [];
       const record = best.get(card.id);
       const stage = growthStage(record?.reps);
-      const variety = flowerVariety(card.id, record?.reps ?? 0, unlocked);
+      const variety = flowerVariety(card.id, record?.reps ?? 0, found);
       return [
         {
           card,
@@ -104,7 +113,8 @@ export function useGarden(now: number): Garden | undefined {
       achievements,
       decorations: decorations(achievements),
       facts,
-      unlocked,
+      earned,
+      found,
     };
   }, [repo, now]);
 }

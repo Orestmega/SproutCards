@@ -5,16 +5,16 @@ import type { MascotMood } from '../../core/cheer';
 import { growthCounts } from '../../core/garden';
 import { gardenFields } from '../../core/gardenBeds';
 import {
+  firstRewardOf,
   gardenPlotsOf,
   GOLDEN_REPS,
-  isUnlocked,
-  nextVariety,
+  nextRewards,
   PLOT_COUNT,
   rarityOf,
   VARIETIES,
   wateringState,
 } from '../../core/gardenLife';
-import type { Unlock, VarietyId } from '../../core/gardenLife';
+import type { Reward, RewardFacts, VarietyId } from '../../core/gardenLife';
 import { useI18n } from '../../i18n';
 import { useApp } from '../AppProviders';
 import { Button, ButtonLink } from '../components/Button';
@@ -65,30 +65,31 @@ export function GardenScreen() {
   }, [raining]);
 
   if (!garden) return null;
-  const { plants, decks, health, answersToday, decorations, unlocked, facts } = garden;
+  const { plants, decks, health, answersToday, decorations, earned, found, facts } = garden;
   const part = dayPart(new Date(now).getHours());
   const watering = wateringState(answersToday, dailyGoal, wateredDay, now);
-  const earned = decorations.filter((d) => d.earned).map((d) => d.id);
+  const earnedDecor = decorations.filter((d) => d.earned).map((d) => d.id);
   const studyDeck = decks.find((d) => plants.some((p) => p.deck.id === d.id));
   const fields = gardenFields(plants);
   // a language that is no longer learned falls back to "all"
   const shownLang = fields.some((field) => field.lang === lang) ? lang : 'all';
   const shownFields = shownLang === 'all' ? fields : fields.filter((x) => x.lang === shownLang);
-  // the plots of the picture hold earned flowers (rewards), the same kind may grow on many plots
-  const plots = gardenPlotsOf(settings.gardenPlots, unlocked);
-  const next = nextVariety(facts);
+  // the plots hold earned flowers: each one can grow on one plot, so the garden shows what was earned
+  const plots = gardenPlotsOf(settings.gardenPlots, earned);
+  const planted = plots.filter((p): p is Reward => p !== null);
+  const goals = nextRewards(facts).slice(0, 2);
 
-  function savePlots(list: (VarietyId | null)[]) {
+  function savePlots(list: (string | null)[]) {
     setSaveFailed(false);
     updateSettings({ gardenPlots: list }).catch(() => setSaveFailed(true));
   }
 
-  function plantAt(index: number, kind: VarietyId | null) {
-    const list = [...plots];
-    list[index] = kind;
+  function plantAt(index: number, reward: Reward | null) {
+    const list = plots.map((p) => p?.id ?? null);
+    list[index] = reward?.id ?? null;
     savePlots(list);
     setPlanting(null);
-    if (kind) cue('correct');
+    if (reward) cue('correct');
   }
 
   function onWater() {
@@ -105,16 +106,16 @@ export function GardenScreen() {
 
       <GardenScene
         part={part}
-        plants={plots.map((kind) => (kind ? { stage: 'bloom' as const, variety: kind } : null))}
+        plants={plots.map((r) => (r ? { stage: 'bloom' as const, variety: r.variety } : null))}
         onPlot={(i) => setPlanting(i)}
         plotLabel={(i) => {
-          const kind = plots[i];
-          return kind
-            ? t('garden.plot.flower', { n: i + 1, flower: t(`flower.${kind}`) })
+          const reward = plots[i];
+          return reward
+            ? t('garden.plot.flower', { n: i + 1, flower: t(`flower.${reward.variety}`) })
             : t('garden.plot.empty', { n: i + 1 });
         }}
         label={t('garden.plots')}
-        decorations={earned}
+        decorations={earnedDecor}
         health={raining ? 'fresh' : health}
         raining={raining}
         big
@@ -124,7 +125,23 @@ export function GardenScreen() {
         </div>
         <p className={`garden__health garden__health--${health}`}>{t(`garden.health.${health}`)}</p>
       </GardenScene>
-      {plants.length > 0 && <p className="muted">{t('garden.plotsHint', { n: PLOT_COUNT })}</p>}
+      <p className="muted">
+        {t('garden.plotsCount', { planted: planted.length, earned: earned.length, n: PLOT_COUNT })}{' '}
+        {t('garden.plotsHint')}
+      </p>
+      {goals.length > 0 && (
+        <ul className="next-flowers">
+          {goals.map(({ reward }) => (
+            <li className="next-flower" key={reward.id}>
+              <Plant stage="bloom" variety={reward.variety} size={36} />
+              <span>
+                {t('garden.nextFlower', { flower: t(`flower.${reward.variety}`) })}{' '}
+                <strong>{goalText(reward, facts, tp)}</strong>
+              </span>
+            </li>
+          ))}
+        </ul>
+      )}
 
       {plants.length === 0 ? (
         <EmptyState title={t('garden.empty.title')} text={t('garden.empty.text')}>
@@ -248,22 +265,15 @@ export function GardenScreen() {
             {t('garden.collection')}
           </h2>
           <span className="muted">
-            {t('stats.achievementsCount', { done: unlocked.length, total: VARIETIES.length })}
+            {t('stats.achievementsCount', { done: found.length, total: VARIETIES.length })}
           </span>
         </div>
         <p className="muted">{t('garden.collectionHint')}</p>
-        {next && (
-          <p className="next-flower">
-            <Plant stage="bloom" variety={next.id} size={36} />
-            <span>
-              {t('garden.nextFlower', { flower: t(`flower.${next.id}`) })}{' '}
-              <strong>{unlockText(next.unlock, facts, t, tp)}</strong>
-            </span>
-          </p>
-        )}
         <ul className="ach-grid">
           {VARIETIES.map((v) => {
-            const has = isUnlocked(v.unlock, facts);
+            const count = earned.filter((r) => r.variety === v.id).length;
+            const has = count > 0;
+            const first = firstRewardOf(v.id);
             return (
               <li key={v.id}>
                 <div className={has ? 'ach ach--done flower' : 'ach flower flower--locked'}>
@@ -273,7 +283,11 @@ export function GardenScreen() {
                     {t(`rarity.${v.rarity}`)}
                   </span>
                   <span className="muted">
-                    {has ? t('garden.opened') : unlockText(v.unlock, facts, t, tp)}
+                    {has
+                      ? tp('garden.earnedCount', count)
+                      : first
+                        ? goalText(first, facts, tp)
+                        : ''}
                   </span>
                 </div>
               </li>
@@ -288,7 +302,7 @@ export function GardenScreen() {
             {t('garden.decorations')}
           </h2>
           <span className="muted">
-            {t('stats.achievementsCount', { done: earned.length, total: decorations.length })}
+            {t('stats.achievementsCount', { done: earnedDecor.length, total: decorations.length })}
           </span>
         </div>
         <ul className="ach-grid">
@@ -327,9 +341,13 @@ export function GardenScreen() {
         <PlotDialog
           index={planting}
           current={plots[planting] ?? null}
-          unlocked={unlocked}
-          next={next}
-          onPlant={(kind) => plantAt(planting, kind)}
+          available={earned.filter((r) => !planted.some((p) => p.id === r.id))}
+          goal={
+            goals[0]
+              ? { reward: goals[0].reward, text: goalText(goals[0].reward, facts, tp) }
+              : null
+          }
+          onPlant={(reward) => plantAt(planting, reward)}
           onClose={() => setPlanting(null)}
         />
       )}
@@ -350,18 +368,16 @@ function rarityLabel(variety: VarietyId, t: T): string {
 
 type TP = ReturnType<typeof useI18n>['tp'];
 
-/** What is still needed to open a kind of flower, e.g. "learn 3 more words". */
-function unlockText(
-  unlock: Unlock,
-  facts: { blooms: number; bestStreak: number },
-  t: T,
-  tp: TP,
-): string {
-  if (unlock.golden) return t('garden.unlock.golden', { reps: GOLDEN_REPS });
-  if (unlock.streak !== undefined) {
-    return tp('garden.unlock.streak', unlock.streak, { now: facts.bestStreak });
+/** What is still needed for a reward, e.g. "learn 3 more words". */
+function goalText(reward: Reward, facts: RewardFacts, tp: TP): string {
+  const { kind, at } = reward.goal;
+  if (kind === 'streak') return tp('garden.unlock.streak', at, { now: facts.bestStreak });
+  if (kind === 'golden') {
+    return tp('garden.unlock.goldenWords', Math.max(0, at - facts.goldenWords), {
+      reps: GOLDEN_REPS,
+    });
   }
-  return tp('garden.unlock.blooms', Math.max(0, (unlock.blooms ?? 0) - facts.blooms));
+  return tp('garden.unlock.blooms', Math.max(0, at - facts.blooms));
 }
 
 /** Opens a native dialog once it is in the page. */
@@ -380,27 +396,34 @@ function useModal() {
 }
 
 /**
- * Choose what grows on a plot: any earned kind of flower (the same kind may grow on many plots).
- * The choice shows at once; "Plant" puts it in the ground.
+ * Choose what grows on a plot: one of the earned flowers not planted yet (each grows on one plot).
+ * Flowers of the same kind are grouped with a count. The choice shows at once; "Plant" puts it in.
  */
 function PlotDialog({
   index,
   current,
-  unlocked,
-  next,
+  available,
+  goal,
   onPlant,
   onClose,
 }: {
   index: number;
-  current: VarietyId | null;
-  unlocked: readonly VarietyId[];
-  next: (typeof VARIETIES)[number] | null;
-  onPlant: (kind: VarietyId | null) => void;
+  current: Reward | null;
+  /** Earned flowers that grow on no plot yet. */
+  available: readonly Reward[];
+  /** The closest next flower, to show what to aim for. */
+  goal: { reward: Reward; text: string } | null;
+  onPlant: (reward: Reward | null) => void;
   onClose: () => void;
 }) {
   const { t } = useI18n();
   const ref = useModal();
-  const [choice, setChoice] = useState<VarietyId | null>(current ?? unlocked[0] ?? null);
+  // the kinds that can go on this plot: its own flower and the free ones, each kind once with a count
+  const pool = current ? [current, ...available] : [...available];
+  const kinds = VARIETIES.map((v) => v.id).filter((id) => pool.some((r) => r.variety === id));
+  const [choice, setChoice] = useState<VarietyId | null>(current?.variety ?? kinds[0] ?? null);
+  const chosen =
+    choice === current?.variety ? current : (available.find((r) => r.variety === choice) ?? null);
   return (
     <dialog
       ref={ref}
@@ -424,27 +447,43 @@ function PlotDialog({
       <p className="plot-dialog__name" aria-live="polite">
         {choice ? t(`flower.${choice}`) : t('garden.plot.nothing')}
       </p>
-      <div className="kind-grid" role="radiogroup" aria-labelledby="plot-title">
-        {unlocked.map((id) => (
-          <button
-            key={id}
-            type="button"
-            role="radio"
-            aria-checked={choice === id}
-            aria-label={t(`flower.${id}`)}
-            className="kind-choice"
-            // the keyboard focus starts on the chosen kind, so focus and choice never look like two picks
-            autoFocus={id === (current ?? unlocked[0])}
-            onClick={(event) => {
-              setChoice(id);
-              event.currentTarget.focus(); // focus follows the choice
-            }}
-          >
-            <Plant stage="bloom" variety={id} size={44} />
-          </button>
-        ))}
-      </div>
-      {next && <p className="muted">{t('garden.plot.more', { flower: t(`flower.${next.id}`) })}</p>}
+      {kinds.length > 0 ? (
+        <div className="kind-grid" role="radiogroup" aria-labelledby="plot-title">
+          {kinds.map((id) => {
+            const free = available.filter((r) => r.variety === id).length;
+            return (
+              <button
+                key={id}
+                type="button"
+                role="radio"
+                aria-checked={choice === id}
+                aria-label={`${t(`flower.${id}`)} (${t('garden.plot.free', { count: free })})`}
+                className="kind-choice"
+                // the keyboard focus starts on the chosen kind, so focus and choice never look like two picks
+                autoFocus={id === (current?.variety ?? kinds[0])}
+                onClick={(event) => {
+                  setChoice(id);
+                  event.currentTarget.focus(); // focus follows the choice
+                }}
+              >
+                <Plant stage="bloom" variety={id} size={44} />
+                {free > 1 && (
+                  <span className="kind-choice__count" aria-hidden="true">
+                    ×{free}
+                  </span>
+                )}
+              </button>
+            );
+          })}
+        </div>
+      ) : (
+        <p>{t('garden.plot.allPlanted')}</p>
+      )}
+      {goal && (
+        <p className="muted">
+          {t('garden.plot.more', { flower: t(`flower.${goal.reward.variety}`) })} {goal.text}
+        </p>
+      )}
       <div className="dialog__actions">
         {current && (
           <Button variant="danger" onClick={() => onPlant(null)}>
@@ -454,9 +493,11 @@ function PlotDialog({
         <Button variant="secondary" onClick={onClose}>
           {t('common.cancel')}
         </Button>
-        <Button disabled={!choice || choice === current} onClick={() => onPlant(choice)}>
-          {t('garden.plot.plantIt')}
-        </Button>
+        {kinds.length > 0 && (
+          <Button disabled={!chosen || chosen.id === current?.id} onClick={() => onPlant(chosen)}>
+            {t('garden.plot.plantIt')}
+          </Button>
+        )}
       </div>
     </dialog>
   );

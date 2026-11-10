@@ -147,40 +147,50 @@ describe('garden screen', () => {
     expect(screen.getByRole('heading', { name: /English field/ })).toBeInTheDocument();
   });
 
-  it('plots hold earned flowers: plant one, the same kind again, or take it off', async () => {
+  it('a flower grows only where one was earned: one learned word, one flower', async () => {
     const user = userEvent.setup();
     const { repo } = await seed();
     open('/garden');
     const plots = await screen.findByRole('group', { name: 'Plots of your garden' });
-    // one learned word: the daisy is earned and stands on the first plot by itself
+    // one learned word earned one daisy: it stands on the first plot, the rest is empty
     expect(within(plots).getByRole('button', { name: 'Plot 1: Daisy' })).toBeInTheDocument();
+    expect(screen.getByText(/Planted 1 of 1 earned flowers/)).toBeInTheDocument();
 
+    // nothing else to plant on another plot
     await user.click(within(plots).getByRole('button', { name: 'Empty plot 2: plant a flower' }));
-    const dialog = await screen.findByRole('dialog', { name: 'Plot 2' });
-    const daisy = within(dialog).getByRole('radio', { name: 'Daisy' });
-    expect(daisy).toHaveAttribute('aria-checked', 'true'); // the choice shows at once
-    await user.click(within(dialog).getByRole('button', { name: 'Plant' }));
-    await waitFor(async () =>
-      expect((await repo.getSettings()).gardenPlots?.slice(0, 2)).toEqual(['daisy', 'daisy']),
-    );
-    expect(await within(plots).findByRole('button', { name: 'Plot 2: Daisy' })).toBeInTheDocument();
+    const empty = await screen.findByRole('dialog', { name: 'Plot 2' });
+    expect(
+      within(empty).getByText('All your earned flowers are planted already.'),
+    ).toBeInTheDocument();
+    expect(within(empty).queryByRole('button', { name: 'Plant' })).not.toBeInTheDocument();
+    await user.click(within(empty).getByRole('button', { name: 'Cancel' }));
 
+    // take it off plot 1, then plant it on plot 3
     await user.click(within(plots).getByRole('button', { name: 'Plot 1: Daisy' }));
     const first = await screen.findByRole('dialog', { name: 'Plot 1' });
     await user.click(within(first).getByRole('button', { name: 'Take off the plot' }));
     await waitFor(async () => expect((await repo.getSettings()).gardenPlots?.[0]).toBeNull());
-    expect(
-      await within(plots).findByRole('button', { name: 'Empty plot 1: plant a flower' }),
-    ).toBeInTheDocument();
+    await user.click(
+      await within(plots).findByRole('button', { name: 'Empty plot 3: plant a flower' }),
+    );
+    const third = await screen.findByRole('dialog', { name: 'Plot 3' });
+    expect(within(third).getByRole('radio', { name: /Daisy/ })).toHaveAttribute(
+      'aria-checked',
+      'true',
+    );
+    await user.click(within(third).getByRole('button', { name: 'Plant' }));
+    await waitFor(async () => expect((await repo.getSettings()).gardenPlots?.[2]).toBe('blooms-1'));
+    expect(await within(plots).findByRole('button', { name: 'Plot 3: Daisy' })).toBeInTheDocument();
   });
 
-  it('kinds of flower open with goals, and the next goal is shown', async () => {
+  it('every step of a goal earns a flower, and the next one is shown', async () => {
     await seed();
     open('/garden');
     const heading = await screen.findByRole('heading', { name: 'Flower collection' });
     const collection = heading.closest('section') as HTMLElement;
-    expect(within(collection).getByText('1 of 15')).toBeInTheDocument(); // the daisy
-    expect(within(collection).getByText(/Next: Tulip/)).toHaveTextContent('learn 1 more word');
+    expect(within(collection).getByText('1 of 23')).toBeInTheDocument(); // the daisy
+    expect(within(collection).getByText('Earned: 1')).toBeInTheDocument();
+    expect(screen.getAllByText(/Next: Tulip/)[0]).toHaveTextContent('learn 2 more words');
   });
 
   it('an empty garden points to the catalog', async () => {

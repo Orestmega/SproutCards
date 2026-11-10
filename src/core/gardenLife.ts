@@ -7,69 +7,120 @@ import type { AchievementId, AchievementState } from './achievements';
 
 export type Rarity = 'common' | 'rare' | 'golden';
 
-/** What opens a kind of flower: learned words (flowers), days in a row, or a word known for long. */
-export interface Unlock {
-  blooms?: number;
-  streak?: number;
-  /** A word answered right `GOLDEN_REPS` times in a row. */
-  golden?: true;
-}
-
 export interface Variety {
   id: string;
   rarity: Rarity;
-  unlock: Unlock;
 }
 
-/**
- * Ids are translation keys (`flower.<id>`); the drawing is in `ui/components/Plant.tsx`. The order is
- * the order in which they open: there is always a clear next goal.
- */
+/** Ids are translation keys (`flower.<id>`); the drawing is in `ui/components/Plant.tsx`. */
 export const VARIETIES = [
-  { id: 'daisy', rarity: 'common', unlock: {} },
-  { id: 'tulip', rarity: 'common', unlock: { blooms: 2 } },
-  { id: 'bellflower', rarity: 'common', unlock: { blooms: 4 } },
-  { id: 'poppy', rarity: 'common', unlock: { blooms: 6 } },
-  { id: 'lavender', rarity: 'common', unlock: { blooms: 9 } },
-  { id: 'cornflower', rarity: 'common', unlock: { blooms: 12 } },
-  { id: 'marigold', rarity: 'common', unlock: { blooms: 16 } },
-  { id: 'violet', rarity: 'common', unlock: { blooms: 20 } },
-  { id: 'daffodil', rarity: 'common', unlock: { blooms: 25 } },
-  { id: 'forgetmenot', rarity: 'common', unlock: { blooms: 30 } },
-  { id: 'sunflower', rarity: 'rare', unlock: { streak: 3 } },
-  { id: 'rose', rarity: 'rare', unlock: { streak: 7 } },
-  { id: 'orchid', rarity: 'rare', unlock: { blooms: 50 } },
-  { id: 'lily', rarity: 'rare', unlock: { streak: 30 } },
-  { id: 'golden', rarity: 'golden', unlock: { golden: true } },
+  { id: 'daisy', rarity: 'common' },
+  { id: 'tulip', rarity: 'common' },
+  { id: 'bellflower', rarity: 'common' },
+  { id: 'poppy', rarity: 'common' },
+  { id: 'lavender', rarity: 'common' },
+  { id: 'cornflower', rarity: 'common' },
+  { id: 'marigold', rarity: 'common' },
+  { id: 'violet', rarity: 'common' },
+  { id: 'daffodil', rarity: 'common' },
+  { id: 'forgetmenot', rarity: 'common' },
+  { id: 'peony', rarity: 'common' },
+  { id: 'iris', rarity: 'common' },
+  { id: 'hyacinth', rarity: 'common' },
+  { id: 'crocus', rarity: 'common' },
+  { id: 'carnation', rarity: 'common' },
+  { id: 'cosmos', rarity: 'common' },
+  { id: 'sunflower', rarity: 'rare' },
+  { id: 'rose', rarity: 'rare' },
+  { id: 'orchid', rarity: 'rare' },
+  { id: 'lily', rarity: 'rare' },
+  { id: 'lotus', rarity: 'rare' },
+  { id: 'sakura', rarity: 'rare' },
+  { id: 'golden', rarity: 'golden' },
 ] as const satisfies readonly Variety[];
 
 export type VarietyId = (typeof VARIETIES)[number]['id'];
 
-/** Correct reviews in a row after which a word can be a golden flower: remembered for months. */
+/** Correct reviews in a row after which a word counts as known for long ("golden"). */
 export const GOLDEN_REPS = 5;
 
-export interface UnlockFacts {
+export interface RewardFacts {
+  /** Learned words (flowers on the beds). */
   blooms: number;
   bestStreak: number;
   /** Words with at least `GOLDEN_REPS` right answers in a row. */
   goldenWords: number;
 }
 
-export function isUnlocked(unlock: Unlock, facts: UnlockFacts): boolean {
-  if (unlock.blooms !== undefined && facts.blooms < unlock.blooms) return false;
-  if (unlock.streak !== undefined && facts.bestStreak < unlock.streak) return false;
-  if (unlock.golden && facts.goldenWords === 0) return false;
-  return true;
+export type GoalKind = 'blooms' | 'streak' | 'golden';
+
+export interface Reward {
+  /** Stable id, e.g. `blooms-20`: a plot remembers which reward grows on it. */
+  id: string;
+  variety: VarietyId;
+  goal: { kind: GoalKind; at: number };
 }
 
-/** The kinds of flower the user can grow now, in the order of `VARIETIES`. */
-export function unlockedVarieties(facts: UnlockFacts): VarietyId[] {
-  return VARIETIES.filter((v) => isUnlocked(v.unlock, facts)).map((v) => v.id);
+/** Learned words, days in a row, long-known words: each step of these earns one flower. */
+const STEPS: Record<GoalKind, number[]> = {
+  blooms: [
+    1, 3, 5, 8, 12, 16, 20, 25, 30, 40, 50, 60, 75, 90, 110, 130, 150, 175, 200, 250, 300, 400, 500,
+  ],
+  streak: [3, 7, 14, 21, 30, 45, 60, 100],
+  golden: [1, 5, 10, 25, 50],
+};
+
+const COMMON = VARIETIES.filter((v) => v.rarity === 'common').map((v) => v.id);
+const RARE = VARIETIES.filter((v) => v.rarity === 'rare').map((v) => v.id);
+
+/**
+ * Every flower that can be earned: one per step of a goal. Learned words give the common kinds in turn,
+ * days in a row the rare ones, long-known words golden flowers. Each reward is one flower: it can grow on
+ * one plot.
+ */
+export const REWARDS: readonly Reward[] = (Object.keys(STEPS) as GoalKind[]).flatMap((kind) =>
+  STEPS[kind].map((at, i): Reward => {
+    const pool = kind === 'blooms' ? COMMON : kind === 'streak' ? RARE : ['golden' as const];
+    return { id: `${kind}-${at}`, variety: pool[i % pool.length] as VarietyId, goal: { kind, at } };
+  }),
+);
+
+function factOf(kind: GoalKind, facts: RewardFacts): number {
+  return kind === 'blooms'
+    ? facts.blooms
+    : kind === 'streak'
+      ? facts.bestStreak
+      : facts.goldenWords;
 }
 
-/** The closest kind still closed (the next goal), or null when all are open. */
-export function nextVariety(facts: UnlockFacts): (typeof VARIETIES)[number] | null {
-  return VARIETIES.find((v) => !isUnlocked(v.unlock, facts)) ?? null;
+export function isEarned(reward: Reward, facts: RewardFacts): boolean {
+  return factOf(reward.goal.kind, facts) >= reward.goal.at;
+}
+
+/** The flowers earned so far, in the order of `REWARDS`. */
+export function earnedRewards(facts: RewardFacts): Reward[] {
+  return REWARDS.filter((r) => isEarned(r, facts));
+}
+
+/** The next flower of each goal (what to aim for), the closest first; empty when all are earned. */
+export function nextRewards(facts: RewardFacts): { reward: Reward; left: number }[] {
+  return (Object.keys(STEPS) as GoalKind[])
+    .flatMap((kind) => {
+      const reward = REWARDS.find((r) => r.goal.kind === kind && !isEarned(r, facts));
+      return reward ? [{ reward, left: reward.goal.at - factOf(kind, facts) }] : [];
+    })
+    .sort((x, y) => x.left / x.reward.goal.at - y.left / y.reward.goal.at);
+}
+
+/** The kinds found so far (at least one flower of the kind earned), in the order of `VARIETIES`. */
+export function foundKinds(earned: readonly Reward[]): VarietyId[] {
+  const kinds = new Set(earned.map((r) => r.variety));
+  return VARIETIES.map((v) => v.id).filter((id) => kinds.has(id));
+}
+
+/** The first reward of a kind: how to find a kind not found yet. */
+export function firstRewardOf(variety: VarietyId): Reward | undefined {
+  return REWARDS.find((r) => r.variety === variety);
 }
 
 /** A small stable hash: the same word gets the same flower on every device. */
@@ -79,22 +130,17 @@ function hash(text: string): number {
   return h;
 }
 
-/** Only a word known for long can be golden. */
-export function canGrowAs(variety: VarietyId, reps: number): boolean {
-  return variety !== 'golden' || reps >= GOLDEN_REPS;
-}
-
 /**
- * How a learned word looks on its bed: a golden flower for a word known for long (once golden flowers
- * are open), else one of the open kinds, picked by a stable hash. The kinds themselves are rewards.
+ * How a learned word looks on its bed: a golden flower for a word known for long (once a golden flower
+ * is found), else one of the kinds found, picked by a stable hash.
  */
 export function flowerVariety(
   cardId: string,
   reps: number,
-  unlocked: readonly VarietyId[],
+  found: readonly VarietyId[],
 ): VarietyId {
-  if (reps >= GOLDEN_REPS && unlocked.includes('golden')) return 'golden';
-  const pool = unlocked.filter((id) => id !== 'golden');
+  if (reps >= GOLDEN_REPS && found.includes('golden')) return 'golden';
+  const pool = found.filter((id) => id !== 'golden');
   if (pool.length === 0) return 'daisy';
   return pool[hash(cardId) % pool.length] ?? 'daisy';
 }
@@ -107,18 +153,27 @@ export function rarityOf(id: VarietyId): Rarity {
 export const PLOT_COUNT = 15;
 
 /**
- * What grows on each plot: a kind of flower the user has earned, or nothing. Flowers are rewards for
- * goals (see `VARIETIES`), not words: the same kind may grow on many plots. Until the user plants
- * anything (`saved` is null), each earned kind stands once. A kind that is not open (any more) leaves
- * its plot empty.
+ * What grows on each plot: an earned flower (a reward), or nothing. Each earned flower grows on one plot
+ * at most, so the garden holds exactly what was earned. Until the user plants anything (`saved` is
+ * null, or holds only unknown ids), the earned flowers stand on the plots in order.
  */
 export function gardenPlotsOf(
-  saved: readonly (VarietyId | null)[] | null,
-  unlocked: readonly VarietyId[],
-): (VarietyId | null)[] {
+  saved: readonly (string | null)[] | null,
+  earned: readonly Reward[],
+): (Reward | null)[] {
+  const byId = new Map(earned.map((r) => [r.id, r]));
+  // an older format (kind names) or ids that no longer exist: start again from the earned flowers;
+  // plots the user emptied (all null) stay empty
+  const filled = saved?.filter((id) => id !== null) ?? [];
+  const usable = saved !== null && (filled.length === 0 || filled.some((id) => byId.has(id)));
+  if (!usable) return Array.from({ length: PLOT_COUNT }, (_, i) => earned[i] ?? null);
+  const used = new Set<string>();
   return Array.from({ length: PLOT_COUNT }, (_, i) => {
-    const kind = saved ? (saved[i] ?? null) : (unlocked[i] ?? null);
-    return kind && unlocked.includes(kind) ? kind : null;
+    const id = saved?.[i] ?? null;
+    const reward = id ? byId.get(id) : undefined;
+    if (!reward || used.has(reward.id)) return null;
+    used.add(reward.id);
+    return reward;
   });
 }
 

@@ -196,10 +196,19 @@ export function GardenScene({
           const plant = plants[i] ?? null;
           if (!plant && !onPlot) return null;
           const art = (
-            <svg x={x - size / 2} y={y - size} width={size} height={size} viewBox="0 0 32 32">
+            <svg
+              x={x - size / 2}
+              y={y - size}
+              width={size}
+              height={size}
+              viewBox="0 0 32 32"
+              overflow="visible"
+            >
               {/* a bigger invisible target makes small plants easy to tap */}
               {onPlot && <rect x="-4" y="-4" width="40" height="40" fill="transparent" />}
-              {onPlot && <ellipse className="garden__plot-ring" cx="16" cy="28" rx="14" ry="5" />}
+              {onPlot && (
+                <ellipse className="garden__plot-ring" cx="16" cy="28.4" rx="13.5" ry="4.6" />
+              )}
               {/* a new key (another flower planted) plays the growing animation */}
               <g className="garden__grow" key={plant ? plant.variety : 'empty'}>
                 <g className="garden__plant">

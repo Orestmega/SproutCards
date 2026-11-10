@@ -208,6 +208,96 @@ function Flower({ variety }: { variety: VarietyId }) {
           <circle cx="16" cy="5.8" r="0.9" fill="#c2571a" />
         </g>
       );
+    case 'peony':
+      return (
+        <g>
+          <circle cx="16" cy="10" r="6.6" fill="#ffb3c8" stroke="#e07a9a" strokeWidth="0.8" />
+          <Ring count={7} rx={2.6} ry={3.4} distance={2.6} fill="#ff8fb0" stroke="#e07a9a" />
+          <circle cx="16" cy="10" r="2.4" fill="#ff6f96" />
+        </g>
+      );
+    case 'iris':
+      return (
+        <g stroke="#4c2f9e" strokeWidth="0.8" strokeLinejoin="round">
+          <path d="M16 3 C19 6 18.5 10 16 11 C13.5 10 13 6 16 3 Z" fill="#9a7cf2" />
+          <path d="M16 11 C11 9 8 11 8.5 15 C12 15 14.5 13.5 16 11 Z" fill="#7b5ae0" />
+          <path d="M16 11 C21 9 24 11 23.5 15 C20 15 17.5 13.5 16 11 Z" fill="#7b5ae0" />
+          <path d="M14.5 11.5 L16 14 L17.5 11.5" fill="#ffd23f" stroke="#c99400" />
+        </g>
+      );
+    case 'hyacinth':
+      return (
+        <g fill="#f08ac4" stroke="#c4548f" strokeWidth="0.5">
+          {[
+            [16, 2.6],
+            [14, 5],
+            [18, 5],
+            [13.4, 8],
+            [16, 7.6],
+            [18.6, 8],
+            [13.6, 11],
+            [16, 10.6],
+            [18.4, 11],
+            [16, 13.4],
+          ].map(([x, y]) => (
+            <circle key={`${x}-${y}`} cx={x} cy={y} r="1.9" />
+          ))}
+        </g>
+      );
+    case 'crocus':
+      return (
+        <g stroke="#7e3fb8" strokeWidth="0.8" strokeLinejoin="round">
+          <path d="M11 14 C10 8 12.5 4.5 14.5 4 C15 8 14 12 11 14 Z" fill="#c69cf0" />
+          <path d="M21 14 C22 8 19.5 4.5 17.5 4 C17 8 18 12 21 14 Z" fill="#c69cf0" />
+          <path d="M16 2.6 C19 6 19 11 16 14.5 C13 11 13 6 16 2.6 Z" fill="#a974e8" />
+          <path d="M16 6 V12" stroke="#ff9d2e" strokeWidth="1.2" strokeLinecap="round" />
+        </g>
+      );
+    case 'carnation':
+      return (
+        <g stroke="#b8243f" strokeWidth="0.7" strokeLinejoin="round">
+          <path
+            d="M9 12 L10 7 L12 9 L13 4.5 L15 8 L16 3.5 L17 8 L19 4.5 L20 9 L22 7 L23 12 C20 15 12 15 9 12 Z"
+            fill="#f2506a"
+          />
+          <path
+            d="M11.5 12.5 L13 9.5 L14.5 12 L16 8.5 L17.5 12 L19 9.5 L20.5 12.5"
+            fill="#ff8fa0"
+          />
+        </g>
+      );
+    case 'cosmos':
+      return (
+        <g>
+          <Ring count={8} rx={2.2} ry={4} distance={4.2} fill="#ff9ccf" stroke="#d46aa4" />
+          <circle cx="16" cy="10" r="2.6" fill="#ffc83d" stroke="#d99a12" strokeWidth="0.7" />
+        </g>
+      );
+    case 'lotus':
+      return (
+        <g stroke="#d0618c" strokeWidth="0.8" strokeLinejoin="round">
+          <path d="M16 14 C9 14 6 10 6.5 7 C10 7.5 13 10 16 14 Z" fill="#ffc6da" />
+          <path d="M16 14 C23 14 26 10 25.5 7 C22 7.5 19 10 16 14 Z" fill="#ffc6da" />
+          <path d="M16 14 C11 12 10 7 11.5 4 C14.5 6 16 10 16 14 Z" fill="#ffa8c8" />
+          <path d="M16 14 C21 12 22 7 20.5 4 C17.5 6 16 10 16 14 Z" fill="#ffa8c8" />
+          <path d="M16 14 C13.5 10 14 5 16 2.5 C18 5 18.5 10 16 14 Z" fill="#ff8ab4" />
+        </g>
+      );
+    case 'sakura':
+      return (
+        <g>
+          <g fill="#ffd1e0" stroke="#e89ab6" strokeWidth="0.7">
+            {[0, 72, 144, 216, 288].map((angle) => (
+              <path
+                key={angle}
+                d="M16 10 C13.5 7.5 13.5 4.5 15 3.6 L16 4.6 L17 3.6 C18.5 4.5 18.5 7.5 16 10 Z"
+                transform={`rotate(${angle} 16 10)`}
+              />
+            ))}
+          </g>
+          <circle cx="16" cy="10" r="1.8" fill="#e8627f" />
+        </g>
+      );
     case 'golden':
       return (
         <g>

@@ -2583,31 +2583,56 @@ textarea.input {
 
 .nav__link[aria-current='page'] .nav__icon--decks .nav__part--1,
 .nav__link[aria-current='page'] .nav__icon--decks .nav__part--2 {
-  animation: page-open 520ms var(--ease-out);
+  animation: page-open 860ms var(--ease-out);
 }
 
 .nav__link[aria-current='page'] .nav__icon--decks .nav__part--2 {
-  animation-delay: 90ms;
+  animation-delay: 150ms;
   animation-fill-mode: backwards;
 }
 
-.nav__link[aria-current='page'] .nav__icon--garden {
+/* the garden icon grows like a flower: the stem, then the leaves, then the bloom opens */
+.nav__icon--garden .nav__part--2 {
   transform-origin: 50% 100%;
-  animation: icon-grow 600ms var(--ease-spring);
 }
 
-/* the chart fills: first the two side bars, then the middle one */
+.nav__icon--garden .nav__part--3 {
+  transform-origin: 100% 100%;
+}
+
+.nav__icon--garden .nav__part--4 {
+  transform-origin: 0% 100%;
+}
+
+.nav__icon--garden .nav__part--5 {
+  transform-origin: 50% 100%;
+}
+
+.nav__link[aria-current='page'] .nav__icon--garden .nav__part--2 {
+  animation: icon-rise 360ms var(--ease-out) backwards;
+}
+
+.nav__link[aria-current='page'] .nav__icon--garden .nav__part--3,
+.nav__link[aria-current='page'] .nav__icon--garden .nav__part--4 {
+  animation: icon-unfold 380ms var(--ease-spring) 260ms backwards;
+}
+
+.nav__link[aria-current='page'] .nav__icon--garden .nav__part--5 {
+  animation: icon-bloom 460ms var(--ease-spring) 520ms backwards;
+}
+
+/* the chart fills: all three bars at once, the middle one quicker */
 .nav__icon--progress .nav__part {
   transform-origin: 50% 100%;
 }
 
 .nav__link[aria-current='page'] .nav__icon--progress .nav__part--1,
 .nav__link[aria-current='page'] .nav__icon--progress .nav__part--3 {
-  animation: icon-rise 420ms var(--ease-out) backwards;
+  animation: icon-rise 720ms var(--ease-out);
 }
 
 .nav__link[aria-current='page'] .nav__icon--progress .nav__part--2 {
-  animation: icon-rise 460ms var(--ease-spring) 260ms backwards;
+  animation: icon-rise 380ms var(--ease-out);
 }
 
 .nav__link[aria-current='page'] .nav__icon--settings {
@@ -2629,9 +2654,18 @@ textarea.input {
   }
 }
 
-@keyframes icon-grow {
+@keyframes icon-unfold {
   from {
-    transform: scale(0.4, 0.1);
+    transform: scale(0);
+  }
+}
+
+@keyframes icon-bloom {
+  from {
+    transform: scale(0);
+  }
+  60% {
+    transform: scale(1.2);
   }
 }
 
@@ -2701,14 +2735,44 @@ textarea.input {
 }
 
 .kind-choice:hover {
-  transform: translateY(-2px);
+  background: var(--color-surface-strong);
 }
 
 /* the chosen kind: a green frame and a light background, at once */
+.kind-choice {
+  position: relative;
+}
+
 .kind-choice[aria-checked='true'] {
   border-color: var(--color-primary-dark);
   background: var(--color-primary-soft);
-  transform: scale(1.06);
+  box-shadow: 0 0 0 2px var(--color-primary-soft);
+}
+
+.kind-choice__count {
+  position: absolute;
+  right: -6px;
+  top: -6px;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 5px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-pill);
+  background: var(--color-ink);
+  color: var(--color-on-ink);
+  font-size: 0.75rem;
+  font-weight: 900;
+}
+
+.next-flowers {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
 }
 
 @media (prefers-reduced-motion: reduce) {
