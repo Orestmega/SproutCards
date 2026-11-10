@@ -22,13 +22,18 @@ so a screen is written once. The dark theme turns the dark button light (mint fa
 - **Garden screen:** the big picture (15 plots, earned decorations, rain while watering, droop when wilted), the
   watering card, beds per deck (tap a plant for its word), the flower collection (unknown kinds as silhouettes),
   decorations, and the rules in plain words. On Home the whole picture is a link to it ("Open your garden").
-- **Sprout (current, 2026-11-10): the owner's own picture.** The owner generated the character with Nano
+- **Sprout (current, 2026-11-10, second version): the owner's picture in one piece.** The layers came apart at
+  the joints, so the picture moves as a whole again (breath with a soft squash, a gentle sway, the reactions). Faces:
+  open eyes are the standard (the eyes of the picture are painted over and drawn in SVG, they blink and glance);
+  happy and celebrating keep the picture's own closed, smiling eyes; asleep (night on Home), thinking and oops get a
+  drawn face on a picture with eyes and mouth painted over. Built by `scripts/mascot/build.mjs`.
+- **Sprout (2026-11-10, first version, replaced the same day):** The owner generated the character with Nano
   Banana; it is cut into seven WebP layers (feet, page, sprout, two arms, body) that stack in a 120 × 120 square,
   so the page rocks, the sprout sways, the arms swing and the feet tap, while the body breathes. The body is 4 %
   taller than in the picture (it looked squashed); the overall size is the one of the first Sprout (Stage 12).
   The face is part of the picture, so moods show through motion and small SVG extras (sparkles, thought dots, a
   drop, z's), not through a different face. To change the picture: replace `design/mascot/sprout.png` (white
-  background) and run `scripts/mascot/cut.mjs`, then `split.mjs` (their first line shows how).
+  background) and run `scripts/mascot/cut.mjs`, then `build.mjs` (their first line shows how).
 - **Sprout (after Stage 19, replaced the same day by the owner's picture):** a plump, perfectly round glossy green ball
   (soft cel shading: a lighter ball over a darker one, light from the top left; same overall size as the Stage 14 drawing), a tall white page tilted behind the head with a folded corner, three gray lines and rounded corners, a sprout with two mirrored leaves growing
   upright from the page's top, small round arms half behind the body, two little feet below. Default face: closed

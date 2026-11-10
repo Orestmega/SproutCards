@@ -734,4 +734,5 @@ export const uk: Record<Keys, string> & Record<string, string> = {
   'cheats.add': 'Додати {count}: {what}',
   'cheats.all': 'Видати все',
   'cheats.reset': 'Скинути',
+  'decor.inGarden': 'У саду',
 };

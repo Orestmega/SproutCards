@@ -1,12 +1,8 @@
 import type { ReactNode } from 'react';
 import type { MascotMood } from '../../core/cheer';
-import armLeft from '../../assets/mascot/armLeft.webp';
-import armRight from '../../assets/mascot/armRight.webp';
-import bodyPicture from '../../assets/mascot/body.webp';
-import footLeft from '../../assets/mascot/footLeft.webp';
-import footRight from '../../assets/mascot/footRight.webp';
-import leaves from '../../assets/mascot/leaves.webp';
-import page from '../../assets/mascot/page.webp';
+import blankPicture from '../../assets/mascot/sprout-blank.webp';
+import noEyesPicture from '../../assets/mascot/sprout-noeyes.webp';
+import fullPicture from '../../assets/mascot/sprout.webp';
 
 export type { MascotMood };
 
@@ -17,32 +13,49 @@ interface MascotProps {
   label?: string;
   /**
    * Changing this number replays the mood's short reaction (a hop, a shake, a jump). The idle motion
-   * (breathing, the page and the sprout swaying, arms swinging, feet tapping) runs on its own. All
-   * motion is off under reduced motion.
+   * (breathing, a gentle sway, blinking) runs on its own. All motion is off under reduced motion.
    */
   reaction?: number;
 }
 
-/** One layer of the picture: every layer covers the whole 120 × 120 square, so they stack exactly. */
-function Layer({ href }: { href: string }) {
-  return <image href={href} x="0" y="0" width="120" height="120" />;
-}
+/**
+ * Which picture a mood uses: the owner's picture as it is (closed, smiling eyes), the picture without
+ * eyes (open eyes are drawn on it) or without eyes and mouth (the whole face is drawn).
+ */
+type Face = 'picture' | 'open' | 'drawn';
+const FACE: Record<MascotMood, Face> = {
+  normal: 'open',
+  encouraging: 'open',
+  happy: 'picture',
+  celebrate: 'picture',
+  thinking: 'drawn',
+  oops: 'drawn',
+  sleepy: 'drawn',
+};
+const PICTURE: Record<Face, string> = {
+  picture: fullPicture,
+  open: noEyesPicture,
+  drawn: blankPicture,
+};
+
+/** The face's ink: the dark green of the eyes and mouth in the owner's picture. */
+const INK = '#2b4a26';
+/** Where the eyes and the mouth are in the picture (see scripts/mascot/build.mjs). */
+const EYE_Y = 69.2;
+const EYES_X = [46.4, 73.6];
 
 /**
- * "Sprout": the owner's character (drawn with Nano Banana from the owner's description), cut into layers
- * (`design/mascot/`) so that each part moves on its own: the page, the sprout, the arms and the feet.
- * The moods change the motion and add small things (sparkles, thought dots, a drop, z's) drawn in SVG.
+ * "Sprout": the owner's character (generated with Nano Banana from the owner's description, see
+ * `design/mascot/`). One picture moves as a whole, so nothing comes apart; the faces the picture does not
+ * have (open eyes, asleep, thinking, oops) are drawn on it in the same dark green.
  */
 export function Mascot({ mood = 'normal', size = 96, label, reaction = 0 }: MascotProps) {
-  // waving arms (encouraging: the right one, celebrating: both) get the `mascot__arm` motion
-  const wavesRight = mood === 'encouraging' || mood === 'celebrate';
-  const wavesLeft = mood === 'celebrate';
-  const arm = (side: 'left' | 'right', waves: boolean) =>
-    waves ? `mascot__arm mascot__arm--${side}` : `mascot__rest mascot__rest--${side}`;
+  const face = FACE[mood];
   return (
     <svg
       className={`mascot mascot--${mood}`}
       data-mood={mood}
+      data-face={face}
       width={size}
       height={size}
       viewBox="0 0 120 120"
@@ -53,31 +66,83 @@ export function Mascot({ mood = 'normal', size = 96, label, reaction = 0 }: Masc
     >
       {/* a new key replays the reaction animation of this group */}
       <g className="mascot__actor" key={reaction}>
-        {/* the back layers first: feet, the page with the sprout, the arms; the body goes over them */}
-        <g className="mascot__foot mascot__foot--left">
-          <Layer href={footLeft} />
-        </g>
-        <g className="mascot__foot mascot__foot--right">
-          <Layer href={footRight} />
-        </g>
-        <g className="mascot__torso">
-          <g className="mascot__page">
-            <Layer href={page} />
-            <g className="mascot__sprout">
-              <Layer href={leaves} />
-            </g>
+        <g className="mascot__sway">
+          <g className="mascot__torso">
+            <image href={PICTURE[face]} x="0" y="0" width="120" height="120" />
+            {face !== 'picture' && <Eyes mood={mood} />}
+            {face === 'drawn' && <Mouth mood={mood} />}
           </g>
-          <g className={arm('left', wavesLeft)}>
-            <Layer href={armLeft} />
-          </g>
-          <g className={arm('right', wavesRight)}>
-            <Layer href={armRight} />
-          </g>
-          <Layer href={bodyPicture} />
         </g>
         <Extras mood={mood} />
       </g>
     </svg>
+  );
+}
+
+/** Open eyes (with a light in each), or closed ones when asleep. */
+function Eyes({ mood }: { mood: MascotMood }): ReactNode {
+  if (mood === 'sleepy') {
+    return (
+      <g stroke={INK} strokeWidth="2.8" strokeLinecap="round" fill="none">
+        {EYES_X.map((x) => (
+          <path
+            key={x}
+            d={`M${x - 6} ${EYE_Y - 0.5} Q${x} ${EYE_Y + 4.5} ${x + 6} ${EYE_Y - 0.5}`}
+          />
+        ))}
+      </g>
+    );
+  }
+  // thinking: looking up and to the side
+  const look = mood === 'thinking' ? { x: 1.4, y: -1.6 } : { x: 0, y: 0 };
+  return (
+    <g>
+      <g className="mascot__look">
+        <g className="mascot__eyes">
+          {EYES_X.map((x) => (
+            <g key={x}>
+              <ellipse cx={x + look.x} cy={EYE_Y + look.y} rx="4.4" ry="5.6" fill={INK} />
+              <circle cx={x + 1.5 + look.x} cy={EYE_Y - 2 + look.y} r="1.7" fill="#ffffff" />
+              <circle
+                cx={x - 1.4 + look.x}
+                cy={EYE_Y + 2.2 + look.y}
+                r="0.75"
+                fill="#ffffff"
+                opacity="0.85"
+              />
+            </g>
+          ))}
+        </g>
+      </g>
+      {mood === 'oops' && (
+        // worried brows: the inner ends go up
+        <g stroke={INK} strokeWidth="2.2" strokeLinecap="round" fill="none">
+          <path d="M40 61 Q45 60.5 50 57.5" />
+          <path d="M80 61 Q75 60.5 70 57.5" />
+        </g>
+      )}
+      {mood === 'thinking' && (
+        <g stroke={INK} strokeWidth="2.2" strokeLinecap="round" fill="none">
+          <path d="M41 60.5 Q46 58.5 51 60.5" />
+          <path d="M69 58 Q74 56 79 58.5" />
+        </g>
+      )}
+    </g>
+  );
+}
+
+/** The mouths the picture does not have: asleep, thinking, oops. */
+function Mouth({ mood }: { mood: MascotMood }): ReactNode {
+  if (mood === 'oops') return <ellipse cx="60" cy="86" rx="3.4" ry="4.2" fill={INK} />;
+  if (mood === 'sleepy') return <ellipse cx="60" cy="85.5" rx="2.4" ry="2.8" fill={INK} />;
+  return (
+    <path
+      d="M54 86.5 Q59.5 84.8 66 86"
+      stroke={INK}
+      strokeWidth="2.6"
+      strokeLinecap="round"
+      fill="none"
+    />
   );
 }
 

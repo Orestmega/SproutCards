@@ -149,4 +149,29 @@ describe('stage 19', () => {
     await user.click(screen.getByRole('button', { name: 'Add 5: Learned words' }));
     await waitFor(() => expect(screen.getByText('Learned words')).toHaveTextContent('+5'));
   });
+
+  it('closing the test setup goes back to the deck', async () => {
+    const user = userEvent.setup();
+    const { deck } = await seed(0);
+    open(`/decks/${deck.id}/test`);
+    await user.click(await screen.findByRole('button', { name: 'Close' }));
+    expect(await screen.findByRole('heading', { name: 'Fruit', level: 1 })).toBeInTheDocument();
+  });
+
+  it('an earned decoration can be put away from the garden and brought back', async () => {
+    const user = userEvent.setup();
+    const { repo } = await seed(0);
+    // the cheat panel's bonus earns every decoration
+    await repo.saveSettings({
+      ...(await repo.getSettings()),
+      cheats: { learned: 0, streak: 3, golden: 0, reviews: 0, challenges: 0, decks: 0, modes: 0 },
+    });
+    const { container } = open('/garden');
+    const toggle = await screen.findByRole('checkbox', { name: 'In the garden' });
+    expect(container.querySelector('.garden__flight')).not.toBeNull(); // the butterflies fly
+    await user.click(toggle);
+    await waitFor(() => expect(container.querySelector('.garden__flight')).toBeNull());
+    await user.click(screen.getByRole('checkbox', { name: 'In the garden' }));
+    await waitFor(() => expect(container.querySelector('.garden__flight')).not.toBeNull());
+  });
 });

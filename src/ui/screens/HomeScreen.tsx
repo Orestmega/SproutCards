@@ -3,7 +3,7 @@ import { useLiveQuery } from 'dexie-react-hooks';
 import { Link } from 'react-router-dom';
 import { dayPart, nextLine } from '../../core/cheer';
 import type { MascotMood } from '../../core/cheer';
-import { gardenPlotsOf } from '../../core/gardenLife';
+import { gardenPlotsOf, shownDecorations } from '../../core/gardenLife';
 import { pickOfTheDay } from '../../core/habit';
 import { computeStreak } from '../../core/stats';
 import { useI18n } from '../../i18n';
@@ -138,7 +138,9 @@ export function HomeScreen() {
           <GardenScene
             part={part}
             plants={homePlots}
-            decorations={garden?.decorations.filter((d) => d.earned).map((d) => d.id)}
+            decorations={
+              garden ? shownDecorations(garden.decorations, settings.hiddenDecorations) : undefined
+            }
             health={garden?.health}
           >
             {/* the whole picture opens the garden; Sprout and the bubble sit above this link */}

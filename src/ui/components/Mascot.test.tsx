@@ -30,11 +30,28 @@ describe('Mascot', () => {
     expect(screen.getByRole('img', { name: 'Sprout waves' })).toBeInTheDocument();
   });
 
-  it('only the moods that need them get raised arms, sparkles, thought dots or a drop', () => {
+  it('open eyes by default, the smile of the picture when happy, a drawn face for the rest', () => {
+    const face = (mood: MascotMood) => {
+      const { container, unmount } = render(<Mascot mood={mood} />);
+      const svg = container.querySelector('svg');
+      const found = {
+        face: svg?.getAttribute('data-face'),
+        openEyes: container.querySelector('.mascot__eyes') !== null,
+      };
+      unmount();
+      return found;
+    };
+    expect(face('normal')).toEqual({ face: 'open', openEyes: true });
+    expect(face('happy')).toEqual({ face: 'picture', openEyes: false });
+    expect(face('celebrate')).toEqual({ face: 'picture', openEyes: false });
+    expect(face('sleepy')).toEqual({ face: 'drawn', openEyes: false });
+    expect(face('oops')).toEqual({ face: 'drawn', openEyes: true });
+  });
+
+  it('only the moods that need them get sparkles, thought dots or a drop', () => {
     const parts = (mood: MascotMood) => {
       const { container, unmount } = render(<Mascot mood={mood} />);
       const found = {
-        arms: container.querySelectorAll('.mascot__arm').length,
         sparkles: container.querySelectorAll('.mascot__sparkle').length,
         dots: container.querySelector('.mascot__dots') !== null,
         drop: container.querySelector('.mascot__drop') !== null,
@@ -42,9 +59,8 @@ describe('Mascot', () => {
       unmount();
       return found;
     };
-    expect(parts('normal')).toEqual({ arms: 0, sparkles: 0, dots: false, drop: false });
-    expect(parts('encouraging')).toMatchObject({ arms: 1 });
-    expect(parts('celebrate')).toMatchObject({ arms: 2, sparkles: 4 });
+    expect(parts('normal')).toEqual({ sparkles: 0, dots: false, drop: false });
+    expect(parts('celebrate')).toMatchObject({ sparkles: 4 });
     expect(parts('thinking')).toMatchObject({ dots: true });
     expect(parts('oops')).toMatchObject({ drop: true });
   });

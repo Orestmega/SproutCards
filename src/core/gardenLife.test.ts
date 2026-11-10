@@ -1,6 +1,8 @@
 import { evaluateAchievements } from './achievements';
 import {
   decorations,
+  shownDecorations,
+  toggleDecoration,
   earnedRewards,
   firstRewardOf,
   flowerVariety,
@@ -124,6 +126,25 @@ describe('wateringState', () => {
   it('a watering day is the local calendar day', () => {
     expect(wateringDay(day(0, 0))).toBe(wateringDay(day(0, 23)));
     expect(wateringDay(day(1, 0))).toBe(wateringDay(day(0, 0)) + 1);
+  });
+});
+
+describe('shownDecorations', () => {
+  const list = [
+    { id: 'pond' as const, achievement: 'streak7' as const, earned: true },
+    { id: 'fence' as const, achievement: 'firstStep' as const, earned: true },
+    { id: 'tree' as const, achievement: 'bloom100' as const, earned: false },
+  ];
+
+  it('every earned decoration stands in the garden unless it was put away', () => {
+    expect(shownDecorations(list, null)).toEqual(['pond', 'fence']);
+    expect(shownDecorations(list, ['fence', 'old-id'])).toEqual(['pond']);
+  });
+
+  it('putting away and bringing back changes only that decoration', () => {
+    expect(toggleDecoration(null, 'fence', false)).toEqual(['fence']);
+    expect(toggleDecoration(['fence', 'pond'], 'fence', true)).toEqual(['pond']);
+    expect(toggleDecoration(['pond'], 'pond', false)).toEqual(['pond']);
   });
 });
 

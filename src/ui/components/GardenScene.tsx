@@ -238,7 +238,12 @@ export function GardenScene({
           );
         })}
         {has('fence') && <Decor id="fence" />}
-        {has('butterflies') && <Decor id="butterflies" />}
+        {has('butterflies') && (
+          // they fly across the garden and back, so the greeting on Home never hides them for long
+          <g className="garden__flight">
+            <Decor id="butterflies" />
+          </g>
+        )}
       </svg>
       {raining && (
         <div className="garden__rain" aria-hidden="true">

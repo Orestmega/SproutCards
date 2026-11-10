@@ -253,3 +253,25 @@ export function decorations(achievements: readonly AchievementState[]): Decorati
   const done = new Set(achievements.filter((a) => a.done).map((a) => a.id));
   return DECORATIONS.map((d) => ({ ...d, earned: done.has(d.achievement) }));
 }
+
+/**
+ * The decorations that stand in the garden: every earned one, except those the user put away. Unknown ids
+ * in the saved list (from an older version) are ignored.
+ */
+export function shownDecorations(
+  list: readonly DecorationState[],
+  hidden: readonly string[] | null | undefined,
+): DecorationId[] {
+  const away = new Set(hidden ?? []);
+  return list.filter((d) => d.earned && !away.has(d.id)).map((d) => d.id);
+}
+
+/** The saved list of put-away decorations after showing or hiding one. */
+export function toggleDecoration(
+  hidden: readonly string[] | null | undefined,
+  id: DecorationId,
+  show: boolean,
+): string[] {
+  const rest = (hidden ?? []).filter((x) => x !== id);
+  return show ? rest : [...rest, id];
+}

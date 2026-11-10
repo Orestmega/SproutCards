@@ -1,5 +1,5 @@
 import { createContext, useContext, useMemo, useState } from 'react';
-import { Outlet, useLocation } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import type { MascotMood } from '../../core/cheer';
 import type { MessageKey } from '../../i18n';
 import { useI18n } from '../../i18n';
@@ -43,7 +43,11 @@ interface Buddy {
 /** Focused frame for study screens: close button, progress bar and Sprout on top, no bottom navigation. */
 export function StudyLayout() {
   const { t } = useI18n();
-  const mode = useLocation().pathname.split('/').pop() ?? '';
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
+  const mode = pathname.split('/').pop() ?? '';
+  // the study routes are /decks/:deckId/<mode>: without a handler of its own, close goes back to the deck
+  const deckPath = pathname.split('/').slice(0, 3).join('/');
   const [progress, setProgress] = useState(0);
   const [onClose, setOnClose] = useState<(() => void) | null>(null);
   const [buddy, setBuddy] = useState<Buddy>({ mood: 'normal', reaction: 0, say: null });
@@ -68,7 +72,7 @@ export function StudyLayout() {
               type="button"
               className="icon-btn"
               aria-label={t('study.close')}
-              onClick={() => onClose?.()}
+              onClick={() => (onClose ? onClose() : navigate(deckPath))}
             >
               <span aria-hidden="true">✕</span>
             </button>

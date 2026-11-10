@@ -127,6 +127,8 @@ export interface Settings {
    * `null` as a whole = nothing planted yet (the earned flowers then stand in order).
    */
   gardenPlots: (string | null)[] | null;
+  /** Earned decorations the user put away (they are not shown in the garden picture). */
+  hiddenDecorations: string[];
   /** Bonuses of the cheat panel (testing only; real progress is never changed). */
   cheats: Cheats;
 }
@@ -144,5 +146,6 @@ export const DEFAULT_SETTINGS: Settings = {
   profileName: '',
   avatar: 'sprout',
   gardenPlots: null,
+  hiddenDecorations: [],
   cheats: NO_CHEATS,
 };

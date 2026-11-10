@@ -670,4 +670,5 @@ export const en = {
   'cheats.add': 'Add {count}: {what}',
   'cheats.all': 'Grant everything',
   'cheats.reset': 'Reset',
+  'decor.inGarden': 'In the garden',
 } as const;

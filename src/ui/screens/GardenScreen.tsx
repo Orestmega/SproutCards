@@ -10,6 +10,8 @@ import {
   nextRewards,
   PLOT_COUNT,
   rarityOf,
+  shownDecorations,
+  toggleDecoration,
   VARIETIES,
   wateringState,
 } from '../../core/gardenLife';
@@ -18,6 +20,7 @@ import { useI18n } from '../../i18n';
 import { useApp } from '../AppProviders';
 import { Button, ButtonLink } from '../components/Button';
 import { DecorationIcon } from '../components/Decoration';
+import { CheckField } from '../components/Fields';
 import { GardenScene } from '../components/GardenScene';
 import { GrowthLegend } from '../components/GrowthBar';
 import { PageHeader } from '../components/Layout';
@@ -60,6 +63,7 @@ export function GardenScreen() {
   const part = dayPart(new Date(now).getHours());
   const watering = wateringState(answersToday, dailyGoal, wateredDay, now);
   const earnedDecor = decorations.filter((d) => d.earned).map((d) => d.id);
+  const shownDecor = shownDecorations(decorations, settings.hiddenDecorations);
   const studyDeck = decks.find((d) => plants.some((p) => p.deck.id === d.id));
   const fields = gardenFields(plants);
   // a language that is no longer learned falls back to "all"
@@ -105,7 +109,7 @@ export function GardenScreen() {
             : t('garden.plot.empty', { n: i + 1 });
         }}
         label={t('garden.plots')}
-        decorations={earnedDecor}
+        decorations={shownDecor}
         health={raining ? 'fresh' : health}
         raining={raining}
         big
@@ -304,6 +308,18 @@ export function GardenScreen() {
                 <span className="ach__name">{t(`decor.${d.id}`)}</span>
                 <span className="muted">{t(`achievement.${d.achievement}.how`)}</span>
                 {d.earned && <span className="visually-hidden">{t('stats.achievementDone')}</span>}
+                {d.earned && (
+                  <CheckField
+                    label={t('decor.inGarden')}
+                    checked={shownDecor.includes(d.id)}
+                    onChange={(show) => {
+                      setSaveFailed(false);
+                      updateSettings({
+                        hiddenDecorations: toggleDecoration(settings.hiddenDecorations, d.id, show),
+                      }).catch(() => setSaveFailed(true));
+                    }}
+                  />
+                )}
               </div>
             </li>
           ))}
