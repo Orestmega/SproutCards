@@ -110,6 +110,12 @@ describe('stage 19', () => {
     expect(within(card).getByText('Weekly goal:')).toBeInTheDocument();
     expect(within(card).getAllByText('Challenge:')).toHaveLength(2);
     expect(within(card).getAllByRole('progressbar')).toHaveLength(3);
+    // what each item gives, the chest for all three, the streak freezes
+    expect(within(card).getByText('+ a rare flower and a streak freeze')).toBeInTheDocument();
+    expect(within(card).getAllByText('+ a rare flower')).toHaveLength(2);
+    expect(within(card).getByText('Chest of the week')).toBeInTheDocument();
+    expect(within(card).getByText(/Finish all three and the chest gives/)).toBeInTheDocument();
+    expect(within(card).getByText(/Streak freezes: 0 of 2/)).toBeInTheDocument();
   });
 
   it('the cheat panel grants every achievement; reset takes the bonuses away', async () => {
@@ -164,7 +170,16 @@ describe('stage 19', () => {
     // the cheat panel's bonus earns every decoration
     await repo.saveSettings({
       ...(await repo.getSettings()),
-      cheats: { learned: 0, streak: 3, golden: 0, reviews: 0, challenges: 0, decks: 0, modes: 0 },
+      cheats: {
+        learned: 0,
+        streak: 3,
+        golden: 0,
+        reviews: 0,
+        challenges: 0,
+        weeks: 0,
+        decks: 0,
+        modes: 0,
+      },
     });
     const { container } = open('/garden');
     const toggle = await screen.findByRole('checkbox', { name: 'In the garden' });

@@ -8,6 +8,7 @@ const ROWS: (keyof Cheats)[] = [
   'streak',
   'golden',
   'challenges',
+  'weeks',
   'reviews',
   'decks',
   'modes',

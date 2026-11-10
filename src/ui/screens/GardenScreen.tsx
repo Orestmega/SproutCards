@@ -378,6 +378,7 @@ function goalText(reward: Reward, facts: RewardFacts, tp: TP): string {
   if (kind === 'challenges') {
     return tp('garden.unlock.challenges', Math.max(0, at - facts.challenges));
   }
+  if (kind === 'weeks') return tp('garden.unlock.weeks', Math.max(0, at - facts.fullWeeks));
   if (kind === 'golden') {
     return tp('garden.unlock.goldenWords', Math.max(0, at - facts.goldenWords), {
       reps: GOLDEN_REPS,

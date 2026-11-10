@@ -1,6 +1,4 @@
 import { useState } from 'react';
-import { computeStreak } from '../../core/stats';
-import { bestStreak } from '../../core/habit';
 import {
   activeDays,
   cleanName,
@@ -96,8 +94,8 @@ export function ProfileScreen() {
 
       <div className="stats stats--two" role="group" aria-label={t('stats.numbers')}>
         <Stat value={blooms} label={t('profile.learned')} />
-        <Stat value={computeStreak(times, now)} label={t('stats.streak')} />
-        <Stat value={bestStreak(times)} label={t('stats.bestStreak')} />
+        <Stat value={garden.streak.current} label={t('stats.streak')} />
+        <Stat value={garden.streak.best} label={t('stats.bestStreak')} />
         <Stat value={activeDays(times)} label={t('profile.days')} />
         <Stat value={times.length} label={t('stats.reviews')} />
         <Stat value={achievements.filter((a) => a.done).length} label={t('stats.achievements')} />

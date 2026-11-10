@@ -5,7 +5,7 @@
  */
 import type { AchievementId, AchievementState } from './achievements';
 
-export type Rarity = 'common' | 'rare' | 'golden';
+export type Rarity = 'common' | 'rare' | 'golden' | 'weekly';
 
 export interface Variety {
   id: string;
@@ -37,6 +37,11 @@ export const VARIETIES = [
   { id: 'lotus', rarity: 'rare' },
   { id: 'sakura', rarity: 'rare' },
   { id: 'golden', rarity: 'golden' },
+  // flowers of the week: only the weekly chest gives them (all three of a week finished)
+  { id: 'edelweiss', rarity: 'weekly' },
+  { id: 'gerbera', rarity: 'weekly' },
+  { id: 'magnolia', rarity: 'weekly' },
+  { id: 'snowdrop', rarity: 'weekly' },
 ] as const satisfies readonly Variety[];
 
 export type VarietyId = (typeof VARIETIES)[number]['id'];
@@ -55,9 +60,11 @@ export interface RewardFacts {
   goldenWords: number;
   /** Weekly goals and challenges finished, over all weeks (see `weekly.ts`). */
   challenges: number;
+  /** Weeks with all three finished: each one opens the week's chest. */
+  fullWeeks: number;
 }
 
-export type GoalKind = 'blooms' | 'streak' | 'golden' | 'challenges';
+export type GoalKind = 'blooms' | 'streak' | 'golden' | 'challenges' | 'weeks';
 
 export interface Reward {
   /** Stable id, e.g. `blooms-20`: a plot remembers which reward grows on it. */
@@ -73,11 +80,14 @@ const STEPS: Record<GoalKind, number[]> = {
   ],
   streak: [3, 7, 14, 21, 30, 45, 60, 100],
   golden: [1, 5, 10, 25, 50],
-  challenges: [1, 3, 5, 8, 12, 16, 20, 26, 32, 40, 52],
+  // every one finished is a flower (as the week card promises)
+  challenges: Array.from({ length: 52 }, (_, i) => i + 1),
+  weeks: Array.from({ length: 52 }, (_, i) => i + 1),
 };
 
 const COMMON = VARIETIES.filter((v) => v.rarity === 'common').map((v) => v.id);
 const RARE = VARIETIES.filter((v) => v.rarity === 'rare').map((v) => v.id);
+const WEEKLY = VARIETIES.filter((v) => v.rarity === 'weekly').map((v) => v.id);
 
 /**
  * Every flower that can be earned: one per step of a goal. Learned words give the common kinds in turn,
@@ -95,15 +105,23 @@ export const REWARDS: readonly Reward[] = (Object.keys(STEPS) as GoalKind[]).fla
           ? RARE
           : kind === 'challenges'
             ? [...RARE].reverse()
-            : ['golden' as const];
+            : kind === 'weeks'
+              ? WEEKLY
+              : ['golden' as const];
     return { id: `${kind}-${at}`, variety: pool[i % pool.length] as VarietyId, goal: { kind, at } };
   }),
 );
+
+/** The flower of the week that the chest of the `n`-th full week gives (1 = the first full week). */
+export function weekFlower(n: number): VarietyId {
+  return WEEKLY[(Math.max(1, n) - 1) % WEEKLY.length] as VarietyId;
+}
 
 function factOf(kind: GoalKind, facts: RewardFacts): number {
   if (kind === 'blooms') return facts.blooms;
   if (kind === 'streak') return facts.bestStreak;
   if (kind === 'challenges') return facts.challenges;
+  if (kind === 'weeks') return facts.fullWeeks;
   return facts.goldenWords;
 }
 

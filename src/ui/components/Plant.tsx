@@ -311,7 +311,99 @@ function Flower({ variety }: { variety: VarietyId }) {
           />
         </g>
       );
+    // flowers of the week (the weekly chest): a soft violet glow marks them
+    case 'edelweiss':
+      return (
+        <g>
+          <WeeklyGlow />
+          <g fill="#ffffff" stroke="#9aa79a" strokeWidth="0.6" strokeLinejoin="round">
+            {[0, 45, 90, 135, 180, 225, 270, 315].map((angle) => (
+              <path
+                key={angle}
+                d="M16 10 L14.2 5.5 L16 2 L17.8 5.5 Z"
+                transform={`rotate(${angle} 16 10)`}
+              />
+            ))}
+          </g>
+          <g fill="#d8d36a">
+            {[
+              [16, 10],
+              [14.6, 9.2],
+              [17.4, 9.2],
+              [15, 11.2],
+              [17, 11.2],
+            ].map(([x, y]) => (
+              <circle key={`${x}-${y}`} cx={x} cy={y} r="0.9" />
+            ))}
+          </g>
+        </g>
+      );
+    case 'gerbera':
+      return (
+        <g>
+          <WeeklyGlow />
+          <Ring count={16} rx={1.1} ry={3.6} distance={4.6} fill="#ff7a59" stroke="#d4512f" />
+          <Ring count={12} rx={0.9} ry={2.2} distance={2.6} fill="#ffb24a" stroke="#d98a1c" />
+          <circle cx="16" cy="10" r="2.1" fill="#5a3a22" />
+        </g>
+      );
+    case 'magnolia':
+      return (
+        <g>
+          <WeeklyGlow />
+          <g stroke="#c77a9c" strokeWidth="0.7" strokeLinejoin="round">
+            <path d="M16 14 C10 13 7.5 8 9 4.5 C12 5.5 14.5 9 16 14 Z" fill="#ffe1ec" />
+            <path d="M16 14 C22 13 24.5 8 23 4.5 C20 5.5 17.5 9 16 14 Z" fill="#ffe1ec" />
+            <path d="M16 14 C12.5 11 12.5 5 16 1.8 C19.5 5 19.5 11 16 14 Z" fill="#ffc2d8" />
+          </g>
+          <path d="M16 13.5 V8" stroke="#e79ab8" strokeWidth="0.8" strokeLinecap="round" />
+        </g>
+      );
+    case 'snowdrop':
+      return (
+        <g>
+          <WeeklyGlow />
+          {/* the stem bends over and the white bell hangs from it */}
+          <path
+            d="M16 16 C16 8 19 5 21.5 6.5"
+            stroke={STEM}
+            strokeWidth="1.4"
+            fill="none"
+            strokeLinecap="round"
+          />
+          <path d="M21.5 6.5 c1.5 0 2.2 1 2 2" stroke={STEM} strokeWidth="1.2" fill="none" />
+          <g stroke="#a9b8c6" strokeWidth="0.6" strokeLinejoin="round">
+            <path
+              d="M23.5 8.5 C20.5 9 19.5 12.5 20.5 15 C22 14 23.5 12 23.5 8.5 Z"
+              fill="#ffffff"
+            />
+            <path
+              d="M23.5 8.5 C26.5 9 27.5 12.5 26.5 15 C25 14 23.5 12 23.5 8.5 Z"
+              fill="#ffffff"
+            />
+            <path
+              d="M23.5 8.5 C22.3 10.5 22.4 13.5 23.5 15.5 C24.6 13.5 24.7 10.5 23.5 8.5 Z"
+              fill="#eef7ff"
+            />
+          </g>
+          <circle cx="23.5" cy="8.4" r="0.9" fill="#7cc25b" />
+        </g>
+      );
   }
+}
+
+/** The soft violet glow and the little star of a flower of the week. */
+function WeeklyGlow() {
+  return (
+    <g>
+      <circle cx="16" cy="10" r="9.5" fill="#c9b4ff" opacity="0.4" />
+      <path
+        className="plant__sparkle"
+        d="M4 3 l0.7 1.8 1.8 0.7 -1.8 0.7 -0.7 1.8 -0.7 -1.8 -1.8 -0.7 1.8 -0.7 z"
+        fill="#ffffff"
+      />
+    </g>
+  );
 }
 
 /** The drawing of a stage in a 32×32 box, standing on the bottom edge. A bloom shows its kind. */

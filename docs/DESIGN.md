@@ -22,6 +22,13 @@ so a screen is written once. The dark theme turns the dark button light (mint fa
 - **Garden screen:** the big picture (15 plots, earned decorations, rain while watering, droop when wilted), the
   watering card, beds per deck (tap a plant for its word), the flower collection (unknown kinds as silhouettes),
   decorations, and the rules in plain words. On Home the whole picture is a link to it ("Open your garden").
+- **Tab icons (2026-11-10, the owner's design, `design/feedback/nav-demo.html`):** home drawn from the roof's peak
+  down both sides, then filled softly; the book's cover opens to the left; the garden's stem grows, leaves unfurl and
+  the flower blooms with a turn; the bars rise one after another; the sun turns and its centre beats. Only when a tab
+  is opened; under reduced motion the icons show their final look.
+- **Week card:** each item says what it gives; a fresh finish glows gold once; the chest of the week (closed / open
+  with a flower of the week); streak freezes with a snowflake (also on frozen days in the week dots). Flowers of
+  the week have a soft violet glow and a little star.
 - **Sprout (current, 2026-11-10, second version): the owner's picture in one piece.** The layers came apart at
   the joints, so the picture moves as a whole again (breath with a soft squash, a gentle sway, the reactions). Faces:
   open eyes are the standard (the eyes of the picture are painted over and drawn in SVG, they blink and glance);

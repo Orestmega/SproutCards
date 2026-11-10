@@ -1,4 +1,11 @@
-import { finishedChallenges, weekChallenges, weekStart, weekState } from './weekly';
+import {
+  finishedChallenges,
+  fullWeeks,
+  weekChallenges,
+  weeklyGoalTimes,
+  weekStart,
+  weekState,
+} from './weekly';
 
 /** Wednesday 2026-03-11, 15:00 local time. */
 const NOW = new Date(2026, 2, 11, 15).getTime();
@@ -72,5 +79,27 @@ describe('finishedChallenges', () => {
       ...[1, 2, 3, 4, 5].map((h) => log(at(0, h))),
     ];
     expect(finishedChallenges(logs, [], NOW, 1)).toBeGreaterThanOrEqual(2);
+  });
+});
+
+describe('weeklyGoalTimes', () => {
+  it('the moment of the answer that reached the weekly goal, once per week', () => {
+    // a daily goal of 1: the weekly goal is 5 answers
+    const logs = [1, 2, 3, 4, 5, 6].map((h) => log(at(0, h)));
+    expect(weeklyGoalTimes(logs, 1)).toEqual([at(0, 5)]);
+    expect(weeklyGoalTimes(logs.slice(0, 4), 1)).toEqual([]);
+  });
+});
+
+describe('fullWeeks', () => {
+  it('counts only weeks where all three were finished', () => {
+    expect(fullWeeks([], [], NOW, 1)).toBe(0);
+    // plenty of answers in every mode, on many days, with many new words: everything is finished
+    const modes = ['learn', 'flip', 'test', 'match'];
+    const logs = Array.from({ length: 140 }, (_, i) =>
+      log(at(-2 + (i % 5), 8 + (i % 10)), 'correct', modes[i % 4]),
+    );
+    const firstSeen = Array.from({ length: 25 }, (_, i) => at(-2, 8 + (i % 10)));
+    expect(fullWeeks(logs, firstSeen, NOW + 3 * 86_400_000, 1)).toBe(1);
   });
 });

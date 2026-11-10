@@ -9,6 +9,7 @@ export interface Cheats {
   golden: number;
   reviews: number;
   challenges: number;
+  weeks: number;
   decks: number;
   modes: number;
 }
@@ -19,6 +20,7 @@ export const NO_CHEATS: Cheats = {
   golden: 0,
   reviews: 0,
   challenges: 0,
+  weeks: 0,
   decks: 0,
   modes: 0,
 };
@@ -30,6 +32,7 @@ export const ALL_CHEATS: Cheats = {
   golden: 50,
   reviews: 2000,
   challenges: 52,
+  weeks: 52,
   decks: 3,
   modes: 4,
 };
@@ -43,6 +46,7 @@ export function cheatsOf(value: Partial<Cheats> | null | undefined): Cheats {
     golden: clean(value?.golden),
     reviews: clean(value?.reviews),
     challenges: clean(value?.challenges),
+    weeks: clean(value?.weeks),
     decks: clean(value?.decks),
     modes: clean(value?.modes),
   };

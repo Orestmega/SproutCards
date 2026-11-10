@@ -131,3 +131,42 @@ export function finishedChallenges(
   }
   return total;
 }
+
+/** Weeks in which the weekly goal and both challenges were all finished (each one opens the week's chest). */
+export function fullWeeks(
+  logs: readonly WeekLog[],
+  firstSeen: readonly number[],
+  now: number,
+  dailyGoal: number,
+): number {
+  if (logs.length === 0) return 0;
+  let first = Infinity;
+  for (const l of logs) first = Math.min(first, l.at);
+  let total = 0;
+  for (let start = weekStart(first); start <= now; start = nextWeek(start)) {
+    if (weekState(logs, firstSeen, start, dailyGoal).items.every((i) => i.done)) total++;
+  }
+  return total;
+}
+
+/**
+ * The moments the weekly goal was reached, one per week at most: the time of the answer that made it
+ * (`dailyGoal` × 5 answers in that week). Each one earns a streak freeze (see `freeze.ts`).
+ */
+export function weeklyGoalTimes(logs: readonly WeekLog[], dailyGoal: number): number[] {
+  const target = dailyGoal * 5;
+  const byWeek = new Map<number, number[]>();
+  for (const l of logs) {
+    const start = weekStart(l.at);
+    const list = byWeek.get(start) ?? [];
+    list.push(l.at);
+    byWeek.set(start, list);
+  }
+  const times: number[] = [];
+  for (const list of byWeek.values()) {
+    if (list.length < target) continue;
+    list.sort((a, b) => a - b);
+    times.push(list[target - 1] as number);
+  }
+  return times.sort((a, b) => a - b);
+}

@@ -24,8 +24,10 @@ import type {
   RewardFacts,
   VarietyId,
 } from '../core/gardenLife';
-import { bestStreak, todayCount } from '../core/habit';
-import { finishedChallenges, weekState } from '../core/weekly';
+import { streakState } from '../core/freeze';
+import type { StreakState } from '../core/freeze';
+import { todayCount } from '../core/habit';
+import { finishedChallenges, fullWeeks, weeklyGoalTimes, weekState } from '../core/weekly';
 import type { WeekState } from '../core/weekly';
 import type { Card, Deck } from '../core/types';
 import { useRepo, useSettings } from './AppProviders';
@@ -57,9 +59,11 @@ export interface Garden {
   found: VarietyId[];
   /** This week's goal and challenges. */
   week: WeekState;
+  /** Days in a row, with the streak freezes earned by weekly goals. */
+  streak: StreakState;
 }
 
-const RANK = { golden: 2, rare: 1, common: 0 } as const;
+const RANK = { weekly: 3, golden: 2, rare: 1, common: 0 } as const;
 
 export function useGarden(now: number): Garden | undefined {
   const repo = useRepo();
@@ -85,14 +89,17 @@ export function useGarden(now: number): Garden | undefined {
     }
     const firstTimes = [...firstSeen.values()];
     const week = weekState(logs, firstTimes, now, dailyGoal);
+    // each weekly goal reached earns a freeze that saves a missed day
+    const streak = streakState(times, weeklyGoalTimes(logs, dailyGoal), now);
     // what earns flowers: learned words, the best streak, long-known words, weekly challenges
     // (plus the bonuses of the cheat panel, which only exist for trying things out)
     const reps = [...best.values()].map((r) => r.reps);
     const facts: RewardFacts = {
       blooms: learnedCount(progress) + cheats.learned,
-      bestStreak: bestStreak(times) + cheats.streak,
+      bestStreak: streak.best + cheats.streak,
       goldenWords: reps.filter((r) => r >= GOLDEN_REPS).length + cheats.golden,
       challenges: finishedChallenges(logs, firstTimes, now, dailyGoal) + cheats.challenges,
+      fullWeeks: fullWeeks(logs, firstTimes, now, dailyGoal) + cheats.weeks,
     };
     const earned = earnedRewards(facts);
     const found = foundKinds(earned);
@@ -133,6 +140,7 @@ export function useGarden(now: number): Garden | undefined {
       earned,
       found,
       week,
+      streak,
     };
   }, [repo, now, dailyGoal, savedCheats]);
 }

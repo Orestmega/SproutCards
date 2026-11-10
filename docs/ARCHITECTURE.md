@@ -219,7 +219,11 @@ achievement). `scenePlants` in `garden.ts` picks the real plants for the picture
 
 `weekly.ts`: the week (Monday to Monday, local time) with a weekly goal (daily goal × 5 answers) and two
 challenges picked from `CHALLENGE_POOL` by the week's number; `finishedChallenges` counts finished items over
-all weeks, which is the `challenges` fact of the rewards. `wholeDeck.ts`: the "learn the whole deck" mode
+all weeks, which is the `challenges` fact of the rewards. `freeze.ts` (`streakState`): days in a row with streak freezes — each weekly goal reached (`weeklyGoalTimes`)
+earns one (at most 2); a missed day uses one instead of breaking the run. Home, Profile and Progress show this streak,
+and its best run is the streak fact of the rewards. `weekly.ts` `fullWeeks` counts weeks with all three finished:
+each one is a "weeks" reward, a flower of the week (rarity `weekly`, `weekFlower(n)`). Every finished goal or
+challenge is a "challenges" reward. `wholeDeck.ts`: the "learn the whole deck" mode
 (`deckLearning`, `wholeDeckChunk`; `?whole=1` on the Learn route). `cheats.ts`: the cheat panel's bonuses,
 stored in `Settings.cheats` and added to the facts in `useGarden`; real progress is never written. Learned
 words for rewards, achievements and the rank are `learnedCount` (best reps ≥ 1), not blooms.

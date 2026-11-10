@@ -18,6 +18,7 @@ describe('cheats', () => {
       bestStreak: ALL_CHEATS.streak,
       goldenWords: ALL_CHEATS.golden,
       challenges: ALL_CHEATS.challenges,
+      fullWeeks: ALL_CHEATS.weeks,
     };
     expect(earnedRewards(facts)).toHaveLength(REWARDS.length);
   });

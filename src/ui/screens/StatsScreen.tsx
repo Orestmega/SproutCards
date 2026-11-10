@@ -2,7 +2,7 @@ import { useLiveQuery } from 'dexie-react-hooks';
 import { Link } from 'react-router-dom';
 import { GROWTH_STAGES, growthCounts } from '../../core/garden';
 import { heatmapWeeks, reviewForecast } from '../../core/habit';
-import { accuracy, computeStreak } from '../../core/stats';
+import { accuracy } from '../../core/stats';
 import { useI18n } from '../../i18n';
 import { useState } from 'react';
 import { useRepo } from '../AppProviders';
@@ -80,7 +80,12 @@ export function StatsScreen() {
       <>
         <PageHeader title={t('stats.title')} />
         <EmptyState title={t('stats.empty.title')} text={t('stats.empty.text')} />
-        <WeekCard week={garden.week} now={opened} />
+        <WeekCard
+          week={garden.week}
+          now={opened}
+          fullWeeks={garden.facts.fullWeeks}
+          freezes={garden.streak.freezes}
+        />
         {achievementsBlock}
       </>
     );
@@ -116,7 +121,7 @@ export function StatsScreen() {
       </section>
 
       <div className="stats stats--two" role="group" aria-label={t('stats.numbers')}>
-        <Stat value={String(computeStreak(times, now))} label={t('stats.streak')} />
+        <Stat value={String(garden.streak.current)} label={t('stats.streak')} />
         <Stat value={String(best)} label={t('stats.bestStreak')} />
         <Stat value={String(totalReviews)} label={t('stats.reviews')} />
         <Stat
@@ -125,7 +130,12 @@ export function StatsScreen() {
         />
       </div>
 
-      <WeekCard week={garden.week} now={opened} />
+      <WeekCard
+        week={garden.week}
+        now={opened}
+        fullWeeks={garden.facts.fullWeeks}
+        freezes={garden.streak.freezes}
+      />
 
       <section className="section" aria-labelledby="stats-activity">
         <h2 className="section__title" id="stats-activity">

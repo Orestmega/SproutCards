@@ -3,8 +3,19 @@ import { useI18n } from '../../i18n';
 import { useSettings } from '../AppProviders';
 import { GoalRing } from './GoalRing';
 
-/** Today's goal and the current week; `times` are the moments of recent answers. */
-export function TodayCard({ times, now }: { times: readonly number[]; now: number }) {
+/**
+ * Today's goal and the current week; `times` are the moments of recent answers, `frozenDays` the starts
+ * of the days a streak freeze saved (they show a snowflake).
+ */
+export function TodayCard({
+  times,
+  now,
+  frozenDays = [],
+}: {
+  times: readonly number[];
+  now: number;
+  frozenDays?: readonly number[];
+}) {
   const { t, language } = useI18n();
   const { dailyGoal } = useSettings();
   const count = todayCount(times, now);
@@ -27,16 +38,26 @@ export function TodayCard({ times, now }: { times: readonly number[]; now: numbe
       <ol className="week" aria-label={t('home.goal.week')}>
         {week.map((day) => {
           const done = day.count > 0;
-          const classes = ['week__dot', done && 'week__dot--done', day.today && 'week__dot--today'];
+          const frozen = !done && frozenDays.includes(day.dayStart);
+          const classes = [
+            'week__dot',
+            done && 'week__dot--done',
+            frozen && 'week__dot--frozen',
+            day.today && 'week__dot--today',
+          ];
           return (
             <li key={day.dayStart}>
               <span className="visually-hidden">
                 {longDay.format(day.dayStart)}:{' '}
-                {done ? t('home.goal.dayDone') : t('home.goal.dayNot')}
+                {done
+                  ? t('home.goal.dayDone')
+                  : frozen
+                    ? t('home.goal.dayFrozen')
+                    : t('home.goal.dayNot')}
               </span>
               <span aria-hidden="true">{dayName.format(day.dayStart)}</span>
               <span className={classes.filter(Boolean).join(' ')} aria-hidden="true">
-                {done ? '✓' : ''}
+                {done ? '✓' : frozen ? '❄' : ''}
               </span>
             </li>
           );

@@ -7,27 +7,69 @@ import { Avatar } from './Avatar';
 import { Mascot } from './Mascot';
 import { PwaBanner } from './PwaBanner';
 
-/** One path per moving part: the book has two pages, the chart three bars (see the tab animations). */
-const ICONS: Record<string, string | string[]> = {
-  home: 'M4 11 12 4l8 7v9a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1z',
-  decks: [
-    'M12 6.5C10 5 7 4.5 4 5v13c3-.5 6 0 8 1.5',
-    'M12 6.5c2-1.5 5-2 8-1.5v13c-3-.5-6 0-8 1.5',
-    'M12 6.5v13',
-  ],
-  progress: ['M5 20V12', 'M12 20V5', 'M19 20v-9'],
-  garden: [
-    'M6 21h12',
-    'M12 21v-8',
-    'M12 13c-3 0-5-2-5-5 3 0 5 2 5 5z',
-    'M12 13c0-3 2-5 5-5 0 3-2 5-5 5z',
-    'M12 9a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z',
-  ],
-  settings:
-    'M12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7zM12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9 7 7M17 17l2.1 2.1M4.9 19.1 7 17M17 7l2.1-2.1',
-};
+type NavIconName = 'home' | 'decks' | 'garden' | 'progress' | 'settings';
 
-function NavIcon({ path, name }: { path: string | string[]; name: string }) {
+/**
+ * The tab icons (the owner's design, design/feedback/nav-demo.html). Each moving part has its own class;
+ * the parts come alive when their tab is opened (see "Tab icons" in components.css).
+ */
+function IconParts({ name }: { name: NavIconName }) {
+  switch (name) {
+    case 'home':
+      // the two halves are drawn from the roof's peak down to the door
+      return (
+        <g className="home">
+          <path
+            className="home__fill"
+            d="M4 11 12 4l8 7v9a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1z"
+          />
+          <path className="home__half" pathLength={1} d="M12 4 4 11v9a1 1 0 0 0 1 1h4v-6h3" />
+          <path className="home__half" pathLength={1} d="M12 4l8 7v9a1 1 0 0 1-1 1h-4v-6h-3" />
+        </g>
+      );
+    case 'decks':
+      // the cover opens to the left and shows the page under it
+      return (
+        <g className="book">
+          <path d="M7 4h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H7z" />
+          <path className="book__page" strokeWidth="1.6" d="M10.5 9h4M10.5 12.5h4M10.5 16h2.5" />
+          <g className="book__cover">
+            <path className="book__face" d="M7 4h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H7z" />
+            <path strokeWidth="1.6" d="M10.5 9h4M10.5 12.5h4M10.5 16h2.5" />
+          </g>
+        </g>
+      );
+    case 'garden':
+      return (
+        <>
+          <path d="M6 21h12" />
+          <path className="g__stem" d="M12 21v-11" />
+          <path className="g__l" d="M12 16c-3 0-5-2-5-5 3 0 5 2 5 5z" />
+          <path className="g__r" d="M12 14c0-3 2-5 5-5 0 3-2 5-5 5z" />
+          <g className="g__flower">
+            <circle cx="12" cy="6.5" r="2.6" />
+          </g>
+        </>
+      );
+    case 'progress':
+      return (
+        <>
+          <path className="p__bar" d="M5 20V12" />
+          <path className="p__bar" d="M12 20V5" />
+          <path className="p__bar" d="M19 20v-9" />
+        </>
+      );
+    case 'settings':
+      return (
+        <g className="s__all">
+          <circle className="s__core" cx="12" cy="12" r="3.5" />
+          <path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9 7 7M17 17l2.1 2.1M4.9 19.1 7 17M17 7l2.1-2.1" />
+        </g>
+      );
+  }
+}
+
+function NavIcon({ name }: { name: NavIconName }) {
   return (
     <svg
       className={`nav__icon nav__icon--${name}`}
@@ -40,9 +82,7 @@ function NavIcon({ path, name }: { path: string | string[]; name: string }) {
       aria-hidden="true"
       focusable="false"
     >
-      {(Array.isArray(path) ? path : [path]).map((d, i) => (
-        <path key={d} className={`nav__part nav__part--${i + 1}`} d={d} />
-      ))}
+      <IconParts name={name} />
     </svg>
   );
 }
@@ -60,7 +100,7 @@ export function Logo() {
 const NAV: {
   to: string;
   label: MessageKey;
-  icon: 'home' | 'decks' | 'garden' | 'progress' | 'settings';
+  icon: NavIconName;
   end?: boolean;
 }[] = [
   { to: '/', label: 'nav.home', icon: 'home', end: true },
@@ -88,7 +128,7 @@ export function AppLayout() {
           {NAV.map((item) => (
             <NavLink key={item.to} to={item.to} end={item.end} className="nav__link">
               <span className="nav__pill">
-                <NavIcon path={ICONS[item.icon] ?? ''} name={item.icon} />
+                <NavIcon name={item.icon} />
               </span>
               <span>{t(item.label)}</span>
             </NavLink>

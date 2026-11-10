@@ -86,7 +86,8 @@ export function HomeScreen() {
       return deck ? [{ snapshot, deck, ...snapshotProgress(snapshot) }] : [];
     })
     .slice(0, 2);
-  const streak = computeStreak(logTimes, now);
+  // days in a row with the streak freezes (weekly goals) once the garden is read
+  const streak = garden ? garden.streak.current : computeStreak(logTimes, now);
   const cards = summaries.reduce((sum, s) => sum + s.cardCount, 0);
 
   // the deck with the most reviews waiting, else one with words not studied yet
@@ -204,8 +205,15 @@ export function HomeScreen() {
         </div>
 
         <div className="home-grid__side">
-          <TodayCard times={logTimes} now={now} />
-          {garden && <WeekCard week={garden.week} now={now} />}
+          <TodayCard times={logTimes} now={now} frozenDays={garden?.streak.frozenDays} />
+          {garden && (
+            <WeekCard
+              week={garden.week}
+              now={now}
+              fullWeeks={garden.facts.fullWeeks}
+              freezes={garden.streak.freezes}
+            />
+          )}
 
           {word && wordDeck && (
             <section className="card wotd" aria-labelledby="wotd-title">
