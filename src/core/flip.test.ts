@@ -175,7 +175,7 @@ describe('flip mode: rounds until everything is known', () => {
 });
 
 describe('flip mode: saving', () => {
-  it('schedules once per card: known all the time = correct, ever "don\'t know" = mistake', () => {
+  it('schedules once per card: known in the end = learned; "don\'t know" on the way = a lapse first', () => {
     const cards = sampleCards().slice(0, 2); // apple, house
     // apple known at once; house not known, then known in round 2
     const s = play(startFlip(cards, 'forward'), (id, round) => id === 'apple' || round > 1);
@@ -187,7 +187,13 @@ describe('flip mode: saving', () => {
       lapses: 0,
       firstSeenAt: NOW,
     });
-    expect(progress[1]).toMatchObject({ id: 'house:forward', reps: 0, lapses: 1 });
+    // house was known in round 2: learned, back tomorrow, one lapse
+    expect(progress[1]).toMatchObject({ id: 'house:forward', reps: 1, intervalDays: 1, lapses: 1 });
+  });
+
+  it('a card left before it was known is a mistake', () => {
+    const s = answerFlip(startFlip(sampleCards().slice(0, 1), 'forward'), false, NOW);
+    expect(flipToProgress(s, [], scheduler)[0]).toMatchObject({ reps: 0, lapses: 1 });
   });
 
   it('keeps the first-seen time and advances an existing schedule', () => {

@@ -80,12 +80,42 @@ function FlipSession({ data, onRestart }: { data: StudyData; onRestart: () => vo
   const finished = isFlipFinished(state);
   const card = currentFlipCard(state);
 
+  /** Answers already stored (saving as you go), and the queue that keeps the writes in order. */
+  const storedLogs = useRef(0);
+  const [storedCount, setStoredCount] = useState(0);
+  const writing = useRef<Promise<void>>(Promise.resolve());
+
+  // Save as you go: after every answer everything but the last answer is stored (the last one can
+  // still be taken back with "undo"), so leaving through the menu or closing the tab loses almost
+  // nothing. A card's record is worked out from the session start every time: storing it again only
+  // replaces it.
+  useEffect(() => {
+    if (practice || state.results.length < 2 || isFlipFinished(state)) return;
+    const upToLast = { ...state, results: state.results.slice(0, -1) };
+    writing.current = writing.current
+      .then(async () => {
+        const logs = flipToLogs(upToLast).slice(storedLogs.current);
+        if (logs.length === 0) return;
+        await repo.saveSession(flipToProgress(upToLast, data.progress, scheduler), logs);
+        storedLogs.current += logs.length;
+        setStoredCount(storedLogs.current);
+      })
+      .catch(() => {
+        // not stored now: the next answer or the final save tries again
+      });
+  }, [state, practice, data.progress, repo]);
+  // only an answer not stored yet can be taken back
+  const canUndo = canUndoFlip(state) && state.results.length > storedCount;
+
   const save = useCallback(async () => {
     setSaveState('saving');
     try {
+      await writing.current; // let a save in progress finish first
       const progress = practice ? [] : flipToProgress(state, data.progress, scheduler);
       setGrown(growthGain(data.progress, progress));
-      await repo.saveSession(progress, flipToLogs(state));
+      const logs = flipToLogs(state).slice(storedLogs.current);
+      await repo.saveSession(progress, logs);
+      storedLogs.current += logs.length;
       setSaveState('saved');
     } catch {
       saved.current = false;
@@ -127,10 +157,11 @@ function FlipSession({ data, onRestart }: { data: StudyData; onRestart: () => vo
   }, [cue]);
 
   const undo = useCallback(() => {
+    if (!canUndo) return; // a stored answer stays
     setState((s) => undoFlip(s));
     setFlipped(false);
     chrome.react('normal');
-  }, [chrome]);
+  }, [chrome, canUndo]);
 
   // read the word aloud as it appears, if the user asked for that
   const spokenFront = card ? flipFace(card, direction).front : null;
@@ -229,7 +260,7 @@ function FlipSession({ data, onRestart }: { data: StudyData; onRestart: () => vo
                 total: state.order.length,
               })}
         </p>
-        {canUndoFlip(state) && (
+        {canUndo && (
           <button type="button" className="icon-btn" aria-label={t('flip.undo')} onClick={undo}>
             <Icon name="undo" />
           </button>

@@ -91,7 +91,11 @@ export function StudyPanel({
               <span className="list-row__main">
                 <span className="list-row__title">{t('resume.continue')}</span>
                 <span className="muted">
-                  {t('resume.progress', { percent: resumable.percent, total: resumable.total })}
+                  {t('resume.progress', {
+                    percent: resumable.percent,
+                    done: resumable.done,
+                    total: resumable.total,
+                  })}
                 </span>
               </span>
               <span className="chevron" aria-hidden="true">

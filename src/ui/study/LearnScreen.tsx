@@ -108,15 +108,53 @@ function LearnSession({ data, onRestart }: { data: StudyData; onRestart: () => v
   const shown = answered?.question ?? state.current;
   const langOf = (side: CardSide) => (side === 'term' ? deck.learningLang : deck.translationLang);
 
+  /** Writes in order: the saves as you go never overlap each other or the final one. */
+  const writing = useRef<Promise<void>>(Promise.resolve());
+
+  // Save as you go: after every answer the new answers and the cards passed so far are stored, so
+  // the learned count grows at once, even if the session is left through the menu or the tab is closed.
+  useEffect(() => {
+    if (practice || state.events.length === 0 || isFinished(state)) return;
+    const current = state;
+    writing.current = writing.current
+      .then(async () => {
+        const now = Date.now();
+        const all = applySessionToProgress(current, data.progress, scheduler, now);
+        const logs = sessionToLogs(current);
+        const rest = unsaved(all, logs, stored.current.cards, stored.current.events);
+        if (rest.progress.length === 0 && rest.logs.length === 0) return;
+        await repo.saveSession(rest.progress, rest.logs);
+        stored.current = {
+          cards: [...new Set([...stored.current.cards, ...rest.progress.map((p) => p.cardId)])],
+          events: logs.length,
+        };
+        // the snapshot must know what is stored, or continuing would store the answers twice
+        writeSnapshot({
+          version: 1,
+          deckId: deck.id,
+          direction,
+          state: current,
+          savedCardIds: stored.current.cards,
+          savedEvents: stored.current.events,
+          savedAt: now,
+        });
+      })
+      .catch(() => {
+        // not stored now: the final save (or the next answer) tries again with the same data
+      });
+  }, [state, practice, data.progress, repo, deck.id, direction]);
+
   const save = useCallback(async () => {
     setSaveState('saving');
     try {
+      await writing.current; // let a save in progress finish first
       const now = Date.now();
       const all = practice
         ? [] // practising ahead of schedule must not move the review dates
         : applySessionToProgress(state, data.progress, scheduler, now);
       const rest = unsaved(all, sessionToLogs(state), stored.current.cards, stored.current.events);
-      setGrown(growthGain(data.progress, rest.progress));
+      // what grew in the whole session (part of it may have been stored along the way)
+      setGrown(growthGain(data.progress, all));
       await repo.saveSession(rest.progress, rest.logs);
       if (whole)
         setWholeAfter(deckLearning(data.cards, mergeProgress(data.progress, all), direction));

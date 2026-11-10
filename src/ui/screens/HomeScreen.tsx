@@ -170,7 +170,7 @@ export function HomeScreen() {
             </button>
           </GardenScene>
 
-          {resumeList.map(({ snapshot, deck, percent, total }) => (
+          {resumeList.map(({ snapshot, deck, percent, done, total }) => (
             <Link
               key={`${deck.id}-${snapshot.direction}`}
               to={`/decks/${deck.id}/learn?dir=${snapshot.direction}&resume=1`}
@@ -183,7 +183,7 @@ export function HomeScreen() {
                 <span className="list-row__title">
                   {t('resume.continueDeck', { name: deck.name })}
                 </span>
-                <span className="muted">{t('resume.progress', { percent, total })}</span>
+                <span className="muted">{t('resume.progress', { percent, done, total })}</span>
               </span>
               <span className="chevron" aria-hidden="true">
                 ›

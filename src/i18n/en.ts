@@ -595,7 +595,7 @@ export const en = {
   'rank.botanist': 'Botanist',
   'resume.continue': 'Continue where you stopped',
   'resume.continueDeck': 'Continue learning: {name}',
-  'resume.progress': '{percent}% done · {total} words in the session',
+  'resume.progress': '{percent}% of the session · {done} of its {total} words learned',
   'garden.plots': 'Plots of your garden',
   'garden.plotsHint':
     'Every goal you reach earns one flower; each grows on one plot. Tap a plot to plant.',

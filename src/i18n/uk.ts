@@ -632,7 +632,7 @@ export const uk: Record<Keys, string> & Record<string, string> = {
   'rank.botanist': 'Ботанік',
   'resume.continue': 'Продовжити з місця, де зупинився',
   'resume.continueDeck': 'Продовжити вчити: {name}',
-  'resume.progress': 'Пройдено {percent}% · слів у сесії: {total}',
+  'resume.progress': 'Пройдено {percent}% сесії · вивчено {done} з {total} слів сесії',
   'garden.plots': 'Ділянки твого саду',
   'garden.plotsHint':
     'Кожна досягнута ціль дає одну квітку; кожна росте на одній ділянці. Торкнись ділянки, щоб посадити.',

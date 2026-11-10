@@ -133,9 +133,9 @@ describe('adding a catalog deck', () => {
     await user.click(screen.getByRole('link', { name: 'Learn' }));
     // the Learn screen is loaded on first use, which can take a moment in a test run
     expect(
-      await screen.findByText('Choose the translation', {}, { timeout: 8000 }),
+      await screen.findByText('Choose the translation', {}, { timeout: 20000 }),
     ).toBeInTheDocument();
-  });
+  }, 40000); // a long path (catalog, deck, Learn loaded on first use): slow when all tests run at once
 
   it('names the deck in the Ukrainian interface language', async () => {
     const user = userEvent.setup();

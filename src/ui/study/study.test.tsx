@@ -88,6 +88,37 @@ async function playLearnPerfectly(user: UserEvent): Promise<number> {
 }
 
 describe('Learn: the full cycle', () => {
+  it('saves as you go: a passed card counts at once, even if the session is left half-way', async () => {
+    const user = userEvent.setup();
+    const { repo, deck } = await seedDeck();
+    const first = open(`/decks/${deck.id}/learn`);
+    await screen.findByText('Choose the translation');
+    // answer right until the first card is learned for this session
+    let answers = 0;
+    while (!screen.queryByText('Card learned for this session.')) {
+      await answerCurrent(user);
+      answers++;
+      if (!screen.queryByText('Card learned for this session.')) {
+        await user.click(await screen.findByRole('button', { name: 'Continue' }));
+      }
+      if (answers > 20) throw new Error('no card was learned');
+    }
+    // stored right away: the learned card and every answer so far
+    await waitFor(async () => {
+      const learned = (await repo.listProgress(deck.id)).filter((p) => p.reps >= 1);
+      expect(learned).toHaveLength(1);
+      expect(await db.reviewLogs.count()).toBe(answers);
+    });
+    // leave without finishing (no close button, as through the menu), then continue to the end
+    first.unmount();
+    open(`/decks/${deck.id}/learn?resume=1`);
+    await screen.findByText(/Choose the translation|Type the translation|Type the word/);
+    const rest = await playLearnPerfectly(user);
+    // nothing is stored twice
+    await waitFor(async () => expect(await db.reviewLogs.count()).toBe(answers + rest));
+    expect((await repo.listProgress(deck.id)).filter((p) => p.reps >= 1)).toHaveLength(3);
+  });
+
   it('learn a deck, save the schedule for tomorrow, then there is nothing due today', async () => {
     const user = userEvent.setup();
     const { repo, deck } = await seedDeck();
@@ -386,12 +417,30 @@ describe('Flashcards', () => {
     expect(await screen.findByRole('heading', { name: 'Session summary' })).toBeInTheDocument();
     await waitFor(async () => expect(await repo.listProgress(deck.id)).toHaveLength(3));
     const progress = await repo.listProgress(deck.id);
-    expect(progress.filter((p) => p.reps === 1)).toHaveLength(2);
+    // all three were known in the end: learned; the one missed in round 1 has a lapse (back tomorrow)
+    expect(progress.filter((p) => p.reps === 1)).toHaveLength(3);
     expect(progress.filter((p) => p.lapses === 1)).toHaveLength(1);
     // every answer of every round is logged: 3 in round 1 + 1 in round 2
     expect((await db.reviewLogs.toArray()).filter((l) => l.mode === 'flip')).toHaveLength(4);
     // the card that was not known is listed for review
     expect(screen.getByText('Cards to review')).toBeInTheDocument();
+  });
+
+  it('saves as you go: leaving half-way keeps all but the last answer (it can still be undone)', async () => {
+    const user = userEvent.setup();
+    const { repo, deck } = await seedDeck();
+    const first = open(`/decks/${deck.id}/flip`);
+    for (const n of [1, 2]) {
+      await screen.findByText(`Card ${n} of 3`);
+      await user.click(screen.getByRole('button', { name: /Show answer/ }));
+      await user.click(screen.getByRole('button', { name: /I know it/ }));
+    }
+    await screen.findByText('Card 3 of 3');
+    await waitFor(async () => {
+      expect(await db.reviewLogs.count()).toBe(1);
+      expect((await repo.listProgress(deck.id)).filter((p) => p.reps === 1)).toHaveLength(1);
+    });
+    first.unmount();
   });
 
   it('backward direction shows the translation on the front', async () => {

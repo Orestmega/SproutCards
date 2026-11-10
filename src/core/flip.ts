@@ -168,7 +168,8 @@ export function summarizeFlip(state: FlipState): FlipSummary {
 
 /**
  * One progress record per card answered so far (an interrupted session keeps what was done).
- * A card ever marked "don't know" counts as a mistake, like in Learn; otherwise as correct.
+ * Like in Learn: a card known at the end is learned; if it was "don't know" on the way, it starts over
+ * first (a lapse) and comes back tomorrow. A card not known yet is a mistake.
  */
 export function flipToProgress(
   state: FlipState,
@@ -177,16 +178,23 @@ export function flipToProgress(
 ): Progress[] {
   const byId = new Map(existing.map((p) => [p.id, p]));
   const cards = new Map(state.cards.map((c) => [c.id, c]));
-  const perCard = new Map<string, { mistake: boolean; at: number }>();
+  const perCard = new Map<string, { mistake: boolean; known: boolean; at: number }>();
   for (const r of state.results) {
-    const entry = perCard.get(r.cardId) ?? { mistake: false, at: r.at };
-    perCard.set(r.cardId, { mistake: entry.mistake || !r.known, at: r.at });
+    const entry = perCard.get(r.cardId) ?? { mistake: false, known: false, at: r.at };
+    perCard.set(r.cardId, { mistake: entry.mistake || !r.known, known: r.known, at: r.at });
   }
-  return [...perCard].map(([cardId, { mistake, at }]) => {
+  return [...perCard].map(([cardId, { mistake, known, at }]) => {
     const id = progressId(cardId, state.direction);
     const previous = byId.get(id);
+    const schedule = known
+      ? scheduler.review(
+          mistake ? scheduler.review(previous, 'wrong', at) : previous,
+          'correct',
+          at,
+        )
+      : scheduler.review(previous, 'wrong', at);
     return {
-      ...scheduler.review(previous, mistake ? 'wrong' : 'correct', at),
+      ...schedule,
       id,
       cardId,
       deckId: (cards.get(cardId) as Card).deckId,
