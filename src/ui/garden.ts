@@ -4,7 +4,8 @@ import { useCallback, useState } from 'react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { evaluateAchievements } from '../core/achievements';
 import type { AchievementState } from '../core/achievements';
-import { growthStage } from '../core/garden';
+import { cheatsOf } from '../core/cheats';
+import { growthStage, learnedCount } from '../core/garden';
 import type { GrowthStage } from '../core/garden';
 import {
   decorations,
@@ -24,8 +25,10 @@ import type {
   VarietyId,
 } from '../core/gardenLife';
 import { bestStreak, todayCount } from '../core/habit';
+import { finishedChallenges, weekState } from '../core/weekly';
+import type { WeekState } from '../core/weekly';
 import type { Card, Deck } from '../core/types';
-import { useRepo } from './AppProviders';
+import { useRepo, useSettings } from './AppProviders';
 
 export interface GardenPlant {
   card: Card;
@@ -52,13 +55,17 @@ export interface Garden {
   facts: RewardFacts;
   earned: Reward[];
   found: VarietyId[];
+  /** This week's goal and challenges. */
+  week: WeekState;
 }
 
 const RANK = { golden: 2, rare: 1, common: 0 } as const;
 
 export function useGarden(now: number): Garden | undefined {
   const repo = useRepo();
+  const { dailyGoal, cheats: savedCheats } = useSettings();
   return useLiveQuery(async () => {
+    const cheats = cheatsOf(savedCheats);
     const { decks, cards, progress, logs } = await repo.gardenSnapshot();
     const deckById = new Map(decks.map((d) => [d.id, d]));
     const best = new Map<string, { reps: number; dueAt: number }>();
@@ -70,12 +77,22 @@ export function useGarden(now: number): Garden | undefined {
       });
     }
     const times = logs.map((log) => log.at);
-    // the kinds of flower open now depend on learned words, the best streak and long-known words
+    // the first time each word was studied, for "new words this week"
+    const firstSeen = new Map<string, number>();
+    for (const p of progress) {
+      const at = p.firstSeenAt ?? p.lastReviewedAt;
+      firstSeen.set(p.cardId, Math.min(firstSeen.get(p.cardId) ?? Infinity, at));
+    }
+    const firstTimes = [...firstSeen.values()];
+    const week = weekState(logs, firstTimes, now, dailyGoal);
+    // what earns flowers: learned words, the best streak, long-known words, weekly challenges
+    // (plus the bonuses of the cheat panel, which only exist for trying things out)
     const reps = [...best.values()].map((r) => r.reps);
     const facts: RewardFacts = {
-      blooms: reps.filter((r) => growthStage(r) === 'bloom').length,
-      bestStreak: bestStreak(times),
-      goldenWords: reps.filter((r) => r >= GOLDEN_REPS).length,
+      blooms: learnedCount(progress) + cheats.learned,
+      bestStreak: bestStreak(times) + cheats.streak,
+      goldenWords: reps.filter((r) => r >= GOLDEN_REPS).length + cheats.golden,
+      challenges: finishedChallenges(logs, firstTimes, now, dailyGoal) + cheats.challenges,
     };
     const earned = earnedRewards(facts);
     const found = foundKinds(earned);
@@ -98,11 +115,11 @@ export function useGarden(now: number): Garden | undefined {
       ];
     });
     const achievements = evaluateAchievements({
-      totalReviews: logs.length,
+      totalReviews: logs.length + cheats.reviews,
       bestStreak: facts.bestStreak,
-      blooms: plants.filter((p) => p.stage === 'bloom').length,
-      decks: decks.length,
-      modesUsed: new Set(logs.map((log) => log.mode)).size,
+      blooms: facts.blooms,
+      decks: decks.length + cheats.decks,
+      modesUsed: new Set(logs.map((log) => log.mode)).size + cheats.modes,
     });
     return {
       decks,
@@ -115,8 +132,9 @@ export function useGarden(now: number): Garden | undefined {
       facts,
       earned,
       found,
+      week,
     };
-  }, [repo, now]);
+  }, [repo, now, dailyGoal, savedCheats]);
 }
 
 const WATERED_KEY = 'sproutcards.watered';

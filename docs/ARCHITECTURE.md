@@ -217,6 +217,13 @@ the daily goal is reached; the watered day is kept in `localStorage` by `ui/gard
 achievement). `scenePlants` in `garden.ts` picks the real plants for the picture, special flowers first.
 `ui/garden.ts` (`useGarden`) reads everything in one `repo.gardenSnapshot()` and builds the plant list.
 
+`weekly.ts`: the week (Monday to Monday, local time) with a weekly goal (daily goal × 5 answers) and two
+challenges picked from `CHALLENGE_POOL` by the week's number; `finishedChallenges` counts finished items over
+all weeks, which is the `challenges` fact of the rewards. `wholeDeck.ts`: the "learn the whole deck" mode
+(`deckLearning`, `wholeDeckChunk`; `?whole=1` on the Learn route). `cheats.ts`: the cheat panel's bonuses,
+stored in `Settings.cheats` and added to the facts in `useGarden`; real progress is never written. Learned
+words for rewards, achievements and the rank are `learnedCount` (best reps ≥ 1), not blooms.
+
 `gardenBeds.ts` (`gardenFields`): one field per learning language, one bed per deck; a bed lists only growing
 words and counts the rest as seeds, so the garden scales to many languages and big decks.
 

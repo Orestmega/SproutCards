@@ -1,16 +1,18 @@
 import { useLiveQuery } from 'dexie-react-hooks';
 import { Link } from 'react-router-dom';
-import { evaluateAchievements } from '../../core/achievements';
 import { GROWTH_STAGES, growthCounts } from '../../core/garden';
-import { bestStreak, heatmapWeeks, reviewForecast } from '../../core/habit';
+import { heatmapWeeks, reviewForecast } from '../../core/habit';
 import { accuracy, computeStreak } from '../../core/stats';
 import { useI18n } from '../../i18n';
+import { useState } from 'react';
 import { useRepo } from '../AppProviders';
 import { GrowthBar, GrowthLegend } from '../components/GrowthBar';
 import { Icon } from '../components/Icons';
 import { PageHeader } from '../components/Layout';
 import { EmptyState } from '../components/Notice';
 import { ProgressBar } from '../components/ProgressBar';
+import { WeekCard } from '../components/WeekCard';
+import { useGarden } from '../garden';
 
 const DAY_MS = 86_400_000;
 const FORECAST_DAYS = 7;
@@ -20,11 +22,14 @@ const ACCURACY_DAYS = 7;
 export function StatsScreen() {
   const { t, language } = useI18n();
   const repo = useRepo();
+  const [opened] = useState(() => Date.now());
+  // achievements and the week come from the garden, the same numbers that earn flowers
+  const garden = useGarden(opened);
   const data = useLiveQuery(async () => {
     const snapshot = await repo.statsSnapshot(0); // all answers: the longest streak needs them
     return { now: Date.now(), ...snapshot };
   }, [repo]);
-  if (!data) return null;
+  if (!data || !garden) return null;
 
   const { now, decks, cardIdsByDeck, progress, logs, totalReviews } = data;
   const times = logs.map((log) => log.at);
@@ -33,14 +38,8 @@ export function StatsScreen() {
     growth: growthCounts(cardIdsByDeck[deck.id] ?? [], progress),
   }));
   const growth = growthCounts(Object.values(cardIdsByDeck).flat(), progress);
-  const best = bestStreak(times);
-  const achievements = evaluateAchievements({
-    totalReviews,
-    bestStreak: best,
-    blooms: growth.bloom,
-    decks: decks.length,
-    modesUsed: new Set(logs.map((log) => log.mode)).size,
-  });
+  const { achievements } = garden;
+  const best = garden.facts.bestStreak;
   const reached = achievements.filter((a) => a.done).length;
   const achievementsBlock = (
     <section className="section" aria-labelledby="stats-achievements">
@@ -62,7 +61,7 @@ export function StatsScreen() {
               <span className="ach__name">{t(`achievement.${a.id}`)}</span>
               <span className="muted">{t(`achievement.${a.id}.how`)}</span>
               {a.done ? (
-                <span className="badge">{t('stats.achievementDone')}</span>
+                <span className="visually-hidden">{t('stats.achievementDone')}</span>
               ) : (
                 <ProgressBar
                   value={a.share}
@@ -81,6 +80,7 @@ export function StatsScreen() {
       <>
         <PageHeader title={t('stats.title')} />
         <EmptyState title={t('stats.empty.title')} text={t('stats.empty.text')} />
+        <WeekCard week={garden.week} now={opened} />
         {achievementsBlock}
       </>
     );
@@ -124,6 +124,8 @@ export function StatsScreen() {
           label={t('stats.accuracy')}
         />
       </div>
+
+      <WeekCard week={garden.week} now={opened} />
 
       <section className="section" aria-labelledby="stats-activity">
         <h2 className="section__title" id="stats-activity">

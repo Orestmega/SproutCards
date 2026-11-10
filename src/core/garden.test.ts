@@ -5,6 +5,7 @@ import {
   growthCounts,
   growthGain,
   growthStage,
+  learnedCount,
   scenePlants,
 } from './garden';
 
@@ -86,6 +87,19 @@ describe('scenePlants', () => {
     expect(scenePlants(plants, 9).map((p) => p.id)).toEqual(['b', 'a', 'c']);
     expect(scenePlants(plants, 1)).toHaveLength(1);
     expect(scenePlants([], 9)).toEqual([]);
+  });
+});
+
+describe('learnedCount', () => {
+  it('a word counts once it was answered cleanly in some direction', () => {
+    expect(
+      learnedCount([
+        { cardId: 'a', reps: 0 },
+        { cardId: 'a', reps: 1 },
+        { cardId: 'b', reps: 0 },
+        { cardId: 'c', reps: 4 },
+      ]),
+    ).toBe(2);
   });
 });
 

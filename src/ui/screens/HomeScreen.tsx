@@ -18,6 +18,7 @@ import { Logo } from '../components/Layout';
 import { Mascot } from '../components/Mascot';
 import { SpeakButton } from '../components/SpeakButton';
 import { TodayCard } from '../components/TodayCard';
+import { WeekCard } from '../components/WeekCard';
 import { useGarden } from '../garden';
 import { listSnapshots } from '../resume';
 import { snapshotProgress } from '../../core/resume';
@@ -202,6 +203,7 @@ export function HomeScreen() {
 
         <div className="home-grid__side">
           <TodayCard times={logTimes} now={now} />
+          {garden && <WeekCard week={garden.week} now={now} />}
 
           {word && wordDeck && (
             <section className="card wotd" aria-labelledby="wotd-title">

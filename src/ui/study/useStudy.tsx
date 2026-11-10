@@ -5,6 +5,7 @@ import { shuffle } from '../../core/random';
 import { selectSessionCards, sessionCards } from '../../core/selection';
 import { startOfDayPlus } from '../../core/scheduler';
 import type { Card, Deck, Direction, Progress } from '../../core/types';
+import { wholeDeckChunk } from '../../core/wholeDeck';
 import { useI18n } from '../../i18n';
 import { useApp } from '../AppProviders';
 import { ButtonLink } from '../components/Button';
@@ -40,7 +41,10 @@ type Loaded =
   | { status: 'error' }
   | { status: 'ready'; data: StudyData };
 
-/** Reads the study options from the URL: `?dir=backward`, `?all=1` (practice every card), `?starred=1`. */
+/**
+ * Reads the study options from the URL: `?dir=backward`, `?all=1` (practice every card), `?starred=1`,
+ * `?whole=1` (learn the whole deck, portion by portion).
+ */
 export function useStudyParams(): {
   deckId: string;
   direction: Direction;
@@ -49,6 +53,8 @@ export function useStudyParams(): {
   starred: boolean;
   /** Continue the unfinished Learn session of this deck and direction. */
   resume: boolean;
+  /** Learn the whole deck: the next unlearned words in order, with no daily limit for new ones. */
+  whole: boolean;
 } {
   const { deckId = '' } = useParams();
   const [params] = useSearchParams();
@@ -58,6 +64,7 @@ export function useStudyParams(): {
     practice: params.get('all') === '1',
     starred: params.get('starred') === '1',
     resume: params.get('resume') === '1',
+    whole: params.get('whole') === '1' && params.get('all') !== '1',
   };
 }
 
@@ -98,8 +105,14 @@ function useStudyData(deckId: string, newCardsPerDay: number, starredOnly: boole
 }
 
 /** The cards for a Learn or flip session: what is due plus today's new cards, or everything when practising. */
-export function pickSessionCards(data: StudyData, direction: Direction, practice: boolean): Card[] {
+export function pickSessionCards(
+  data: StudyData,
+  direction: Direction,
+  practice: boolean,
+  whole = false,
+): Card[] {
   if (practice) return shuffle(data.cards).slice(0, 20);
+  if (whole) return shuffle(wholeDeckChunk(data.cards, data.progress, direction));
   const selection = selectSessionCards(
     data.cards,
     data.progress,
@@ -129,7 +142,7 @@ export function StudyGate({
 }) {
   const { t } = useI18n();
   const { settings } = useApp();
-  const { direction, practice, starred } = useStudyParams();
+  const { direction, practice, starred, whole } = useStudyParams();
   const loaded = useStudyData(deckId, settings.newCardsPerDay, starred);
 
   if (loaded.status === 'loading') return null;
@@ -153,6 +166,18 @@ export function StudyGate({
     return (
       <EmptyState title={t('study.noCards.title')} text={t('study.noCards.text')}>
         <ButtonLink to={`/decks/${deckId}/cards/new`}>{t('deck.addCard')}</ButtonLink>
+        <ButtonLink to={`/decks/${deckId}`} variant="secondary">
+          {t('study.backToDeck')}
+        </ButtonLink>
+      </EmptyState>
+    );
+  }
+  if (whole && wholeDeckChunk(data.cards, data.progress, direction).length === 0) {
+    return (
+      <EmptyState title={t('whole.done.title')} text={t('whole.done.text')} mood="celebrate">
+        <ButtonLink to={`/decks/${deckId}/${mode}?dir=${direction}&all=1`}>
+          {t('study.practiceAll')}
+        </ButtonLink>
         <ButtonLink to={`/decks/${deckId}`} variant="secondary">
           {t('study.backToDeck')}
         </ButtonLink>

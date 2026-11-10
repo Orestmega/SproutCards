@@ -7,6 +7,7 @@ import type { MessageKey } from '../../i18n';
 import { useRepo } from '../AppProviders';
 import { CheckField } from '../components/Fields';
 import { Icon } from '../components/Icons';
+import { ProgressBar } from '../components/ProgressBar';
 import { snapshotProgress } from '../../core/resume';
 import { readSnapshot } from '../resume';
 import type { IconName } from '../components/Icons';
@@ -32,10 +33,17 @@ export function StudyPanel({
   const repo = useRepo();
   const [direction, setDirection] = useState<Direction>('forward');
   const [starredOnly, setStarredOnly] = useState(false);
-  const due = useLiveQuery(async () => {
+  const counts = useLiveQuery(async () => {
     const now = Date.now();
-    return (await repo.listProgress(deck.id, direction)).filter((p) => p.dueAt <= now).length;
+    const progress = await repo.listProgress(deck.id, direction);
+    return {
+      due: progress.filter((p) => p.dueAt <= now).length,
+      // learned in this direction: answered cleanly at least once (as in the garden)
+      learned: progress.filter((p) => p.reps >= 1).length,
+    };
   }, [repo, deck.id, direction]);
+  const due = counts?.due;
+  const learned = Math.min(cardCount, counts?.learned ?? 0);
 
   const snapshot = readSnapshot(deck.id, direction);
   const resumable = snapshot && snapshot.state.current !== null ? snapshotProgress(snapshot) : null;
@@ -91,6 +99,19 @@ export function StudyPanel({
               </span>
             </Link>
           )}
+          <Link to={`${base}/learn?dir=${direction}&whole=1`} className="whole-card">
+            <span className="whole-card__top">
+              <span className="list-row__title">{t('whole.title')}</span>
+              <span className="muted">{t('whole.progress', { learned, total: cardCount })}</span>
+            </span>
+            <ProgressBar
+              value={cardCount ? learned / cardCount : 0}
+              label={t('whole.progress', { learned, total: cardCount })}
+            />
+            <span className="muted">
+              {learned >= cardCount ? t('whole.allDone') : t('whole.desc')}
+            </span>
+          </Link>
           <div className="modes">
             {MODES.map((mode) => (
               <Link

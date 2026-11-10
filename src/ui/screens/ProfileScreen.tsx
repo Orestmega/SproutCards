@@ -33,8 +33,9 @@ export function ProfileScreen() {
   const [saveFailed, setSaveFailed] = useState(false);
   if (!garden) return null;
 
-  const { plants, decks, times, achievements } = garden;
-  const blooms = plants.filter((p) => p.stage === 'bloom').length;
+  const { decks, times, achievements } = garden;
+  // learned words (plus the cheat panel's bonus), the same number that earns flowers
+  const blooms = garden.facts.blooms;
   const rank = gardenRank(blooms);
   // every kind of flower found in the garden can be the picture
   const choices: AvatarId[] = ['sprout', ...garden.found];

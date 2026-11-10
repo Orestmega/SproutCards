@@ -1,4 +1,6 @@
 // Domain types shared by the pure core, the storage layer and the UI.
+import type { Cheats } from './cheats';
+import { NO_CHEATS } from './cheats';
 import type { VarietyId } from './gardenLife';
 // Nothing here depends on React or on browser APIs.
 
@@ -125,6 +127,8 @@ export interface Settings {
    * `null` as a whole = nothing planted yet (the earned flowers then stand in order).
    */
   gardenPlots: (string | null)[] | null;
+  /** Bonuses of the cheat panel (testing only; real progress is never changed). */
+  cheats: Cheats;
 }
 
 export const DEFAULT_SETTINGS: Settings = {
@@ -140,4 +144,5 @@ export const DEFAULT_SETTINGS: Settings = {
   profileName: '',
   avatar: 'sprout',
   gardenPlots: null,
+  cheats: NO_CHEATS,
 };

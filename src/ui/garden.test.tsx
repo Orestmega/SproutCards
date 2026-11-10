@@ -190,7 +190,7 @@ describe('garden screen', () => {
     const collection = heading.closest('section') as HTMLElement;
     expect(within(collection).getByText('1 of 23')).toBeInTheDocument(); // the daisy
     expect(within(collection).getByText('Earned: 1')).toBeInTheDocument();
-    expect(screen.getAllByText(/Next: Tulip/)[0]).toHaveTextContent('learn 2 more words');
+    expect(screen.getAllByText(/Next: Tulip/)[0]).toHaveTextContent('learn 1 more word');
   });
 
   it('an empty garden points to the catalog', async () => {

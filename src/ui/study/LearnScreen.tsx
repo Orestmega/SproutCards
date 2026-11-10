@@ -17,10 +17,13 @@ import type { GrowthGain } from '../../core/garden';
 import { isResumable, markSaved, unsaved, withCurrentCards } from '../../core/resume';
 import { createFixedIntervalScheduler } from '../../core/scheduler';
 import type { CardSide, Direction } from '../../core/types';
+import { deckLearning, mergeProgress } from '../../core/wholeDeck';
+import type { DeckLearning } from '../../core/wholeDeck';
 import { useI18n } from '../../i18n';
 import { useApp } from '../AppProviders';
 import { Button } from '../components/Button';
 import { ConfirmDialog } from '../components/ConfirmDialog';
+import { ProgressBar } from '../components/ProgressBar';
 import { SpeakButton } from '../components/SpeakButton';
 import { ChoiceList, instructionKey, TypingForm } from './parts';
 import { useCue } from '../cues';
@@ -35,7 +38,7 @@ import type { StudyData } from './useStudy';
 const scheduler = createFixedIntervalScheduler();
 
 export function LearnScreen() {
-  const { deckId } = useStudyParams();
+  const { deckId, whole } = useStudyParams();
   // Changing the key reloads the data and starts a fresh session ("Study again").
   const [run, setRun] = useState(0);
   return (
@@ -43,7 +46,7 @@ export function LearnScreen() {
       key={run}
       deckId={deckId}
       mode="learn"
-      emptyFor={(data, direction) => pickSessionCards(data, direction, false).length === 0}
+      emptyFor={(data, direction) => pickSessionCards(data, direction, false, whole).length === 0}
     >
       {(data) => <LearnSession data={data} onRestart={() => setRun((r) => r + 1)} />}
     </StudyGate>
@@ -63,7 +66,7 @@ function LearnSession({ data, onRestart }: { data: StudyData; onRestart: () => v
   const chrome = useStudyChrome();
   const cue = useCue();
   const navigate = useNavigate();
-  const { direction, practice, resume } = useStudyParams();
+  const { direction, practice, resume, whole } = useStudyParams();
   const { deck } = data;
 
   // A session left half-way can be continued (`?resume=1`); practice sessions are not kept.
@@ -75,7 +78,7 @@ function LearnSession({ data, onRestart }: { data: StudyData; onRestart: () => v
         saved: { cards: snapshot.savedCardIds, events: snapshot.savedEvents },
       };
     }
-    const cards = pickSessionCards(data, direction, practice);
+    const cards = pickSessionCards(data, direction, practice, whole);
     return {
       state: startSession(cards, direction, {
         ...DEFAULT_LEARN_CONFIG,
@@ -93,6 +96,8 @@ function LearnSession({ data, onRestart }: { data: StudyData; onRestart: () => v
   const [grown, setGrown] = useState<GrowthGain | null>(null);
   const [confirmLeave, setConfirmLeave] = useState(false);
   const [combo, setCombo] = useState(0); // correct answers in a row, for Sprout's cheers
+  /** "Learn the whole deck": how many words of the deck are learned after this session. */
+  const [wholeAfter, setWholeAfter] = useState<DeckLearning | null>(null);
   const saved = useRef(false);
 
   const finished = !answered && isFinished(state);
@@ -109,6 +114,8 @@ function LearnSession({ data, onRestart }: { data: StudyData; onRestart: () => v
       const rest = unsaved(all, sessionToLogs(state), stored.current.cards, stored.current.events);
       setGrown(growthGain(data.progress, rest.progress));
       await repo.saveSession(rest.progress, rest.logs);
+      if (whole)
+        setWholeAfter(deckLearning(data.cards, mergeProgress(data.progress, all), direction));
       if (isFinished(state) || practice) {
         clearSnapshot(deck.id, direction);
       } else {
@@ -133,7 +140,7 @@ function LearnSession({ data, onRestart }: { data: StudyData; onRestart: () => v
       saved.current = false;
       setSaveState('error');
     }
-  }, [state, data.progress, practice, repo, deck.id, direction]);
+  }, [state, data.progress, data.cards, practice, whole, repo, deck.id, direction]);
 
   // Keep a snapshot after every answer, so the session can be continued even if the tab is closed.
   useEffect(() => {
@@ -255,11 +262,30 @@ function LearnSession({ data, onRestart }: { data: StudyData; onRestart: () => v
           void save();
         }}
         onAgain={onRestart}
+        againLabel={
+          whole && wholeAfter && wholeAfter.learned < wholeAfter.total ? t('whole.next') : undefined
+        }
         extra={
-          <p className="muted">
-            {tp('learn.cardsLearned', summary.passedCards)}
-            {practice ? ` ${t('learn.practiceNote')}` : ''}
-          </p>
+          <>
+            <p className="muted">
+              {tp('learn.cardsLearned', summary.passedCards)}
+              {practice ? ` ${t('learn.practiceNote')}` : ''}
+            </p>
+            {whole && wholeAfter && (
+              <div className="stack">
+                <p className="whole-note">
+                  {t('whole.progress', { learned: wholeAfter.learned, total: wholeAfter.total })}
+                </p>
+                <ProgressBar
+                  value={wholeAfter.total ? wholeAfter.learned / wholeAfter.total : 0}
+                  label={t('whole.progress', {
+                    learned: wholeAfter.learned,
+                    total: wholeAfter.total,
+                  })}
+                />
+              </div>
+            )}
+          </>
         }
       />
     );

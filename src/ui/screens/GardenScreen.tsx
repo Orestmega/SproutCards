@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { dayPart } from '../../core/cheer';
-import type { MascotMood } from '../../core/cheer';
 import { growthCounts } from '../../core/garden';
 import { gardenFields } from '../../core/gardenBeds';
 import {
@@ -22,7 +21,6 @@ import { DecorationIcon } from '../components/Decoration';
 import { GardenScene } from '../components/GardenScene';
 import { GrowthLegend } from '../components/GrowthBar';
 import { PageHeader } from '../components/Layout';
-import { Mascot } from '../components/Mascot';
 import { EmptyState, Notice } from '../components/Notice';
 import { Plant } from '../components/Plant';
 import { ProgressBar } from '../components/ProgressBar';
@@ -34,12 +32,6 @@ import type { GardenPlant } from '../garden';
 const RAIN_MS = 2600;
 /** Plants shown per bed; a huge deck shows the most grown ones and a count of the rest. */
 const BED_LIMIT = 60;
-const MOOD: Record<string, MascotMood> = {
-  new: 'normal',
-  fresh: 'happy',
-  thirsty: 'encouraging',
-  wilted: 'oops',
-};
 
 /** The garden in full: the picture, today's watering, every word as a plant, flowers and decorations. */
 export function GardenScreen() {
@@ -51,7 +43,6 @@ export function GardenScreen() {
   const garden = useGarden(now);
   const [wateredDay, water] = useWatering();
   const [raining, setRaining] = useState(false);
-  const [reaction, setReaction] = useState(0);
   const [selected, setSelected] = useState<GardenPlant | null>(null);
   /** The plot whose flower is being chosen. */
   const [planting, setPlanting] = useState<number | null>(null);
@@ -95,7 +86,6 @@ export function GardenScreen() {
   function onWater() {
     water(now);
     setRaining(true);
-    setReaction((r) => r + 1);
     cue('finish');
   }
 
@@ -120,9 +110,6 @@ export function GardenScreen() {
         raining={raining}
         big
       >
-        <div className="garden__sprout">
-          <Mascot mood={raining ? 'celebrate' : MOOD[health]} size={112} reaction={reaction} />
-        </div>
         <p className={`garden__health garden__health--${health}`}>{t(`garden.health.${health}`)}</p>
       </GardenScene>
       <p className="muted">
@@ -316,7 +303,7 @@ export function GardenScreen() {
                 <DecorationIcon id={d.id} size={56} />
                 <span className="ach__name">{t(`decor.${d.id}`)}</span>
                 <span className="muted">{t(`achievement.${d.achievement}.how`)}</span>
-                {d.earned && <span className="badge">{t('stats.achievementDone')}</span>}
+                {d.earned && <span className="visually-hidden">{t('stats.achievementDone')}</span>}
               </div>
             </li>
           ))}
@@ -372,6 +359,9 @@ type TP = ReturnType<typeof useI18n>['tp'];
 function goalText(reward: Reward, facts: RewardFacts, tp: TP): string {
   const { kind, at } = reward.goal;
   if (kind === 'streak') return tp('garden.unlock.streak', at, { now: facts.bestStreak });
+  if (kind === 'challenges') {
+    return tp('garden.unlock.challenges', Math.max(0, at - facts.challenges));
+  }
   if (kind === 'golden') {
     return tp('garden.unlock.goldenWords', Math.max(0, at - facts.goldenWords), {
       reps: GOLDEN_REPS,

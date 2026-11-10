@@ -44,6 +44,13 @@ export function growthGain(
   return gain;
 }
 
+/** Learned words: studied cleanly at least once in some direction (a leaf or a flower). */
+export function learnedCount(progress: readonly { cardId: string; reps: number }[]): number {
+  let count = 0;
+  for (const reps of bestRepsByCard(progress).values()) if (reps >= 1) count++;
+  return count;
+}
+
 /** The best number of correct reviews in a row per card: the stronger direction decides. */
 export function bestRepsByCard(
   progress: readonly { cardId: string; reps: number }[],

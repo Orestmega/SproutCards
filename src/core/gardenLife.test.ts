@@ -21,7 +21,7 @@ const NOW = new Date(2026, 2, 11, 15).getTime();
 const day = (offset: number, hour = 10) => new Date(2026, 2, 11 + offset, hour).getTime();
 
 describe('flowers as rewards', () => {
-  const none = { blooms: 0, bestStreak: 0, goldenWords: 0 };
+  const none = { blooms: 0, bestStreak: 0, goldenWords: 0, challenges: 0 };
 
   it('nothing is earned at the start; the first learned word earns the first flower', () => {
     expect(earnedRewards(none)).toEqual([]);
@@ -30,7 +30,7 @@ describe('flowers as rewards', () => {
   });
 
   it('every step of a goal is one more flower: words give common kinds, days rare ones', () => {
-    const earned = earnedRewards({ blooms: 20, bestStreak: 7, goldenWords: 1 });
+    const earned = earnedRewards({ blooms: 20, bestStreak: 7, goldenWords: 1, challenges: 0 });
     expect(earned.filter((r) => r.goal.kind === 'blooms')).toHaveLength(7); // 1 3 5 8 12 16 20
     expect(earned.filter((r) => r.goal.kind === 'streak').map((r) => r.variety)).toEqual([
       'sunflower',
@@ -45,6 +45,12 @@ describe('flowers as rewards', () => {
   it('reward ids are unique, and every kind can be earned', () => {
     expect(new Set(REWARDS.map((r) => r.id)).size).toBe(REWARDS.length);
     for (const v of VARIETIES) expect(firstRewardOf(v.id), v.id).toBeDefined();
+  });
+
+  it('finished weekly challenges earn rare flowers too', () => {
+    const earned = earnedRewards({ ...none, challenges: 3 });
+    expect(earned.map((r) => r.id)).toEqual(['challenges-1', 'challenges-3']);
+    expect(earned.every((r) => rarityOf(r.variety) === 'rare')).toBe(true);
   });
 
   it('kinds found are the kinds of the earned flowers', () => {
@@ -69,7 +75,7 @@ describe('flowerVariety', () => {
 });
 
 describe('gardenPlotsOf', () => {
-  const earned = earnedRewards({ blooms: 5, bestStreak: 0, goldenWords: 0 }); // 3 flowers
+  const earned = earnedRewards({ blooms: 5, bestStreak: 0, goldenWords: 0, challenges: 0 }); // 3 flowers
 
   it('until anything is planted, the earned flowers stand in order: no more than earned', () => {
     const plots = gardenPlotsOf(null, earned);

@@ -6,6 +6,7 @@ import { UI_LANGUAGES, useI18n } from '../../i18n';
 import { useApp } from '../AppProviders';
 import { Avatar } from '../components/Avatar';
 import { Button, ButtonLink } from '../components/Button';
+import { CheatPanel } from '../components/CheatPanel';
 import { CheckField, TextField } from '../components/Fields';
 import { PageHeader } from '../components/Layout';
 import { Notice } from '../components/Notice';
@@ -225,6 +226,10 @@ export function SettingsScreen() {
             {t('settings.sources')}
           </ButtonLink>
         </div>
+      </section>
+
+      <section className="section" aria-label={t('cheats.title')}>
+        <CheatPanel value={settings.cheats} onChange={(cheats) => save({ cheats })} />
       </section>
     </>
   );

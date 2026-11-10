@@ -1637,6 +1637,13 @@ textarea.input {
   height: 30px;
 }
 
+/* reached: the card glows gold, no label needed */
+.ach--done {
+  box-shadow:
+    0 0 0 2px var(--color-sun),
+    0 6px 20px rgb(255 200 61 / 35%);
+}
+
 .ach--done .ach__medal {
   background: var(--color-sun);
   color: #4d3600;
@@ -2780,4 +2787,123 @@ textarea.input {
   .plot-dialog__grow {
     animation: none;
   }
+}
+
+/* ---------- Learn the whole deck ---------- */
+.whole-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  box-shadow:
+    0 var(--edge) 0 var(--color-border),
+    var(--shadow-1);
+  margin-bottom: var(--edge);
+  color: inherit;
+  font-weight: 500;
+  text-decoration: none;
+  transition: transform var(--motion-fast);
+}
+
+.whole-card:hover {
+  transform: translateY(-2px);
+}
+
+.whole-card__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.whole-note {
+  font-weight: 800;
+}
+
+/* ---------- The week: goal and challenges ---------- */
+.weekly {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.weekly__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-2);
+}
+
+.weekly__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.weekly__item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.weekly__row {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.weekly__name {
+  font-weight: 800;
+}
+
+.weekly__count {
+  flex: none;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.weekly__item--done .progress__fill {
+  background: var(--color-sun);
+}
+
+/* ---------- The cheat panel (settings) ---------- */
+.cheats__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.cheats__row {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-1);
+}
+
+.cheats__label {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  font-weight: 700;
+}
+
+.cheats__value {
+  color: var(--color-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.cheats__buttons,
+.cheats__actions {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
 }

@@ -45,14 +45,19 @@ export type VarietyId = (typeof VARIETIES)[number]['id'];
 export const GOLDEN_REPS = 5;
 
 export interface RewardFacts {
-  /** Learned words (flowers on the beds). */
+  /**
+   * Learned words: answered cleanly in a session at least once (a leaf or a flower on the beds). Counted
+   * from the first success, so studying shows at once, not only after the next day's review.
+   */
   blooms: number;
   bestStreak: number;
   /** Words with at least `GOLDEN_REPS` right answers in a row. */
   goldenWords: number;
+  /** Weekly goals and challenges finished, over all weeks (see `weekly.ts`). */
+  challenges: number;
 }
 
-export type GoalKind = 'blooms' | 'streak' | 'golden';
+export type GoalKind = 'blooms' | 'streak' | 'golden' | 'challenges';
 
 export interface Reward {
   /** Stable id, e.g. `blooms-20`: a plot remembers which reward grows on it. */
@@ -68,6 +73,7 @@ const STEPS: Record<GoalKind, number[]> = {
   ],
   streak: [3, 7, 14, 21, 30, 45, 60, 100],
   golden: [1, 5, 10, 25, 50],
+  challenges: [1, 3, 5, 8, 12, 16, 20, 26, 32, 40, 52],
 };
 
 const COMMON = VARIETIES.filter((v) => v.rarity === 'common').map((v) => v.id);
@@ -80,17 +86,25 @@ const RARE = VARIETIES.filter((v) => v.rarity === 'rare').map((v) => v.id);
  */
 export const REWARDS: readonly Reward[] = (Object.keys(STEPS) as GoalKind[]).flatMap((kind) =>
   STEPS[kind].map((at, i): Reward => {
-    const pool = kind === 'blooms' ? COMMON : kind === 'streak' ? RARE : ['golden' as const];
+    // learned words give the common kinds in turn, days in a row and weekly challenges the rare ones
+    // (from opposite ends, so both bring something new), long-known words golden flowers
+    const pool =
+      kind === 'blooms'
+        ? COMMON
+        : kind === 'streak'
+          ? RARE
+          : kind === 'challenges'
+            ? [...RARE].reverse()
+            : ['golden' as const];
     return { id: `${kind}-${at}`, variety: pool[i % pool.length] as VarietyId, goal: { kind, at } };
   }),
 );
 
 function factOf(kind: GoalKind, facts: RewardFacts): number {
-  return kind === 'blooms'
-    ? facts.blooms
-    : kind === 'streak'
-      ? facts.bestStreak
-      : facts.goldenWords;
+  if (kind === 'blooms') return facts.blooms;
+  if (kind === 'streak') return facts.bestStreak;
+  if (kind === 'challenges') return facts.challenges;
+  return facts.goldenWords;
 }
 
 export function isEarned(reward: Reward, facts: RewardFacts): boolean {
