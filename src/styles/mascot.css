@@ -1,43 +1,175 @@
 /*
- * Sprout's motion. Origins are in the drawing's own units (viewBox 0 0 120 120).
- * Idle: breathing, blinking, leaves in the wind. Reactions: a short animation of `.mascot__actor`,
- * replayed whenever the component gets a new `reaction` number.
+ * Sprout's motion. The picture is a stack of layers in a 120 × 120 square (see Mascot.tsx); the origins
+ * below are the joints in those units: where the sprout meets the page, the page meets the head, the arms
+ * the shoulders and the feet the ground.
+ * Idle: breathing, the page rocking, the sprout swaying, the arms swinging, the feet tapping.
+ * Reactions: a short animation of `.mascot__actor`, replayed whenever the component gets a new `reaction`.
  */
-.mascot__torso,
-.mascot__sprout,
-.mascot__eyes,
-.mascot__arm,
+.mascot {
+  overflow: visible;
+}
+
 .mascot__actor,
-.mascot__shadow,
+.mascot__torso,
+.mascot__page,
+.mascot__sprout,
+.mascot__rest,
+.mascot__arm,
+.mascot__foot,
 .mascot__dots,
-.mascot__drop {
+.mascot__drop,
+.mascot__zzz > * {
   transform-box: view-box;
 }
 
+/* ---------- Idle: every part on its own ---------- */
+
+/* a soft breath: the round body squashes and stretches a little */
 .mascot__torso {
+  transform-origin: 60px 108px;
   animation: mascot-breathe 3.2s ease-in-out infinite;
 }
 
+@keyframes mascot-breathe {
+  50% {
+    transform: translateY(-1.5px) scale(1.02, 0.98);
+  }
+}
+
+/* the page on the head rocks gently */
+.mascot__page {
+  transform-origin: 60px 45.8px;
+  animation: mascot-page 3.6s ease-in-out infinite alternate;
+}
+
+@keyframes mascot-page {
+  from {
+    transform: rotate(-2.5deg);
+  }
+  to {
+    transform: rotate(2.5deg);
+  }
+}
+
+/* the sprout sways in the wind, out of step with the page */
 .mascot__sprout {
-  transform-origin: 60px 17px;
-  animation: mascot-sway 2.6s ease-in-out infinite alternate;
+  transform-origin: 59px 16.2px;
+  animation: mascot-sway 2.2s ease-in-out -1.1s infinite alternate;
 }
 
-.mascot__eyes {
-  transform-origin: 60px 72px;
-  animation: mascot-blink 4.8s infinite;
+@keyframes mascot-sway {
+  from {
+    transform: rotate(-7deg);
+  }
+  to {
+    transform: rotate(7deg);
+  }
 }
 
+/* the little arms swing, half a beat apart */
+.mascot__rest--left,
+.mascot__arm--left {
+  transform-origin: 26px 78.3px;
+}
+
+.mascot__rest--right,
 .mascot__arm--right {
-  transform-origin: 92px 80px;
-  animation: mascot-wave 1.1s ease-in-out infinite alternate;
+  transform-origin: 94px 78.3px;
+}
+
+.mascot__rest--left {
+  animation: arm-swing-left 2.4s ease-in-out infinite alternate;
+}
+
+.mascot__rest--right {
+  animation: arm-swing 2.4s ease-in-out -1.2s infinite alternate;
+}
+
+@keyframes arm-swing {
+  from {
+    transform: rotate(-4deg);
+  }
+  to {
+    transform: rotate(6deg);
+  }
+}
+
+@keyframes arm-swing-left {
+  from {
+    transform: rotate(4deg);
+  }
+  to {
+    transform: rotate(-6deg);
+  }
+}
+
+/* waving: a quick swing of the arm (encouraging: the right one, celebrating: both) */
+.mascot__arm--right {
+  animation: mascot-wave 0.45s ease-in-out infinite alternate;
 }
 
 .mascot__arm--left {
-  transform-origin: 28px 80px;
-  animation: mascot-wave-left 1.1s ease-in-out infinite alternate;
+  animation: mascot-wave-left 0.45s ease-in-out infinite alternate;
 }
 
+@keyframes mascot-wave {
+  from {
+    transform: rotate(-8deg);
+  }
+  to {
+    transform: rotate(10deg);
+  }
+}
+
+@keyframes mascot-wave-left {
+  from {
+    transform: rotate(8deg);
+  }
+  to {
+    transform: rotate(-10deg);
+  }
+}
+
+/* now and then one foot taps, then the other */
+.mascot__foot--left {
+  transform-origin: 40.6px 111.5px;
+  animation: foot-tap 5s ease-in-out infinite;
+}
+
+.mascot__foot--right {
+  transform-origin: 79.4px 111.5px;
+  animation: foot-tap-right 5s ease-in-out 2.5s infinite;
+}
+
+@keyframes foot-tap {
+  0%,
+  80%,
+  100% {
+    transform: none;
+  }
+  86% {
+    transform: translateY(-2.5px) rotate(-8deg);
+  }
+  92% {
+    transform: none;
+  }
+}
+
+@keyframes foot-tap-right {
+  0%,
+  80%,
+  100% {
+    transform: none;
+  }
+  86% {
+    transform: translateY(-2.5px) rotate(8deg);
+  }
+  92% {
+    transform: none;
+  }
+}
+
+/* ---------- Moods ---------- */
 .mascot__actor {
   transform-origin: 60px 112px;
 }
@@ -62,70 +194,37 @@
   animation: mascot-tilt 3.4s ease-in-out infinite;
 }
 
-.mascot__sparkle {
-  transform-box: fill-box;
-  transform-origin: center;
-  animation: mascot-twinkle 1.2s ease-in-out infinite;
+/* happy: the sprout wiggles quickly; celebrating: it spins round once and the feet dance */
+.mascot--happy .mascot__sprout {
+  animation: mascot-sway 0.35s ease-in-out 4 alternate;
 }
 
-.mascot__dots > * {
-  animation: mascot-dot 1.5s ease-in-out infinite;
+.mascot--celebrate .mascot__sprout {
+  animation: sprout-spin 0.9s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.mascot__dots > :nth-child(2) {
-  animation-delay: 200ms;
+.mascot--celebrate .mascot__foot--left,
+.mascot--celebrate .mascot__foot--right {
+  animation-duration: 0.9s;
+  animation-delay: 0s;
 }
 
-.mascot__dots > :nth-child(3) {
-  animation-delay: 400ms;
+.mascot--celebrate .mascot__foot--right {
+  animation-delay: 0.45s;
 }
 
-.mascot__drop {
-  animation: mascot-drop 1.6s ease-in infinite;
+/* asleep: slow breathing and a slow sprout */
+.mascot--sleepy .mascot__torso {
+  animation-duration: 5s;
 }
 
-@keyframes mascot-breathe {
-  50% {
-    transform: translateY(-1.6px);
-  }
+.mascot--sleepy .mascot__sprout {
+  animation-duration: 4s;
 }
 
-@keyframes mascot-sway {
-  from {
-    transform: rotate(-7deg);
-  }
-  to {
-    transform: rotate(7deg);
-  }
-}
-
-@keyframes mascot-blink {
-  0%,
-  92%,
-  100% {
-    transform: scaleY(1);
-  }
-  95% {
-    transform: scaleY(0.1);
-  }
-}
-
-@keyframes mascot-wave {
-  from {
-    transform: rotate(-10deg);
-  }
-  to {
-    transform: rotate(14deg);
-  }
-}
-
-@keyframes mascot-wave-left {
-  from {
-    transform: rotate(10deg);
-  }
-  to {
-    transform: rotate(-14deg);
-  }
+/* a finger or mouse over Sprout: it wiggles, as if it were ticklish */
+.mascot-btn:hover .mascot__actor {
+  animation: mascot-tickle 0.6s ease-in-out;
 }
 
 @keyframes mascot-hop {
@@ -195,6 +294,55 @@
   }
 }
 
+@keyframes sprout-spin {
+  from {
+    transform: rotate(-360deg);
+  }
+}
+
+@keyframes mascot-tickle {
+  25% {
+    transform: rotate(-4deg) scale(1.03, 0.97);
+  }
+  50% {
+    transform: rotate(3deg) scale(0.98, 1.02);
+  }
+  75% {
+    transform: rotate(-2deg);
+  }
+}
+
+/* ---------- The small things around Sprout ---------- */
+.mascot__sparkle {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: mascot-twinkle 1.2s ease-in-out infinite;
+}
+
+.mascot__dots > * {
+  animation: mascot-dot 1.5s ease-in-out infinite;
+}
+
+.mascot__dots > :nth-child(2) {
+  animation-delay: 200ms;
+}
+
+.mascot__dots > :nth-child(3) {
+  animation-delay: 400ms;
+}
+
+.mascot__drop {
+  animation: mascot-drop 1.6s ease-in infinite;
+}
+
+.mascot__zzz > * {
+  animation: mascot-z 3s ease-in infinite;
+}
+
+.mascot__zzz > :nth-child(2) {
+  animation-delay: 1.5s;
+}
+
 @keyframes mascot-twinkle {
   0%,
   100% {
@@ -231,88 +379,6 @@
   }
 }
 
-/* idle life of every part (see the end of the file) */
-
-/* reduced motion: Sprout stands still (and stays fully visible) */
-@media (prefers-reduced-motion: reduce) {
-  .mascot *,
-  .bubble {
-    animation: none !important;
-  }
-}
-
-/* ---------- Extra moves ---------- */
-.mascot__leaf,
-.mascot__zzz > * {
-  transform-box: view-box;
-}
-
-/* breathing has a little squash and stretch */
-@keyframes mascot-breathe {
-  50% {
-    transform: translateY(-1.8px) scale(1.01, 0.99);
-  }
-}
-
-.mascot__torso {
-  transform-origin: 60px 110px;
-}
-
-/* happy: the leaves flap; celebrating: the sprout spins round once */
-/* both leaves are drawn as the right one (the left is its mirror), so they share the origin */
-.mascot__leaf--right {
-  transform-origin: 60px 11.5px;
-}
-
-.mascot__leaf--left {
-  transform-origin: 60px 11.5px;
-}
-
-.mascot--happy .mascot__leaf--right,
-.mascot--celebrate .mascot__leaf--right {
-  animation: leaf-flap 0.5s ease-in-out 3 alternate;
-}
-
-.mascot--happy .mascot__leaf--left,
-.mascot--celebrate .mascot__leaf--left {
-  animation: leaf-flap 0.5s ease-in-out 3 alternate; /* mirrored: the two flap like wings */
-}
-
-@keyframes leaf-flap {
-  to {
-    transform: rotate(-18deg);
-  }
-}
-
-@keyframes leaf-flap-left {
-  to {
-    transform: rotate(18deg);
-  }
-}
-
-.mascot--celebrate .mascot__sprout {
-  animation: sprout-spin 0.9s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-@keyframes sprout-spin {
-  from {
-    transform: rotate(-360deg);
-  }
-}
-
-/* asleep: slow breathing, the z's float up and fade, one after the other */
-.mascot--sleepy .mascot__torso {
-  animation-duration: 5s;
-}
-
-.mascot__zzz > * {
-  animation: mascot-z 3s ease-in infinite;
-}
-
-.mascot__zzz > :nth-child(2) {
-  animation-delay: 1.5s;
-}
-
 @keyframes mascot-z {
   0% {
     opacity: 0;
@@ -327,223 +393,10 @@
   }
 }
 
-/* a finger or mouse over Sprout: it wiggles, as if it were ticklish */
-.mascot-btn:hover .mascot__actor {
-  animation: mascot-tickle 0.6s ease-in-out;
-}
-
-@keyframes mascot-tickle {
-  25% {
-    transform: rotate(-4deg) scale(1.03, 0.97);
+/* reduced motion: Sprout stands still (and stays fully visible) */
+@media (prefers-reduced-motion: reduce) {
+  .mascot *,
+  .bubble {
+    animation: none !important;
   }
-  50% {
-    transform: rotate(3deg) scale(0.98, 1.02);
-  }
-  75% {
-    transform: rotate(-2deg);
-  }
-}
-
-/* ---------- Every part of the body lives on its own (idle) ---------- */
-.mascot__page,
-.mascot__rest,
-.mascot__foot,
-.mascot__mouth,
-.mascot__arcs,
-.mascot__look {
-  transform-box: view-box;
-}
-
-/* a livelier breath: the round body squashes and stretches a little */
-@keyframes mascot-breathe {
-  50% {
-    transform: translateY(-2px) scale(1.025, 0.975);
-  }
-}
-
-/* the page on the head rocks gently, a beat behind the body */
-.mascot__page {
-  transform-origin: 60px 58px;
-  animation: mascot-page 3.6s ease-in-out infinite alternate;
-}
-
-@keyframes mascot-page {
-  from {
-    transform: rotate(-2.5deg);
-  }
-  to {
-    transform: rotate(2.5deg);
-  }
-}
-
-/* the two leaves rustle, each in its own rhythm */
-.mascot__leaf--left {
-  animation: leaf-rustle-left 1.9s ease-in-out infinite alternate;
-}
-
-.mascot__leaf--right {
-  animation: leaf-rustle 1.6s ease-in-out -0.8s infinite alternate;
-}
-
-@keyframes leaf-rustle {
-  from {
-    transform: rotate(4deg);
-  }
-  to {
-    transform: rotate(-9deg);
-  }
-}
-
-@keyframes leaf-rustle-left {
-  from {
-    transform: rotate(-4deg);
-  }
-  to {
-    transform: rotate(9deg);
-  }
-}
-
-/* the little arms swing, the left one half a beat later */
-.mascot__rest--left {
-  transform-origin: 26px 80px;
-  animation: arm-swing-left 2.4s ease-in-out infinite alternate;
-}
-
-.mascot__rest--right {
-  transform-origin: 94px 80px;
-  animation: arm-swing 2.4s ease-in-out -1.2s infinite alternate;
-}
-
-@keyframes arm-swing {
-  from {
-    transform: rotate(-6deg);
-  }
-  to {
-    transform: rotate(10deg);
-  }
-}
-
-@keyframes arm-swing-left {
-  from {
-    transform: rotate(6deg);
-  }
-  to {
-    transform: rotate(-10deg);
-  }
-}
-
-/* now and then one foot taps, then the other */
-.mascot__foot--left {
-  transform-origin: 40px 116px;
-  animation: foot-tap 5s ease-in-out infinite;
-}
-
-.mascot__foot--right {
-  transform-origin: 80px 116px;
-  animation: foot-tap-right 5s ease-in-out 2.5s infinite;
-}
-
-@keyframes foot-tap {
-  0%,
-  80%,
-  100% {
-    transform: none;
-  }
-  86% {
-    transform: translateY(-2.5px) rotate(-10deg);
-  }
-  92% {
-    transform: none;
-  }
-}
-
-@keyframes foot-tap-right {
-  0%,
-  80%,
-  100% {
-    transform: none;
-  }
-  86% {
-    transform: translateY(-2.5px) rotate(10deg);
-  }
-  92% {
-    transform: none;
-  }
-}
-
-/* the cheeks glow warmer with each breath */
-.mascot__cheeks > * {
-  transform-box: fill-box;
-  transform-origin: center;
-  animation: cheek-glow 3.2s ease-in-out infinite;
-}
-
-@keyframes cheek-glow {
-  50% {
-    transform: scale(1.12);
-  }
-}
-
-/* the smile opens and closes a little, as if humming */
-.mascot__mouth {
-  transform-origin: 60px 84px;
-  animation: mouth-hum 3.2s ease-in-out infinite;
-}
-
-@keyframes mouth-hum {
-  50% {
-    transform: scale(1.05, 0.88);
-  }
-}
-
-/* closed, smiling eyes squeeze shut for a moment, like a blink */
-.mascot__arcs {
-  transform-origin: 60px 72px;
-  animation: eyes-squeeze 4.8s infinite;
-}
-
-@keyframes eyes-squeeze {
-  0%,
-  92%,
-  100% {
-    transform: none;
-  }
-  95% {
-    transform: translateY(1px) scaleY(0.6);
-  }
-}
-
-/* open eyes glance to the sides now and then */
-.mascot__look {
-  animation: eyes-look 7s ease-in-out infinite;
-}
-
-@keyframes eyes-look {
-  0%,
-  30%,
-  100% {
-    transform: none;
-  }
-  38%,
-  50% {
-    transform: translateX(-2.5px);
-  }
-  58%,
-  70% {
-    transform: translateX(2.5px);
-  }
-  78% {
-    transform: none;
-  }
-}
-
-/* celebrating: the arms are up, the feet do a little dance */
-.mascot--celebrate .mascot__foot--left,
-.mascot--celebrate .mascot__foot--right {
-  animation-duration: 0.9s;
-  animation-delay: 0s;
-}
-
-.mascot--celebrate .mascot__foot--right {
-  animation-delay: 0.45s;
 }
