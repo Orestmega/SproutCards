@@ -1025,3 +1025,23 @@
     display: none;
   }
 }
+
+/* "count my typed answer as right": small, under the feedback */
+.override {
+  margin: 0;
+  font-size: var(--font-size-sm, 0.875rem);
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+.override__btn {
+  padding: 4px 2px;
+  border: 0;
+  background: none;
+  color: var(--color-primary-ink, var(--color-text));
+  font: inherit;
+  font-weight: 800;
+  text-decoration: underline;
+  cursor: pointer;
+  min-height: 32px;
+}

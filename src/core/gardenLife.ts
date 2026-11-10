@@ -155,28 +155,6 @@ export function firstRewardOf(variety: VarietyId): Reward | undefined {
   return REWARDS.find((r) => r.variety === variety);
 }
 
-/** A small stable hash: the same word gets the same flower on every device. */
-function hash(text: string): number {
-  let h = 2166136261;
-  for (const char of text) h = Math.imul(h ^ char.charCodeAt(0), 16777619) >>> 0;
-  return h;
-}
-
-/**
- * How a learned word looks on its bed: a golden flower for a word known for long (once a golden flower
- * is found), else one of the kinds found, picked by a stable hash.
- */
-export function flowerVariety(
-  cardId: string,
-  reps: number,
-  found: readonly VarietyId[],
-): VarietyId {
-  if (reps >= GOLDEN_REPS && found.includes('golden')) return 'golden';
-  const pool = found.filter((id) => id !== 'golden');
-  if (pool.length === 0) return 'daisy';
-  return pool[hash(cardId) % pool.length] ?? 'daisy';
-}
-
 export function rarityOf(id: VarietyId): Rarity {
   return VARIETIES.find((v) => v.id === id)?.rarity ?? 'common';
 }

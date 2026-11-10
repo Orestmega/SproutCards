@@ -230,7 +230,7 @@ describe('statistics', () => {
 
     // the garden: one word in bloom, one seed
     expect(screen.getByRole('heading', { name: 'Your garden' })).toBeInTheDocument();
-    expect(screen.getAllByText('Seeds: 1 · Sprouts: 0 · Leaves: 0 · Blooms: 1')).toHaveLength(1);
+    expect(screen.getAllByText('Seeds: 1 · Sprouts: 0 · Leaves: 0 · Bushes: 1')).toHaveLength(1);
 
     // the forecast counts the word due tomorrow
     expect(screen.getByRole('heading', { name: 'Reviews, next 7 days' })).toBeInTheDocument();

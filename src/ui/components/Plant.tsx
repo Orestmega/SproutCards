@@ -409,9 +409,10 @@ function WeeklyGlow() {
 /** The drawing of a stage in a 32×32 box, standing on the bottom edge. A bloom shows its kind. */
 export function PlantArt({
   stage,
-  variety = 'daisy',
+  variety,
 }: {
   stage: GrowthStage;
+  /** A kind of flower (rewards, the collection). Without it a bloom is a green bush: words have no flowers. */
   variety?: VarietyId;
 }) {
   if (stage === 'seed') {
@@ -454,12 +455,35 @@ export function PlantArt({
       </g>
     );
   }
+  if (!variety) return <Bush />;
   return (
     <g>
       <Soil />
       <path d="M16 28 V12" stroke={STEM} strokeWidth="2.6" strokeLinecap="round" />
       <Leaves />
       <Flower variety={variety} />
+    </g>
+  );
+}
+
+/** A word known well: a full, round green bush (no flower: flowers are only rewards). */
+function Bush() {
+  return (
+    <g>
+      <Soil />
+      <path d="M16 28 V18" stroke={STEM} strokeWidth="2.6" strokeLinecap="round" />
+      <circle cx="10.5" cy="17" r="6" fill={LEAF} />
+      <circle cx="21.5" cy="17" r="6" fill={LEAF} />
+      <circle cx="16" cy="11" r="7" fill={LEAF_LIGHT} />
+      <circle cx="16" cy="19" r="5.5" fill={LEAF} />
+      <path
+        d="M12.5 9.5 Q14.5 7.5 17 8"
+        stroke="#ffffff"
+        strokeWidth="1.2"
+        strokeLinecap="round"
+        fill="none"
+        opacity="0.5"
+      />
     </g>
   );
 }

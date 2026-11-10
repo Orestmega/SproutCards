@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import { gardenShare } from '../../core/garden';
 import type { DeckSummary } from '../../db/repo';
 import { useI18n } from '../../i18n';
 import { GrowthBar } from './GrowthBar';
@@ -47,7 +46,8 @@ export function DeckCard({ summary }: { summary: DeckSummary }) {
         <span className="deck-card__foot">
           <span className="muted">
             {tp('count.cards', cardCount)} ·{' '}
-            {t('deck.grown', { percent: Math.round(gardenShare(growth) * 100) })}
+            {/* learned: answered cleanly at least once (a leaf or a bush), as in the garden */}
+            {t('deck.grown', { learned: growth.leaf + growth.bloom, total: cardCount })}
           </span>
           {dueCount > 0 && <span className="badge">{tp('count.due', dueCount)}</span>}
         </span>

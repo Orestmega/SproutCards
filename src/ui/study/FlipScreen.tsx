@@ -49,13 +49,7 @@ export function FlipScreen() {
       deckId={deckId}
       mode="flip"
       emptyFor={(data, direction) => {
-        const s = selectSessionCards(
-          data.cards,
-          data.progress,
-          direction,
-          data.now,
-          data.newBudget,
-        );
+        const s = selectSessionCards(data.cards, data.progress, direction, data.now);
         return s.due.length + s.fresh.length === 0;
       }}
     >

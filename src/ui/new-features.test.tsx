@@ -145,7 +145,7 @@ describe('deck screen', () => {
       [],
     );
     open(`/decks/${deck.id}`);
-    expect(await screen.findByRole('img', { name: 'Bloom: learned' })).toBeInTheDocument();
+    expect(await screen.findByRole('img', { name: 'Bush: you know it well' })).toBeInTheDocument();
     expect(screen.getAllByRole('img', { name: 'Seed: not studied yet' })).toHaveLength(2);
 
     await user.click(screen.getByRole('button', { name: 'Starred' }));
@@ -254,17 +254,19 @@ describe('flashcards: undo and swipe', () => {
   });
 });
 
-describe('Learn: hint and result', () => {
-  it('shows letters one by one, never the whole word', async () => {
+describe('Learn: counting a typed answer as right, and the result', () => {
+  it('no hint button; a typed answer marked wrong can be counted as right', async () => {
     const user = userEvent.setup();
     const { deck } = await seed([['house', 'будинок']]); // one card: typing right away
     open(`/decks/${deck.id}/learn`);
-    const hint = await screen.findByRole('button', { name: 'Show a letter' });
-    await user.click(hint);
-    expect(screen.getByText('б••••••')).toBeInTheDocument();
-    for (let i = 0; i < 3; i++) await user.click(hint);
-    expect(screen.getByText('буди•••')).toBeInTheDocument();
-    expect(hint).toBeDisabled();
+    const input = await screen.findByRole('textbox');
+    expect(screen.queryByRole('button', { name: 'Show a letter' })).toBeNull();
+    await user.type(input, 'дім');
+    await user.click(screen.getByRole('button', { name: 'Check' }));
+    expect(await screen.findByText('Not quite.')).toBeInTheDocument();
+    await user.click(screen.getByRole('button', { name: 'Count it as right' }));
+    expect(await screen.findByText('Counted as right.')).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Count it as right' })).toBeNull();
   });
 
   it("the result screen shows how far today's goal is", async () => {
@@ -304,11 +306,9 @@ describe('settings', () => {
       id: 'app',
       uiLanguage: 'en',
       speechEnabled: false,
-      newCardsPerDay: 5,
       ignoreDiacritics: false,
     } as never);
     expect(await createRepo(db).getSettings()).toMatchObject({
-      newCardsPerDay: 5,
       theme: 'system',
       dailyGoal: 20,
       soundEnabled: true,

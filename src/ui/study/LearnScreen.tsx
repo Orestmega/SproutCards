@@ -58,6 +58,10 @@ interface Answered {
   question: Question;
   input: string | null;
   feedback: Feedback;
+  /** The session before this answer: "count it as right" answers again from here. */
+  before: LearnState;
+  /** The answer was counted as right by the learner. */
+  overridden?: boolean;
 }
 
 function LearnSession({ data, onRestart }: { data: StudyData; onRestart: () => void }) {
@@ -198,7 +202,7 @@ function LearnSession({ data, onRestart }: { data: StudyData; onRestart: () => v
       if (!state.current || answered) return;
       const result = submitAnswer(state, input, Date.now());
       setState(result.state);
-      setAnswered({ question: state.current, input, feedback: result.feedback });
+      setAnswered({ question: state.current, input, feedback: result.feedback, before: state });
       const reaction = reactTo(combo, result.feedback.result, input === null);
       setCombo(reaction.combo);
       chrome.react(
@@ -230,6 +234,17 @@ function LearnSession({ data, onRestart }: { data: StudyData; onRestart: () => v
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, [choiceReady, picked, answer]);
+
+  // a typed answer marked wrong, but the learner knows it was right (a typo, an apostrophe, a synonym)
+  function countAsRight() {
+    if (!answered || answered.feedback.result === 'correct') return;
+    const result = submitAnswer(answered.before, answered.input, Date.now(), Math.random, true);
+    setState(result.state);
+    setAnswered({ ...answered, feedback: result.feedback, overridden: true });
+    setCombo((c) => c + 1);
+    chrome.react('happy');
+    cue('correct');
+  }
 
   async function leaveAndSave() {
     if (!saved.current) {
@@ -327,7 +342,6 @@ function LearnSession({ data, onRestart }: { data: StudyData; onRestart: () => v
             onSubmit={(text) => answer(text)}
             onSkip={() => answer(null)}
             skipLabel={t('learn.dontKnow')}
-            hintFor={shown.acceptable[0]}
           />
         )
       )}
@@ -341,6 +355,7 @@ function LearnSession({ data, onRestart }: { data: StudyData; onRestart: () => v
         <FeedbackPanel
           answered={answered}
           answerLang={langOf(answered.question.answerSide)}
+          onCountAsRight={countAsRight}
           onContinue={() => {
             setAnswered(null);
             setPicked(null);
@@ -367,10 +382,13 @@ function FeedbackPanel({
   answered,
   answerLang,
   onContinue,
+  onCountAsRight,
 }: {
   answered: Answered;
   answerLang: string;
   onContinue: () => void;
+  /** Count a typed answer that was marked wrong as right after all. */
+  onCountAsRight: () => void;
 }) {
   const { t } = useI18n();
   const { feedback, input, question } = answered;
@@ -406,9 +424,21 @@ function FeedbackPanel({
                 )}
               </>
             )}
+            {answered.overridden && <p className="muted">{t('learn.countedAsRight')}</p>}
             {feedback.passed && <p>{t('learn.cardDone')}</p>}
           </div>
         </div>
+        {question.kind === 'typing' &&
+          input !== null &&
+          input.trim() !== '' &&
+          feedback.result !== 'correct' && (
+            <p className="override">
+              {t('learn.overrideText')}{' '}
+              <button type="button" className="override__btn" onClick={onCountAsRight}>
+                {t('learn.overrideButton')}
+              </button>
+            </p>
+          )}
         <Button block onClick={onContinue} autoFocus>
           {t('learn.continue')}
         </Button>

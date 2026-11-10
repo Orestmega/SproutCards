@@ -5,9 +5,7 @@ import {
   toggleDecoration,
   earnedRewards,
   firstRewardOf,
-  flowerVariety,
   foundKinds,
-  GOLDEN_REPS,
   gardenHealth,
   gardenPlotsOf,
   nextRewards,
@@ -74,22 +72,6 @@ describe('flowers as rewards', () => {
 
   it('kinds found are the kinds of the earned flowers', () => {
     expect(foundKinds(earnedRewards({ ...none, blooms: 3 }))).toEqual(['daisy', 'tulip']);
-  });
-});
-
-describe('flowerVariety', () => {
-  const found = ['daisy', 'tulip', 'bellflower', 'golden'] as const;
-
-  it('the same word always gets the same found kind', () => {
-    const a = flowerVariety('card-1', 2, [...found]);
-    expect(a).toBe(flowerVariety('card-1', 3, [...found]));
-    expect(['daisy', 'tulip', 'bellflower']).toContain(a);
-  });
-
-  it('a word known for long is golden once a golden flower is found', () => {
-    expect(flowerVariety('card-1', GOLDEN_REPS, [...found])).toBe('golden');
-    expect(flowerVariety('card-1', GOLDEN_REPS, ['daisy'])).toBe('daisy');
-    expect(flowerVariety('card-1', 2, [])).toBe('daisy');
   });
 });
 

@@ -105,7 +105,6 @@ export type ThemeChoice = 'system' | 'light' | 'dark';
 export interface Settings {
   uiLanguage: UiLanguage;
   speechEnabled: boolean;
-  newCardsPerDay: number;
   /** When true, `e` and `é` are the same when checking typed answers. */
   ignoreDiacritics: boolean;
   /** Colours of the app; `system` follows the device. */
@@ -136,7 +135,6 @@ export interface Settings {
 export const DEFAULT_SETTINGS: Settings = {
   uiLanguage: 'uk',
   speechEnabled: true,
-  newCardsPerDay: 10,
   ignoreDiacritics: true,
   theme: 'system',
   dailyGoal: 20,

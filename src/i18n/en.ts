@@ -136,9 +136,6 @@ export const en = {
   'settings.title': 'Settings',
   'settings.language': 'Interface language',
   'settings.learning': 'Learning',
-  'settings.newCards': 'New cards per day',
-  'settings.newCardsHint': 'A number from 0 to {max}.',
-  'settings.newCardsInvalid': 'Enter a whole number from 0 to {max}.',
   'settings.diacritics': 'Ignore accents when checking answers',
   'settings.diacriticsHint': 'With this on, "cafe" is accepted for "café".',
   'settings.speech': 'Read words aloud',
@@ -186,7 +183,7 @@ export const en = {
   'study.noCards.text': 'This deck has no cards yet.',
   'study.nothingDue.title': 'Nothing to study right now',
   'study.nothingDue.text':
-    'All cards are scheduled for later, or today’s limit of new cards is reached. You can still practise everything; practising does not change the review dates.',
+    'Every card is planned for later. You can still practise; practice does not change the review dates.',
   'study.practiceAll': 'Practise all cards',
 
   'learn.options': 'Answer options',
@@ -333,7 +330,8 @@ export const en = {
   'stats.chartLabel': 'Reviews per day over the last {days} days',
   'stats.dayReviews': '{date}: {count}',
   'stats.decks': 'Progress by deck',
-  'stats.learnedHint': 'A word blooms after 2 correct reviews in a row.',
+  'stats.learnedHint':
+    'A word is learned after its first clean answer (a leaf); after 2 correct reviews in a row it becomes a bush.',
   'stats.empty.title': 'No statistics yet',
   'stats.empty.text': 'Study a few cards and your numbers will appear here.',
   'error.crash.title': 'Something went wrong',
@@ -412,12 +410,12 @@ export const en = {
   'growth.seed': 'Seeds',
   'growth.sprout': 'Sprouts',
   'growth.leaf': 'Leaves',
-  'growth.bloom': 'Blooms',
+  'growth.bloom': 'Bushes',
   'growth.one.seed': 'Seed: not studied yet',
-  'growth.one.sprout': 'Sprout: started, needs practice',
-  'growth.one.leaf': 'Leaf: one clean answer, almost there',
-  'growth.one.bloom': 'Bloom: learned',
-  'deck.grown': '{percent}% grown',
+  'growth.one.sprout': 'Sprout: started, not learned yet',
+  'growth.one.leaf': 'Leaf: learned',
+  'growth.one.bloom': 'Bush: you know it well',
+  'deck.grown': '{learned} of {total} learned',
   'deck.addMany': 'Add a list',
   'deck.search': 'Search cards',
   'deck.filters': 'Show cards',
@@ -485,7 +483,6 @@ export const en = {
   'flip.swipeHint': 'Swipe right if you know it, left if not',
   'flip.stampKnow': 'Know it',
   'flip.stampLearn': 'Learning',
-  'learn.hint': 'Show a letter',
   'summary.goal': "Today's goal: {count} of {goal}",
   'summary.goalDone': "Today's goal reached: {count} of {goal}",
   'nav.garden': 'Garden',
@@ -517,13 +514,14 @@ export const en = {
   'garden.decorations': 'Decorations',
   'garden.howTitle': 'How the garden works',
   'garden.rule.stages':
-    'A new word is a seed. Study it and it sprouts; answer it cleanly and it grows leaves. Right again at the next review: a flower, the word is learned. A mistake takes it back to a sprout.',
+    'A new word is a seed. Study it and it sprouts; pass it in a session and it grows leaves: the word is learned. Right again at the next review: a bush. Words do not grow flowers: flowers are rewards.',
   'garden.rule.water': "Reach today's goal and water the garden: rain, and Sprout is happy.",
   'garden.rule.wilt':
     'Without study the garden gets thirsty after a day and wilts after two. Your words are never lost: a few answers bring it back.',
   'garden.rule.flowers':
     'Flowers are rewards: every step of a goal earns one (learned words: 1, 3, 5, 8, 12, 16, 20…; days in a row: 3, 7, 14…). Each earned flower grows on one plot, so your garden shows exactly what you earned. Your words grow on the beds below.',
-  'garden.rule.golden': 'A word you answer right {reps} times in a row turns into a golden flower.',
+  'garden.rule.golden':
+    'A word you answer right {reps} times in a row is known for long: such words earn golden flowers.',
   'garden.rule.decor':
     'Achievements add decorations: butterflies, a birdhouse, a pond, an apple tree and more.',
   'garden.toProgress': 'All numbers and achievements',
@@ -689,4 +687,7 @@ export const en = {
   'week.freezesHint':
     'Miss a day and a freeze keeps your days in a row. Each weekly goal gives one.',
   'home.goal.dayFrozen': 'saved by a freeze',
+  'learn.overrideText': 'Think your answer was right (a typo, an apostrophe)?',
+  'learn.overrideButton': 'Count it as right',
+  'learn.countedAsRight': 'Counted as right.',
 } as const;

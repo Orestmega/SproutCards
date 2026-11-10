@@ -8,12 +8,12 @@ const de = { id: 'de', name: 'Basics', learningLang: 'de' };
 const plant = (
   deck: BedPlant['deck'],
   stage: BedPlant['stage'],
-  rank = 0,
+  reps = 0,
 ): BedPlant & { id: string } => ({
-  id: `${deck.id}-${stage}-${rank}`,
+  id: `${deck.id}-${stage}-${reps}`,
   deck,
   stage,
-  rank,
+  reps,
 });
 
 describe('gardenFields', () => {
@@ -25,7 +25,7 @@ describe('gardenFields', () => {
     expect(en?.beds.map((b) => b.deckName)).toEqual(['Travel', 'Food']);
   });
 
-  it('a bed shows only what grows, most grown and rarest first; new words are a bag of seeds', () => {
+  it('a bed shows only what grows, most grown and best known first; new words are a bag of seeds', () => {
     const [field] = gardenFields([
       plant(en1, 'sprout'),
       plant(en1, 'bloom', 0),
@@ -34,7 +34,7 @@ describe('gardenFields', () => {
       ...Array.from({ length: 50 }, () => plant(en1, 'seed')),
     ]);
     const bed = field?.beds[0];
-    expect(bed?.growing.map((p) => `${p.stage}${p.rank}`)).toEqual([
+    expect(bed?.growing.map((p) => `${p.stage}${p.reps}`)).toEqual([
       'bloom2',
       'bloom0',
       'leaf0',

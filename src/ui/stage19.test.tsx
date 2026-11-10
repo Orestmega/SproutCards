@@ -71,6 +71,12 @@ describe('stage 19', () => {
     expect(within(collection).getByText('Earned: 1')).toBeInTheDocument();
   });
 
+  it('the list of decks says how many words are learned', async () => {
+    await seed(1);
+    open('/decks');
+    expect(await screen.findByText(/1 of 3 learned/)).toBeInTheDocument();
+  });
+
   it('the garden picture has no mascot', async () => {
     await seed(1);
     const { container } = open('/garden');

@@ -242,20 +242,10 @@ describe('settings', () => {
     expect(await screen.findByRole('heading', { name: 'Налаштування' })).toBeInTheDocument();
   });
 
-  it('rejects an invalid number of new cards without saving it', async () => {
-    const user = userEvent.setup();
+  it('has no limit on new cards per day', async () => {
     window.location.hash = '#/settings';
     render(<App db={db} />);
-    const field = await screen.findByLabelText('New cards per day');
-    await user.clear(field);
-    await user.type(field, '9999');
-    expect(await screen.findByText('Enter a whole number from 0 to 200.')).toBeInTheDocument();
-    await user.tab(); // leaving the field discards the invalid text
-    expect(field).toHaveValue('10');
-    expect((await createRepo(db).getSettings()).newCardsPerDay).toBe(10);
-    await user.clear(field);
-    await user.type(field, '25');
-    await user.tab();
-    await waitFor(async () => expect((await createRepo(db).getSettings()).newCardsPerDay).toBe(25));
+    await screen.findByRole('heading', { name: 'Settings', level: 1 });
+    expect(screen.queryByLabelText('New cards per day')).toBeNull();
   });
 });

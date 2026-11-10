@@ -351,7 +351,8 @@ describe('progress and review log', () => {
     const water = progress.find((p) => p.cardId === 'water') as Progress;
     expect(apple).toMatchObject({
       id: 'apple:forward',
-      reps: 0,
+      reps: 1, // passed the session: learned, back tomorrow
+      intervalDays: 1,
       lapses: 1,
       direction: 'forward',
       deckId: 'd1',
@@ -367,12 +368,32 @@ describe('progress and review log', () => {
     expect([first, second, third].map((p) => p[0]?.intervalDays)).toEqual([1, 3, 7]);
   });
 
-  it('a mistake in a later session resets the interval', () => {
+  it('a mistake in a later session resets the interval, but the passed card still counts as learned', () => {
     const cards = [makeCard('apple', 'яблуко', { id: 'a' })];
     const first = applySessionToProgress(finish(cards), [], scheduler, NOW);
     const second = applySessionToProgress(finish(cards), first, scheduler, NOW);
     const reset = applySessionToProgress(finish(cards, 'a'), second, scheduler, NOW);
-    expect(reset[0]).toMatchObject({ reps: 0, intervalDays: 1, lapses: 1 });
+    // back to the first interval (it comes back tomorrow), one success in a row: learned
+    expect(reset[0]).toMatchObject({ reps: 1, intervalDays: 1, lapses: 1 });
+  });
+
+  it('a new card passed with mistakes is learned too', () => {
+    const cards = [makeCard('apple', 'яблуко', { id: 'a' })];
+    const progress = applySessionToProgress(finish(cards, 'a'), [], scheduler, NOW);
+    expect(progress[0]).toMatchObject({ reps: 1, intervalDays: 1, lapses: 1 });
+  });
+
+  it('a typed answer can be counted as correct after all (a typo)', () => {
+    const cards = sampleCards();
+    let s = startSession(cards, 'forward', undefined, seededRng(3));
+    const before = s;
+    const wrong = submitAnswer(s, 'zzz', NOW, seededRng(4));
+    expect(wrong.feedback.result).toBe('wrong');
+    const counted = submitAnswer(before, 'zzz', NOW, seededRng(4), true);
+    expect(counted.feedback.result).toBe('correct');
+    expect(counted.state.events.at(-1)?.result).toBe('correct');
+    s = counted.state;
+    expect(s.items[before.current?.cardId ?? '']?.mistakes).toBe(0);
   });
 
   it('keeps forward and backward progress separate', () => {

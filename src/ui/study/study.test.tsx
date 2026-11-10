@@ -119,7 +119,6 @@ describe('Learn: the full cycle', () => {
     db = new AppDatabase(name);
     open(`/decks/${deck.id}/learn`);
     expect(await screen.findByText('Nothing to study right now')).toBeInTheDocument();
-    expect(await createRepo(db).countNewSince(startOfDayPlus(Date.now(), 0))).toBe(3);
   });
 
   it('shows the right answer after a mistake and the mistaken card comes back', async () => {
@@ -228,7 +227,7 @@ describe('Learn: limits and edge cases', () => {
       ANSWERS.set(b, a);
     }
     const { repo, deck } = await seedDeck(many);
-    await repo.saveSettings({ ...(await repo.getSettings()), newCardsPerDay: 2, uiLanguage: 'en' });
+    await repo.saveSettings({ ...(await repo.getSettings()), uiLanguage: 'en' });
     open(`/decks/${deck.id}/learn`);
     await screen.findByText(/Choose the translation|Type the translation/);
     const seen = new Set<string>();
@@ -239,7 +238,7 @@ describe('Learn: limits and edge cases', () => {
       await answerCurrent(user);
       await user.click(await screen.findByRole('button', { name: 'Continue' }));
     }
-    expect(seen.size).toBe(2);
+    expect(seen.size).toBe(5); // no daily limit: every new card comes
   });
 
   it('an empty deck explains itself instead of showing a broken screen', async () => {

@@ -1,12 +1,10 @@
 import {
   bestRepsByCard,
-  gardenPlots,
   gardenShare,
   growthCounts,
   growthGain,
   growthStage,
   learnedCount,
-  scenePlants,
 } from './garden';
 
 describe('growthStage', () => {
@@ -41,22 +39,6 @@ describe('growthCounts', () => {
   });
 });
 
-describe('gardenPlots', () => {
-  it('is empty without words and never bigger than the words or the plots', () => {
-    expect(gardenPlots({ seed: 0, sprout: 0, leaf: 0, bloom: 0 }, 9)).toEqual([]);
-    expect(gardenPlots({ seed: 2, sprout: 0, leaf: 0, bloom: 0 }, 9)).toHaveLength(2);
-    expect(
-      gardenPlots({ seed: 100, sprout: 50, leaf: 20, bloom: 5 }, 9).length,
-    ).toBeLessThanOrEqual(9);
-  });
-
-  it('puts the most grown first and shows a rare stage too', () => {
-    const plots = gardenPlots({ seed: 100, sprout: 0, leaf: 0, bloom: 1 }, 5);
-    expect(plots[0]).toBe('bloom');
-    expect(plots.filter((p) => p === 'seed')).toHaveLength(4);
-  });
-});
-
 describe('growthGain', () => {
   const p = (cardId: string, reps: number, direction = 'forward') => ({
     id: `${cardId}:${direction}`,
@@ -74,19 +56,6 @@ describe('growthGain', () => {
     const before = [p('a', 2), p('b', 1), p('c', 2, 'backward')];
     const after = [p('a', 3), p('b', 0), p('c', 1)];
     expect(growthGain(before, after)).toEqual({ sprout: 0, leaf: 0, bloom: 0 });
-  });
-});
-
-describe('scenePlants', () => {
-  it('draws real plants, the special flowers first', () => {
-    const plants = [
-      { id: 'a', stage: 'bloom' as const, rank: 0 },
-      { id: 'b', stage: 'bloom' as const, rank: 2 },
-      { id: 'c', stage: 'seed' as const, rank: 0 },
-    ];
-    expect(scenePlants(plants, 9).map((p) => p.id)).toEqual(['b', 'a', 'c']);
-    expect(scenePlants(plants, 1)).toHaveLength(1);
-    expect(scenePlants([], 9)).toEqual([]);
   });
 });
 

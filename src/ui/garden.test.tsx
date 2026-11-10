@@ -74,7 +74,7 @@ describe('garden screen', () => {
     expect(await screen.findByRole('heading', { name: 'Garden', level: 1 })).toBeInTheDocument();
   });
 
-  it('shows every word as a plant; tapping one tells its word, stage, flower and next review', async () => {
+  it('shows every word as a plant (no flowers: they are rewards); tapping one tells its word, stage, next review', async () => {
     const user = userEvent.setup();
     await seed();
     open('/garden');
@@ -87,14 +87,16 @@ describe('garden screen', () => {
       within(section).getByRole('link', { name: 'Plant: learn new words' }),
     ).toBeInTheDocument();
     expect(
-      within(section).getByRole('button', { name: 'pear: Leaf: one clean answer, almost there' }),
+      within(section).getByRole('button', { name: 'pear: Leaf: learned' }),
     ).toBeInTheDocument();
 
-    await user.click(within(section).getByRole('button', { name: /^apple: Bloom: learned \(/ }));
+    await user.click(
+      within(section).getByRole('button', { name: 'apple: Bush: you know it well' }),
+    );
     const dialog = await screen.findByRole('dialog', { name: /apple/ });
     expect(within(dialog).getByText('яблуко')).toBeInTheDocument();
     expect(within(dialog).getByText(/^Next review:/)).toBeInTheDocument();
-    expect(within(dialog).getByText(/^(Common|Rare|Golden)$/)).toBeInTheDocument();
+    expect(within(dialog).queryByText(/^(Common|Rare|Golden)$/)).toBeNull();
     await user.click(within(dialog).getByRole('button', { name: 'Close' }));
     await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument());
   });

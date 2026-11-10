@@ -9,10 +9,8 @@ import { growthStage, learnedCount } from '../core/garden';
 import type { GrowthStage } from '../core/garden';
 import {
   decorations,
-  flowerVariety,
   GOLDEN_REPS,
   gardenHealth,
-  rarityOf,
   earnedRewards,
   foundKinds,
   wateringDay,
@@ -37,9 +35,6 @@ export interface GardenPlant {
   deck: Deck;
   stage: GrowthStage;
   /** Only meaningful for a bloom. */
-  variety: VarietyId;
-  /** Drawing order: golden flowers, then rare ones, then the rest. */
-  rank: number;
   reps: number;
   /** When the card is due next (the earlier direction), if it was studied. */
   dueAt: number | null;
@@ -62,8 +57,6 @@ export interface Garden {
   /** Days in a row, with the streak freezes earned by weekly goals. */
   streak: StreakState;
 }
-
-const RANK = { weekly: 3, golden: 2, rare: 1, common: 0 } as const;
 
 export function useGarden(now: number): Garden | undefined {
   const repo = useRepo();
@@ -108,14 +101,11 @@ export function useGarden(now: number): Garden | undefined {
       if (!deck) return [];
       const record = best.get(card.id);
       const stage = growthStage(record?.reps);
-      const variety = flowerVariety(card.id, record?.reps ?? 0, found);
       return [
         {
           card,
           deck,
           stage,
-          variety,
-          rank: stage === 'bloom' ? RANK[rarityOf(variety)] : 0,
           reps: record?.reps ?? 0,
           dueAt: record ? record.dueAt : null,
         },

@@ -144,7 +144,6 @@ describe('adding a catalog deck', () => {
       ...DEFAULT_SETTINGS,
       uiLanguage: 'uk',
       speechEnabled: true,
-      newCardsPerDay: 10,
       ignoreDiacritics: true,
     });
     open('/catalog');

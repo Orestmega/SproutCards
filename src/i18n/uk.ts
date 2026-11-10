@@ -151,9 +151,6 @@ export const uk: Record<Keys, string> & Record<string, string> = {
   'settings.title': 'Налаштування',
   'settings.language': 'Мова інтерфейсу',
   'settings.learning': 'Навчання',
-  'settings.newCards': 'Нових карток на день',
-  'settings.newCardsHint': 'Число від 0 до {max}.',
-  'settings.newCardsInvalid': 'Введи ціле число від 0 до {max}.',
   'settings.diacritics': 'Не зважати на наголоси й діакритику під час перевірки відповідей',
   'settings.diacriticsHint': 'Якщо ввімкнено, «cafe» зараховується замість «café».',
   'settings.speech': 'Озвучувати слова',
@@ -202,7 +199,7 @@ export const uk: Record<Keys, string> & Record<string, string> = {
   'study.noCards.text': 'У цій колоді ще немає карток.',
   'study.nothingDue.title': 'Зараз вчити нічого',
   'study.nothingDue.text':
-    'Усі картки заплановані на потім, або сьогоднішній ліміт нових карток вичерпано. Можна все одно потренуватися; тренування не змінює дат повторення.',
+    'Усі картки заплановані на потім. Можна все одно потренуватися; тренування не змінює дат повторення.',
   'study.practiceAll': 'Потренувати всі картки',
 
   'learn.options': 'Варіанти відповіді',
@@ -353,7 +350,8 @@ export const uk: Record<Keys, string> & Record<string, string> = {
   'stats.chartLabel': 'Повторень на день за останні {days} днів',
   'stats.dayReviews': '{date}: {count}',
   'stats.decks': 'Прогрес за колодами',
-  'stats.learnedHint': 'Слово зацвітає після 2 правильних повторень поспіль.',
+  'stats.learnedHint':
+    'Слово вивчене після першої відповіді без помилок (листочок); після 2 правильних повторень поспіль воно стає кущиком.',
   'stats.empty.title': 'Статистики ще немає',
   'stats.empty.text': 'Повчи кілька карток, і тут з’являться твої числа.',
   'error.crash.title': 'Щось пішло не так',
@@ -436,12 +434,12 @@ export const uk: Record<Keys, string> & Record<string, string> = {
   'growth.seed': 'Насінини',
   'growth.sprout': 'Паростки',
   'growth.leaf': 'Листочки',
-  'growth.bloom': 'Квіти',
+  'growth.bloom': 'Кущики',
   'growth.one.seed': 'Насінина: ще не вчили',
-  'growth.one.sprout': 'Паросток: почали, треба повторити',
-  'growth.one.leaf': 'Листочок: одна чиста відповідь, майже',
-  'growth.one.bloom': 'Квітка: вивчено',
-  'deck.grown': 'виросло на {percent}%',
+  'growth.one.sprout': 'Паросток: почали, ще не вивчено',
+  'growth.one.leaf': 'Листочок: вивчено',
+  'growth.one.bloom': 'Кущик: добре знаєш',
+  'deck.grown': 'вивчено {learned} з {total}',
   'deck.addMany': 'Додати списком',
   'deck.search': 'Пошук карток',
   'deck.filters': 'Показати картки',
@@ -510,7 +508,6 @@ export const uk: Record<Keys, string> & Record<string, string> = {
   'flip.swipeHint': 'Свайп праворуч, якщо знаєш, ліворуч, якщо ні',
   'flip.stampKnow': 'Знаю',
   'flip.stampLearn': 'Вчу',
-  'learn.hint': 'Показати літеру',
   'summary.goal': 'Ціль на сьогодні: {count} із {goal}',
   'summary.goalDone': 'Ціль на сьогодні виконано: {count} із {goal}',
   'nav.garden': 'Сад',
@@ -546,14 +543,14 @@ export const uk: Record<Keys, string> & Record<string, string> = {
   'garden.decorations': 'Прикраси',
   'garden.howTitle': 'Як працює сад',
   'garden.rule.stages':
-    'Нове слово — насінина. Почав вчити — паросток; відповів без помилок — листочок. Ще раз правильно на наступному повторенні — квітка: слово вивчене. Помилка повертає його до паростка.',
+    'Нове слово — насінина. Почав вчити — паросток; пройшов його в сесії — листочок: слово вивчене. Ще раз правильно на наступному повторенні — кущик. Квіти на словах не ростуть: квіти — це нагороди.',
   'garden.rule.water': 'Виконай ціль на день і полий сад: піде дощ, а Sprout зрадіє.',
   'garden.rule.wilt':
     'Без навчання сад через день хоче пити, а через два в’яне. Слова не зникають ніколи: кілька відповідей повертають саду життя.',
   'garden.rule.flowers':
     'Квіти — нагороди: кожен крок цілі дає одну (вивчені слова: 1, 3, 5, 8, 12, 16, 20…; дні поспіль: 3, 7, 14…). Кожна зароблена квітка росте на одній ділянці, тож сад показує саме те, що ти заробив. Твої слова ростуть на грядках нижче.',
   'garden.rule.golden':
-    'Слово, на яке ти правильно відповів {reps} разів поспіль, стає золотою квіткою.',
+    'Слово, на яке ти відповів правильно {reps} разів поспіль, — «надовго запам’ятане»: такі слова дають золоті квіти.',
   'garden.rule.decor': 'Досягнення додають прикраси: метеликів, шпаківню, ставок, яблуню та інші.',
   'garden.toProgress': 'Усі числа й досягнення',
   'garden.plant.notStudied': 'Ще не вчили',
@@ -755,4 +752,7 @@ export const uk: Record<Keys, string> & Record<string, string> = {
   'week.freezesHint':
     'Пропустиш день — заморозка збереже серію днів поспіль. Кожна ціль тижня дає одну.',
   'home.goal.dayFrozen': 'збережено заморозкою',
+  'learn.overrideText': 'Вважаєш, що відповідь правильна (опечатка, апостроф)?',
+  'learn.overrideButton': 'Зарахувати',
+  'learn.countedAsRight': 'Зараховано як правильну.',
 };

@@ -231,11 +231,11 @@ describe('settings', () => {
   it('returns defaults when nothing is saved, and saved values afterwards', async () => {
     const r = repo();
     expect(await r.getSettings()).toEqual(DEFAULT_SETTINGS);
-    await r.saveSettings({ ...DEFAULT_SETTINGS, uiLanguage: 'en', newCardsPerDay: 25 });
+    await r.saveSettings({ ...DEFAULT_SETTINGS, uiLanguage: 'en', dailyGoal: 30 });
     expect(await r.getSettings()).toEqual({
       ...DEFAULT_SETTINGS,
       uiLanguage: 'en',
-      newCardsPerDay: 25,
+      dailyGoal: 30,
     });
   });
 

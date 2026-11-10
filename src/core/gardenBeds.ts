@@ -8,8 +8,8 @@ import type { GrowthStage } from './garden';
 
 export interface BedPlant {
   stage: GrowthStage;
-  /** Higher is shown first (a golden flower before a common one). */
-  rank: number;
+  /** Correct answers in a row: the better known word is shown first. */
+  reps: number;
   deck: { id: string; name: string; learningLang: string };
 }
 
@@ -47,7 +47,7 @@ export function gardenFields<P extends BedPlant>(plants: readonly P[]): Field<P>
     const beds = [...decks.values()].map((list): Bed<P> => {
       const growing = list
         .filter((p) => p.stage !== 'seed')
-        .sort((a, b) => ORDER[b.stage] - ORDER[a.stage] || b.rank - a.rank);
+        .sort((a, b) => ORDER[b.stage] - ORDER[a.stage] || b.reps - a.reps);
       const first = list[0] as P;
       return {
         deckId: first.deck.id,

@@ -3,7 +3,6 @@ import type { ReactNode } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
 import { shuffle } from '../../core/random';
 import { selectSessionCards, sessionCards } from '../../core/selection';
-import { startOfDayPlus } from '../../core/scheduler';
 import type { Card, Deck, Direction, Progress } from '../../core/types';
 import { wholeDeckChunk } from '../../core/wholeDeck';
 import { useI18n } from '../../i18n';
@@ -30,8 +29,6 @@ export interface StudyData {
   deck: Deck;
   cards: Card[];
   progress: Progress[];
-  /** New cards the user may still start today. */
-  newBudget: number;
   now: number;
 }
 
@@ -69,7 +66,7 @@ export function useStudyParams(): {
 }
 
 /** Loads the data once. To start over, remount the component that calls this (change its `key`). */
-function useStudyData(deckId: string, newCardsPerDay: number, starredOnly: boolean): Loaded {
+function useStudyData(deckId: string, starredOnly: boolean): Loaded {
   const { repo } = useApp();
   const [loaded, setLoaded] = useState<Loaded>({ status: 'loading' });
 
@@ -79,16 +76,14 @@ function useStudyData(deckId: string, newCardsPerDay: number, starredOnly: boole
       const deck = await repo.getDeck(deckId);
       if (!deck) return { status: 'missing' } as const;
       const now = Date.now();
-      const [cards, progress, newToday] = await Promise.all([
+      const [cards, progress] = await Promise.all([
         repo.listCards(deckId),
         repo.listProgress(deckId),
-        repo.countNewSince(startOfDayPlus(now, 0)),
       ]);
       const data: StudyData = {
         deck,
         cards: starredOnly ? cards.filter((c) => c.starred === true) : cards,
         progress,
-        newBudget: Math.max(0, newCardsPerDay - newToday),
         now,
       };
       return { status: 'ready', data } as const;
@@ -99,7 +94,7 @@ function useStudyData(deckId: string, newCardsPerDay: number, starredOnly: boole
     return () => {
       cancelled = true;
     };
-  }, [repo, deckId, newCardsPerDay, starredOnly]);
+  }, [repo, deckId, starredOnly]);
 
   return loaded;
 }
@@ -113,13 +108,7 @@ export function pickSessionCards(
 ): Card[] {
   if (practice) return shuffle(data.cards).slice(0, 20);
   if (whole) return shuffle(wholeDeckChunk(data.cards, data.progress, direction));
-  const selection = selectSessionCards(
-    data.cards,
-    data.progress,
-    direction,
-    data.now,
-    data.newBudget,
-  );
+  const selection = selectSessionCards(data.cards, data.progress, direction, data.now);
   return shuffle(sessionCards(selection));
 }
 
@@ -141,9 +130,8 @@ export function StudyGate({
   emptyFor?: (data: StudyData, direction: Direction) => boolean;
 }) {
   const { t } = useI18n();
-  const { settings } = useApp();
   const { direction, practice, starred, whole } = useStudyParams();
-  const loaded = useStudyData(deckId, settings.newCardsPerDay, starred);
+  const loaded = useStudyData(deckId, starred);
 
   if (loaded.status === 'loading') return null;
   if (loaded.status === 'missing') return <NotFoundScreen />;

@@ -255,19 +255,22 @@ export function judgeAnswer(
 /**
  * Submits an answer to the current question.
  * @param input the typed text or the chosen option; `null` means "I don't know" (counts as wrong)
+ * @param countAsCorrect the learner says a typed answer was right after all (a typo, an apostrophe, a
+ *   synonym): it is taken as correct. The screen calls this again with the state from before the answer.
  */
 export function submitAnswer(
   state: LearnState,
   input: string | null,
   now: number,
   rng: Rng = Math.random,
+  countAsCorrect = false,
 ): { state: LearnState; feedback: Feedback } {
   const question = state.current;
   if (!question) throw new Error('No active question: the session is finished');
   const { config } = state;
   const opts = answerOptions(config);
 
-  const result = judgeAnswer(question, input, opts);
+  const result: ReviewResult = countAsCorrect ? 'correct' : judgeAnswer(question, input, opts);
 
   const item = state.items[question.cardId] as ItemState;
   const last = lastLevel(config);
@@ -381,8 +384,9 @@ export function summarize(state: LearnState): SessionSummary {
 
 /**
  * Turns a finished (or interrupted) session into updated progress records.
- * Only cards that passed the session are scheduled. A card with at least one mistake in the session
- * is scheduled as `wrong` (interval resets to the first one), otherwise as `correct`.
+ * Only cards that passed the session are scheduled, and a passed card counts as learned (one success in
+ * a row). A card with mistakes in the session starts over (a lapse) and then gets that one success, so
+ * it comes back tomorrow; a card without mistakes moves on to a longer interval.
  * @param existing current progress records (any direction; only the session's direction is used)
  */
 export function applySessionToProgress(
@@ -397,7 +401,9 @@ export function applySessionToProgress(
     if (!item.passed) continue;
     const id = progressId(cardId, state.direction);
     const previous = byId.get(id);
-    const schedule = scheduler.review(previous, item.mistakes > 0 ? 'wrong' : 'correct', now);
+    // mistakes: reset (counts a lapse), then the success that passed the session
+    const base = item.mistakes > 0 ? { ...scheduler.review(previous, 'wrong', now) } : previous;
+    const schedule = scheduler.review(base, 'correct', now);
     const card = state.cards[cardId] as Card;
     updated.push({
       ...schedule,

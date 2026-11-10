@@ -20,7 +20,7 @@ Dependencies point one way: `ui` → `db` → `core`. `core` imports nothing fro
 | `Card` | `term` (learning language), `translations[]` (first is primary), `examples[]`, `notes`, `reviewed` |
 | `Progress` | schedule of one card **in one direction**: `reps`, `intervalDays`, `dueAt`, `lapses`, `lastReviewedAt`. Id is `cardId:direction` |
 | `ReviewLog` | one row per answer (time, card, mode, level, result) for statistics |
-| `Settings` | UI language, speech on/off, new cards per day, ignore accents |
+| `Settings` | UI language, speech on/off, ignore accents (no daily limit of new cards) |
 
 `Direction` is `forward` (term → translation) or `backward` (translation → term). Forward and backward
 progress of the same card are independent. A card with no `Progress` row has never been studied.
@@ -211,10 +211,11 @@ stands on the plots of the picture. `habit.ts` gives today's count, the week, th
 and the review forecast. `evaluateAchievements` turns facts (reviews, streak, blooms, decks, modes used) into a list
 with progress. No XP or points on purpose: the measure of success is words learned, not time spent.
 
-`gardenLife.ts`: `flowerVariety` (a stable hash of the card id: about 10 % rare; golden from `GOLDEN_REPS`),
+`gardenLife.ts`: words have no kind of flower (flowers are only rewards; a well-known word is a green bush),
 `gardenHealth` (fresh / thirsty / wilted from the last review day; only a picture), `wateringState` (ready once
 the daily goal is reached; the watered day is kept in `localStorage` by `ui/garden.ts`), `decorations` (one per
-achievement). `scenePlants` in `garden.ts` picks the real plants for the picture, special flowers first.
+achievement). In `learn.ts` a card passed in a session is learned (`reps` 1; with mistakes it starts over
+first, so it comes back tomorrow), and `submitAnswer(..., countAsCorrect)` takes a typed answer as right.
 `ui/garden.ts` (`useGarden`) reads everything in one `repo.gardenSnapshot()` and builds the plant list.
 
 `weekly.ts`: the week (Monday to Monday, local time) with a weekly goal (daily goal × 5 answers) and two

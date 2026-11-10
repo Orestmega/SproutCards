@@ -5,11 +5,11 @@ import { uk } from './uk';
 describe('translate', () => {
   it('fills placeholders', () => {
     expect(translate('en', 'form.languageCodePlaceholder')).toBe('For example: pt-BR');
-    expect(translate('uk', 'settings.newCardsHint', { max: 200 })).toBe('Число від 0 до 200.');
+    expect(translate('uk', 'whole.progress', { learned: 3, total: 10 })).toBe('Вивчено 3 з 10');
   });
 
   it('leaves unknown placeholders visible instead of crashing', () => {
-    expect(translate('en', 'settings.newCardsHint')).toBe('A number from 0 to {max}.');
+    expect(translate('en', 'whole.progress')).toBe('Learned {learned} of {total}');
   });
 });
 

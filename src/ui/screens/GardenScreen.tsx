@@ -9,7 +9,6 @@ import {
   GOLDEN_REPS,
   nextRewards,
   PLOT_COUNT,
-  rarityOf,
   shownDecorations,
   toggleDecoration,
   VARIETIES,
@@ -222,7 +221,7 @@ export function GardenScreen() {
                               aria-label={`${plant.card.term}: ${plantName(plant, t)}`}
                               onClick={() => setSelected(plant)}
                             >
-                              <Plant stage={plant.stage} variety={plant.variety} size={40} />
+                              <Plant stage={plant.stage} size={40} />
                             </button>
                           </li>
                         ))}
@@ -361,12 +360,7 @@ export function GardenScreen() {
 type T = ReturnType<typeof useI18n>['t'];
 
 function plantName(plant: GardenPlant, t: T): string {
-  if (plant.stage !== 'bloom') return t(`growth.one.${plant.stage}`);
-  return `${t('growth.one.bloom')} (${t(`flower.${plant.variety}`)})`;
-}
-
-function rarityLabel(variety: VarietyId, t: T): string {
-  return t(`rarity.${rarityOf(variety)}`);
+  return t(`growth.one.${plant.stage}`);
 }
 
 type TP = ReturnType<typeof useI18n>['tp'];
@@ -546,7 +540,7 @@ function PlantDialog({
       }}
     >
       <div className="plant-dialog__top">
-        <Plant stage={plant.stage} variety={plant.variety} size={88} />
+        <Plant stage={plant.stage} size={88} />
         <div>
           <h2 id="plant-title" className="wotd__word">
             <span lang={deck.learningLang}>{card.term}</span>
@@ -557,7 +551,6 @@ function PlantDialog({
       </div>
       <ul className="plant-dialog__facts">
         <li>{plantName(plant, t)}</li>
-        {plant.stage === 'bloom' && <li>{rarityLabel(plant.variety, t)}</li>}
         {plant.stage !== 'seed' && <li>{due}</li>}
         <li className="muted">{deck.name}</li>
       </ul>

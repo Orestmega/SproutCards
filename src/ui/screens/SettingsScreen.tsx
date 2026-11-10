@@ -7,7 +7,7 @@ import { useApp } from '../AppProviders';
 import { Avatar } from '../components/Avatar';
 import { Button, ButtonLink } from '../components/Button';
 import { CheatPanel } from '../components/CheatPanel';
-import { CheckField, TextField } from '../components/Fields';
+import { CheckField } from '../components/Fields';
 import { PageHeader } from '../components/Layout';
 import { Notice } from '../components/Notice';
 import { playCue } from '../cues';
@@ -16,8 +16,6 @@ import { usePwa } from '../pwa';
 /** Language names are written in the language itself, so they can be found whatever the UI language. */
 const NATIVE_NAMES: Record<UiLanguage, string> = { uk: 'Українська', en: 'English' };
 const THEMES: ThemeChoice[] = ['system', 'light', 'dark'];
-
-const MAX_NEW_CARDS = 200;
 
 export function SettingsScreen() {
   const { t } = useI18n();
@@ -29,9 +27,6 @@ export function SettingsScreen() {
     setSaveFailed(false);
     updateSettings(patch).catch(() => setSaveFailed(true));
   };
-  const [newCards, setNewCards] = useState(String(settings.newCardsPerDay));
-  const parsed = Number(newCards);
-  const newCardsValid = /^\d+$/.test(newCards) && parsed >= 0 && parsed <= MAX_NEW_CARDS;
 
   return (
     <>
@@ -120,21 +115,6 @@ export function SettingsScreen() {
               ))}
             </div>
           </div>
-          <TextField
-            label={t('settings.newCards')}
-            hint={t('settings.newCardsHint', { max: MAX_NEW_CARDS })}
-            inputMode="numeric"
-            value={newCards}
-            error={
-              newCardsValid ? undefined : t('settings.newCardsInvalid', { max: MAX_NEW_CARDS })
-            }
-            onChange={(e) => setNewCards(e.target.value)}
-            // Saved when the field loses focus; an invalid value is discarded, not stored half-way.
-            onBlur={() => {
-              if (newCardsValid) save({ newCardsPerDay: parsed });
-              else setNewCards(String(settings.newCardsPerDay));
-            }}
-          />
           <div className="field">
             <CheckField
               label={t('settings.diacritics')}
