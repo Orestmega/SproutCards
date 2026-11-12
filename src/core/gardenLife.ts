@@ -199,11 +199,18 @@ function dayNumber(time: number): number {
   return Math.floor(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) / 86_400_000);
 }
 
-export function gardenHealth(reviewTimes: readonly number[], now: number): GardenHealth {
-  if (reviewTimes.length === 0) return 'new';
-  let last = -Infinity;
-  for (const t of reviewTimes) last = Math.max(last, t);
-  const daysAgo = dayNumber(now) - dayNumber(last);
+/**
+ * How the garden looks, from the last watering (reach the day's goal, then water): watered today it is
+ * fresh, yesterday it is thirsty, earlier or never it wilts. Studying alone does not water it. Only a
+ * picture: no word ever loses its progress. `studied`: there were answers at all (else a new garden).
+ */
+export function gardenHealth(
+  lastWateredDay: number | null,
+  studied: boolean,
+  now: number,
+): GardenHealth {
+  if (lastWateredDay === null) return studied ? 'wilted' : 'new';
+  const daysAgo = dayNumber(now) - lastWateredDay;
   if (daysAgo <= 0) return 'fresh';
   return daysAgo === 1 ? 'thirsty' : 'wilted';
 }

@@ -489,9 +489,9 @@ export const en = {
   'garden.title': 'Garden',
   'garden.open': 'Open your garden',
   'garden.health.new': 'A new garden: plant your first words',
-  'garden.health.fresh': 'Fresh: you studied today',
-  'garden.health.thirsty': 'Thirsty: study today to keep it fresh',
-  'garden.health.wilted': 'Wilting: a few answers bring it back',
+  'garden.health.fresh': 'Watered: fresh until tomorrow',
+  'garden.health.thirsty': "Thirsty: reach today's goal and water it",
+  'garden.health.wilted': "Wilting: reach today's goal and water the garden",
   'garden.empty.title': 'Nothing planted yet',
   'garden.empty.text': 'Every word you add is a seed. Add a deck to start your garden.',
   'garden.water.title': 'Watering',
@@ -517,7 +517,7 @@ export const en = {
     'A new word is a seed. Study it and it sprouts; pass it in a session and it grows leaves: the word is learned. Right again at the next review: a bush. Words do not grow flowers: flowers are rewards.',
   'garden.rule.water': "Reach today's goal and water the garden: rain, and Sprout is happy.",
   'garden.rule.wilt':
-    'Without study the garden gets thirsty after a day and wilts after two. Your words are never lost: a few answers bring it back.',
+    "The garden lives on watering: reach the day's goal and water it, and the flowers stay fresh until tomorrow. Skip it and the next day they are thirsty and bend, then they wilt. Your words are never lost: watering brings it back.",
   'garden.rule.flowers':
     'Flowers are rewards: every step of a goal earns one (learned words: 1, 3, 5, 8, 12, 16, 20…; days in a row: 3, 7, 14…). Each earned flower grows on one plot, so your garden shows exactly what you earned. Your words grow on the beds below.',
   'garden.rule.golden':

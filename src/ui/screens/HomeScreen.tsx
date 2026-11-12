@@ -3,7 +3,7 @@ import { useLiveQuery } from 'dexie-react-hooks';
 import { Link } from 'react-router-dom';
 import { dayPart, nextLine } from '../../core/cheer';
 import type { MascotMood } from '../../core/cheer';
-import { gardenPlotsOf, shownDecorations } from '../../core/gardenLife';
+import { gardenHealth, gardenPlotsOf, shownDecorations } from '../../core/gardenLife';
 import { pickOfTheDay } from '../../core/habit';
 import { computeStreak } from '../../core/stats';
 import { useI18n } from '../../i18n';
@@ -19,7 +19,7 @@ import { Mascot } from '../components/Mascot';
 import { SpeakButton } from '../components/SpeakButton';
 import { TodayCard } from '../components/TodayCard';
 import { WeekCard } from '../components/WeekCard';
-import { useGarden } from '../garden';
+import { useGarden, useWatering } from '../garden';
 import { listSnapshots } from '../resume';
 import { snapshotProgress } from '../../core/resume';
 
@@ -50,6 +50,7 @@ export function HomeScreen() {
   const [pats, setPats] = useState(0);
   const [line, setLine] = useState(-1); // -1: the usual message, not a pat line
   const garden = useGarden(now);
+  const [wateredDay] = useWatering();
 
   // a word from a deck that has cards; the same one all day
   const wordDeck = pickOfTheDay(summaries?.filter((s) => s.cardCount > 0) ?? [], now)?.deck;
@@ -142,7 +143,7 @@ export function HomeScreen() {
             decorations={
               garden ? shownDecorations(garden.decorations, settings.hiddenDecorations) : undefined
             }
-            health={garden?.health}
+            health={garden ? gardenHealth(wateredDay, garden.times.length > 0, now) : undefined}
           >
             {/* the whole picture opens the garden; Sprout and the bubble sit above this link */}
             <Link to="/garden" className="garden__open">

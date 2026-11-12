@@ -2067,22 +2067,155 @@ textarea.input {
   color: var(--color-wrong);
 }
 
-/* a thirsty garden fades a little, a wilted one droops; studying brings the colour back */
-.garden--thirsty .garden__plant {
-  filter: saturate(0.65);
+/*
+ * Wilting: no grey filter over the picture. Each flower bends the way a real one does: the stem leans
+ * from the soil, the leaves hang, the head droops and its petals fade a little, the glow goes out, now
+ * and then a dry petal falls. Thirsty is the first, gentle step. Plots start one after another (--i).
+ * Watering (the rain) lifts them back up. Origins are in the plant's own 32 × 32 box.
+ */
+.plant__body,
+.plant__head,
+.plant__leaves,
+.plant__fall {
+  transform-box: view-box;
 }
 
-.garden--wilted .garden__plant {
-  filter: saturate(0.3) brightness(0.92);
-  animation: plant-droop 4s ease-in-out infinite alternate;
+.plant__body {
+  transform-origin: 16px 28px;
 }
 
-@keyframes plant-droop {
+.plant__head {
+  transform-origin: 16px 12px;
+}
+
+.plant__leaves {
+  transform-origin: 16px 24px;
+}
+
+.plant__fall {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.plant__glow {
+  transition: opacity 1.2s ease;
+}
+
+/* thirsty: a slight lean, the head starts to bow, colours a touch duller */
+.garden--thirsty .plant__body {
+  transform: rotate(7deg);
+  animation: from-upright 1.4s ease-out both;
+  animation-delay: calc(var(--i, 0) * 90ms);
+}
+
+.garden--thirsty .plant__head {
+  transform: rotate(32deg);
+  filter: saturate(0.8);
+  animation: from-upright 1.4s ease-out both;
+  animation-delay: calc(var(--i, 0) * 90ms + 200ms);
+}
+
+.garden--thirsty .plant__glow {
+  opacity: 0.15;
+}
+
+/* wilted: bent over, the head hangs and sways a little, the leaves droop, petals fall */
+.garden--wilted .plant__body {
+  transform: rotate(16deg);
+  animation: from-upright 1.8s ease-out both;
+  animation-delay: calc(var(--i, 0) * 90ms);
+}
+
+.garden--wilted .plant__head {
+  transform: rotate(78deg) scale(0.84);
+  filter: saturate(0.55) sepia(0.25);
+  animation:
+    from-upright 1.8s ease-out both,
+    head-hang 4.5s ease-in-out infinite alternate;
+  animation-delay: calc(var(--i, 0) * 90ms + 250ms), calc(var(--i, 0) * 90ms + 2s);
+}
+
+.garden--wilted .plant__leaves {
+  transform: scaleY(0.7) rotate(6deg);
+  animation: from-upright 1.8s ease-out both;
+  animation-delay: calc(var(--i, 0) * 90ms + 150ms);
+}
+
+.garden--wilted .plant__glow {
+  opacity: 0;
+}
+
+.garden--wilted .plant__fall {
+  animation: petal-fall 7s ease-in infinite;
+  animation-delay: calc(var(--i, 0) * 700ms + 2s);
+}
+
+/* from the upright plant to the pose set on the element (the keyframe has only a start) */
+@keyframes from-upright {
   from {
-    transform: rotate(6deg) scaleY(0.94);
+    transform: none;
+    filter: none;
+  }
+}
+
+@keyframes head-hang {
+  from {
+    transform: rotate(74deg) scale(0.84);
   }
   to {
-    transform: rotate(10deg) scaleY(0.9);
+    transform: rotate(82deg) scale(0.84);
+  }
+}
+
+/* a dry petal comes off the drooping head, drifts down and lies on the soil for a moment */
+@keyframes petal-fall {
+  0%,
+  70% {
+    opacity: 0;
+    transform: translate(4px, 2px) rotate(0);
+  }
+  74% {
+    opacity: 1;
+  }
+  92% {
+    opacity: 1;
+    transform: translate(1px, 15px) rotate(160deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(1px, 15px) rotate(180deg);
+  }
+}
+
+/* watering: the rain lifts every flower back up */
+.garden--raining .plant__body,
+.garden--raining .plant__head,
+.garden--raining .plant__leaves {
+  animation: revive 1.4s cubic-bezier(0.34, 1.4, 0.64, 1) both;
+  animation-delay: calc(var(--i, 0) * 60ms + 300ms);
+}
+
+.garden--raining .plant__head {
+  animation-name: revive-head;
+}
+
+@keyframes revive {
+  from {
+    transform: rotate(16deg) scaleY(0.88);
+  }
+  to {
+    transform: none;
+  }
+}
+
+@keyframes revive-head {
+  from {
+    transform: rotate(78deg) scale(0.84);
+    filter: saturate(0.55) sepia(0.25);
+  }
+  to {
+    transform: none;
+    filter: none;
   }
 }
 
@@ -2307,9 +2440,12 @@ textarea.input {
     animation: none !important;
   }
 
-  .garden--wilted .garden__plant {
-    animation: none;
-    transform: rotate(8deg);
+  /* the poses stay (a wilted flower is still bent), only the motion goes */
+  .plant__body,
+  .plant__head,
+  .plant__leaves,
+  .plant__fall {
+    animation: none !important;
   }
 }
 

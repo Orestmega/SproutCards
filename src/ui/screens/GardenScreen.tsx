@@ -5,6 +5,7 @@ import { growthCounts } from '../../core/garden';
 import { gardenFields } from '../../core/gardenBeds';
 import {
   firstRewardOf,
+  gardenHealth,
   gardenPlotsOf,
   GOLDEN_REPS,
   nextRewards,
@@ -58,7 +59,9 @@ export function GardenScreen() {
   }, [raining]);
 
   if (!garden) return null;
-  const { plants, decks, health, answersToday, decorations, earned, found, facts } = garden;
+  const { plants, decks, answersToday, decorations, earned, found, facts } = garden;
+  // the look of the garden follows the watering (studying alone does not water it)
+  const health = gardenHealth(wateredDay, garden.times.length > 0, now);
   const part = dayPart(new Date(now).getHours());
   const watering = wateringState(answersToday, dailyGoal, wateredDay, now);
   const earnedDecor = decorations.filter((d) => d.earned).map((d) => d.id);

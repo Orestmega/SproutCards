@@ -301,7 +301,7 @@ function Flower({ variety }: { variety: VarietyId }) {
     case 'golden':
       return (
         <g>
-          <circle cx="16" cy="10" r="9" fill="#ffe27a" opacity="0.45" />
+          <circle className="plant__glow" cx="16" cy="10" r="9" fill="#ffe27a" opacity="0.45" />
           <Ring count={6} rx={2.6} ry={4.2} distance={4} fill="#ffd23f" stroke="#c99400" />
           <circle cx="16" cy="10" r="2.8" fill="#fff4c2" stroke="#c99400" strokeWidth="0.7" />
           <path
@@ -396,7 +396,7 @@ function Flower({ variety }: { variety: VarietyId }) {
 function WeeklyGlow() {
   return (
     <g>
-      <circle cx="16" cy="10" r="9.5" fill="#c9b4ff" opacity="0.4" />
+      <circle className="plant__glow" cx="16" cy="10" r="9.5" fill="#c9b4ff" opacity="0.4" />
       <path
         className="plant__sparkle"
         d="M4 3 l0.7 1.8 1.8 0.7 -1.8 0.7 -0.7 1.8 -0.7 -1.8 -1.8 -0.7 1.8 -0.7 z"
@@ -456,12 +456,21 @@ export function PlantArt({
     );
   }
   if (!variety) return <Bush />;
+  // the parts are separate so a thirsty garden can bend them one by one (see "wilting" in components.css):
+  // the stem leans from the soil, the leaves hang, the head droops, a dry petal falls
   return (
     <g>
       <Soil />
-      <path d="M16 28 V12" stroke={STEM} strokeWidth="2.6" strokeLinecap="round" />
-      <Leaves />
-      <Flower variety={variety} />
+      <g className="plant__body">
+        <path d="M16 28 V12" stroke={STEM} strokeWidth="2.6" strokeLinecap="round" />
+        <g className="plant__leaves">
+          <Leaves />
+        </g>
+        <g className="plant__head">
+          <Flower variety={variety} />
+        </g>
+      </g>
+      <ellipse className="plant__fall" cx="18" cy="12" rx="1.6" ry="0.9" fill="#c9a26a" />
     </g>
   );
 }

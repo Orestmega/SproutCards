@@ -112,11 +112,13 @@ describe('gardenPlotsOf', () => {
 });
 
 describe('gardenHealth', () => {
-  it('is new before any study, then fresh, thirsty, wilted', () => {
-    expect(gardenHealth([], NOW)).toBe('new');
-    expect(gardenHealth([day(-5), day(0, 1)], NOW)).toBe('fresh');
-    expect(gardenHealth([day(-1, 23)], NOW)).toBe('thirsty');
-    expect(gardenHealth([day(-2)], NOW)).toBe('wilted');
+  it('depends on the watering, not on studying: fresh, thirsty, wilted', () => {
+    expect(gardenHealth(null, false, NOW)).toBe('new');
+    // studied today but not watered yet: it still wilts
+    expect(gardenHealth(null, true, NOW)).toBe('wilted');
+    expect(gardenHealth(wateringDay(day(0, 1)), true, NOW)).toBe('fresh');
+    expect(gardenHealth(wateringDay(day(-1, 23)), true, NOW)).toBe('thirsty');
+    expect(gardenHealth(wateringDay(day(-2)), true, NOW)).toBe('wilted');
   });
 });
 

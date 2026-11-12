@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react';
 import type { ReactNode } from 'react';
 import type { DayPart } from '../../core/cheer';
 import type { GrowthStage } from '../../core/garden';
@@ -135,7 +136,13 @@ export function GardenScene({
   const plots = big ? PLOTS_BIG : PLOTS;
   const dark = part === 'night';
   const has = (id: DecorationId) => decorations.includes(id);
-  const classes = ['garden', `garden--${part}`, `garden--${health}`, big && 'garden--big'];
+  const classes = [
+    'garden',
+    `garden--${part}`,
+    `garden--${health}`,
+    big && 'garden--big',
+    raining && 'garden--raining',
+  ];
   return (
     <div className={classes.filter(Boolean).join(' ')} data-part={part} data-health={health}>
       {/* the sky has its own layer: on a wide screen the hills are cropped, the sun must not be */}
@@ -211,7 +218,8 @@ export function GardenScene({
               )}
               {/* a new key (another flower planted) plays the growing animation */}
               <g className="garden__grow" key={plant ? plant.variety : 'empty'}>
-                <g className="garden__plant">
+                {/* --i: the plot's number, so the flowers wilt and revive one after another */}
+                <g className="garden__plant" style={{ '--i': i } as CSSProperties}>
                   {plant ? <PlantArt stage={plant.stage} variety={plant.variety} /> : <EmptyPlot />}
                 </g>
               </g>

@@ -10,18 +10,11 @@ import type { GrowthStage } from '../core/garden';
 import {
   decorations,
   GOLDEN_REPS,
-  gardenHealth,
   earnedRewards,
   foundKinds,
   wateringDay,
 } from '../core/gardenLife';
-import type {
-  DecorationState,
-  GardenHealth,
-  Reward,
-  RewardFacts,
-  VarietyId,
-} from '../core/gardenLife';
+import type { DecorationState, Reward, RewardFacts, VarietyId } from '../core/gardenLife';
 import { streakState } from '../core/freeze';
 import type { StreakState } from '../core/freeze';
 import { todayCount } from '../core/habit';
@@ -44,7 +37,6 @@ export interface Garden {
   decks: Deck[];
   plants: GardenPlant[];
   times: number[];
-  health: GardenHealth;
   answersToday: number;
   achievements: AchievementState[];
   decorations: DecorationState[];
@@ -122,7 +114,6 @@ export function useGarden(now: number): Garden | undefined {
       decks,
       plants,
       times,
-      health: gardenHealth(times, now),
       answersToday: todayCount(times, now),
       achievements,
       decorations: decorations(achievements),

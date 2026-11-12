@@ -125,7 +125,9 @@ describe('garden screen', () => {
   it('a garden left alone wilts, but every word keeps its progress', async () => {
     const { repo, deck } = await seed({ daysAgo: 3 });
     open('/garden');
-    expect(await screen.findByText('Wilting: a few answers bring it back')).toBeInTheDocument();
+    expect(
+      await screen.findByText("Wilting: reach today's goal and water the garden"),
+    ).toBeInTheDocument();
     expect(document.querySelector('.garden')).toHaveAttribute('data-health', 'wilted');
     expect((await repo.listProgress(deck.id)).map((p) => p.reps).sort()).toEqual([1, 3]);
   });
