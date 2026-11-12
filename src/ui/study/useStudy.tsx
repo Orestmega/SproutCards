@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
 import { shuffle } from '../../core/random';
-import { selectSessionCards, sessionCards } from '../../core/selection';
+import { selectSessionCards, sessionCards, sessionSizeOf } from '../../core/selection';
 import type { Card, Deck, Direction, Progress } from '../../core/types';
 import { wholeDeckChunk } from '../../core/wholeDeck';
 import { useI18n } from '../../i18n';
@@ -29,6 +29,8 @@ export interface StudyData {
   deck: Deck;
   cards: Card[];
   progress: Progress[];
+  /** Words per session (the choice on the deck screen). */
+  size: number;
   now: number;
 }
 
@@ -66,7 +68,7 @@ export function useStudyParams(): {
 }
 
 /** Loads the data once. To start over, remount the component that calls this (change its `key`). */
-function useStudyData(deckId: string, starredOnly: boolean): Loaded {
+function useStudyData(deckId: string, starredOnly: boolean, size: number): Loaded {
   const { repo } = useApp();
   const [loaded, setLoaded] = useState<Loaded>({ status: 'loading' });
 
@@ -84,6 +86,7 @@ function useStudyData(deckId: string, starredOnly: boolean): Loaded {
         deck,
         cards: starredOnly ? cards.filter((c) => c.starred === true) : cards,
         progress,
+        size,
         now,
       };
       return { status: 'ready', data } as const;
@@ -94,7 +97,7 @@ function useStudyData(deckId: string, starredOnly: boolean): Loaded {
     return () => {
       cancelled = true;
     };
-  }, [repo, deckId, starredOnly]);
+  }, [repo, deckId, starredOnly, size]);
 
   return loaded;
 }
@@ -106,10 +109,10 @@ export function pickSessionCards(
   practice: boolean,
   whole = false,
 ): Card[] {
-  if (practice) return shuffle(data.cards).slice(0, 20);
-  if (whole) return shuffle(wholeDeckChunk(data.cards, data.progress, direction));
+  if (practice) return shuffle(data.cards).slice(0, data.size);
+  if (whole) return shuffle(wholeDeckChunk(data.cards, data.progress, direction, data.size));
   const selection = selectSessionCards(data.cards, data.progress, direction, data.now);
-  return shuffle(sessionCards(selection));
+  return shuffle(sessionCards(selection, data.size));
 }
 
 /**
@@ -131,7 +134,8 @@ export function StudyGate({
 }) {
   const { t } = useI18n();
   const { direction, practice, starred, whole } = useStudyParams();
-  const loaded = useStudyData(deckId, starred);
+  const { settings } = useApp();
+  const loaded = useStudyData(deckId, starred, sessionSizeOf(settings.sessionSize));
 
   if (loaded.status === 'loading') return null;
   if (loaded.status === 'missing') return <NotFoundScreen />;

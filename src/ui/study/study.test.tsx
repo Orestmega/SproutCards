@@ -88,6 +88,21 @@ async function playLearnPerfectly(user: UserEvent): Promise<number> {
 }
 
 describe('Learn: the full cycle', () => {
+  it('the deck screen chooses how many words a session takes', async () => {
+    const user = userEvent.setup();
+    const { repo, deck } = await seedDeck(WORDS6);
+    await repo.saveSettings({ ...(await repo.getSettings()), uiLanguage: 'en' });
+    const first = open(`/decks/${deck.id}`);
+    const group = await screen.findByRole('radiogroup', { name: 'Words at a time' });
+    await user.click(within(group).getByRole('radio', { name: '5' }));
+    await waitFor(async () => expect((await repo.getSettings()).sessionSize).toBe(5));
+    first.unmount();
+    open(`/decks/${deck.id}/learn`);
+    await screen.findByText('Choose the translation');
+    expect(await playLearnPerfectly(user)).toBe(15); // 5 words, 3 levels each
+    await waitFor(async () => expect(await repo.listProgress(deck.id)).toHaveLength(5));
+  });
+
   it('saves as you go: a passed card counts at once, even if the session is left half-way', async () => {
     const user = userEvent.setup();
     const { repo, deck } = await seedDeck();

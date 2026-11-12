@@ -1,4 +1,4 @@
-import { countDue, selectSessionCards, sessionCards } from './selection';
+import { countDue, selectSessionCards, sessionCards, sessionSizeOf } from './selection';
 import { makeCard } from './testUtils';
 import type { Progress } from './types';
 import { progressId } from './types';
@@ -59,6 +59,16 @@ describe('selectSessionCards', () => {
 describe('countDue', () => {
   it('counts only records that are due', () => {
     expect(countDue([prog('a', NOW - 1), prog('b', NOW), prog('c', NOW + 1)], NOW)).toBe(2);
+  });
+});
+
+describe('sessionSizeOf', () => {
+  it('keeps a size one can choose, else the default 20', () => {
+    expect(sessionSizeOf(10)).toBe(10);
+    expect(sessionSizeOf(50)).toBe(50);
+    expect(sessionSizeOf(7)).toBe(20);
+    expect(sessionSizeOf(undefined)).toBe(20);
+    expect(sessionSizeOf('10')).toBe(20);
   });
 });
 

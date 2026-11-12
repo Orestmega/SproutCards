@@ -396,12 +396,15 @@ export function PlantArt({
   stage,
   variety,
   seed,
+  noSoil = false,
 }: {
   stage: GrowthStage;
   /** A kind of flower (rewards, the collection). Without it a bloom is a green bush: words have no flowers. */
   variety?: VarietyId;
   /** The plot's number in the garden picture: each flower wilts in its own way. */
   seed?: number;
+  /** Without the soil (a flower rising out of the weekly chest). */
+  noSoil?: boolean;
 }) {
   if (stage === 'seed') {
     return (
@@ -457,7 +460,7 @@ export function PlantArt({
   const dir = n % 3 === 1 ? -1 : 1;
   return (
     <g className="plant" style={style}>
-      <Soil />
+      {!noSoil && <Soil />}
       <g className="plant__sway" style={{ '--sd': `-${(n * 0.9) % 3.4}s` } as CSSProperties}>
         <g className="plant__lower">
           <path d="M16 28 V20" stroke={STEM} strokeWidth="2.6" strokeLinecap="round" />

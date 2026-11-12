@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom';
 import type { Deck, Direction } from '../../core/types';
 import { useI18n } from '../../i18n';
 import type { MessageKey } from '../../i18n';
-import { useRepo } from '../AppProviders';
+import { useApp, useRepo } from '../AppProviders';
+import { SESSION_SIZES, sessionSizeOf } from '../../core/selection';
 import { CheckField } from '../components/Fields';
 import { Icon } from '../components/Icons';
 import { ProgressBar } from '../components/ProgressBar';
@@ -31,6 +32,8 @@ export function StudyPanel({
 }) {
   const { t, tp, languageName } = useI18n();
   const repo = useRepo();
+  const { settings, updateSettings } = useApp();
+  const size = sessionSizeOf(settings.sessionSize);
   const [direction, setDirection] = useState<Direction>('forward');
   const [starredOnly, setStarredOnly] = useState(false);
   const counts = useLiveQuery(async () => {
@@ -75,6 +78,26 @@ export function StudyPanel({
         <p className="muted">{t('study.needCards')}</p>
       ) : (
         <>
+          {/* how many words one session takes; remembered for every deck and mode */}
+          <div className="field">
+            <span className="field__label" id="study-size">
+              {t('study.size')}
+            </span>
+            <div className="seg" role="radiogroup" aria-labelledby="study-size">
+              {SESSION_SIZES.map((n) => (
+                <button
+                  key={n}
+                  type="button"
+                  role="radio"
+                  aria-checked={size === n}
+                  className="seg__btn"
+                  onClick={() => void updateSettings({ sessionSize: n }).catch(() => undefined)}
+                >
+                  {n}
+                </button>
+              ))}
+            </div>
+          </div>
           {due !== undefined && due > 0 && <p className="muted">{tp('count.due', due)}</p>}
           {starredCount > 0 && (
             <CheckField
@@ -113,7 +136,7 @@ export function StudyPanel({
               label={t('whole.progress', { learned, total: cardCount })}
             />
             <span className="muted">
-              {learned >= cardCount ? t('whole.allDone') : t('whole.desc')}
+              {learned >= cardCount ? t('whole.allDone') : t('whole.desc', { size })}
             </span>
           </Link>
           <div className="modes">

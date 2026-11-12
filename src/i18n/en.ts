@@ -649,7 +649,8 @@ export const en = {
   'week.reward': 'Each one finished brings a rare flower to the garden.',
   'whole.title': 'Whole deck',
   'whole.progress': 'Learned {learned} of {total}',
-  'whole.desc': 'Every word in order, 20 at a time, with no daily limit. Progress is saved.',
+  'whole.desc':
+    'Every word in order, {size} at a time, with no daily limit. Progress is saved after every answer.',
   'whole.allDone': 'The whole deck is learned in this direction.',
   'whole.next': 'Next words',
   'whole.done.title': 'The whole deck is learned!',
@@ -691,4 +692,5 @@ export const en = {
   'learn.countedAsRight': 'Counted as right.',
   'resume.more_one': '{count} more unfinished',
   'resume.more_other': '{count} more unfinished',
+  'study.size': 'Words at a time',
 } as const;

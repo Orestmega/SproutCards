@@ -126,6 +126,8 @@ export interface Settings {
    * `null` as a whole = nothing planted yet (the earned flowers then stand in order).
    */
   gardenPlots: (string | null)[] | null;
+  /** Words per study session, chosen on the deck screen (see `SESSION_SIZES`). */
+  sessionSize: number;
   /** Earned decorations the user put away (they are not shown in the garden picture). */
   hiddenDecorations: string[];
   /** Bonuses of the cheat panel (testing only; real progress is never changed). */
@@ -145,5 +147,6 @@ export const DEFAULT_SETTINGS: Settings = {
   avatar: 'sprout',
   gardenPlots: null,
   hiddenDecorations: [],
+  sessionSize: 20,
   cheats: NO_CHEATS,
 };

@@ -712,7 +712,8 @@ export const uk: Record<Keys, string> & Record<string, string> = {
   'week.reward': 'Кожна виконана дає рідкісну квітку в сад.',
   'whole.title': 'Уся колода',
   'whole.progress': 'Вивчено {learned} з {total}',
-  'whole.desc': 'Усі слова по черзі, по 20 за раз, без денного ліміту. Прогрес зберігається.',
+  'whole.desc':
+    'Усі слова по черзі, по {size} за раз, без денного ліміту. Прогрес зберігається після кожної відповіді.',
   'whole.allDone': 'У цьому напрямку всю колоду вивчено.',
   'whole.next': 'Наступні слова',
   'whole.done.title': 'Всю колоду вивчено!',
@@ -758,4 +759,5 @@ export const uk: Record<Keys, string> & Record<string, string> = {
   'resume.more_few': 'ще {count} незавершені',
   'resume.more_many': 'ще {count} незавершених',
   'resume.more_other': 'ще {count} незавершеної',
+  'study.size': 'Слів за раз',
 };

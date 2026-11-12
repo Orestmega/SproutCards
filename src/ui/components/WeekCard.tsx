@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useId, useState } from 'react';
 import { MAX_FREEZES } from '../../core/freeze';
 import { weekFlower } from '../../core/gardenLife';
 import type { WeekItem, WeekState } from '../../core/weekly';
 import { useI18n } from '../../i18n';
 import { useCue } from '../cues';
-import { Plant } from './Plant';
+import type { VarietyId } from '../../core/gardenLife';
+import { Plant, PlantArt } from './Plant';
 import { ProgressBar } from './ProgressBar';
 
 const DAY_MS = 86_400_000;
@@ -63,11 +64,14 @@ export function WeekCard({
       week.items.filter((i) => i.done && !seen.has(itemKey(week, i))).map((i) => itemKey(week, i)),
     );
   });
+  // the chest opens with its animation once: the first time this device sees the week full
+  const chestKey = `${week.start}:chest`;
+  const [opening] = useState(() => full && !readSeen().includes(chestKey));
   useEffect(() => {
-    if (fresh.size === 0) return;
-    writeSeen([...readSeen(), ...fresh]);
+    if (fresh.size === 0 && !opening) return;
+    writeSeen([...readSeen(), ...fresh, ...(opening ? [chestKey] : [])]);
     cue('finish');
-  }, [fresh, cue]);
+  }, [fresh, opening, chestKey, cue]);
 
   return (
     <section className="card weekly" aria-labelledby="weekly-title">
@@ -134,7 +138,7 @@ export function WeekCard({
       </ul>
 
       <div className={full ? 'chest chest--open' : 'chest'}>
-        <ChestIcon open={full} />
+        <ChestIcon open={full} opening={opening} flower={chestFlower} />
         <div className="chest__text">
           <span className="weekly__name">{t('week.chest.title')}</span>
           <span className="muted">
@@ -143,7 +147,10 @@ export function WeekCard({
             })}
           </span>
         </div>
-        <span className="chest__flower" aria-hidden="true">
+        <span
+          className={opening ? 'chest__flower chest__flower--pop' : 'chest__flower'}
+          aria-hidden="true"
+        >
           <Plant stage="bloom" variety={chestFlower} size={40} />
         </span>
       </div>
@@ -155,39 +162,194 @@ export function WeekCard({
   );
 }
 
-/** A little chest: closed, or open with light coming out. */
-function ChestIcon({ open }: { open: boolean }) {
+/**
+ * The chest of the week (the owner's design, design/feedback/chest-demo.html): a wooden chest with gold
+ * bands. Closed, it rocks a little now and then. Opening (`opening`, played once): it shakes, the lid flips
+ * up, light and rays come out and the flower of the week rises. Open: it stays like that.
+ */
+export function ChestIcon({
+  open,
+  opening,
+  flower,
+}: {
+  open: boolean;
+  opening: boolean;
+  flower: VarietyId;
+}) {
+  // gradients need ids that are unique on the page
+  const id = useId().replace(/[^a-zA-Z0-9]/g, '');
+  const url = (name: string) => `url(#${id}${name})`;
+  const classes = ['chest__icon', open && 'chest__icon--open', opening && 'chest__icon--opening'];
   return (
-    <svg className="chest__icon" viewBox="0 0 48 48" aria-hidden="true" focusable="false">
-      {open && <circle cx="24" cy="22" r="16" fill="#ffe27a" opacity="0.5" />}
-      <rect
-        x="8"
-        y="22"
-        width="32"
-        height="18"
-        rx="3"
-        fill="#c98a4b"
-        stroke="#7a4f24"
-        strokeWidth="2"
-      />
-      <rect
-        x="21"
-        y="26"
-        width="6"
-        height="7"
-        rx="1.5"
-        fill="#ffd23f"
-        stroke="#7a4f24"
-        strokeWidth="1.5"
-      />
-      <g className="chest__lid">
+    <svg
+      className={classes.filter(Boolean).join(' ')}
+      viewBox="0 0 64 64"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <defs>
+        <linearGradient id={`${id}wood`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#e2a561" />
+          <stop offset="1" stopColor="#b9783a" />
+        </linearGradient>
+        <linearGradient id={`${id}woodLid`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#eab36c" />
+          <stop offset="1" stopColor="#cf8f4c" />
+        </linearGradient>
+        <linearGradient id={`${id}gold`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#ffe27a" />
+          <stop offset="1" stopColor="#f0b429" />
+        </linearGradient>
+        <radialGradient id={`${id}glowG`} cx=".5" cy=".5" r=".5">
+          <stop offset="0" stopColor="#fff6c9" />
+          <stop offset=".55" stopColor="#ffe27a" stopOpacity=".7" />
+          <stop offset="1" stopColor="#ffe27a" stopOpacity="0" />
+        </radialGradient>
+        <radialGradient id={`${id}inner`} cx=".5" cy=".4" r=".7">
+          <stop offset="0" stopColor="#ffe9a0" />
+          <stop offset="1" stopColor="#6b4423" />
+        </radialGradient>
+        <clipPath id={`${id}up`}>
+          <rect x="-10" y="-10" width="84" height="40" />
+        </clipPath>
+      </defs>
+      <ellipse cx="32" cy="58" rx="23" ry="3.6" fill="#3a2a14" opacity=".18" />
+      <g className="chest__rock">
+        {/* the inside of the lid, standing up behind the chest */}
+        <g className="chest__backlid">
+          <path
+            d="M11 31V21a9 9 0 0 1 9-9h24a9 9 0 0 1 9 9v10z"
+            fill="#8f5a2b"
+            stroke="#6b4423"
+            strokeWidth="2.2"
+            strokeLinejoin="round"
+          />
+          <path d="M16 31V22a5 5 0 0 1 5-5h22a5 5 0 0 1 5 5v9z" fill="#a8703a" opacity=".55" />
+        </g>
+        <g className="chest__glow">
+          <circle cx="32" cy="26" r="23" fill={url('glowG')} />
+        </g>
+        <g clipPath={url('up')}>
+          <g className="chest__rays" fill="#fff1a8">
+            <path d="M32 29 L24 -6 L30 -6Z" />
+            <path d="M32 29 L10 -2 L17 -5Z" />
+            <path d="M32 29 L-4 12 L-2 5Z" />
+            <path d="M32 29 L40 -6 L34 -6Z" />
+            <path d="M32 29 L54 -2 L47 -5Z" />
+            <path d="M32 29 L68 12 L66 5Z" />
+          </g>
+        </g>
+        {/* the flower of the week rises out of the chest */}
+        <g transform="translate(16 -3)">
+          <g className="chest__fl">
+            <g className="chest__bob">
+              <svg width="32" height="32" viewBox="0 0 32 32" overflow="visible">
+                <PlantArt stage="bloom" variety={flower} noSoil />
+              </svg>
+            </g>
+          </g>
+        </g>
+        {/* the body */}
         <path
-          d="M8 22 V18 a6 6 0 0 1 6-6 h20 a6 6 0 0 1 6 6 V22 Z"
-          fill="#d99a58"
+          d="M9 30h46v24a4 4 0 0 1-4 4H13a4 4 0 0 1-4-4z"
+          fill={url('wood')}
           stroke="#7a4f24"
-          strokeWidth="2"
+          strokeWidth="2.2"
           strokeLinejoin="round"
         />
+        <path d="M10 39.5h44M10 48h44" stroke="#9c6430" strokeWidth="1.1" opacity=".7" />
+        <path d="M11 32h42" stroke="#fff" strokeWidth="1.4" opacity=".25" strokeLinecap="round" />
+        <rect
+          x="14"
+          y="30"
+          width="6"
+          height="28"
+          fill={url('gold')}
+          stroke="#7a4f24"
+          strokeWidth="1.6"
+        />
+        <rect
+          x="44"
+          y="30"
+          width="6"
+          height="28"
+          fill={url('gold')}
+          stroke="#7a4f24"
+          strokeWidth="1.6"
+        />
+        <g fill="#7a4f24">
+          <circle cx="17" cy="35" r=".9" />
+          <circle cx="17" cy="53" r=".9" />
+          <circle cx="47" cy="35" r=".9" />
+          <circle cx="47" cy="53" r=".9" />
+        </g>
+        {/* the dark opening with light inside */}
+        <ellipse
+          className="chest__rim"
+          cx="32"
+          cy="30"
+          rx="22.5"
+          ry="3.4"
+          fill={url('inner')}
+          stroke="#6b4423"
+          strokeWidth="1.8"
+        />
+        {/* the lock */}
+        <rect
+          x="26.5"
+          y="34"
+          width="11"
+          height="12"
+          rx="2.4"
+          fill={url('gold')}
+          stroke="#7a4f24"
+          strokeWidth="1.8"
+        />
+        <circle cx="32" cy="39" r="1.7" fill="#5a3a18" />
+        <path d="M32 40v3" stroke="#5a3a18" strokeWidth="1.8" strokeLinecap="round" />
+        {/* the lid (closed) */}
+        <g className="chest__lid">
+          <path
+            d="M8 31V22a10 10 0 0 1 10-10h28a10 10 0 0 1 10 10v9z"
+            fill={url('woodLid')}
+            stroke="#7a4f24"
+            strokeWidth="2.2"
+            strokeLinejoin="round"
+          />
+          <path d="M10 22.5h44" stroke="#9c6430" strokeWidth="1.1" opacity=".7" />
+          <path
+            d="M14 17.5c2-2.2 5-3 8-3"
+            stroke="#fff"
+            strokeWidth="1.5"
+            opacity=".35"
+            strokeLinecap="round"
+            fill="none"
+          />
+          <rect
+            x="14"
+            y="12.6"
+            width="6"
+            height="18.4"
+            fill={url('gold')}
+            stroke="#7a4f24"
+            strokeWidth="1.6"
+          />
+          <rect
+            x="44"
+            y="12.6"
+            width="6"
+            height="18.4"
+            fill={url('gold')}
+            stroke="#7a4f24"
+            strokeWidth="1.6"
+          />
+          <path
+            d="M27 31v-3a5 5 0 0 1 10 0v3z"
+            fill={url('gold')}
+            stroke="#7a4f24"
+            strokeWidth="1.6"
+          />
+        </g>
       </g>
     </svg>
   );

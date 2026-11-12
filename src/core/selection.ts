@@ -41,6 +41,16 @@ export function countDue(progress: readonly Progress[], now: number): number {
 /** Most cards in one session: long due lists are worked off over several sessions. */
 export const SESSION_SIZE = 20;
 
+/** How many words one session may take (chosen on the deck screen). */
+export const SESSION_SIZES = [5, 10, 20, 30, 50] as const;
+
+/** A saved session size, or the default when it is missing or not one of `SESSION_SIZES`. */
+export function sessionSizeOf(value: unknown): number {
+  return SESSION_SIZES.includes(value as (typeof SESSION_SIZES)[number])
+    ? (value as number)
+    : SESSION_SIZE;
+}
+
 /** The cards of one session: due first (most overdue first), then new ones, capped at `SESSION_SIZE`. */
 export function sessionCards(selection: SessionSelection, size: number = SESSION_SIZE): Card[] {
   return [...selection.due, ...selection.fresh].slice(0, size);
