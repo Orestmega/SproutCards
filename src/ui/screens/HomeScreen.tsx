@@ -72,6 +72,15 @@ export function HomeScreen() {
     update?.catch(() => undefined);
   }, [due]);
 
+  // late in the evening and at night Sprout dozes; a pat wakes it only for a moment, then it sleeps again
+  const hour = new Date(now).getHours();
+  const drowsy = hour >= 21 || hour < 5;
+  useEffect(() => {
+    if (line < 0 || !drowsy) return;
+    const timer = setTimeout(() => setLine(-1), 6000);
+    return () => clearTimeout(timer);
+  }, [line, pats, drowsy]);
+
   if (!summaries || due === undefined || !logTimes) return null;
 
   const part = dayPart(new Date(now).getHours());
@@ -99,7 +108,8 @@ export function HomeScreen() {
     .find((s) => s.dueCount > 0);
   const freshDeck = summaries.find((s) => s.growth.seed > 0);
 
-  let mood: MascotMood = part === 'night' ? 'sleepy' : 'normal';
+  // asleep whatever is waiting (see drowsy above)
+  let mood: MascotMood = 'normal';
   let message = t('home.welcome');
   if (summaries.length > 0 && due > 0) {
     mood = 'encouraging';
@@ -110,6 +120,7 @@ export function HomeScreen() {
   } else if (summaries.length > 0) {
     message = t('home.addCardsMessage');
   }
+  if (drowsy) mood = 'sleepy';
   // after a pat Sprout jumps for joy and says one of its lines instead
   const patLine = PAT_LINES[line];
   if (patLine) {

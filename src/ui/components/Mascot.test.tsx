@@ -1,7 +1,8 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { App } from '../../App';
 import { AppDatabase } from '../../db/db';
+import { createRepo } from '../../db/repo';
 import { Mascot } from './Mascot';
 import type { MascotMood } from './Mascot';
 
@@ -108,4 +109,54 @@ describe('Home: pat Sprout', () => {
     await user.click(sprout);
     expect(sprout.querySelector('svg')).toHaveAttribute('data-mood', 'celebrate');
   });
+
+  it('late at night Sprout dozes even with reviews waiting; a pat wakes it only for a moment', async () => {
+    const late = new Date();
+    late.setHours(23, 0, 0, 0);
+    const clock = vi.spyOn(Date, 'now').mockReturnValue(late.getTime());
+    try {
+      const repo = createRepo(db);
+      const deck = await repo.createDeck({
+        name: 'Night',
+        learningLang: 'en',
+        translationLang: 'uk',
+      });
+      const card = await repo.addCard(deck.id, { term: 'moon', translations: ['місяць'] });
+      await repo.saveSession(
+        [
+          {
+            id: `${card.id}:forward`,
+            cardId: card.id,
+            deckId: deck.id,
+            direction: 'forward',
+            reps: 1,
+            intervalDays: 1,
+            dueAt: late.getTime() - 1000, // due: there is something to review
+            lapses: 0,
+            lastReviewedAt: late.getTime() - 86_400_000,
+          },
+        ],
+        [],
+      );
+      await repo.saveSettings({ ...(await repo.getSettings()), uiLanguage: 'en' });
+      const user = userEvent.setup();
+      window.location.hash = '#/';
+      render(<App db={db} />);
+      const sprout = await screen.findByRole('button', { name: 'Pat Sprout' });
+      await waitFor(() =>
+        expect(sprout.querySelector('svg')).toHaveAttribute('data-mood', 'sleepy'),
+      );
+      await user.click(sprout);
+      expect(sprout.querySelector('svg')).toHaveAttribute('data-mood', 'happy');
+      // and it dozes off again
+      await waitFor(
+        () => expect(sprout.querySelector('svg')).toHaveAttribute('data-mood', 'sleepy'),
+        {
+          timeout: 8000,
+        },
+      );
+    } finally {
+      clock.mockRestore();
+    }
+  }, 20000);
 });
