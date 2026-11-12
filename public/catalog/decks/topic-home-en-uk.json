@@ -1,0 +1,621 @@
+{
+ "format": "sproutcards-deck",
+ "version": 1,
+ "deck": {
+  "id": "topic-home-en-uk",
+  "name": "Home (English)",
+  "learningLang": "en",
+  "translationLang": "uk",
+  "description": "Rooms, furniture and things around the house.",
+  "source": "SproutCards catalog",
+  "catalogId": "topic-home-en-uk",
+  "createdAt": 0
+ },
+ "cards": [
+  {
+   "id": "topic-home-en-uk-1",
+   "term": "house",
+   "translations": [
+    "будинок",
+    "дім"
+   ],
+   "examples": [
+    {
+     "text": "I am in the house.",
+     "translation": "Я в будинку."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-home-en-uk-2",
+   "term": "flat",
+   "translations": [
+    "квартира"
+   ],
+   "examples": [
+    {
+     "text": "The earth is flat.",
+     "translation": "Земля пласка."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-home-en-uk-3",
+   "term": "room",
+   "translations": [
+    "кімната"
+   ],
+   "examples": [
+    {
+     "text": "The room was warm.",
+     "translation": "У кімнаті було тепло."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-home-en-uk-4",
+   "term": "bedroom",
+   "translations": [
+    "спальня"
+   ],
+   "examples": [
+    {
+     "text": "This is my bedroom.",
+     "translation": "Це моя спальня."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-home-en-uk-5",
+   "term": "bathroom",
+   "translations": [
+    "ванна кімната"
+   ],
+   "examples": [
+    {
+     "text": "Where's the bathroom?",
+     "translation": "Де прибиральня?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-home-en-uk-6",
+   "term": "door",
+   "translations": [
+    "двері"
+   ],
+   "examples": [
+    {
+     "text": "I locked the door.",
+     "translation": "Я замкнув двері."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-home-en-uk-7",
+   "term": "window",
+   "translations": [
+    "вікно"
+   ],
+   "examples": [
+    {
+     "text": "The window opened.",
+     "translation": "Вікно відкрилось."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-home-en-uk-8",
+   "term": "wall",
+   "translations": [
+    "стіна"
+   ],
+   "examples": [
+    {
+     "text": "I painted the wall.",
+     "translation": "Я пофарбував мур."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-home-en-uk-9",
+   "term": "floor",
+   "translations": [
+    "підлога",
+    "поверх"
+   ],
+   "examples": [
+    {
+     "text": "The floor is cold.",
+     "translation": "Підлога холодна."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-home-en-uk-10",
+   "term": "roof",
+   "translations": [
+    "дах"
+   ],
+   "examples": [
+    {
+     "text": "The roof is leaking.",
+     "translation": "Дах протікає."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-home-en-uk-11",
+   "term": "stairs",
+   "translations": [
+    "сходи"
+   ],
+   "examples": [
+    {
+     "text": "I ran up the stairs.",
+     "translation": "Я побіг вгору по сходах."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-home-en-uk-12",
+   "term": "garden",
+   "translations": [
+    "сад"
+   ],
+   "examples": [
+    {
+     "text": "My garden is small.",
+     "translation": "У мене маленький сад."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-home-en-uk-13",
+   "term": "table",
+   "translations": [
+    "стіл"
+   ],
+   "examples": [
+    {
+     "text": "It's on the table.",
+     "translation": "Він на столі."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-home-en-uk-14",
+   "term": "chair",
+   "translations": [
+    "стілець"
+   ],
+   "examples": [
+    {
+     "text": "I love that chair.",
+     "translation": "Мені подобається цей стілець."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-home-en-uk-15",
+   "term": "bed",
+   "translations": [
+    "ліжко"
+   ],
+   "examples": [
+    {
+     "text": "He sat on the bed.",
+     "translation": "Він сів на ліжко."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-home-en-uk-16",
+   "term": "sofa",
+   "translations": [
+    "диван"
+   ],
+   "examples": [
+    {
+     "text": "I slept on the sofa.",
+     "translation": "Я спав на дивані."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-home-en-uk-17",
+   "term": "lamp",
+   "translations": [
+    "лампа"
+   ],
+   "examples": [
+    {
+     "text": "I want a new lamp.",
+     "translation": "Я хочу нову лампочку."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-home-en-uk-18",
+   "term": "mirror",
+   "translations": [
+    "дзеркало"
+   ],
+   "examples": [
+    {
+     "text": "Look in the mirror.",
+     "translation": "Подивися у дзеркало."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-home-en-uk-19",
+   "term": "shelf",
+   "translations": [
+    "полиця"
+   ],
+   "examples": [
+    {
+     "text": "Put it on the shelf.",
+     "translation": "Поклади на полицю."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-home-en-uk-20",
+   "term": "clock",
+   "translations": [
+    "годинник"
+   ],
+   "examples": [
+    {
+     "text": "Where is my clock?",
+     "translation": "Де мій годинник?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-home-en-uk-21",
+   "term": "key",
+   "translations": [
+    "ключ"
+   ],
+   "examples": [
+    {
+     "text": "This isn't my key.",
+     "translation": "Це не мій ключ."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-home-en-uk-22",
+   "term": "picture",
+   "translations": [
+    "картина",
+    "фото"
+   ],
+   "examples": [
+    {
+     "text": "This is a picture.",
+     "translation": "Це малюнок."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-home-en-uk-23",
+   "term": "carpet",
+   "translations": [
+    "килим"
+   ],
+   "examples": [
+    {
+     "text": "I hate this carpet.",
+     "translation": "Ненавиджу цей килим."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-home-en-uk-24",
+   "term": "shower",
+   "translations": [
+    "душ"
+   ],
+   "examples": [
+    {
+     "text": "I've had a shower.",
+     "translation": "Я прийняв душ."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-home-en-uk-25",
+   "term": "towel",
+   "translations": [
+    "рушник"
+   ],
+   "examples": [
+    {
+     "text": "She needs a towel.",
+     "translation": "Їй потрібен рушник."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-home-en-uk-26",
+   "term": "soap",
+   "translations": [
+    "мило"
+   ],
+   "examples": [
+    {
+     "text": "We're out of soap.",
+     "translation": "У нас закінчилося мило."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-home-en-uk-27",
+   "term": "fridge",
+   "translations": [
+    "холодильник"
+   ],
+   "examples": [
+    {
+     "text": "It's in the fridge.",
+     "translation": "Він у холодильнику."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-home-en-uk-28",
+   "term": "oven",
+   "translations": [
+    "духовка"
+   ],
+   "examples": [
+    {
+     "text": "I want a new oven.",
+     "translation": "Мені потрібна нова духовка."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-home-en-uk-29",
+   "term": "sink",
+   "translations": [
+    "раковина"
+   ],
+   "examples": [
+    {
+     "text": "It didn't sink in.",
+     "translation": "До нього не дійшло."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-home-en-uk-30",
+   "term": "blanket",
+   "translations": [
+    "ковдра"
+   ],
+   "examples": [
+    {
+     "text": "Can I get a blanket?",
+     "translation": "Можна мені взяти ковдру?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-home-en-uk-31",
+   "term": "pillow",
+   "translations": [
+    "подушка"
+   ],
+   "examples": [
+    {
+     "text": "I am not a pillow.",
+     "translation": "Я не подушка."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-home-en-uk-32",
+   "term": "box",
+   "translations": [
+    "коробка"
+   ],
+   "examples": [
+    {
+     "text": "Who made this box?",
+     "translation": "Хто зробив цей ящик?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-home-en-uk-33",
+   "term": "bag",
+   "translations": [
+    "сумка"
+   ],
+   "examples": [
+    {
+     "text": "Whose bag is this?",
+     "translation": "Чия це сумка?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-home-en-uk-34",
+   "term": "phone",
+   "translations": [
+    "телефон"
+   ],
+   "examples": [
+    {
+     "text": "My phone is handy.",
+     "translation": "Мій телефон зручний."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-home-en-uk-35",
+   "term": "computer",
+   "translations": [
+    "комп’ютер"
+   ],
+   "examples": [
+    {
+     "text": "I have a computer.",
+     "translation": "У мене є комп'ютер."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-home-en-uk-36",
+   "term": "television",
+   "translations": [
+    "телевізор"
+   ],
+   "examples": [
+    {
+     "text": "I watch television.",
+     "translation": "Я дивлюсь телевізор."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-home-en-uk-37",
+   "term": "clean",
+   "translations": [
+    "чистий",
+    "прибирати"
+   ],
+   "examples": [
+    {
+     "text": "Clean up the room.",
+     "translation": "Прибери в кімнаті."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-home-en-uk-38",
+   "term": "dirty",
+   "translations": [
+    "брудний"
+   ],
+   "examples": [
+    {
+     "text": "The fork is dirty.",
+     "translation": "Виделка брудна."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-home-en-uk-39",
+   "term": "neighbour",
+   "translations": [
+    "сусід"
+   ],
+   "examples": [
+    {
+     "text": "He's my neighbour.",
+     "translation": "Він - мій сусід."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-home-en-uk-40",
+   "term": "live",
+   "translations": [
+    "жити"
+   ],
+   "examples": [
+    {
+     "text": "Live and let live.",
+     "translation": "Живи і дай жити іншим."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  }
+ ],
+ "progress": []
+}

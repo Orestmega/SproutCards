@@ -1,0 +1,587 @@
+{
+ "format": "sproutcards-deck",
+ "version": 1,
+ "deck": {
+  "id": "topic-time-en-uk",
+  "name": "Time and numbers (English)",
+  "learningLang": "en",
+  "translationLang": "uk",
+  "description": "Days, months, numbers and words about time.",
+  "source": "SproutCards catalog",
+  "catalogId": "topic-time-en-uk",
+  "createdAt": 0
+ },
+ "cards": [
+  {
+   "id": "topic-time-en-uk-1",
+   "term": "time",
+   "translations": [
+    "час"
+   ],
+   "examples": [
+    {
+     "text": "I don't have time.",
+     "translation": "У мене немає часу."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-time-en-uk-2",
+   "term": "minute",
+   "translations": [
+    "хвилина"
+   ],
+   "examples": [
+    {
+     "text": "Give her a minute.",
+     "translation": "Дайте їй хвилину."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-time-en-uk-3",
+   "term": "hour",
+   "translations": [
+    "година"
+   ],
+   "examples": [
+    {
+     "text": "You have one hour.",
+     "translation": "Ви маєте одну годину."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-time-en-uk-4",
+   "term": "day",
+   "translations": [
+    "день"
+   ],
+   "examples": [
+    {
+     "text": "I was out all day.",
+     "translation": "Мене не було весь день."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-time-en-uk-5",
+   "term": "week",
+   "translations": [
+    "тиждень"
+   ],
+   "examples": [
+    {
+     "text": "Last week was hot.",
+     "translation": "Минулого тижня було спекотно."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-time-en-uk-6",
+   "term": "month",
+   "translations": [
+    "місяць"
+   ],
+   "examples": [
+    {
+     "text": "I moved last month.",
+     "translation": "Я переїхав минулого місяця."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-time-en-uk-7",
+   "term": "year",
+   "translations": [
+    "рік"
+   ],
+   "examples": [
+    {
+     "text": "It's the new year.",
+     "translation": "Це новий рік."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-time-en-uk-8",
+   "term": "today",
+   "translations": [
+    "сьогодні"
+   ],
+   "examples": [
+    {
+     "text": "I feel well today.",
+     "translation": "Я почуваюся добре сьогодні."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-time-en-uk-9",
+   "term": "tomorrow",
+   "translations": [
+    "завтра"
+   ],
+   "examples": [],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-time-en-uk-10",
+   "term": "yesterday",
+   "translations": [
+    "вчора"
+   ],
+   "examples": [
+    {
+     "text": "Yesterday was cold.",
+     "translation": "Вчора було холодно."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-time-en-uk-11",
+   "term": "morning",
+   "translations": [
+    "ранок"
+   ],
+   "examples": [
+    {
+     "text": "Good morning, doctor!",
+     "translation": "Доброго ранку, лікаре!"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-time-en-uk-12",
+   "term": "evening",
+   "translations": [
+    "вечір"
+   ],
+   "examples": [
+    {
+     "text": "Good evening, madam!",
+     "translation": "Доброго вечора, пані!"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-time-en-uk-13",
+   "term": "night",
+   "translations": [
+    "ніч"
+   ],
+   "examples": [
+    {
+     "text": "The night is cold.",
+     "translation": "Ніч холодна."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-time-en-uk-14",
+   "term": "now",
+   "translations": [
+    "зараз"
+   ],
+   "examples": [
+    {
+     "text": "It's starting now.",
+     "translation": "Вже починається."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-time-en-uk-15",
+   "term": "later",
+   "translations": [
+    "пізніше"
+   ],
+   "examples": [
+    {
+     "text": "I'll see you later.",
+     "translation": "Побачимося пізніше."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-time-en-uk-16",
+   "term": "early",
+   "translations": [
+    "рано"
+   ],
+   "examples": [
+    {
+     "text": "Let's leave early.",
+     "translation": "Давай підемо раніше."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-time-en-uk-17",
+   "term": "late",
+   "translations": [
+    "пізно"
+   ],
+   "examples": [
+    {
+     "text": "It's getting late.",
+     "translation": "Стає пізно."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-time-en-uk-18",
+   "term": "always",
+   "translations": [
+    "завжди"
+   ],
+   "examples": [
+    {
+     "text": "She always smiles.",
+     "translation": "Вона завжди усміхається."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-time-en-uk-19",
+   "term": "never",
+   "translations": [
+    "ніколи"
+   ],
+   "examples": [
+    {
+     "text": "I will never tell!",
+     "translation": "Я ніколи не скажу!"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-time-en-uk-20",
+   "term": "sometimes",
+   "translations": [
+    "іноді"
+   ],
+   "examples": [
+    {
+     "text": "I sometimes skate.",
+     "translation": "Іноді я катаюся на ковзанах."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-time-en-uk-21",
+   "term": "often",
+   "translations": [
+    "часто"
+   ],
+   "examples": [
+    {
+     "text": "I often drink tea.",
+     "translation": "Я часто п'ю чай."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-time-en-uk-22",
+   "term": "Monday",
+   "translations": [
+    "понеділок"
+   ],
+   "examples": [
+    {
+     "text": "Monday was very cold.",
+     "translation": "Понеділок був дуже холодний."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-time-en-uk-23",
+   "term": "Tuesday",
+   "translations": [
+    "вівторок"
+   ],
+   "examples": [],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-time-en-uk-24",
+   "term": "Wednesday",
+   "translations": [
+    "середа"
+   ],
+   "examples": [],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-time-en-uk-25",
+   "term": "Thursday",
+   "translations": [
+    "четвер"
+   ],
+   "examples": [],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-time-en-uk-26",
+   "term": "Friday",
+   "translations": [
+    "п’ятниця"
+   ],
+   "examples": [],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-time-en-uk-27",
+   "term": "Saturday",
+   "translations": [
+    "субота"
+   ],
+   "examples": [
+    {
+     "text": "Saturday was special.",
+     "translation": "Субота була особливим днем."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-time-en-uk-28",
+   "term": "Sunday",
+   "translations": [
+    "неділя"
+   ],
+   "examples": [
+    {
+     "text": "Sunday is the last day of the week.",
+     "translation": "Неділя — це останній день тижня."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-time-en-uk-29",
+   "term": "January",
+   "translations": [
+    "січень"
+   ],
+   "examples": [
+    {
+     "text": "January is usually the coldest month.",
+     "translation": "Січень, як правило, найхолодніший місяць."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-time-en-uk-30",
+   "term": "July",
+   "translations": [
+    "липень"
+   ],
+   "examples": [],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-time-en-uk-31",
+   "term": "one",
+   "translations": [
+    "один"
+   ],
+   "examples": [
+    {
+     "text": "I have one sister.",
+     "translation": "У мене є одна сестра."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-time-en-uk-32",
+   "term": "two",
+   "translations": [
+    "два"
+   ],
+   "examples": [
+    {
+     "text": "John has two sons.",
+     "translation": "У Джона двоє синів."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-time-en-uk-33",
+   "term": "three",
+   "translations": [
+    "три"
+   ],
+   "examples": [
+    {
+     "text": "He has three sons.",
+     "translation": "У нього три сина."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-time-en-uk-34",
+   "term": "four",
+   "translations": [
+    "чотири"
+   ],
+   "examples": [
+    {
+     "text": "Twice two is four.",
+     "translation": "Двічі по два — чотири."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-time-en-uk-35",
+   "term": "five",
+   "translations": [
+    "п’ять"
+   ],
+   "examples": [
+    {
+     "text": "He ran five miles.",
+     "translation": "Він пробіг п'ять миль."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-time-en-uk-36",
+   "term": "ten",
+   "translations": [
+    "десять"
+   ],
+   "examples": [
+    {
+     "text": "I bought ten eggs.",
+     "translation": "Я купив десять яєць."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-time-en-uk-37",
+   "term": "hundred",
+   "translations": [
+    "сто"
+   ],
+   "examples": [
+    {
+     "text": "I have a hundred pesos.",
+     "translation": "У мене є сто песо."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-time-en-uk-38",
+   "term": "thousand",
+   "translations": [
+    "тисяча"
+   ],
+   "examples": [
+    {
+     "text": "Will ten thousand yen do?",
+     "translation": "Десяти тисяч єн вистачить?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-time-en-uk-39",
+   "term": "first",
+   "translations": [
+    "перший"
+   ],
+   "examples": [
+    {
+     "text": "I was there first.",
+     "translation": "Я був там першим."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-time-en-uk-40",
+   "term": "last",
+   "translations": [
+    "останній"
+   ],
+   "examples": [
+    {
+     "text": "They arrived last.",
+     "translation": "Вони приїхали останніми."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  }
+ ],
+ "progress": []
+}

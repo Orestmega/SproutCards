@@ -71,6 +71,31 @@ describe('stage 19', () => {
     expect(within(collection).getByText('Earned: 1')).toBeInTheDocument();
   });
 
+  it('a catalog deck is named in the interface language; a renamed one keeps its name', async () => {
+    const repo = createRepo(db);
+    const names = { en: 'Travel (English)', uk: 'Подорожі (англійська)' };
+    const travel = await repo.createDeck({
+      name: names.uk,
+      learningLang: 'en',
+      translationLang: 'uk',
+    });
+    await db.decks.update(travel.id, { catalogId: 'topic-travel-en-uk', names });
+    const mine = await repo.createDeck({
+      name: 'My words',
+      learningLang: 'en',
+      translationLang: 'uk',
+    });
+    await db.decks.update(mine.id, {
+      catalogId: 'topic-food-en-uk',
+      names: { en: 'Food', uk: 'Їжа' },
+    });
+    await repo.saveSettings({ ...(await repo.getSettings()), uiLanguage: 'en' });
+    open('/decks');
+    expect(await screen.findByText('Travel (English)')).toBeInTheDocument();
+    expect(screen.queryByText('Подорожі (англійська)')).toBeNull();
+    expect(screen.getByText('My words')).toBeInTheDocument();
+  });
+
   it('the list of decks says how many words are learned', async () => {
     await seed(1);
     open('/decks');
@@ -88,9 +113,14 @@ describe('stage 19', () => {
   it('the deck screen offers the whole deck with how much of it is learned', async () => {
     const { deck } = await seed(2);
     open(`/decks/${deck.id}`);
-    const link = await screen.findByRole('link', { name: /Whole deck/ });
-    expect(link).toHaveAttribute('href', `#/decks/${deck.id}/learn?dir=forward&whole=1`);
-    expect(await within(link).findByText('Learned 2 of 3')).toBeInTheDocument();
+    const card = await screen.findByRole('button', { name: /Whole deck/ });
+    expect(await within(card).findByText('Learned 2 of 3')).toBeInTheDocument();
+    // it asks how many words at a time, like Learn
+    const user = userEvent.setup();
+    await user.click(card);
+    const dialog = await screen.findByRole('dialog', { name: 'How many words at a time?' });
+    await user.click(within(dialog).getByRole('button', { name: 'Start' }));
+    expect(window.location.hash).toBe(`#/decks/${deck.id}/learn?dir=forward&whole=1&size=20`);
   });
 
   it('the whole deck brings only the words still to learn, and says when all are learned', async () => {

@@ -3,6 +3,7 @@ import { Link, NavLink, Outlet } from 'react-router-dom';
 import { useI18n } from '../../i18n';
 import type { MessageKey } from '../../i18n';
 import { useSettings } from '../AppProviders';
+import { useCatalogNames } from '../catalogNames';
 import { Avatar } from './Avatar';
 import { Mascot } from './Mascot';
 import { PwaBanner } from './PwaBanner';
@@ -113,6 +114,7 @@ const NAV: {
 /** Page frame with the bottom navigation (hidden on focused screens such as study sessions). */
 export function AppLayout() {
   const { t } = useI18n();
+  useCatalogNames();
   const settings = useSettings();
   return (
     <div className="app app--shell">

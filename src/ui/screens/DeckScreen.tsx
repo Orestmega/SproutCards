@@ -1,3 +1,4 @@
+import { deckName } from '../../core/catalog';
 import { useMemo, useRef, useState } from 'react';
 import type { ChangeEvent } from 'react';
 import { useLiveQuery } from 'dexie-react-hooks';
@@ -32,7 +33,7 @@ type Message =
 
 export function DeckScreen() {
   const { deckId = '' } = useParams();
-  const { t, tp, languageName } = useI18n();
+  const { t, tp, language, languageName } = useI18n();
   const repo = useRepo();
   const navigate = useNavigate();
   const fileInput = useRef<HTMLInputElement>(null);
@@ -127,10 +128,10 @@ export function DeckScreen() {
 
   return (
     <>
-      <PageHeader title={deck.name} backTo="/decks" />
+      <PageHeader title={deckName(deck, language)} backTo="/decks" />
       <div className="card deck-head">
         <div className="deck-head__top">
-          <DeckAvatar id={deck.id} name={deck.name} />
+          <DeckAvatar id={deck.id} name={deckName(deck, language)} />
           <div className="list-row__main">
             <span className="muted">
               {languageName(deck.learningLang)} → {languageName(deck.translationLang)} ·{' '}
@@ -263,7 +264,7 @@ export function DeckScreen() {
           onConfirm={removeDeck}
           onCancel={() => setConfirmDelete(false)}
         >
-          <p>{t('deck.deleteConfirm.text', { name: deck.name })}</p>
+          <p>{t('deck.deleteConfirm.text', { name: deckName(deck, language) })}</p>
         </ConfirmDialog>
       )}
     </>

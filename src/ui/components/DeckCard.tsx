@@ -1,3 +1,4 @@
+import { deckName } from '../../core/catalog';
 import { Link } from 'react-router-dom';
 import type { DeckSummary } from '../../db/repo';
 import { useI18n } from '../../i18n';
@@ -25,15 +26,16 @@ export function DeckAvatar({ id, name }: { id: string; name: string }) {
 
 /** A deck in a list: its name, how much is waiting and how far its words have grown. */
 export function DeckCard({ summary }: { summary: DeckSummary }) {
-  const { t, tp, languageName } = useI18n();
+  const { t, tp, language, languageName } = useI18n();
   const { deck, cardCount, dueCount, growth } = summary;
+  const name = deckName(deck, language);
   return (
     <li>
       <Link to={`/decks/${deck.id}`} className="deck-card">
         <span className="deck-card__top">
-          <DeckAvatar id={deck.id} name={deck.name} />
+          <DeckAvatar id={deck.id} name={name} />
           <span className="list-row__main">
-            <span className="deck-card__name">{deck.name}</span>
+            <span className="deck-card__name">{name}</span>
             <span className="muted">
               {languageName(deck.learningLang)} → {languageName(deck.translationLang)}
             </span>

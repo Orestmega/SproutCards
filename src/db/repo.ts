@@ -5,7 +5,16 @@ import type { DeckBundle } from '../core/exchange';
 import { remapBundleIds } from '../core/exchange';
 import type { IdFactory } from '../core/id';
 import { newId } from '../core/id';
-import type { Card, Deck, Direction, Example, Progress, ReviewLog, Settings } from '../core/types';
+import type {
+  Card,
+  Deck,
+  Direction,
+  Example,
+  Progress,
+  ReviewLog,
+  Settings,
+  UiLanguage,
+} from '../core/types';
 import { DEFAULT_SETTINGS } from '../core/types';
 import { growthCounts } from '../core/garden';
 import type { GrowthCounts } from '../core/garden';
@@ -77,6 +86,27 @@ export function createRepo(
       const deck: Deck = { ...input, name, id: makeId(), createdAt: now() };
       await db.decks.add(deck);
       return deck;
+    },
+
+    /**
+     * Catalog decks added before decks kept their names in every language: take them from the catalog
+     * index now (only decks still without them; a renamed deck keeps its own name anyway).
+     */
+    async fillCatalogNames(
+      entries: readonly { id: string; title: Partial<Record<UiLanguage, string>> }[],
+    ): Promise<number> {
+      const byId = new Map(entries.map((e) => [e.id, e.title]));
+      const decks = (await db.decks.toArray()).filter((d) => d.catalogId && !d.names);
+      for (const deck of decks) {
+        const title = byId.get(deck.catalogId as string);
+        if (title) await db.decks.update(deck.id, { names: { ...title } });
+      }
+      return decks.length;
+    },
+
+    /** Whether some catalog deck still has no names in every language (then the index is worth reading). */
+    async needsCatalogNames(): Promise<boolean> {
+      return (await db.decks.toArray()).some((d) => d.catalogId && !d.names);
     },
 
     async updateDeck(id: string, changes: Partial<NewDeck>): Promise<void> {

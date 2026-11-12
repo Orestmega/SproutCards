@@ -33,6 +33,8 @@ export interface Deck {
   source?: string;
   /** Set when the deck was added from the built-in catalog: the catalog entry's id. */
   catalogId?: string;
+  /** A catalog deck's name in every interface language, so it follows the language (see `deckName`). */
+  names?: Partial<Record<UiLanguage, string>>;
   createdAt: number;
 }
 

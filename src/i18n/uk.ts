@@ -760,4 +760,6 @@ export const uk: Record<Keys, string> & Record<string, string> = {
   'resume.more_many': 'ще {count} незавершених',
   'resume.more_other': 'ще {count} незавершеної',
   'study.size': 'Слів за раз',
+  'study.sizeTitle': 'Скільки слів за раз?',
+  'study.start': 'Почати',
 };

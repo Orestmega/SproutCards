@@ -693,4 +693,6 @@ export const en = {
   'resume.more_one': '{count} more unfinished',
   'resume.more_other': '{count} more unfinished',
   'study.size': 'Words at a time',
+  'study.sizeTitle': 'How many words at a time?',
+  'study.start': 'Start',
 } as const;

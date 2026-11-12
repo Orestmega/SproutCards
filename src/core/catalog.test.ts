@@ -1,6 +1,12 @@
 import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { isSafeCatalogPath, localize, parseCatalogIndex, prepareCatalogBundle } from './catalog';
+import {
+  isSafeCatalogPath,
+  localize,
+  parseCatalogIndex,
+  prepareCatalogBundle,
+  deckName,
+} from './catalog';
 import type { CatalogEntry } from './catalog';
 import { parseExchange } from './exchange';
 import { makeCard } from './testUtils';
@@ -96,7 +102,24 @@ describe('the generated catalog in public/catalog', () => {
   it('has a valid index with the starter decks', () => {
     expect(catalog).not.toBeNull();
     const ids = catalog?.decks.map((d) => d.id);
-    expect(ids).toEqual(['freq-en-uk-1', 'freq-en-uk-2', 'freq-en-uk-3', 'topic-travel-en-uk']);
+    expect(ids).toEqual([
+      'freq-en-uk-1',
+      'freq-en-uk-2',
+      'freq-en-uk-3',
+      'topic-travel-en-uk',
+      ...[
+        'food',
+        'home',
+        'family',
+        'body',
+        'work',
+        'nature',
+        'time',
+        'city',
+        'feelings',
+        'verbs',
+      ].map((topic) => `topic-${topic}-en-uk`),
+    ]);
   });
 
   for (const deck of catalog?.decks ?? []) {
@@ -164,5 +187,18 @@ describe('the generated catalog in public/catalog', () => {
         }
       }
     }
+  });
+});
+
+describe('deckName', () => {
+  const names = { en: 'Travel (English)', uk: 'Подорожі (англійська)' };
+  it('a catalog deck follows the interface language', () => {
+    expect(deckName({ name: names.uk, names }, 'en')).toBe('Travel (English)');
+    expect(deckName({ name: names.en, names }, 'uk')).toBe('Подорожі (англійська)');
+  });
+
+  it('a renamed deck keeps its own name; a deck of the user has only its name', () => {
+    expect(deckName({ name: 'My trip words', names }, 'en')).toBe('My trip words');
+    expect(deckName({ name: 'Food' }, 'uk')).toBe('Food');
   });
 });

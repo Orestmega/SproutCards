@@ -3566,3 +3566,13 @@ textarea.input {
   color: var(--color-text);
   font-weight: 900;
 }
+
+/* the whole-deck card and the Learn / flashcards modes are buttons (they ask how many words first) */
+:where(button.whole-card, button.mode) {
+  width: 100%;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}

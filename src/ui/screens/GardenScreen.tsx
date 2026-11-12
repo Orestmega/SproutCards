@@ -1,3 +1,4 @@
+import { deckName } from '../../core/catalog';
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { dayPart } from '../../core/cheer';
@@ -38,7 +39,7 @@ const BED_LIMIT = 60;
 
 /** The garden in full: the picture, today's watering, every word as a plant, flowers and decorations. */
 export function GardenScreen() {
-  const { t, tp, languageName } = useI18n();
+  const { t, tp, language, languageName } = useI18n();
   const { settings, updateSettings } = useApp();
   const { dailyGoal } = settings;
   const cue = useCue();
@@ -211,7 +212,12 @@ export function GardenScreen() {
                 {field.beds.map((bed) => (
                   <div className="card bed" key={bed.deckId}>
                     <div className="section__head">
-                      <h4 className="bed__name">{bed.deckName}</h4>
+                      <h4 className="bed__name">
+                        {deckName(
+                          decks.find((d) => d.id === bed.deckId) ?? { name: bed.deckName },
+                          language,
+                        )}
+                      </h4>
                       <span className="muted">{tp('garden.blooms', bed.blooms)}</span>
                     </div>
                     {bed.growing.length > 0 ? (
@@ -555,7 +561,7 @@ function PlantDialog({
       <ul className="plant-dialog__facts">
         <li>{plantName(plant, t)}</li>
         {plant.stage !== 'seed' && <li>{due}</li>}
-        <li className="muted">{deck.name}</li>
+        <li className="muted">{deckName(deck, language)}</li>
       </ul>
       <div className="dialog__actions">
         <Button variant="secondary" onClick={onClose} autoFocus>

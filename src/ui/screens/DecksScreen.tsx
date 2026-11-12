@@ -1,3 +1,4 @@
+import { deckName } from '../../core/catalog';
 import { useState } from 'react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useI18n } from '../../i18n';
@@ -12,14 +13,14 @@ import { EmptyState } from '../components/Notice';
 const SEARCH_FROM = 5;
 
 export function DecksScreen() {
-  const { t } = useI18n();
+  const { t, language } = useI18n();
   const repo = useRepo();
   const summaries = useLiveQuery(() => repo.deckSummaries(Date.now()), [repo]);
   const [query, setQuery] = useState('');
   if (!summaries) return null;
 
   const wanted = query.trim().toLowerCase();
-  const shown = summaries.filter((s) => s.deck.name.toLowerCase().includes(wanted));
+  const shown = summaries.filter((s) => deckName(s.deck, language).toLowerCase().includes(wanted));
 
   return (
     <>

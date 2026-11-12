@@ -59,7 +59,7 @@ describe('catalog list', () => {
     open('/catalog');
     expect(await screen.findByText('Frequent English words, part 1')).toBeInTheDocument();
     expect(screen.getByText('Travel (English)')).toBeInTheDocument();
-    expect(screen.getAllByText('Translations not checked')).toHaveLength(4);
+    expect(screen.getAllByText('Translations not checked')).toHaveLength(14);
     expect(screen.getAllByText(/100 cards/).length).toBeGreaterThanOrEqual(3);
     expect(screen.getAllByRole('link', { name: 'Authors of the sentences' })[0]).toHaveAttribute(
       'href',
@@ -130,7 +130,8 @@ describe('adding a catalog deck', () => {
       await screen.findByRole('heading', { name: 'Frequent English words, part 1' }),
     ).toBeInTheDocument();
     expect(screen.getAllByText('Unchecked').length).toBeGreaterThan(0);
-    await user.click(screen.getByRole('link', { name: 'Learn' }));
+    await user.click(screen.getByRole('button', { name: 'Learn' }));
+    await user.click(await screen.findByRole('button', { name: 'Start' }));
     // the Learn screen is loaded on first use, which can take a moment in a test run
     expect(
       await screen.findByText('Choose the translation', {}, { timeout: 20000 }),
@@ -229,7 +230,7 @@ describe('sources and licenses', () => {
     expect(await screen.findByText(/Tatoeba export used: /)).toBeInTheDocument();
     expect(
       await screen.findAllByRole('link', { name: /List of sentences and authors/ }),
-    ).toHaveLength(4);
+    ).toHaveLength(14);
     expect(screen.getByText(/written by an AI assistant/)).toBeInTheDocument();
     expect(screen.getByText('This is a non-commercial personal project.')).toBeInTheDocument();
   });

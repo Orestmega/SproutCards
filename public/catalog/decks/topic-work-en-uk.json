@@ -1,0 +1,630 @@
+{
+ "format": "sproutcards-deck",
+ "version": 1,
+ "deck": {
+  "id": "topic-work-en-uk",
+  "name": "Work and study (English)",
+  "learningLang": "en",
+  "translationLang": "uk",
+  "description": "School, university, the office and jobs.",
+  "source": "SproutCards catalog",
+  "catalogId": "topic-work-en-uk",
+  "createdAt": 0
+ },
+ "cards": [
+  {
+   "id": "topic-work-en-uk-1",
+   "term": "work",
+   "translations": [
+    "робота",
+    "працювати"
+   ],
+   "examples": [
+    {
+     "text": "You work too much.",
+     "translation": "Ви занадто багато працюєте."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-work-en-uk-2",
+   "term": "job",
+   "translations": [
+    "робота",
+    "посада"
+   ],
+   "examples": [
+    {
+     "text": "That's not my job.",
+     "translation": "Це не моя робота."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-work-en-uk-3",
+   "term": "office",
+   "translations": [
+    "офіс"
+   ],
+   "examples": [
+    {
+     "text": "Where is my office?",
+     "translation": "Де мій кабінет?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-work-en-uk-4",
+   "term": "company",
+   "translations": [
+    "компанія"
+   ],
+   "examples": [
+    {
+     "text": "I love this company.",
+     "translation": "Я люблю цю компанію."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-work-en-uk-5",
+   "term": "meeting",
+   "translations": [
+    "зустріч",
+    "нарада"
+   ],
+   "examples": [
+    {
+     "text": "The meeting ended.",
+     "translation": "Зустріч закінчилася."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-work-en-uk-6",
+   "term": "money",
+   "translations": [
+    "гроші"
+   ],
+   "examples": [
+    {
+     "text": "I have some money.",
+     "translation": "Я маю трохи грошей."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-work-en-uk-7",
+   "term": "salary",
+   "translations": [
+    "зарплата"
+   ],
+   "examples": [
+    {
+     "text": "I have a good salary.",
+     "translation": "У мене добра заробітна платня."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-work-en-uk-8",
+   "term": "colleague",
+   "translations": [
+    "колега"
+   ],
+   "examples": [
+    {
+     "text": "He is my colleague.",
+     "translation": "Він мій колега."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-work-en-uk-9",
+   "term": "manager",
+   "translations": [
+    "менеджер",
+    "керівник"
+   ],
+   "examples": [
+    {
+     "text": "Who's the manager?",
+     "translation": "Хто керівник?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-work-en-uk-10",
+   "term": "project",
+   "translations": [
+    "проєкт"
+   ],
+   "examples": [
+    {
+     "text": "This is a big project.",
+     "translation": "Це великий проект."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-work-en-uk-11",
+   "term": "task",
+   "translations": [
+    "завдання"
+   ],
+   "examples": [
+    {
+     "text": "The task was failed.",
+     "translation": "Завдання провалилося."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-work-en-uk-12",
+   "term": "email",
+   "translations": [
+    "електронний лист"
+   ],
+   "examples": [
+    {
+     "text": "Did you read my email?",
+     "translation": "Ти читав мій імейл?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-work-en-uk-13",
+   "term": "letter",
+   "translations": [
+    "лист",
+    "літера"
+   ],
+   "examples": [
+    {
+     "text": "What is this letter?",
+     "translation": "Яка це буква?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-work-en-uk-14",
+   "term": "paper",
+   "translations": [
+    "папір"
+   ],
+   "examples": [
+    {
+     "text": "I need some paper.",
+     "translation": "Мені потрібен папір."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-work-en-uk-15",
+   "term": "pen",
+   "translations": [
+    "ручка"
+   ],
+   "examples": [
+    {
+     "text": "Do you have a pen?",
+     "translation": "У тебе є ручка?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-work-en-uk-16",
+   "term": "pencil",
+   "translations": [
+    "олівець"
+   ],
+   "examples": [
+    {
+     "text": "This is my pencil.",
+     "translation": "Це мій олівець."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-work-en-uk-17",
+   "term": "book",
+   "translations": [
+    "книга"
+   ],
+   "examples": [
+    {
+     "text": "This is your book.",
+     "translation": "Це твоя книжка."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-work-en-uk-18",
+   "term": "notebook",
+   "translations": [
+    "зошит"
+   ],
+   "examples": [
+    {
+     "text": "I want a notebook.",
+     "translation": "Я хочу зошит."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-work-en-uk-19",
+   "term": "school",
+   "translations": [
+    "школа"
+   ],
+   "examples": [
+    {
+     "text": "I study at school.",
+     "translation": "Я навчаюсь у школі."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-work-en-uk-20",
+   "term": "university",
+   "translations": [
+    "університет"
+   ],
+   "examples": [
+    {
+     "text": "He is at university.",
+     "translation": "Він в університеті."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-work-en-uk-21",
+   "term": "class",
+   "translations": [
+    "клас",
+    "урок"
+   ],
+   "examples": [
+    {
+     "text": "They are in class.",
+     "translation": "Вони в класі."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-work-en-uk-22",
+   "term": "lesson",
+   "translations": [
+    "урок"
+   ],
+   "examples": [
+    {
+     "text": "The lesson has ended.",
+     "translation": "Урок скінчився."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-work-en-uk-23",
+   "term": "exam",
+   "translations": [
+    "іспит"
+   ],
+   "examples": [
+    {
+     "text": "I failed the exam.",
+     "translation": "Я не склав іспит."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-work-en-uk-24",
+   "term": "test",
+   "translations": [
+    "тест",
+    "контрольна"
+   ],
+   "examples": [
+    {
+     "text": "How was your test?",
+     "translation": "Як пройшов тест?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-work-en-uk-25",
+   "term": "homework",
+   "translations": [
+    "домашнє завдання"
+   ],
+   "examples": [
+    {
+     "text": "Go do your homework.",
+     "translation": "Йди зроби уроки."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-work-en-uk-26",
+   "term": "question",
+   "translations": [
+    "питання"
+   ],
+   "examples": [
+    {
+     "text": "Answer my question.",
+     "translation": "Дай відповідь на моє запитання."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-work-en-uk-27",
+   "term": "answer",
+   "translations": [
+    "відповідь",
+    "відповідати"
+   ],
+   "examples": [
+    {
+     "text": "We need an answer.",
+     "translation": "Нам потрібна відповідь."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-work-en-uk-28",
+   "term": "mistake",
+   "translations": [
+    "помилка"
+   ],
+   "examples": [
+    {
+     "text": "He made a mistake.",
+     "translation": "Він зробив помилку."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-work-en-uk-29",
+   "term": "learn",
+   "translations": [
+    "вчити",
+    "вчитися"
+   ],
+   "examples": [
+    {
+     "text": "What did we learn?",
+     "translation": "Що ми дізналися?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-work-en-uk-30",
+   "term": "study",
+   "translations": [
+    "навчатися",
+    "вивчати"
+   ],
+   "examples": [
+    {
+     "text": "Please study here.",
+     "translation": "Навчайся тут."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-work-en-uk-31",
+   "term": "teach",
+   "translations": [
+    "навчати",
+    "викладати"
+   ],
+   "examples": [
+    {
+     "text": "What do you teach?",
+     "translation": "Що ти викладаєш?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-work-en-uk-32",
+   "term": "read",
+   "translations": [
+    "читати"
+   ],
+   "examples": [
+    {
+     "text": "I can't read this.",
+     "translation": "Я не можу цього прочитати."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-work-en-uk-33",
+   "term": "write",
+   "translations": [
+    "писати"
+   ],
+   "examples": [
+    {
+     "text": "When do you write?",
+     "translation": "Коли ти пишеш?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-work-en-uk-34",
+   "term": "know",
+   "translations": [
+    "знати"
+   ],
+   "examples": [
+    {
+     "text": "I don't know that.",
+     "translation": "Я цього не знаю."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-work-en-uk-35",
+   "term": "understand",
+   "translations": [
+    "розуміти"
+   ],
+   "examples": [
+    {
+     "text": "You understand me.",
+     "translation": "Ти мене розумієш."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-work-en-uk-36",
+   "term": "explain",
+   "translations": [
+    "пояснювати"
+   ],
+   "examples": [
+    {
+     "text": "Please explain it.",
+     "translation": "Будь ласка, поясніть це."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-work-en-uk-37",
+   "term": "busy",
+   "translations": [
+    "зайнятий"
+   ],
+   "examples": [
+    {
+     "text": "I know he is busy.",
+     "translation": "Я знаю, що він зайнятий."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-work-en-uk-38",
+   "term": "free",
+   "translations": [
+    "вільний",
+    "безкоштовний"
+   ],
+   "examples": [
+    {
+     "text": "When are you free?",
+     "translation": "Коли ти вільний?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-work-en-uk-39",
+   "term": "holiday",
+   "translations": [
+    "відпустка",
+    "свято"
+   ],
+   "examples": [
+    {
+     "text": "Today is a holiday.",
+     "translation": "Сьогодні свято."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-work-en-uk-40",
+   "term": "career",
+   "translations": [
+    "кар’єра"
+   ],
+   "examples": [
+    {
+     "text": "He focused on his career.",
+     "translation": "Він зосередився на своїй кар'єрі."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  }
+ ],
+ "progress": []
+}

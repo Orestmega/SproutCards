@@ -74,6 +74,14 @@ async function answerCurrent(user: UserEvent, right = true) {
   }
 }
 
+/** On the deck screen: taps a mode, chooses how many words in the dialog, starts. */
+async function startFromDeck(user: UserEvent, mode: string, size: string) {
+  await user.click(await screen.findByRole('button', { name: mode }));
+  const dialog = await screen.findByRole('dialog', { name: 'How many words at a time?' });
+  await user.click(within(dialog).getByRole('radio', { name: size }));
+  await user.click(within(dialog).getByRole('button', { name: 'Start' }));
+}
+
 /** Plays Learn to the end answering everything right; returns how many answers it took. */
 async function playLearnPerfectly(user: UserEvent): Promise<number> {
   let answers = 0;
@@ -88,16 +96,14 @@ async function playLearnPerfectly(user: UserEvent): Promise<number> {
 }
 
 describe('Learn: the full cycle', () => {
-  it('the deck screen chooses how many words a session takes', async () => {
+  it('tapping Learn asks how many words a session takes', async () => {
     const user = userEvent.setup();
     const { repo, deck } = await seedDeck(WORDS6);
     await repo.saveSettings({ ...(await repo.getSettings()), uiLanguage: 'en' });
-    const first = open(`/decks/${deck.id}`);
-    const group = await screen.findByRole('radiogroup', { name: 'Words at a time' });
-    await user.click(within(group).getByRole('radio', { name: '5' }));
+    open(`/decks/${deck.id}`);
+    // tapping Learn asks how many words; the choice is remembered for next time
+    await startFromDeck(user, 'Learn', '5');
     await waitFor(async () => expect((await repo.getSettings()).sessionSize).toBe(5));
-    first.unmount();
-    open(`/decks/${deck.id}/learn`);
     await screen.findByText('Choose the translation');
     expect(await playLearnPerfectly(user)).toBe(15); // 5 words, 3 levels each
     await waitFor(async () => expect(await repo.listProgress(deck.id)).toHaveLength(5));
@@ -759,13 +765,11 @@ describe('Starred cards', () => {
       expect((await repo.listCards(deck.id)).filter((c) => c.starred)).toHaveLength(1),
     );
 
-    // the study panel offers "only starred" and the links carry it
+    // the study panel offers "only starred" and the session gets it
     await user.click(await screen.findByRole('checkbox', { name: 'Only starred cards (1)' }));
-    expect(screen.getByRole('link', { name: 'Learn' })).toHaveAttribute(
-      'href',
-      `#/decks/${deck.id}/learn?dir=forward&starred=1`,
-    );
     expect(screen.getByRole('link', { name: 'Match' })).toBeInTheDocument();
+    await startFromDeck(user, 'Learn', '10');
+    expect(window.location.hash).toBe(`#/decks/${deck.id}/learn?dir=forward&starred=1&size=10`);
   });
 
   it('a session with ?starred=1 contains only starred cards', async () => {
@@ -801,24 +805,19 @@ describe('Deck screen study panel and speech', () => {
     const user = userEvent.setup();
     const { deck } = await seedDeck();
     open(`/decks/${deck.id}`);
-    expect(await screen.findByRole('link', { name: 'Learn' })).toHaveAttribute(
-      'href',
-      `#/decks/${deck.id}/learn?dir=forward`,
-    );
-    expect(screen.getByRole('link', { name: 'Flashcards' })).toBeInTheDocument();
+    expect(await screen.findByRole('button', { name: 'Learn' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Flashcards' })).toBeInTheDocument();
     expect(screen.getByRole('link', { name: 'Quiz' })).toBeInTheDocument();
     await user.click(screen.getByRole('radio', { name: /Ukrainian → English/ }));
-    expect(screen.getByRole('link', { name: 'Learn' })).toHaveAttribute(
-      'href',
-      `#/decks/${deck.id}/learn?dir=backward`,
-    );
+    await startFromDeck(user, 'Learn', '20');
+    expect(window.location.hash).toBe(`#/decks/${deck.id}/learn?dir=backward&size=20`);
   });
 
   it('with no cards, modes are not offered', async () => {
     const { deck } = await seedDeck([]);
     open(`/decks/${deck.id}`);
     expect(await screen.findByText('Add some cards to start studying.')).toBeInTheDocument();
-    expect(screen.queryByRole('link', { name: 'Learn' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Learn' })).not.toBeInTheDocument();
   });
 
   it('says so when the browser cannot speak (no silent failure)', async () => {
@@ -971,10 +970,10 @@ describe('Sprout during study', () => {
 });
 
 describe('Deck screen: mode tiles', () => {
-  it('each mode is a link named by the mode, with a short description', async () => {
+  it('each mode is named by the mode, with a short description', async () => {
     const { deck } = await seedDeck();
     open(`/decks/${deck.id}`);
-    expect(await screen.findByRole('link', { name: 'Learn' })).toHaveAccessibleDescription(
+    expect(await screen.findByRole('button', { name: 'Learn' })).toHaveAccessibleDescription(
       'Choose, then type the answer',
     );
     expect(screen.getByRole('link', { name: 'Match' })).toHaveAccessibleDescription(

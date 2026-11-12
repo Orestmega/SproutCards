@@ -54,6 +54,8 @@ export function useStudyParams(): {
   resume: boolean;
   /** Learn the whole deck: the next unlearned words in order, with no daily limit for new ones. */
   whole: boolean;
+  /** Words in this session, when chosen right before it (`?size=10`). */
+  size: number | null;
 } {
   const { deckId = '' } = useParams();
   const [params] = useSearchParams();
@@ -64,6 +66,7 @@ export function useStudyParams(): {
     starred: params.get('starred') === '1',
     resume: params.get('resume') === '1',
     whole: params.get('whole') === '1' && params.get('all') !== '1',
+    size: params.has('size') ? sessionSizeOf(Number(params.get('size'))) : null,
   };
 }
 
@@ -133,9 +136,9 @@ export function StudyGate({
   emptyFor?: (data: StudyData, direction: Direction) => boolean;
 }) {
   const { t } = useI18n();
-  const { direction, practice, starred, whole } = useStudyParams();
+  const { direction, practice, starred, whole, size } = useStudyParams();
   const { settings } = useApp();
-  const loaded = useStudyData(deckId, starred, sessionSizeOf(settings.sessionSize));
+  const loaded = useStudyData(deckId, starred, size ?? sessionSizeOf(settings.sessionSize));
 
   if (loaded.status === 'loading') return null;
   if (loaded.status === 'missing') return <NotFoundScreen />;

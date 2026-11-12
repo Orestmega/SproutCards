@@ -1,0 +1,624 @@
+{
+ "format": "sproutcards-deck",
+ "version": 1,
+ "deck": {
+  "id": "topic-city-en-uk",
+  "name": "City and shopping (English)",
+  "learningLang": "en",
+  "translationLang": "uk",
+  "description": "Streets, places in town and buying things.",
+  "source": "SproutCards catalog",
+  "catalogId": "topic-city-en-uk",
+  "createdAt": 0
+ },
+ "cards": [
+  {
+   "id": "topic-city-en-uk-1",
+   "term": "city",
+   "translations": [
+    "місто"
+   ],
+   "examples": [
+    {
+     "text": "What city is this?",
+     "translation": "Що це за місто?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-city-en-uk-2",
+   "term": "town",
+   "translations": [
+    "містечко",
+    "місто"
+   ],
+   "examples": [
+    {
+     "text": "Is it far to town?",
+     "translation": "До міста далеко?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-city-en-uk-3",
+   "term": "street",
+   "translations": [
+    "вулиця"
+   ],
+   "examples": [
+    {
+     "text": "The street is lit.",
+     "translation": "Вулиця освітлена."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-city-en-uk-4",
+   "term": "road",
+   "translations": [
+    "дорога"
+   ],
+   "examples": [
+    {
+     "text": "The road is muddy.",
+     "translation": "Дорога брудна."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-city-en-uk-5",
+   "term": "square",
+   "translations": [
+    "площа"
+   ],
+   "examples": [
+    {
+     "text": "I won fair and square.",
+     "translation": "Я виграв чесно."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-city-en-uk-6",
+   "term": "bridge",
+   "translations": [
+    "міст"
+   ],
+   "examples": [
+    {
+     "text": "The bridge is low.",
+     "translation": "Міст низький."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-city-en-uk-7",
+   "term": "park",
+   "translations": [
+    "парк"
+   ],
+   "examples": [
+    {
+     "text": "You may park here.",
+     "translation": "Ви можете припаркуватися тут."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-city-en-uk-8",
+   "term": "shop",
+   "translations": [
+    "магазин"
+   ],
+   "examples": [
+    {
+     "text": "I was in the shop.",
+     "translation": "Я був в магазині."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-city-en-uk-9",
+   "term": "market",
+   "translations": [
+    "ринок"
+   ],
+   "examples": [
+    {
+     "text": "Let's go to the market.",
+     "translation": "Ходімо на ринок."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-city-en-uk-10",
+   "term": "bank",
+   "translations": [
+    "банк"
+   ],
+   "examples": [
+    {
+     "text": "Where is the bank?",
+     "translation": "Де знаходиться банк?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-city-en-uk-11",
+   "term": "church",
+   "translations": [
+    "церква"
+   ],
+   "examples": [
+    {
+     "text": "Where's the church?",
+     "translation": "Де знаходиться церква?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-city-en-uk-12",
+   "term": "museum",
+   "translations": [
+    "музей"
+   ],
+   "examples": [
+    {
+     "text": "We went to the museum.",
+     "translation": "Ми пішли до музею."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-city-en-uk-13",
+   "term": "library",
+   "translations": [
+    "бібліотека"
+   ],
+   "examples": [
+    {
+     "text": "This is a library.",
+     "translation": "Це бібліотека."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-city-en-uk-14",
+   "term": "cinema",
+   "translations": [
+    "кінотеатр"
+   ],
+   "examples": [
+    {
+     "text": "I was at the cinema.",
+     "translation": "Я була в кіно."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-city-en-uk-15",
+   "term": "theatre",
+   "translations": [
+    "театр"
+   ],
+   "examples": [
+    {
+     "text": "We went to the theatre.",
+     "translation": "Ми ходили до театру."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-city-en-uk-16",
+   "term": "post",
+   "translations": [
+    "пошта"
+   ],
+   "examples": [
+    {
+     "text": "No post came today.",
+     "translation": "Сьогодні пошти не було."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-city-en-uk-17",
+   "term": "police",
+   "translations": [
+    "поліція"
+   ],
+   "examples": [
+    {
+     "text": "I trust the police.",
+     "translation": "Я довіряю поліції."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-city-en-uk-18",
+   "term": "corner",
+   "translations": [
+    "ріг",
+    "кут"
+   ],
+   "examples": [
+    {
+     "text": "Stop at the corner.",
+     "translation": "Зупиніться на розі."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-city-en-uk-19",
+   "term": "building",
+   "translations": [
+    "будівля"
+   ],
+   "examples": [
+    {
+     "text": "I own this building.",
+     "translation": "Я власник цієї будівлі."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-city-en-uk-20",
+   "term": "car",
+   "translations": [
+    "автомобіль",
+    "машина"
+   ],
+   "examples": [
+    {
+     "text": "Whose car is this?",
+     "translation": "Чия це машина?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-city-en-uk-21",
+   "term": "bus",
+   "translations": [
+    "автобус"
+   ],
+   "examples": [
+    {
+     "text": "I'll take the bus.",
+     "translation": "Я поїду автобусом."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-city-en-uk-22",
+   "term": "bicycle",
+   "translations": [
+    "велосипед"
+   ],
+   "examples": [
+    {
+     "text": "This is my bicycle.",
+     "translation": "Це мій велосипед."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-city-en-uk-23",
+   "term": "walk",
+   "translations": [
+    "йти пішки",
+    "прогулянка"
+   ],
+   "examples": [
+    {
+     "text": "I can hardly walk.",
+     "translation": "Я ледве можу йти."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-city-en-uk-24",
+   "term": "left",
+   "translations": [
+    "ліворуч",
+    "лівий"
+   ],
+   "examples": [
+    {
+     "text": "They've just left.",
+     "translation": "Вони щойно пішли."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-city-en-uk-25",
+   "term": "right",
+   "translations": [
+    "праворуч",
+    "правий"
+   ],
+   "examples": [
+    {
+     "text": "You guessed right.",
+     "translation": "Ти вгадав правильно."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-city-en-uk-26",
+   "term": "near",
+   "translations": [
+    "біля",
+    "близько"
+   ],
+   "examples": [
+    {
+     "text": "He lives near here.",
+     "translation": "Він живе неподалік."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-city-en-uk-27",
+   "term": "far",
+   "translations": [
+    "далеко"
+   ],
+   "examples": [
+    {
+     "text": "She didn't go far.",
+     "translation": "Вона далеко не пішла."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-city-en-uk-28",
+   "term": "price",
+   "translations": [
+    "ціна"
+   ],
+   "examples": [
+    {
+     "text": "I'll pay any price.",
+     "translation": "Я заплачу будь-яку ціну."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-city-en-uk-29",
+   "term": "cheap",
+   "translations": [
+    "дешевий"
+   ],
+   "examples": [
+    {
+     "text": "It's not so cheap.",
+     "translation": "Це не так вже й дешево."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-city-en-uk-30",
+   "term": "expensive",
+   "translations": [
+    "дорогий"
+   ],
+   "examples": [
+    {
+     "text": "It's so expensive!",
+     "translation": "Це дуже дорого!"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-city-en-uk-31",
+   "term": "buy",
+   "translations": [
+    "купувати"
+   ],
+   "examples": [
+    {
+     "text": "I didn't buy them.",
+     "translation": "Я їх не купував."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-city-en-uk-32",
+   "term": "sell",
+   "translations": [
+    "продавати"
+   ],
+   "examples": [
+    {
+     "text": "You can't sell it.",
+     "translation": "Ти не можеш його продати."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-city-en-uk-33",
+   "term": "pay",
+   "translations": [
+    "платити"
+   ],
+   "examples": [
+    {
+     "text": "Pay what you want.",
+     "translation": "Заплати стільки, скільки хочеш."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-city-en-uk-34",
+   "term": "cash",
+   "translations": [
+    "готівка"
+   ],
+   "examples": [
+    {
+     "text": "Will you pay cash?",
+     "translation": "Ти заплатиш готівкою?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-city-en-uk-35",
+   "term": "card",
+   "translations": [
+    "картка"
+   ],
+   "examples": [
+    {
+     "text": "Is this your card?",
+     "translation": "Це твоя картка?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-city-en-uk-36",
+   "term": "clothes",
+   "translations": [
+    "одяг"
+   ],
+   "examples": [
+    {
+     "text": "I changed clothes.",
+     "translation": "Я переодягнувся."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-city-en-uk-37",
+   "term": "shoes",
+   "translations": [
+    "взуття"
+   ],
+   "examples": [
+    {
+     "text": "We can make shoes.",
+     "translation": "Ми можемо зробити взуття."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-city-en-uk-38",
+   "term": "shirt",
+   "translations": [
+    "сорочка"
+   ],
+   "examples": [
+    {
+     "text": "Try on that shirt.",
+     "translation": "Поміряйте цю сорочку."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-city-en-uk-39",
+   "term": "dress",
+   "translations": [
+    "сукня"
+   ],
+   "examples": [
+    {
+     "text": "I love that dress.",
+     "translation": "Обожнюю цю сукню."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-city-en-uk-40",
+   "term": "size",
+   "translations": [
+    "розмір"
+   ],
+   "examples": [
+    {
+     "text": "What is your size?",
+     "translation": "Який у тебе розмір?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  }
+ ],
+ "progress": []
+}

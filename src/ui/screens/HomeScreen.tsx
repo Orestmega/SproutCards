@@ -1,3 +1,4 @@
+import { deckName } from '../../core/catalog';
 import { useEffect, useState } from 'react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { Link } from 'react-router-dom';
@@ -37,7 +38,7 @@ const PAT_LINES = [
 ] as const satisfies readonly MessageKey[];
 
 export function HomeScreen() {
-  const { t, tp, languageName } = useI18n();
+  const { t, tp, language, languageName } = useI18n();
   const repo = useRepo();
   const settings = useSettings();
   const summaries = useLiveQuery(() => repo.deckSummaries(Date.now()), [repo]);
@@ -175,12 +176,12 @@ export function HomeScreen() {
           {/* the main action first; then one card for the latest unfinished session */}
           {dueDeck ? (
             <ButtonLink to={`/decks/${dueDeck.deck.id}/learn`} block>
-              {t('home.review', { name: dueDeck.deck.name })}
+              {t('home.review', { name: deckName(dueDeck.deck, language) })}
             </ButtonLink>
           ) : (
             freshDeck && (
               <ButtonLink to={`/decks/${freshDeck.deck.id}/learn`} block>
-                {t('home.learnNew', { name: freshDeck.deck.name })}
+                {t('home.learnNew', { name: deckName(freshDeck.deck, language) })}
               </ButtonLink>
             )
           )}
@@ -195,7 +196,7 @@ export function HomeScreen() {
               </span>
               <span className="list-row__main">
                 <span className="list-row__title">
-                  {t('resume.continueDeck', { name: latest.deck.name })}
+                  {t('resume.continueDeck', { name: deckName(latest.deck, language) })}
                 </span>
                 <span className="muted">
                   {t('resume.progress', {
@@ -237,7 +238,7 @@ export function HomeScreen() {
                 {word.translations.join('; ')}
               </p>
               <p className="muted">
-                {wordDeck.name} · {languageName(wordDeck.learningLang)}
+                {deckName(wordDeck, language)} · {languageName(wordDeck.learningLang)}
               </p>
             </section>
           )}

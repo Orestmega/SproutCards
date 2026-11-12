@@ -1,0 +1,622 @@
+{
+ "format": "sproutcards-deck",
+ "version": 1,
+ "deck": {
+  "id": "topic-body-en-uk",
+  "name": "Body and health (English)",
+  "learningLang": "en",
+  "translationLang": "uk",
+  "description": "Parts of the body, feeling ill and getting better.",
+  "source": "SproutCards catalog",
+  "catalogId": "topic-body-en-uk",
+  "createdAt": 0
+ },
+ "cards": [
+  {
+   "id": "topic-body-en-uk-1",
+   "term": "head",
+   "translations": [
+    "голова"
+   ],
+   "examples": [
+    {
+     "text": "He shook his head.",
+     "translation": "Він похитав головою."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-body-en-uk-2",
+   "term": "face",
+   "translations": [
+    "обличчя"
+   ],
+   "examples": [
+    {
+     "text": "Why the long face?",
+     "translation": "Що у тебе з обличчям?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-body-en-uk-3",
+   "term": "eye",
+   "translations": [
+    "око"
+   ],
+   "examples": [
+    {
+     "text": "An eye for an eye.",
+     "translation": "Око за око."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-body-en-uk-4",
+   "term": "ear",
+   "translations": [
+    "вухо"
+   ],
+   "examples": [
+    {
+     "text": "My ear is itching.",
+     "translation": "У мене чешеться вухо."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-body-en-uk-5",
+   "term": "nose",
+   "translations": [
+    "ніс"
+   ],
+   "examples": [
+    {
+     "text": "I have a big nose.",
+     "translation": "У мене великий ніс."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-body-en-uk-6",
+   "term": "mouth",
+   "translations": [
+    "рот"
+   ],
+   "examples": [
+    {
+     "text": "He has a big mouth.",
+     "translation": "В нього великий рот."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-body-en-uk-7",
+   "term": "tooth",
+   "translations": [
+    "зуб"
+   ],
+   "examples": [
+    {
+     "text": "Which tooth hurts?",
+     "translation": "Який зуб болить?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-body-en-uk-8",
+   "term": "hair",
+   "translations": [
+    "волосся"
+   ],
+   "examples": [
+    {
+     "text": "I like short hair.",
+     "translation": "Я люблю коротке волосся."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-body-en-uk-9",
+   "term": "neck",
+   "translations": [
+    "шия"
+   ],
+   "examples": [
+    {
+     "text": "His neck is broken.",
+     "translation": "У нього зламана шия."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-body-en-uk-10",
+   "term": "shoulder",
+   "translations": [
+    "плече"
+   ],
+   "examples": [
+    {
+     "text": "My shoulder hurts.",
+     "translation": "В мене болить плече."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-body-en-uk-11",
+   "term": "arm",
+   "translations": [
+    "рука"
+   ],
+   "examples": [
+    {
+     "text": "He twisted my arm.",
+     "translation": "Він скрутив мені руку."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-body-en-uk-12",
+   "term": "hand",
+   "translations": [
+    "рука",
+    "долоня"
+   ],
+   "examples": [
+    {
+     "text": "Let go of my hand.",
+     "translation": "Пустіть мою руку."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-body-en-uk-13",
+   "term": "finger",
+   "translations": [
+    "палець"
+   ],
+   "examples": [
+    {
+     "text": "I broke my finger.",
+     "translation": "Я зламала палець."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-body-en-uk-14",
+   "term": "leg",
+   "translations": [
+    "нога"
+   ],
+   "examples": [
+    {
+     "text": "I have leg cramps.",
+     "translation": "Мені ногу звело."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-body-en-uk-15",
+   "term": "foot",
+   "translations": [
+    "стопа",
+    "нога"
+   ],
+   "examples": [
+    {
+     "text": "I will go on foot.",
+     "translation": "Я піду пішки."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-body-en-uk-16",
+   "term": "back",
+   "translations": [
+    "спина"
+   ],
+   "examples": [
+    {
+     "text": "Turn back, please.",
+     "translation": "Повернися, будь ласка."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-body-en-uk-17",
+   "term": "heart",
+   "translations": [
+    "серце"
+   ],
+   "examples": [
+    {
+     "text": "Her heart is sick.",
+     "translation": "У неї хворе серце."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-body-en-uk-18",
+   "term": "stomach",
+   "translations": [
+    "шлунок",
+    "живіт"
+   ],
+   "examples": [
+    {
+     "text": "My stomach is full.",
+     "translation": "Я не хочу їсти."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-body-en-uk-19",
+   "term": "skin",
+   "translations": [
+    "шкіра"
+   ],
+   "examples": [
+    {
+     "text": "The skin is rough.",
+     "translation": "Шкіра жорстка."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-body-en-uk-20",
+   "term": "blood",
+   "translations": [
+    "кров"
+   ],
+   "examples": [],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-body-en-uk-21",
+   "term": "health",
+   "translations": [
+    "здоров’я"
+   ],
+   "examples": [
+    {
+     "text": "Health over wealth.",
+     "translation": "Здоров'я важливіше за багатство."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-body-en-uk-22",
+   "term": "healthy",
+   "translations": [
+    "здоровий"
+   ],
+   "examples": [
+    {
+     "text": "My dads are healthy.",
+     "translation": "Мої тати здорові."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-body-en-uk-23",
+   "term": "sick",
+   "translations": [
+    "хворий"
+   ],
+   "examples": [
+    {
+     "text": "I'm sick of lying.",
+     "translation": "Мені набридло брехати."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-body-en-uk-24",
+   "term": "pain",
+   "translations": [
+    "біль"
+   ],
+   "examples": [
+    {
+     "text": "The pain has gone.",
+     "translation": "Біль минув."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-body-en-uk-25",
+   "term": "fever",
+   "translations": [
+    "температура",
+    "гарячка"
+   ],
+   "examples": [
+    {
+     "text": "You have no fever.",
+     "translation": "У вас немає температури."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-body-en-uk-26",
+   "term": "cold",
+   "translations": [
+    "застуда",
+    "холодний"
+   ],
+   "examples": [
+    {
+     "text": "I have a cold now.",
+     "translation": "Тепер я застудився."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-body-en-uk-27",
+   "term": "cough",
+   "translations": [
+    "кашель",
+    "кашляти"
+   ],
+   "examples": [
+    {
+     "text": "Your cough worries me.",
+     "translation": "Мене турбує твій кашель."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-body-en-uk-28",
+   "term": "medicine",
+   "translations": [
+    "ліки"
+   ],
+   "examples": [
+    {
+     "text": "Take the medicine.",
+     "translation": "Прийми ліки."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-body-en-uk-29",
+   "term": "hospital",
+   "translations": [
+    "лікарня"
+   ],
+   "examples": [
+    {
+     "text": "Call the hospital.",
+     "translation": "Зателефонуй до лікарні."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-body-en-uk-30",
+   "term": "nurse",
+   "translations": [
+    "медсестра"
+   ],
+   "examples": [
+    {
+     "text": "She became a nurse.",
+     "translation": "Вона стала медсестрою."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-body-en-uk-31",
+   "term": "tired",
+   "translations": [
+    "втомлений"
+   ],
+   "examples": [
+    {
+     "text": "He got tired soon.",
+     "translation": "Він швидко втомився."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-body-en-uk-32",
+   "term": "sleep",
+   "translations": [
+    "спати",
+    "сон"
+   ],
+   "examples": [
+    {
+     "text": "You need to sleep.",
+     "translation": "Вам треба поспати."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-body-en-uk-33",
+   "term": "rest",
+   "translations": [
+    "відпочинок",
+    "відпочивати"
+   ],
+   "examples": [
+    {
+     "text": "Let's take a rest.",
+     "translation": "Відпочинемо."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-body-en-uk-34",
+   "term": "hurt",
+   "translations": [
+    "боліти",
+    "поранити"
+   ],
+   "examples": [
+    {
+     "text": "My shoulders hurt.",
+     "translation": "У мене болять плечі."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-body-en-uk-35",
+   "term": "breathe",
+   "translations": [
+    "дихати"
+   ],
+   "examples": [
+    {
+     "text": "Breathe in deeply.",
+     "translation": "Глибоко вдихни."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-body-en-uk-36",
+   "term": "strong",
+   "translations": [
+    "сильний"
+   ],
+   "examples": [
+    {
+     "text": "I'm strong enough.",
+     "translation": "Я достатньо сильна."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-body-en-uk-37",
+   "term": "weak",
+   "translations": [
+    "слабкий"
+   ],
+   "examples": [
+    {
+     "text": "It's his weak spot.",
+     "translation": "Це його слабке місце."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-body-en-uk-38",
+   "term": "fit",
+   "translations": [
+    "у формі"
+   ],
+   "examples": [
+    {
+     "text": "Do you think it'll fit?",
+     "translation": "Гадаєш, підійде?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-body-en-uk-39",
+   "term": "exercise",
+   "translations": [
+    "вправа",
+    "зарядка"
+   ],
+   "examples": [
+    {
+     "text": "Exercise outdoors.",
+     "translation": "Роби зарядку на свіжому повітрі."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-body-en-uk-40",
+   "term": "better",
+   "translations": [
+    "краще"
+   ],
+   "examples": [
+    {
+     "text": "I like him better.",
+     "translation": "Мені він більше подобається."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  }
+ ],
+ "progress": []
+}

@@ -21,6 +21,15 @@ const PARTS = 3;
 interface Translations {
   frequent: Record<string, string[]>;
   travel: { term: string; translations: string[] }[];
+  /** More topic decks: a title and a description in both languages, and the words. */
+  topics: Record<
+    string,
+    {
+      title: { en: string; uk: string };
+      description: { en: string; uk: string };
+      words: { term: string; translations: string[] }[];
+    }
+  >;
 }
 interface Candidates {
   words: { word: string; count: number }[];
@@ -105,6 +114,16 @@ const decks: DeckSpec[] = [
     },
     cards: travel,
   },
+  // the other topics come after the existing decks, so their examples do not change
+  ...Object.entries(translations.topics).map(
+    ([key, topic]): DeckSpec => ({
+      id: `topic-${key}-en-uk`,
+      kind: 'topic',
+      title: topic.title,
+      description: topic.description,
+      cards: topic.words.map((w) => ({ ...w, pair: exampleFor(w.term) })),
+    }),
+  ),
 ];
 
 mkdirSync(new URL('decks/', OUT), { recursive: true });

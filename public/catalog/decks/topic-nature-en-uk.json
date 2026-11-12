@@ -1,0 +1,623 @@
+{
+ "format": "sproutcards-deck",
+ "version": 1,
+ "deck": {
+  "id": "topic-nature-en-uk",
+  "name": "Nature and weather (English)",
+  "learningLang": "en",
+  "translationLang": "uk",
+  "description": "Weather, seasons, animals and the world outside.",
+  "source": "SproutCards catalog",
+  "catalogId": "topic-nature-en-uk",
+  "createdAt": 0
+ },
+ "cards": [
+  {
+   "id": "topic-nature-en-uk-1",
+   "term": "weather",
+   "translations": [
+    "погода"
+   ],
+   "examples": [
+    {
+     "text": "It is bad weather.",
+     "translation": "Погана погода."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-nature-en-uk-2",
+   "term": "sun",
+   "translations": [
+    "сонце"
+   ],
+   "examples": [
+    {
+     "text": "The sun is rising.",
+     "translation": "Сонце встає."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-nature-en-uk-3",
+   "term": "rain",
+   "translations": [
+    "дощ"
+   ],
+   "examples": [
+    {
+     "text": "A heavy rain fell.",
+     "translation": "Пройшов сильний дощ."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-nature-en-uk-4",
+   "term": "snow",
+   "translations": [
+    "сніг"
+   ],
+   "examples": [
+    {
+     "text": "The snow is white.",
+     "translation": "Сніг білий."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-nature-en-uk-5",
+   "term": "wind",
+   "translations": [
+    "вітер"
+   ],
+   "examples": [
+    {
+     "text": "Wind up the clock.",
+     "translation": "Заведи годинник."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-nature-en-uk-6",
+   "term": "cloud",
+   "translations": [
+    "хмара"
+   ],
+   "examples": [
+    {
+     "text": "I'm on cloud nine.",
+     "translation": "Я на сьомому небі."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-nature-en-uk-7",
+   "term": "storm",
+   "translations": [
+    "буря",
+    "гроза"
+   ],
+   "examples": [
+    {
+     "text": "The storm was bad.",
+     "translation": "Буря була дуже сильна."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-nature-en-uk-8",
+   "term": "sky",
+   "translations": [
+    "небо"
+   ],
+   "examples": [
+    {
+     "text": "The sky is orange.",
+     "translation": "Небо оранжеве."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-nature-en-uk-9",
+   "term": "hot",
+   "translations": [
+    "гарячий",
+    "спекотний"
+   ],
+   "examples": [
+    {
+     "text": "The water was hot.",
+     "translation": "Вода була гаряча."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-nature-en-uk-10",
+   "term": "warm",
+   "translations": [
+    "теплий"
+   ],
+   "examples": [
+    {
+     "text": "Wear warm clothes.",
+     "translation": "Вдягайтесь тепліше."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-nature-en-uk-11",
+   "term": "cool",
+   "translations": [
+    "прохолодний"
+   ],
+   "examples": [
+    {
+     "text": "That's quite cool.",
+     "translation": "Це досить-таки круто."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-nature-en-uk-12",
+   "term": "spring",
+   "translations": [
+    "весна"
+   ],
+   "examples": [
+    {
+     "text": "People like spring.",
+     "translation": "Люди люблять весну."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-nature-en-uk-13",
+   "term": "summer",
+   "translations": [
+    "літо"
+   ],
+   "examples": [
+    {
+     "text": "Do you like summer?",
+     "translation": "Тобі подобається літо?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-nature-en-uk-14",
+   "term": "autumn",
+   "translations": [
+    "осінь"
+   ],
+   "examples": [
+    {
+     "text": "It's autumn again.",
+     "translation": "Знов осінь."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-nature-en-uk-15",
+   "term": "winter",
+   "translations": [
+    "зима"
+   ],
+   "examples": [
+    {
+     "text": "I hate the winter.",
+     "translation": "Я ненавиджу зиму."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-nature-en-uk-16",
+   "term": "tree",
+   "translations": [
+    "дерево"
+   ],
+   "examples": [
+    {
+     "text": "Tie him to a tree.",
+     "translation": "Прив'яжи його до дерева."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-nature-en-uk-17",
+   "term": "flower",
+   "translations": [
+    "квітка"
+   ],
+   "examples": [
+    {
+     "text": "Smell this flower.",
+     "translation": "Понюхай цю квітку."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-nature-en-uk-18",
+   "term": "grass",
+   "translations": [
+    "трава"
+   ],
+   "examples": [
+    {
+     "text": "Keep off the grass.",
+     "translation": "По газонах не ходити."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-nature-en-uk-19",
+   "term": "forest",
+   "translations": [
+    "ліс"
+   ],
+   "examples": [
+    {
+     "text": "I hate the forest.",
+     "translation": "Я ненавиджу ліс."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-nature-en-uk-20",
+   "term": "river",
+   "translations": [
+    "річка"
+   ],
+   "examples": [
+    {
+     "text": "The river is wide.",
+     "translation": "Річка широка."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-nature-en-uk-21",
+   "term": "lake",
+   "translations": [
+    "озеро"
+   ],
+   "examples": [
+    {
+     "text": "This lake is deep.",
+     "translation": "Це озеро глибоке."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-nature-en-uk-22",
+   "term": "sea",
+   "translations": [
+    "море"
+   ],
+   "examples": [
+    {
+     "text": "We swam in the sea.",
+     "translation": "Ми плавали в морі."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-nature-en-uk-23",
+   "term": "mountain",
+   "translations": [
+    "гора"
+   ],
+   "examples": [
+    {
+     "text": "I want to climb this mountain.",
+     "translation": "Я хочу залізти на гору."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-nature-en-uk-24",
+   "term": "island",
+   "translations": [
+    "острів"
+   ],
+   "examples": [
+    {
+     "text": "Sicily is an island.",
+     "translation": "Сицилія — це острів."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-nature-en-uk-25",
+   "term": "beach",
+   "translations": [
+    "пляж"
+   ],
+   "examples": [
+    {
+     "text": "Where's the beach?",
+     "translation": "Де знаходиться пляж?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-nature-en-uk-26",
+   "term": "stone",
+   "translations": [
+    "камінь"
+   ],
+   "examples": [
+    {
+     "text": "I had a kidney stone.",
+     "translation": "У мене були камені в нирках."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-nature-en-uk-27",
+   "term": "earth",
+   "translations": [
+    "земля"
+   ],
+   "examples": [
+    {
+     "text": "The earth rotates.",
+     "translation": "Земля обертається."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-nature-en-uk-28",
+   "term": "star",
+   "translations": [
+    "зірка"
+   ],
+   "examples": [
+    {
+     "text": "The sun is a star.",
+     "translation": "Сонце - це зірка."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-nature-en-uk-29",
+   "term": "moon",
+   "translations": [
+    "місяць"
+   ],
+   "examples": [
+    {
+     "text": "The moon is bright.",
+     "translation": "Місяць яскравий."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-nature-en-uk-30",
+   "term": "animal",
+   "translations": [
+    "тварина"
+   ],
+   "examples": [
+    {
+     "text": "What animal is it?",
+     "translation": "Що це за тварина?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-nature-en-uk-31",
+   "term": "dog",
+   "translations": [
+    "собака",
+    "пес"
+   ],
+   "examples": [
+    {
+     "text": "Beware of the dog!",
+     "translation": "Стережися собаки!"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-nature-en-uk-32",
+   "term": "cat",
+   "translations": [
+    "кіт",
+    "кішка"
+   ],
+   "examples": [
+    {
+     "text": "The cat scared me.",
+     "translation": "Кіт мене злякав."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-nature-en-uk-33",
+   "term": "horse",
+   "translations": [
+    "кінь"
+   ],
+   "examples": [
+    {
+     "text": "This is his horse.",
+     "translation": "Це його кінь."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-nature-en-uk-34",
+   "term": "cow",
+   "translations": [
+    "корова"
+   ],
+   "examples": [
+    {
+     "text": "A cow gives us milk.",
+     "translation": "Корова дає молоко."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-nature-en-uk-35",
+   "term": "bird",
+   "translations": [
+    "птах"
+   ],
+   "examples": [
+    {
+     "text": "This bird can fly.",
+     "translation": "Цей птах уміє літати."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-nature-en-uk-36",
+   "term": "insect",
+   "translations": [
+    "комаха"
+   ],
+   "examples": [
+    {
+     "text": "A botfly is an insect.",
+     "translation": "Овод — комаха."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-nature-en-uk-37",
+   "term": "fire",
+   "translations": [
+    "вогонь",
+    "пожежа"
+   ],
+   "examples": [
+    {
+     "text": "You can't fire me.",
+     "translation": "Ти не можеш мене звільнити."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-nature-en-uk-38",
+   "term": "air",
+   "translations": [
+    "повітря"
+   ],
+   "examples": [
+    {
+     "text": "We need fresh air.",
+     "translation": "Нам потрібне свіже повітря."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-nature-en-uk-39",
+   "term": "wild",
+   "translations": [
+    "дикий"
+   ],
+   "examples": [
+    {
+     "text": "The crowd went wild.",
+     "translation": "Натовп збожеволів."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-nature-en-uk-40",
+   "term": "beautiful",
+   "translations": [
+    "гарний",
+    "красивий"
+   ],
+   "examples": [
+    {
+     "text": "They're beautiful.",
+     "translation": "Вони чудові."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  }
+ ],
+ "progress": []
+}

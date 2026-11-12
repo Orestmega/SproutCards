@@ -113,6 +113,19 @@ export function localize(text: Localized, language: UiLanguage): string {
 }
 
 /**
+ * The name to show: a catalog deck follows the interface language, unless the user renamed it (then the
+ * name is no longer one of the catalog's names, and theirs stays).
+ */
+export function deckName(
+  deck: { name: string; names?: Partial<Record<UiLanguage, string>> },
+  language: UiLanguage,
+): string {
+  const names = deck.names;
+  if (!names || !Object.values(names).includes(deck.name)) return deck.name;
+  return names[language] ?? deck.name;
+}
+
+/**
  * Prepares a downloaded catalog deck for adding: named in the interface language, stamped with the
  * time of adding (so it sorts as new, not as "1970"), and tied to its catalog entry.
  */
@@ -126,6 +139,7 @@ export function prepareCatalogBundle(
     deck: {
       ...bundle.deck,
       name: localize(entry.title, language),
+      names: { ...entry.title },
       description: localize(entry.description, language),
       catalogId: entry.id,
       createdAt: now,

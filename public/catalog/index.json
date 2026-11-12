@@ -77,6 +77,196 @@
    "file": "decks/topic-travel-en-uk.json",
    "attribution": "attribution/topic-travel-en-uk.tsv",
    "reviewed": false
+  },
+  {
+   "id": "topic-food-en-uk",
+   "kind": "topic",
+   "title": {
+    "en": "Food and drink (English)",
+    "uk": "Їжа й напої (англійська)"
+   },
+   "description": {
+    "en": "Meals, everyday food, drinks and the kitchen.",
+    "uk": "Страви, щоденна їжа, напої й кухня."
+   },
+   "learningLang": "en",
+   "translationLang": "uk",
+   "cardCount": 40,
+   "exampleCount": 40,
+   "file": "decks/topic-food-en-uk.json",
+   "attribution": "attribution/topic-food-en-uk.tsv",
+   "reviewed": false
+  },
+  {
+   "id": "topic-home-en-uk",
+   "kind": "topic",
+   "title": {
+    "en": "Home (English)",
+    "uk": "Дім (англійська)"
+   },
+   "description": {
+    "en": "Rooms, furniture and things around the house.",
+    "uk": "Кімнати, меблі й речі вдома."
+   },
+   "learningLang": "en",
+   "translationLang": "uk",
+   "cardCount": 40,
+   "exampleCount": 40,
+   "file": "decks/topic-home-en-uk.json",
+   "attribution": "attribution/topic-home-en-uk.tsv",
+   "reviewed": false
+  },
+  {
+   "id": "topic-family-en-uk",
+   "kind": "topic",
+   "title": {
+    "en": "Family and people (English)",
+    "uk": "Сім’я й люди (англійська)"
+   },
+   "description": {
+    "en": "Family members, friends and people around you.",
+    "uk": "Рідні, друзі й люди довкола."
+   },
+   "learningLang": "en",
+   "translationLang": "uk",
+   "cardCount": 40,
+   "exampleCount": 40,
+   "file": "decks/topic-family-en-uk.json",
+   "attribution": "attribution/topic-family-en-uk.tsv",
+   "reviewed": false
+  },
+  {
+   "id": "topic-body-en-uk",
+   "kind": "topic",
+   "title": {
+    "en": "Body and health (English)",
+    "uk": "Тіло й здоров’я (англійська)"
+   },
+   "description": {
+    "en": "Parts of the body, feeling ill and getting better.",
+    "uk": "Частини тіла, хвороби й одужання."
+   },
+   "learningLang": "en",
+   "translationLang": "uk",
+   "cardCount": 40,
+   "exampleCount": 39,
+   "file": "decks/topic-body-en-uk.json",
+   "attribution": "attribution/topic-body-en-uk.tsv",
+   "reviewed": false
+  },
+  {
+   "id": "topic-work-en-uk",
+   "kind": "topic",
+   "title": {
+    "en": "Work and study (English)",
+    "uk": "Робота й навчання (англійська)"
+   },
+   "description": {
+    "en": "School, university, the office and jobs.",
+    "uk": "Школа, університет, офіс і професії."
+   },
+   "learningLang": "en",
+   "translationLang": "uk",
+   "cardCount": 40,
+   "exampleCount": 40,
+   "file": "decks/topic-work-en-uk.json",
+   "attribution": "attribution/topic-work-en-uk.tsv",
+   "reviewed": false
+  },
+  {
+   "id": "topic-nature-en-uk",
+   "kind": "topic",
+   "title": {
+    "en": "Nature and weather (English)",
+    "uk": "Природа й погода (англійська)"
+   },
+   "description": {
+    "en": "Weather, seasons, animals and the world outside.",
+    "uk": "Погода, пори року, тварини й світ довкола."
+   },
+   "learningLang": "en",
+   "translationLang": "uk",
+   "cardCount": 40,
+   "exampleCount": 40,
+   "file": "decks/topic-nature-en-uk.json",
+   "attribution": "attribution/topic-nature-en-uk.tsv",
+   "reviewed": false
+  },
+  {
+   "id": "topic-time-en-uk",
+   "kind": "topic",
+   "title": {
+    "en": "Time and numbers (English)",
+    "uk": "Час і числа (англійська)"
+   },
+   "description": {
+    "en": "Days, months, numbers and words about time.",
+    "uk": "Дні, місяці, числа й слова про час."
+   },
+   "learningLang": "en",
+   "translationLang": "uk",
+   "cardCount": 40,
+   "exampleCount": 34,
+   "file": "decks/topic-time-en-uk.json",
+   "attribution": "attribution/topic-time-en-uk.tsv",
+   "reviewed": false
+  },
+  {
+   "id": "topic-city-en-uk",
+   "kind": "topic",
+   "title": {
+    "en": "City and shopping (English)",
+    "uk": "Місто й покупки (англійська)"
+   },
+   "description": {
+    "en": "Streets, places in town and buying things.",
+    "uk": "Вулиці, місця в місті й покупки."
+   },
+   "learningLang": "en",
+   "translationLang": "uk",
+   "cardCount": 40,
+   "exampleCount": 40,
+   "file": "decks/topic-city-en-uk.json",
+   "attribution": "attribution/topic-city-en-uk.tsv",
+   "reviewed": false
+  },
+  {
+   "id": "topic-feelings-en-uk",
+   "kind": "topic",
+   "title": {
+    "en": "Feelings and character (English)",
+    "uk": "Почуття й характер (англійська)"
+   },
+   "description": {
+    "en": "How people feel and what they are like.",
+    "uk": "Як почуваються люди і які вони."
+   },
+   "learningLang": "en",
+   "translationLang": "uk",
+   "cardCount": 40,
+   "exampleCount": 38,
+   "file": "decks/topic-feelings-en-uk.json",
+   "attribution": "attribution/topic-feelings-en-uk.tsv",
+   "reviewed": false
+  },
+  {
+   "id": "topic-verbs-en-uk",
+   "kind": "topic",
+   "title": {
+    "en": "Everyday verbs (English)",
+    "uk": "Щоденні дієслова (англійська)"
+   },
+   "description": {
+    "en": "Common actions of every day.",
+    "uk": "Звичні дії кожного дня."
+   },
+   "learningLang": "en",
+   "translationLang": "uk",
+   "cardCount": 40,
+   "exampleCount": 40,
+   "file": "decks/topic-verbs-en-uk.json",
+   "attribution": "attribution/topic-verbs-en-uk.tsv",
+   "reviewed": false
   }
  ]
 }

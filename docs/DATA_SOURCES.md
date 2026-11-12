@@ -25,6 +25,11 @@ The raw files are kept in `data-cache/` (git-ignored, not published). Only the d
   No third-party frequency list is used. Function words (the, a, of...), contractions and some auxiliary
   forms were left out because they have no clean one-word translation.
 - **Travel deck** words and phrases were chosen and translated by the same AI assistant (unchecked).
+- **Ten more topic decks** (2026-11-12): food and drink, home, family and people, body and health, work and
+  study, nature and weather, time and numbers, city and shopping, feelings and character, everyday verbs —
+  40 words each, chosen and translated by the same AI assistant (`topics` in
+  `scripts/data/translations.en-uk.json`), unchecked, `reviewed: false`. Their example sentences come from the
+  same Tatoeba export as the other decks (CC BY 2.0 FR, authors listed in `public/catalog/attribution/`).
 
 ## The mascot picture (AI-generated)
 

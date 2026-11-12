@@ -1,3 +1,4 @@
+import { deckName } from '../../core/catalog';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { Link } from 'react-router-dom';
 import { GROWTH_STAGES, growthCounts } from '../../core/garden';
@@ -210,7 +211,7 @@ export function StatsScreen() {
           <ul className="list">
             {perDeck.map(({ deck, growth: deckGrowth }) => (
               <li className="list-row stages-row" key={deck.id}>
-                <strong className="list-row__title">{deck.name}</strong>
+                <strong className="list-row__title">{deckName(deck, language)}</strong>
                 <GrowthBar growth={deckGrowth} />
                 <span className="muted">
                   {GROWTH_STAGES.map(

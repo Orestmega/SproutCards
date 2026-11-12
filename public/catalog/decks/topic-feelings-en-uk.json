@@ -1,0 +1,613 @@
+{
+ "format": "sproutcards-deck",
+ "version": 1,
+ "deck": {
+  "id": "topic-feelings-en-uk",
+  "name": "Feelings and character (English)",
+  "learningLang": "en",
+  "translationLang": "uk",
+  "description": "How people feel and what they are like.",
+  "source": "SproutCards catalog",
+  "catalogId": "topic-feelings-en-uk",
+  "createdAt": 0
+ },
+ "cards": [
+  {
+   "id": "topic-feelings-en-uk-1",
+   "term": "happy",
+   "translations": [
+    "щасливий"
+   ],
+   "examples": [
+    {
+     "text": "You make me happy.",
+     "translation": "Ти мене радуєш."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-feelings-en-uk-2",
+   "term": "sad",
+   "translations": [
+    "сумний"
+   ],
+   "examples": [
+    {
+     "text": "Sad to see you go.",
+     "translation": "Сумно, що ти йдеш."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-feelings-en-uk-3",
+   "term": "angry",
+   "translations": [
+    "злий",
+    "сердитий"
+   ],
+   "examples": [
+    {
+     "text": "She must be angry.",
+     "translation": "Вона, мабуть, злиться."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-feelings-en-uk-4",
+   "term": "afraid",
+   "translations": [
+    "наляканий"
+   ],
+   "examples": [
+    {
+     "text": "They'll be afraid.",
+     "translation": "Їм буде страшно."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-feelings-en-uk-5",
+   "term": "glad",
+   "translations": [
+    "радий"
+   ],
+   "examples": [
+    {
+     "text": "I'm glad you agree.",
+     "translation": "Я радий, що ти згодний."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-feelings-en-uk-6",
+   "term": "proud",
+   "translations": [
+    "гордий"
+   ],
+   "examples": [
+    {
+     "text": "I am proud of you.",
+     "translation": "Я пишаюся тобою."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-feelings-en-uk-7",
+   "term": "lonely",
+   "translations": [
+    "самотній"
+   ],
+   "examples": [
+    {
+     "text": "She looked lonely.",
+     "translation": "Вона виглядала самотньою."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-feelings-en-uk-8",
+   "term": "bored",
+   "translations": [
+    "знуджений"
+   ],
+   "examples": [
+    {
+     "text": "I'm already bored.",
+     "translation": "Мені вже нудно."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-feelings-en-uk-9",
+   "term": "excited",
+   "translations": [
+    "схвильований"
+   ],
+   "examples": [
+    {
+     "text": "I'm really excited.",
+     "translation": "Я дуже схвильований."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-feelings-en-uk-10",
+   "term": "surprised",
+   "translations": [
+    "здивований"
+   ],
+   "examples": [
+    {
+     "text": "They're surprised.",
+     "translation": "Вони здивовані."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-feelings-en-uk-11",
+   "term": "worried",
+   "translations": [
+    "стурбований"
+   ],
+   "examples": [
+    {
+     "text": "They were worried.",
+     "translation": "Вони були стурбовані."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-feelings-en-uk-12",
+   "term": "nervous",
+   "translations": [
+    "знервований"
+   ],
+   "examples": [
+    {
+     "text": "We're all nervous.",
+     "translation": "Ми всі знервовані."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-feelings-en-uk-13",
+   "term": "calm",
+   "translations": [
+    "спокійний"
+   ],
+   "examples": [
+    {
+     "text": "We must keep calm.",
+     "translation": "Ми маємо зберігати спокій."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-feelings-en-uk-14",
+   "term": "kind",
+   "translations": [
+    "добрий"
+   ],
+   "examples": [
+    {
+     "text": "He's a kind person.",
+     "translation": "Він доброзичлива людина."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-feelings-en-uk-15",
+   "term": "nice",
+   "translations": [
+    "приємний",
+    "милий"
+   ],
+   "examples": [
+    {
+     "text": "You are very nice.",
+     "translation": "Ти дуже милий."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-feelings-en-uk-16",
+   "term": "friendly",
+   "translations": [
+    "привітний"
+   ],
+   "examples": [
+    {
+     "text": "Huskies are friendly.",
+     "translation": "Хаскі дружелюбні."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-feelings-en-uk-17",
+   "term": "polite",
+   "translations": [
+    "ввічливий"
+   ],
+   "examples": [
+    {
+     "text": "You're too polite.",
+     "translation": "Ти занадто ввічливий."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-feelings-en-uk-18",
+   "term": "rude",
+   "translations": [
+    "грубий"
+   ],
+   "examples": [
+    {
+     "text": "You're being rude.",
+     "translation": "Ти поводишся як грубіян."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-feelings-en-uk-19",
+   "term": "honest",
+   "translations": [
+    "чесний"
+   ],
+   "examples": [
+    {
+     "text": "He is very honest.",
+     "translation": "Він дуже чесний."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-feelings-en-uk-20",
+   "term": "brave",
+   "translations": [
+    "сміливий"
+   ],
+   "examples": [
+    {
+     "text": "You're very brave.",
+     "translation": "Ви дуже смілива."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-feelings-en-uk-21",
+   "term": "shy",
+   "translations": [
+    "сором’язливий"
+   ],
+   "examples": [
+    {
+     "text": "I'm extremely shy.",
+     "translation": "Я надзвичайно сором'язливий."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-feelings-en-uk-22",
+   "term": "lazy",
+   "translations": [
+    "лінивий"
+   ],
+   "examples": [
+    {
+     "text": "They're just lazy.",
+     "translation": "Вони просто ледачі."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-feelings-en-uk-23",
+   "term": "clever",
+   "translations": [
+    "розумний"
+   ],
+   "examples": [
+    {
+     "text": "She's very clever.",
+     "translation": "Вона дуже розумна."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-feelings-en-uk-24",
+   "term": "stupid",
+   "translations": [
+    "дурний"
+   ],
+   "examples": [],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-feelings-en-uk-25",
+   "term": "funny",
+   "translations": [
+    "смішний"
+   ],
+   "examples": [
+    {
+     "text": "This is not funny.",
+     "translation": "Це не смішно."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-feelings-en-uk-26",
+   "term": "serious",
+   "translations": [
+    "серйозний"
+   ],
+   "examples": [
+    {
+     "text": "Let's get serious.",
+     "translation": "Давайте серйозно."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-feelings-en-uk-27",
+   "term": "patient",
+   "translations": [
+    "терплячий"
+   ],
+   "examples": [
+    {
+     "text": "I'm a patient man.",
+     "translation": "Я терпляча людина."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-feelings-en-uk-28",
+   "term": "careful",
+   "translations": [
+    "обережний"
+   ],
+   "examples": [
+    {
+     "text": "I'm being careful.",
+     "translation": "Я обережна."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-feelings-en-uk-29",
+   "term": "quiet",
+   "translations": [
+    "тихий"
+   ],
+   "examples": [
+    {
+     "text": "The area was quiet.",
+     "translation": "Район був спокійний."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-feelings-en-uk-30",
+   "term": "strange",
+   "translations": [
+    "дивний"
+   ],
+   "examples": [
+    {
+     "text": "That's so strange.",
+     "translation": "Це так дивно."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-feelings-en-uk-31",
+   "term": "fear",
+   "translations": [
+    "страх"
+   ],
+   "examples": [
+    {
+     "text": "I don't fear them.",
+     "translation": "Я їх не боюся."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-feelings-en-uk-32",
+   "term": "hope",
+   "translations": [
+    "надія",
+    "сподіватися"
+   ],
+   "examples": [
+    {
+     "text": "I hope she's safe.",
+     "translation": "Сподіваюся, вона в безпеці."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-feelings-en-uk-33",
+   "term": "dream",
+   "translations": [
+    "мрія",
+    "сон"
+   ],
+   "examples": [
+    {
+     "text": "It's just a dream.",
+     "translation": "Це лише мрія."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-feelings-en-uk-34",
+   "term": "smile",
+   "translations": [
+    "усмішка",
+    "усміхатися"
+   ],
+   "examples": [
+    {
+     "text": "I like your smile.",
+     "translation": "Мені подобається твоя усмішка."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-feelings-en-uk-35",
+   "term": "laugh",
+   "translations": [
+    "сміятися"
+   ],
+   "examples": [
+    {
+     "text": "Don't laugh at him.",
+     "translation": "Не насміхайся над ним."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-feelings-en-uk-36",
+   "term": "cry",
+   "translations": [
+    "плакати"
+   ],
+   "examples": [],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-feelings-en-uk-37",
+   "term": "feel",
+   "translations": [
+    "відчувати",
+    "почуватися"
+   ],
+   "examples": [
+    {
+     "text": "I feel good today.",
+     "translation": "Сьогодні я добре почуваюся."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-feelings-en-uk-38",
+   "term": "like",
+   "translations": [
+    "подобатися"
+   ],
+   "examples": [
+    {
+     "text": "I like jazz music.",
+     "translation": "Мені подобається джаз."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-feelings-en-uk-39",
+   "term": "hate",
+   "translations": [
+    "ненавидіти"
+   ],
+   "examples": [
+    {
+     "text": "I hate mosquitoes.",
+     "translation": "Ненавиджу комарів."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-feelings-en-uk-40",
+   "term": "miss",
+   "translations": [
+    "сумувати"
+   ],
+   "examples": [
+    {
+     "text": "We miss you a lot.",
+     "translation": "Нам дуже тебе бракує."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  }
+ ],
+ "progress": []
+}

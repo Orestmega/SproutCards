@@ -1,0 +1,620 @@
+{
+ "format": "sproutcards-deck",
+ "version": 1,
+ "deck": {
+  "id": "topic-food-en-uk",
+  "name": "Food and drink (English)",
+  "learningLang": "en",
+  "translationLang": "uk",
+  "description": "Meals, everyday food, drinks and the kitchen.",
+  "source": "SproutCards catalog",
+  "catalogId": "topic-food-en-uk",
+  "createdAt": 0
+ },
+ "cards": [
+  {
+   "id": "topic-food-en-uk-1",
+   "term": "bread",
+   "translations": [
+    "хліб"
+   ],
+   "examples": [
+    {
+     "text": "Who ate the bread?",
+     "translation": "Хто з'їв хліб?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-food-en-uk-2",
+   "term": "butter",
+   "translations": [
+    "масло"
+   ],
+   "examples": [
+    {
+     "text": "I need more butter.",
+     "translation": "Мені потрібно більше масла."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-food-en-uk-3",
+   "term": "cheese",
+   "translations": [
+    "сир"
+   ],
+   "examples": [
+    {
+     "text": "I ate some cheese.",
+     "translation": "Я поїв сиру."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-food-en-uk-4",
+   "term": "milk",
+   "translations": [
+    "молоко"
+   ],
+   "examples": [
+    {
+     "text": "Give me some milk.",
+     "translation": "Дай мені трохи молока."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-food-en-uk-5",
+   "term": "egg",
+   "translations": [
+    "яйце"
+   ],
+   "examples": [
+    {
+     "text": "This egg is fresh.",
+     "translation": "Це яйце свіже."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-food-en-uk-6",
+   "term": "meat",
+   "translations": [
+    "м’ясо"
+   ],
+   "examples": [
+    {
+     "text": "The meat is tough.",
+     "translation": "М'ясо жорстке."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-food-en-uk-7",
+   "term": "chicken",
+   "translations": [
+    "курка",
+    "курятина"
+   ],
+   "examples": [
+    {
+     "text": "She bought chicken.",
+     "translation": "Вона купила курку."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-food-en-uk-8",
+   "term": "fish",
+   "translations": [
+    "риба"
+   ],
+   "examples": [
+    {
+     "text": "She loves to fish.",
+     "translation": "Вона обожнює рибалити."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-food-en-uk-9",
+   "term": "rice",
+   "translations": [
+    "рис"
+   ],
+   "examples": [
+    {
+     "text": "We cultivate rice.",
+     "translation": "Ми культивуємо рис."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-food-en-uk-10",
+   "term": "potato",
+   "translations": [
+    "картопля"
+   ],
+   "examples": [
+    {
+     "text": "I ate potato chips.",
+     "translation": "Я їв картопляні чіпси."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-food-en-uk-11",
+   "term": "soup",
+   "translations": [
+    "суп"
+   ],
+   "examples": [
+    {
+     "text": "I love lentil soup.",
+     "translation": "Я люблю суп з сочевиці."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-food-en-uk-12",
+   "term": "salad",
+   "translations": [
+    "салат"
+   ],
+   "examples": [
+    {
+     "text": "I brought a salad.",
+     "translation": "Я приніс салат."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-food-en-uk-13",
+   "term": "apple",
+   "translations": [
+    "яблуко"
+   ],
+   "examples": [
+    {
+     "text": "She ate one apple.",
+     "translation": "Вона з'їла одне яблуко."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-food-en-uk-14",
+   "term": "banana",
+   "translations": [
+    "банан"
+   ],
+   "examples": [
+    {
+     "text": "A banana is yellow.",
+     "translation": "Банан жовтий."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-food-en-uk-15",
+   "term": "orange",
+   "translations": [
+    "апельсин"
+   ],
+   "examples": [
+    {
+     "text": "Give me an orange.",
+     "translation": "Дай мені апельсин."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-food-en-uk-16",
+   "term": "vegetable",
+   "translations": [
+    "овоч"
+   ],
+   "examples": [
+    {
+     "text": "What's your favorite vegetable?",
+     "translation": "Який у тебе улюблений овоч?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-food-en-uk-17",
+   "term": "fruit",
+   "translations": [
+    "фрукт"
+   ],
+   "examples": [
+    {
+     "text": "I don't eat fruit.",
+     "translation": "Я не їм фрукти."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-food-en-uk-18",
+   "term": "sugar",
+   "translations": [
+    "цукор"
+   ],
+   "examples": [
+    {
+     "text": "Do you want sugar?",
+     "translation": "Хочеш цукру?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-food-en-uk-19",
+   "term": "salt",
+   "translations": [
+    "сіль"
+   ],
+   "examples": [
+    {
+     "text": "There's no more salt.",
+     "translation": "Сіль скінчилася."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-food-en-uk-20",
+   "term": "pepper",
+   "translations": [
+    "перець"
+   ],
+   "examples": [
+    {
+     "text": "Do you like pepper?",
+     "translation": "Ти любиш перець?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-food-en-uk-21",
+   "term": "water",
+   "translations": [
+    "вода"
+   ],
+   "examples": [
+    {
+     "text": "I want some water.",
+     "translation": "Я хочу води."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-food-en-uk-22",
+   "term": "coffee",
+   "translations": [
+    "кава"
+   ],
+   "examples": [
+    {
+     "text": "They drank coffee.",
+     "translation": "Вони пили каву."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-food-en-uk-23",
+   "term": "tea",
+   "translations": [
+    "чай"
+   ],
+   "examples": [
+    {
+     "text": "We don't have tea.",
+     "translation": "Ми не маємо чаю."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-food-en-uk-24",
+   "term": "juice",
+   "translations": [
+    "сік"
+   ],
+   "examples": [
+    {
+     "text": "Do you like juice?",
+     "translation": "Ти любиш сік?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-food-en-uk-25",
+   "term": "wine",
+   "translations": [
+    "вино"
+   ],
+   "examples": [
+    {
+     "text": "Is this your wine?",
+     "translation": "Це твоє вино?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-food-en-uk-26",
+   "term": "beer",
+   "translations": [
+    "пиво"
+   ],
+   "examples": [
+    {
+     "text": "He ordered a beer.",
+     "translation": "Він замовив пиво."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-food-en-uk-27",
+   "term": "breakfast",
+   "translations": [
+    "сніданок"
+   ],
+   "examples": [
+    {
+     "text": "He made breakfast.",
+     "translation": "Він приготував сніданок."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-food-en-uk-28",
+   "term": "lunch",
+   "translations": [
+    "обід"
+   ],
+   "examples": [
+    {
+     "text": "I owe you a lunch.",
+     "translation": "Я винен тобі обід."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-food-en-uk-29",
+   "term": "dinner",
+   "translations": [
+    "вечеря"
+   ],
+   "examples": [
+    {
+     "text": "What's for dinner?",
+     "translation": "Що на вечерю?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-food-en-uk-30",
+   "term": "cake",
+   "translations": [
+    "торт",
+    "тістечко"
+   ],
+   "examples": [
+    {
+     "text": "Let's make a cake.",
+     "translation": "Давай зробимо торт."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-food-en-uk-31",
+   "term": "chocolate",
+   "translations": [
+    "шоколад"
+   ],
+   "examples": [
+    {
+     "text": "They eat chocolate.",
+     "translation": "Вони їдять шоколад."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-food-en-uk-32",
+   "term": "kitchen",
+   "translations": [
+    "кухня"
+   ],
+   "examples": [
+    {
+     "text": "It is in a kitchen.",
+     "translation": "Воно на кухні."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-food-en-uk-33",
+   "term": "plate",
+   "translations": [
+    "тарілка"
+   ],
+   "examples": [
+    {
+     "text": "Where is my plate?",
+     "translation": "Де моя тарілка?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-food-en-uk-34",
+   "term": "cup",
+   "translations": [
+    "чашка"
+   ],
+   "examples": [
+    {
+     "text": "Who broke the cup?",
+     "translation": "Хто розбив чашку?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-food-en-uk-35",
+   "term": "knife",
+   "translations": [
+    "ніж"
+   ],
+   "examples": [
+    {
+     "text": "The knife is dull.",
+     "translation": "Ніж затупився."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-food-en-uk-36",
+   "term": "fork",
+   "translations": [
+    "виделка"
+   ],
+   "examples": [
+    {
+     "text": "The fork is small.",
+     "translation": "Виделка маленька."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-food-en-uk-37",
+   "term": "spoon",
+   "translations": [
+    "ложка"
+   ],
+   "examples": [
+    {
+     "text": "I licked the spoon.",
+     "translation": "Я лизнув ложку."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-food-en-uk-38",
+   "term": "hungry",
+   "translations": [
+    "голодний"
+   ],
+   "examples": [
+    {
+     "text": "I'm really hungry.",
+     "translation": "Я дуже голодний."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-food-en-uk-39",
+   "term": "delicious",
+   "translations": [
+    "смачний"
+   ],
+   "examples": [
+    {
+     "text": "This is delicious.",
+     "translation": "Це добре смакує."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-food-en-uk-40",
+   "term": "cook",
+   "translations": [
+    "готувати",
+    "кухар"
+   ],
+   "examples": [
+    {
+     "text": "I'll cook tonight.",
+     "translation": "Сьогодні ввечері я готуватиму."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  }
+ ],
+ "progress": []
+}

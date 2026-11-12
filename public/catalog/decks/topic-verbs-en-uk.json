@@ -1,0 +1,623 @@
+{
+ "format": "sproutcards-deck",
+ "version": 1,
+ "deck": {
+  "id": "topic-verbs-en-uk",
+  "name": "Everyday verbs (English)",
+  "learningLang": "en",
+  "translationLang": "uk",
+  "description": "Common actions of every day.",
+  "source": "SproutCards catalog",
+  "catalogId": "topic-verbs-en-uk",
+  "createdAt": 0
+ },
+ "cards": [
+  {
+   "id": "topic-verbs-en-uk-1",
+   "term": "go",
+   "translations": [
+    "йти",
+    "їхати"
+   ],
+   "examples": [
+    {
+     "text": "Let us go, please.",
+     "translation": "Відпусти нас, будь ласка."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-verbs-en-uk-2",
+   "term": "come",
+   "translations": [
+    "приходити"
+   ],
+   "examples": [
+    {
+     "text": "He may come today.",
+     "translation": "Він може сьогодні прийти."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-verbs-en-uk-3",
+   "term": "see",
+   "translations": [
+    "бачити"
+   ],
+   "examples": [
+    {
+     "text": "I want to see you.",
+     "translation": "Я хочу тебе бачити."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-verbs-en-uk-4",
+   "term": "look",
+   "translations": [
+    "дивитися"
+   ],
+   "examples": [
+    {
+     "text": "Let's take a look.",
+     "translation": "Подивімося."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-verbs-en-uk-5",
+   "term": "watch",
+   "translations": [
+    "дивитися",
+    "спостерігати"
+   ],
+   "examples": [
+    {
+     "text": "Watch how I do it.",
+     "translation": "Дивись, як я це роблю."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-verbs-en-uk-6",
+   "term": "hear",
+   "translations": [
+    "чути"
+   ],
+   "examples": [
+    {
+     "text": "What did you hear?",
+     "translation": "Що ти чула?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-verbs-en-uk-7",
+   "term": "listen",
+   "translations": [
+    "слухати"
+   ],
+   "examples": [
+    {
+     "text": "They don't listen.",
+     "translation": "Вони не слухають."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-verbs-en-uk-8",
+   "term": "say",
+   "translations": [
+    "казати"
+   ],
+   "examples": [
+    {
+     "text": "What does she say?",
+     "translation": "Що вона каже?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-verbs-en-uk-9",
+   "term": "speak",
+   "translations": [
+    "говорити"
+   ],
+   "examples": [
+    {
+     "text": "He wants to speak.",
+     "translation": "Він хоче поговорити."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-verbs-en-uk-10",
+   "term": "tell",
+   "translations": [
+    "розповідати"
+   ],
+   "examples": [
+    {
+     "text": "Tell me the truth.",
+     "translation": "Скажи мені правду."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-verbs-en-uk-11",
+   "term": "ask",
+   "translations": [
+    "питати",
+    "просити"
+   ],
+   "examples": [
+    {
+     "text": "I didn't even ask.",
+     "translation": "Я навіть не питав."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-verbs-en-uk-12",
+   "term": "think",
+   "translations": [
+    "думати"
+   ],
+   "examples": [
+    {
+     "text": "I think otherwise.",
+     "translation": "Я думаю інакше."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-verbs-en-uk-13",
+   "term": "want",
+   "translations": [
+    "хотіти"
+   ],
+   "examples": [
+    {
+     "text": "Do you want a car?",
+     "translation": "Хочете автомобіль?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-verbs-en-uk-14",
+   "term": "need",
+   "translations": [
+    "потребувати"
+   ],
+   "examples": [
+    {
+     "text": "We need the money.",
+     "translation": "Нам потрібні ці гроші."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-verbs-en-uk-15",
+   "term": "give",
+   "translations": [
+    "давати"
+   ],
+   "examples": [
+    {
+     "text": "Give the password.",
+     "translation": "Дай пароль."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-verbs-en-uk-16",
+   "term": "take",
+   "translations": [
+    "брати"
+   ],
+   "examples": [
+    {
+     "text": "Let's take a walk.",
+     "translation": "Ходімо прогуляємося."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-verbs-en-uk-17",
+   "term": "bring",
+   "translations": [
+    "приносити"
+   ],
+   "examples": [
+    {
+     "text": "Bring your wallet.",
+     "translation": "Принеси свій гаманець."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-verbs-en-uk-18",
+   "term": "make",
+   "translations": [
+    "робити"
+   ],
+   "examples": [
+    {
+     "text": "He'll make coffee.",
+     "translation": "Він зробить каву."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-verbs-en-uk-19",
+   "term": "do",
+   "translations": [
+    "робити"
+   ],
+   "examples": [
+    {
+     "text": "This book will do.",
+     "translation": "Ця книжка згодиться."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-verbs-en-uk-20",
+   "term": "open",
+   "translations": [
+    "відчиняти"
+   ],
+   "examples": [
+    {
+     "text": "Was the door open?",
+     "translation": "Двері були відчинені?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-verbs-en-uk-21",
+   "term": "close",
+   "translations": [
+    "зачиняти"
+   ],
+   "examples": [
+    {
+     "text": "He lives close by.",
+     "translation": "Він живе неподалік."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-verbs-en-uk-22",
+   "term": "start",
+   "translations": [
+    "починати"
+   ],
+   "examples": [
+    {
+     "text": "It's a good start.",
+     "translation": "Добрий початок."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-verbs-en-uk-23",
+   "term": "finish",
+   "translations": [
+    "закінчувати"
+   ],
+   "examples": [
+    {
+     "text": "Just let me finish.",
+     "translation": "Просто дай мені закінчити."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-verbs-en-uk-24",
+   "term": "stop",
+   "translations": [
+    "зупиняти"
+   ],
+   "examples": [
+    {
+     "text": "You can't stop me.",
+     "translation": "Тобі мене не зупинити."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-verbs-en-uk-25",
+   "term": "wait",
+   "translations": [
+    "чекати"
+   ],
+   "examples": [
+    {
+     "text": "Wait, don't shoot!",
+     "translation": "Зачекайте, не стріляйте!"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-verbs-en-uk-26",
+   "term": "help",
+   "translations": [
+    "допомагати"
+   ],
+   "examples": [
+    {
+     "text": "I cannot help you.",
+     "translation": "Нічим не можу вам допомогти."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-verbs-en-uk-27",
+   "term": "try",
+   "translations": [
+    "пробувати"
+   ],
+   "examples": [
+    {
+     "text": "They try the rice.",
+     "translation": "Вони пробують рис."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-verbs-en-uk-28",
+   "term": "find",
+   "translations": [
+    "знаходити"
+   ],
+   "examples": [
+    {
+     "text": "How do we find it?",
+     "translation": "Як ми це знайдемо?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-verbs-en-uk-29",
+   "term": "lose",
+   "translations": [
+    "губити",
+    "програвати"
+   ],
+   "examples": [
+    {
+     "text": "I didn't lose them.",
+     "translation": "Я їх не загубив."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-verbs-en-uk-30",
+   "term": "keep",
+   "translations": [
+    "тримати",
+    "зберігати"
+   ],
+   "examples": [
+    {
+     "text": "Keep to the right.",
+     "translation": "Тримайтеся праворуч."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-verbs-en-uk-31",
+   "term": "put",
+   "translations": [
+    "класти"
+   ],
+   "examples": [
+    {
+     "text": "Put out the light.",
+     "translation": "Вимкни світло."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-verbs-en-uk-32",
+   "term": "sit",
+   "translations": [
+    "сидіти"
+   ],
+   "examples": [
+    {
+     "text": "I can't sit still.",
+     "translation": "Я не можу спокійно сидіти."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-verbs-en-uk-33",
+   "term": "stand",
+   "translations": [
+    "стояти"
+   ],
+   "examples": [
+    {
+     "text": "I stand corrected.",
+     "translation": "Я визнаю свою помилку."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-verbs-en-uk-34",
+   "term": "run",
+   "translations": [
+    "бігти"
+   ],
+   "examples": [
+    {
+     "text": "You run very fast.",
+     "translation": "Ти бігаєш дуже швидко."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-verbs-en-uk-35",
+   "term": "eat",
+   "translations": [
+    "їсти"
+   ],
+   "examples": [
+    {
+     "text": "Termites eat wood.",
+     "translation": "Терміти їдять деревину."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-verbs-en-uk-36",
+   "term": "drink",
+   "translations": [
+    "пити"
+   ],
+   "examples": [
+    {
+     "text": "Do you drink beer?",
+     "translation": "Ти п'єш пиво?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-verbs-en-uk-37",
+   "term": "play",
+   "translations": [
+    "грати"
+   ],
+   "examples": [
+    {
+     "text": "I can play tennis.",
+     "translation": "Я вмію грати в теніс."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-verbs-en-uk-38",
+   "term": "call",
+   "translations": [
+    "дзвонити",
+    "кликати"
+   ],
+   "examples": [
+    {
+     "text": "I gave him a call.",
+     "translation": "Я зателефонував йому."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-verbs-en-uk-39",
+   "term": "remember",
+   "translations": [
+    "пам’ятати"
+   ],
+   "examples": [
+    {
+     "text": "Remember to flush.",
+     "translation": "Не забудь злити воду."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-verbs-en-uk-40",
+   "term": "forget",
+   "translations": [
+    "забувати"
+   ],
+   "examples": [
+    {
+     "text": "I'll never forget.",
+     "translation": "Я ніколи не забуду."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  }
+ ],
+ "progress": []
+}

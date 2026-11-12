@@ -1,0 +1,628 @@
+{
+ "format": "sproutcards-deck",
+ "version": 1,
+ "deck": {
+  "id": "topic-family-en-uk",
+  "name": "Family and people (English)",
+  "learningLang": "en",
+  "translationLang": "uk",
+  "description": "Family members, friends and people around you.",
+  "source": "SproutCards catalog",
+  "catalogId": "topic-family-en-uk",
+  "createdAt": 0
+ },
+ "cards": [
+  {
+   "id": "topic-family-en-uk-1",
+   "term": "family",
+   "translations": [
+    "сім’я",
+    "родина"
+   ],
+   "examples": [
+    {
+     "text": "We're like family.",
+     "translation": "Ми неначе родина."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-family-en-uk-2",
+   "term": "mother",
+   "translations": [
+    "мати",
+    "мама"
+   ],
+   "examples": [
+    {
+     "text": "How's your mother?",
+     "translation": "Як твоя мама?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-family-en-uk-3",
+   "term": "father",
+   "translations": [
+    "батько",
+    "тато"
+   ],
+   "examples": [
+    {
+     "text": "My father is tall.",
+     "translation": "Мій батько високий."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-family-en-uk-4",
+   "term": "parents",
+   "translations": [
+    "батьки"
+   ],
+   "examples": [
+    {
+     "text": "Obey your parents.",
+     "translation": "Слухайтеся своїх батьків."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-family-en-uk-5",
+   "term": "son",
+   "translations": [
+    "син"
+   ],
+   "examples": [
+    {
+     "text": "I also have a son.",
+     "translation": "У мене також є син."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-family-en-uk-6",
+   "term": "daughter",
+   "translations": [
+    "донька"
+   ],
+   "examples": [
+    {
+     "text": "I have a daughter.",
+     "translation": "Я маю доньку."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-family-en-uk-7",
+   "term": "brother",
+   "translations": [
+    "брат"
+   ],
+   "examples": [
+    {
+     "text": "I have one brother.",
+     "translation": "У мене є один брат."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-family-en-uk-8",
+   "term": "sister",
+   "translations": [
+    "сестра"
+   ],
+   "examples": [
+    {
+     "text": "How's your sister?",
+     "translation": "Як твоя сестра?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-family-en-uk-9",
+   "term": "husband",
+   "translations": [
+    "чоловік"
+   ],
+   "examples": [
+    {
+     "text": "I love my husband.",
+     "translation": "Я кохаю свого чоловіка."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-family-en-uk-10",
+   "term": "wife",
+   "translations": [
+    "дружина"
+   ],
+   "examples": [
+    {
+     "text": "Is your wife tall?",
+     "translation": "Твоя дружина висока?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-family-en-uk-11",
+   "term": "child",
+   "translations": [
+    "дитина"
+   ],
+   "examples": [
+    {
+     "text": "She's not a child.",
+     "translation": "Вона не дитина."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-family-en-uk-12",
+   "term": "children",
+   "translations": [
+    "діти"
+   ],
+   "examples": [
+    {
+     "text": "She wants children.",
+     "translation": "Вона хоче дітей."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-family-en-uk-13",
+   "term": "baby",
+   "translations": [
+    "немовля",
+    "малюк"
+   ],
+   "examples": [
+    {
+     "text": "Check on the baby.",
+     "translation": "Подивись, як там дитина."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-family-en-uk-14",
+   "term": "grandmother",
+   "translations": [
+    "бабуся"
+   ],
+   "examples": [
+    {
+     "text": "My grandmother can fly.",
+     "translation": "Моя бабуся вміє літати."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-family-en-uk-15",
+   "term": "grandfather",
+   "translations": [
+    "дідусь"
+   ],
+   "examples": [
+    {
+     "text": "This is my grandfather.",
+     "translation": "Це мій дідусь."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-family-en-uk-16",
+   "term": "uncle",
+   "translations": [
+    "дядько"
+   ],
+   "examples": [
+    {
+     "text": "Where's your uncle?",
+     "translation": "Де твій дядько?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-family-en-uk-17",
+   "term": "aunt",
+   "translations": [
+    "тітка"
+   ],
+   "examples": [
+    {
+     "text": "Where's your aunt?",
+     "translation": "Де твоя тітка?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-family-en-uk-18",
+   "term": "cousin",
+   "translations": [
+    "двоюрідний брат",
+    "двоюрідна сестра"
+   ],
+   "examples": [
+    {
+     "text": "This is my cousin.",
+     "translation": "Це мій двоюрідний брат."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-family-en-uk-19",
+   "term": "friend",
+   "translations": [
+    "друг",
+    "подруга"
+   ],
+   "examples": [
+    {
+     "text": "You are my friend.",
+     "translation": "Ти мій друг."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-family-en-uk-20",
+   "term": "boy",
+   "translations": [
+    "хлопчик"
+   ],
+   "examples": [
+    {
+     "text": "That boy is smart.",
+     "translation": "Цей хлопчик розумний."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-family-en-uk-21",
+   "term": "girl",
+   "translations": [
+    "дівчинка"
+   ],
+   "examples": [
+    {
+     "text": "Look at that girl!",
+     "translation": "Подивись на цю дівчину!"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-family-en-uk-22",
+   "term": "man",
+   "translations": [
+    "чоловік"
+   ],
+   "examples": [
+    {
+     "text": "He is a brave man.",
+     "translation": "Він хоробра людина."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-family-en-uk-23",
+   "term": "woman",
+   "translations": [
+    "жінка"
+   ],
+   "examples": [
+    {
+     "text": "Who is that woman?",
+     "translation": "Хто та жінка?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-family-en-uk-24",
+   "term": "people",
+   "translations": [
+    "люди"
+   ],
+   "examples": [
+    {
+     "text": "We are the people.",
+     "translation": "Народ — це ми."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-family-en-uk-25",
+   "term": "person",
+   "translations": [
+    "людина"
+   ],
+   "examples": [
+    {
+     "text": "Choose one person.",
+     "translation": "Вибери одну людину."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-family-en-uk-26",
+   "term": "guest",
+   "translations": [
+    "гість"
+   ],
+   "examples": [
+    {
+     "text": "You're a guest here.",
+     "translation": "Ти тут гість."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-family-en-uk-27",
+   "term": "boss",
+   "translations": [
+    "начальник"
+   ],
+   "examples": [
+    {
+     "text": "I'm your boss now.",
+     "translation": "Тепер я твій бос."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-family-en-uk-28",
+   "term": "teacher",
+   "translations": [
+    "учитель",
+    "вчителька"
+   ],
+   "examples": [
+    {
+     "text": "I'm not a teacher.",
+     "translation": "Я не вчитель."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-family-en-uk-29",
+   "term": "doctor",
+   "translations": [
+    "лікар"
+   ],
+   "examples": [
+    {
+     "text": "He's not a doctor.",
+     "translation": "Він не лікар."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-family-en-uk-30",
+   "term": "student",
+   "translations": [
+    "студент",
+    "учень"
+   ],
+   "examples": [
+    {
+     "text": "Are you a student?",
+     "translation": "Ти є студентом?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-family-en-uk-31",
+   "term": "name",
+   "translations": [
+    "ім’я"
+   ],
+   "examples": [
+    {
+     "text": "I forgot his name.",
+     "translation": "Я забув, як його звати."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-family-en-uk-32",
+   "term": "age",
+   "translations": [
+    "вік"
+   ],
+   "examples": [
+    {
+     "text": "I'm half your age.",
+     "translation": "Я вдвічі молодший за тебе."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-family-en-uk-33",
+   "term": "birthday",
+   "translations": [
+    "день народження"
+   ],
+   "examples": [
+    {
+     "text": "Today is my birthday.",
+     "translation": "Сьогодні у мене день народження."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-family-en-uk-34",
+   "term": "wedding",
+   "translations": [
+    "весілля"
+   ],
+   "examples": [
+    {
+     "text": "When's the wedding?",
+     "translation": "Коли весілля?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-family-en-uk-35",
+   "term": "love",
+   "translations": [
+    "любов",
+    "любити"
+   ],
+   "examples": [
+    {
+     "text": "I love music, too.",
+     "translation": "Я теж обожнюю музику."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-family-en-uk-36",
+   "term": "young",
+   "translations": [
+    "молодий"
+   ],
+   "examples": [
+    {
+     "text": "She married young.",
+     "translation": "Вона вийшла заміж молодою."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-family-en-uk-37",
+   "term": "old",
+   "translations": [
+    "старий"
+   ],
+   "examples": [
+    {
+     "text": "He is getting old.",
+     "translation": "Він старішає."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-family-en-uk-38",
+   "term": "married",
+   "translations": [
+    "одружений",
+    "заміжня"
+   ],
+   "examples": [
+    {
+     "text": "Let's get married.",
+     "translation": "Давай одружимося."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-family-en-uk-39",
+   "term": "together",
+   "translations": [
+    "разом"
+   ],
+   "examples": [
+    {
+     "text": "We dance together.",
+     "translation": "Ми танцюємо разом."
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  },
+  {
+   "id": "topic-family-en-uk-40",
+   "term": "alone",
+   "translations": [
+    "сам",
+    "сама"
+   ],
+   "examples": [
+    {
+     "text": "Do you live alone?",
+     "translation": "Ти живеш сам?"
+    }
+   ],
+   "reviewed": false,
+   "createdAt": 0
+  }
+ ],
+ "progress": []
+}

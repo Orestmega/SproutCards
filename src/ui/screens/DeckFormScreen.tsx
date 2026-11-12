@@ -1,3 +1,4 @@
+import { deckName } from '../../core/catalog';
 import { useState } from 'react';
 import type { FormEvent } from 'react';
 import { useLiveQuery } from 'dexie-react-hooks';
@@ -14,6 +15,7 @@ import { NotFoundScreen } from './NotFoundScreen';
 export function DeckFormScreen() {
   const { deckId } = useParams();
   const repo = useRepo();
+  const { language } = useI18n();
   const existing = useLiveQuery(
     async () => (deckId ? ((await repo.getDeck(deckId)) ?? null) : undefined),
     [repo, deckId],
@@ -24,7 +26,8 @@ export function DeckFormScreen() {
     <DeckForm
       deckId={deckId}
       initial={{
-        name: existing?.name ?? '',
+        // a catalog deck: the name the user sees (saving it unchanged keeps it following the language)
+        name: existing ? deckName(existing, language) : '',
         description: existing?.description ?? '',
         learningLang: existing?.learningLang ?? 'en',
         translationLang: existing?.translationLang ?? 'uk',
