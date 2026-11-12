@@ -20,7 +20,12 @@ export function TodayCard({
   const { dailyGoal } = useSettings();
   const count = todayCount(times, now);
   const week = weekDays(times, now);
-  const dayName = new Intl.DateTimeFormat(language, { weekday: 'narrow' });
+  // short names ("Пн", "Вт"): one letter is ambiguous (two "П", two "С")
+  const shortDay = new Intl.DateTimeFormat(language, { weekday: 'short' });
+  const dayName = (time: number) => {
+    const name = shortDay.format(time).replace('.', '');
+    return name.charAt(0).toLocaleUpperCase(language) + name.slice(1);
+  };
   const longDay = new Intl.DateTimeFormat(language, { weekday: 'long' });
   const left = Math.max(0, dailyGoal - count);
   return (
@@ -55,7 +60,12 @@ export function TodayCard({
                     ? t('home.goal.dayFrozen')
                     : t('home.goal.dayNot')}
               </span>
-              <span aria-hidden="true">{dayName.format(day.dayStart)}</span>
+              <span
+                className={day.today ? 'week__name week__name--today' : 'week__name'}
+                aria-hidden="true"
+              >
+                {dayName(day.dayStart)}
+              </span>
               <span className={classes.filter(Boolean).join(' ')} aria-hidden="true">
                 {done ? '✓' : frozen ? '❄' : ''}
               </span>

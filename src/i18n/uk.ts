@@ -748,11 +748,14 @@ export const uk: Record<Keys, string> & Record<string, string> = {
   'week.chest.title': 'Скринька тижня',
   'week.chest.closed': 'Виконай усі три — і скринька дасть квітку тижня: {flower}.',
   'week.chest.open': 'Скриньку відкрито! Квітка тижня: {flower}. Вона вже в саду.',
-  'week.freezes': 'Заморозки серії: {count} з {max}',
-  'week.freezesHint':
-    'Пропустиш день — заморозка збереже серію днів поспіль. Кожна ціль тижня дає одну.',
+  'week.freezes': 'Заморозки серії: {count} з {max} — рятують пропущений день',
+  'week.freezesHint': 'Пропустиш день — заморозка збереже серію. Кожна ціль тижня дає одну.',
   'home.goal.dayFrozen': 'збережено заморозкою',
   'learn.overrideText': 'Вважаєш, що відповідь правильна (опечатка, апостроф)?',
   'learn.overrideButton': 'Зарахувати',
   'learn.countedAsRight': 'Зараховано як правильну.',
+  'resume.more_one': 'ще {count} незавершена',
+  'resume.more_few': 'ще {count} незавершені',
+  'resume.more_many': 'ще {count} незавершених',
+  'resume.more_other': 'ще {count} незавершеної',
 };

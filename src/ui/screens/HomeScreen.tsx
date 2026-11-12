@@ -86,7 +86,8 @@ export function HomeScreen() {
       const deck = summaries.find((s) => s.deck.id === snapshot.deckId)?.deck;
       return deck ? [{ snapshot, deck, ...snapshotProgress(snapshot) }] : [];
     })
-    .slice(0, 2);
+    .slice(0, 3);
+  const latest = resumeList[0];
   // days in a row with the streak freezes (weekly goals) once the garden is read
   const streak = garden ? garden.streak.current : computeStreak(logTimes, now);
   const cards = summaries.reduce((sum, s) => sum + s.cardCount, 0);
@@ -171,27 +172,7 @@ export function HomeScreen() {
             </button>
           </GardenScene>
 
-          {resumeList.map(({ snapshot, deck, percent, done, total }) => (
-            <Link
-              key={`${deck.id}-${snapshot.direction}`}
-              to={`/decks/${deck.id}/learn?dir=${snapshot.direction}&resume=1`}
-              className="resume-card"
-            >
-              <span className="resume-card__icon" aria-hidden="true">
-                <Icon name="learn" />
-              </span>
-              <span className="list-row__main">
-                <span className="list-row__title">
-                  {t('resume.continueDeck', { name: deck.name })}
-                </span>
-                <span className="muted">{t('resume.progress', { percent, done, total })}</span>
-              </span>
-              <span className="chevron" aria-hidden="true">
-                ›
-              </span>
-            </Link>
-          ))}
-
+          {/* the main action first; then one card for the latest unfinished session */}
           {dueDeck ? (
             <ButtonLink to={`/decks/${dueDeck.deck.id}/learn`} block>
               {t('home.review', { name: dueDeck.deck.name })}
@@ -202,6 +183,33 @@ export function HomeScreen() {
                 {t('home.learnNew', { name: freshDeck.deck.name })}
               </ButtonLink>
             )
+          )}
+
+          {latest && (
+            <Link
+              to={`/decks/${latest.deck.id}/learn?dir=${latest.snapshot.direction}&resume=1`}
+              className="resume-card"
+            >
+              <span className="resume-card__icon" aria-hidden="true">
+                <Icon name="learn" />
+              </span>
+              <span className="list-row__main">
+                <span className="list-row__title">
+                  {t('resume.continueDeck', { name: latest.deck.name })}
+                </span>
+                <span className="muted">
+                  {t('resume.progress', {
+                    percent: latest.percent,
+                    done: latest.done,
+                    total: latest.total,
+                  })}
+                  {resumeList.length > 1 && ` · ${tp('resume.more', resumeList.length - 1)}`}
+                </span>
+              </span>
+              <span className="chevron" aria-hidden="true">
+                ›
+              </span>
+            </Link>
           )}
         </div>
 

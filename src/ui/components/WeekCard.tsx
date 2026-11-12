@@ -89,6 +89,20 @@ export function WeekCard({
             item.done && 'weekly__item--done',
             fresh.has(key) && 'weekly__item--new',
           ];
+          if (item.done) {
+            // finished: one line with a tick (it already brought its flower)
+            return (
+              <li className={classes.filter(Boolean).join(' ')} key={key}>
+                <span className="weekly__tick" aria-hidden="true">
+                  ✓
+                </span>
+                <span>
+                  <span className="weekly__name">{name}</span> {what}
+                </span>
+                <span className="visually-hidden">{t('week.got')}</span>
+              </li>
+            );
+          }
           return (
             <li className={classes.filter(Boolean).join(' ')} key={key}>
               <div className="weekly__row">
@@ -134,9 +148,8 @@ export function WeekCard({
         </span>
       </div>
 
-      <p className="weekly__freezes">
+      <p className="weekly__freezes" title={t('week.freezesHint')}>
         <span aria-hidden="true">❄️</span> {t('week.freezes', { count: freezes, max: MAX_FREEZES })}
-        <span className="muted"> {t('week.freezesHint')}</span>
       </p>
     </section>
   );

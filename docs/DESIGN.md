@@ -26,7 +26,12 @@ so a screen is written once. The dark theme turns the dark button light (mint fa
   down both sides, then filled softly; the book's cover opens to the left; the garden's stem grows, leaves unfurl and
   the flower blooms with a turn; the bars rise one after another; the sun turns and its centre beats. Only when a tab
   is opened; under reduced motion the icons show their final look.
-- **Week card:** each item says what it gives; a fresh finish glows gold once; the chest of the week (closed / open
+- **Home order (2026-11-12):** the garden, then the main dark button (review / learn new), then one "continue
+  learning" card for the latest unfinished session ("+N more unfinished" when there are more).
+- **Week dots:** short day names ("Пн Вт Ср…"), today in bold with a thick ring.
+- **Garden wilting:** the owner's demo — per-part wilt values (head, stem in two places, leaves), fading colour,
+  one falling petal, a spring back up after watering; no grey overlay.
+- **Week card:** a finished item folds to one line with a gold tick; the freezes are one short line; a fresh finish glows gold once; the chest of the week (closed / open
   with a flower of the week); streak freezes with a snowflake (also on frozen days in the week dots). Flowers of
   the week have a soft violet glow and a little star.
 - **Sprout (current, 2026-11-10, second version): the owner's picture in one piece.** The layers came apart at

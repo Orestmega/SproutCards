@@ -683,11 +683,12 @@ export const en = {
   'week.chest.title': 'Chest of the week',
   'week.chest.closed': 'Finish all three and the chest gives a flower of the week: {flower}.',
   'week.chest.open': 'The chest is open! Flower of the week: {flower}. It is in your garden.',
-  'week.freezes': 'Streak freezes: {count} of {max}',
-  'week.freezesHint':
-    'Miss a day and a freeze keeps your days in a row. Each weekly goal gives one.',
+  'week.freezes': 'Streak freezes: {count} of {max} — each saves a missed day',
+  'week.freezesHint': 'Miss a day and a freeze keeps your streak. Each weekly goal gives one.',
   'home.goal.dayFrozen': 'saved by a freeze',
   'learn.overrideText': 'Think your answer was right (a typo, an apostrophe)?',
   'learn.overrideButton': 'Count it as right',
   'learn.countedAsRight': 'Counted as right.',
+  'resume.more_one': '{count} more unfinished',
+  'resume.more_other': '{count} more unfinished',
 } as const;

@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react';
 import type { GrowthStage } from '../../core/garden';
 import type { VarietyId } from '../../core/gardenLife';
 
@@ -11,22 +12,6 @@ function Soil() {
     <g>
       <ellipse cx="16" cy="28.4" rx="11.5" ry="3.8" fill={SOIL} />
       <ellipse cx="14" cy="27.6" rx="6" ry="1.4" fill="#a3754f" opacity="0.6" />
-    </g>
-  );
-}
-
-function Leaves({ low = false }: { low?: boolean }) {
-  const y = low ? 3 : 0;
-  return (
-    <g>
-      <path
-        d={`M16 ${24 + y} C19 ${19 + y} 25 ${19 + y} 27 ${22 + y} C24 ${26 + y} 20 ${27 + y} 16 ${24 + y} Z`}
-        fill={LEAF}
-      />
-      <path
-        d={`M16 ${25 + y} C13 ${20 + y} 7 ${20 + y} 5 ${23 + y} C8 ${27 + y} 12 ${28 + y} 16 ${25 + y} Z`}
-        fill={LEAF_LIGHT}
-      />
     </g>
   );
 }
@@ -410,10 +395,13 @@ function WeeklyGlow() {
 export function PlantArt({
   stage,
   variety,
+  seed,
 }: {
   stage: GrowthStage;
   /** A kind of flower (rewards, the collection). Without it a bloom is a green bush: words have no flowers. */
   variety?: VarietyId;
+  /** The plot's number in the garden picture: each flower wilts in its own way. */
+  seed?: number;
 }) {
   if (stage === 'seed') {
     return (
@@ -456,24 +444,85 @@ export function PlantArt({
     );
   }
   if (!variety) return <Bush />;
-  // the parts are separate so a thirsty garden can bend them one by one (see "wilting" in components.css):
-  // the stem leans from the soil, the leaves hang, the head droops, a dry petal falls
+  // The owner's design (design/feedback/wilt-demo.html): the parts are separate so a thirsty garden bends
+  // them in order (head, then stem, then leaves; see "Wilting" in components.css). `seed` (the plot's
+  // number) gives each flower its own side to lean to, its own strength and its own delay.
+  const n = seed ?? 0;
+  const style = {
+    '--dir': n % 3 === 1 ? -1 : 1,
+    '--k': (0.85 + ((n * 37) % 30) / 100).toFixed(2),
+    '--d': `${((n * 173) % 700) / 1000}s`,
+    '--d2': `${((((n * 173) % 700) / 1000) * 0.4).toFixed(2)}s`,
+  } as CSSProperties;
+  const dir = n % 3 === 1 ? -1 : 1;
   return (
-    <g>
+    <g className="plant" style={style}>
       <Soil />
-      <g className="plant__body">
-        <path d="M16 28 V12" stroke={STEM} strokeWidth="2.6" strokeLinecap="round" />
-        <g className="plant__leaves">
-          <Leaves />
-        </g>
-        <g className="plant__head">
-          <Flower variety={variety} />
+      <g className="plant__sway" style={{ '--sd': `-${(n * 0.9) % 3.4}s` } as CSSProperties}>
+        <g className="plant__lower">
+          <path d="M16 28 V20" stroke={STEM} strokeWidth="2.6" strokeLinecap="round" />
+          <g className="plant__leaves">
+            <g className="plant__leaf-r">
+              <path d="M16 24 C19 19 25 19 27 22 C24 26 20 27 16 24 Z" fill={LEAF} />
+            </g>
+            <g className="plant__leaf-l">
+              <path d="M16 25 C13 20 7 20 5 23 C8 27 12 28 16 25 Z" fill={LEAF_LIGHT} />
+            </g>
+          </g>
+          <g className="plant__upper">
+            <path d="M16 20 V12" stroke={STEM} strokeWidth="2.6" strokeLinecap="round" />
+            <g className="plant__head">
+              <Flower variety={variety} />
+            </g>
+            {/* a petal of the flower's own colour, that falls off when it wilts */}
+            <ellipse
+              className="plant__petal"
+              style={
+                { '--pd': `${(0.3 + ((n * 113) % 1500) / 1000).toFixed(2)}s` } as CSSProperties
+              }
+              cx={16 + dir * 4}
+              cy="9"
+              rx="1.5"
+              ry="2.6"
+              fill={PETAL[variety] ?? '#ffffff'}
+            />
+          </g>
         </g>
       </g>
-      <ellipse className="plant__fall" cx="18" cy="12" rx="1.6" ry="0.9" fill="#c9a26a" />
     </g>
   );
 }
+
+/** The colour of a fallen petal, per kind. */
+const PETAL: Partial<Record<VarietyId, string>> = {
+  daisy: '#ffffff',
+  tulip: '#f0566a',
+  bellflower: '#7d8cf0',
+  poppy: '#ff6b3d',
+  lavender: '#a678e3',
+  cornflower: '#3d7bf0',
+  marigold: '#ff9f1c',
+  violet: '#8e5bd6',
+  daffodil: '#ffd84a',
+  forgetmenot: '#7fb8ff',
+  peony: '#ff9fc0',
+  iris: '#7a5cd6',
+  hyacinth: '#c58cf0',
+  crocus: '#b48cff',
+  carnation: '#ff6f91',
+  cosmos: '#ff9ccf',
+  sunflower: '#ffcf2e',
+  rose: '#e8384f',
+  orchid: '#e59ff0',
+  lily: '#ffd1e0',
+  lotus: '#ffa8c8',
+  sakura: '#ffd1e0',
+  golden: '#ffd23f',
+  edelweiss: '#ffffff',
+  gerbera: '#ff7a59',
+  magnolia: '#ffc2d8',
+  snowdrop: '#ffffff',
+};
 
 /** A word known well: a full, round green bush (no flower: flowers are only rewards). */
 function Bush() {

@@ -1,4 +1,3 @@
-import type { CSSProperties } from 'react';
 import type { ReactNode } from 'react';
 import type { DayPart } from '../../core/cheer';
 import type { GrowthStage } from '../../core/garden';
@@ -218,9 +217,12 @@ export function GardenScene({
               )}
               {/* a new key (another flower planted) plays the growing animation */}
               <g className="garden__grow" key={plant ? plant.variety : 'empty'}>
-                {/* --i: the plot's number, so the flowers wilt and revive one after another */}
-                <g className="garden__plant" style={{ '--i': i } as CSSProperties}>
-                  {plant ? <PlantArt stage={plant.stage} variety={plant.variety} /> : <EmptyPlot />}
+                <g className="garden__plant">
+                  {plant ? (
+                    <PlantArt stage={plant.stage} variety={plant.variety} seed={i} />
+                  ) : (
+                    <EmptyPlot />
+                  )}
                 </g>
               </g>
             </svg>

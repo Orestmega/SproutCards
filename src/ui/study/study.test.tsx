@@ -331,12 +331,21 @@ describe('Learn: limits and edge cases', () => {
     await waitFor(async () => expect(await db.reviewLogs.count()).toBe(2));
     first.unmount();
 
-    // the deck and the home screen offer to continue
+    // a second unfinished session (the other direction), to see that Home shows one card for both
+    const forwardKey = `sproutcards.learn.${deck.id}.forward`;
+    const saved = JSON.parse(localStorage.getItem(forwardKey) as string) as Record<string, unknown>;
+    const backwardKey = `sproutcards.learn.${deck.id}.backward`;
+    localStorage.setItem(backwardKey, JSON.stringify({ ...saved, direction: 'backward' }));
+
+    // the deck and the home screen offer to continue: one card, which mentions the other session
     const home = open('/');
     expect(
       await screen.findByRole('link', { name: /Continue learning: Test deck/ }),
     ).toBeInTheDocument();
+    expect(screen.getAllByRole('link', { name: /Continue learning/ })).toHaveLength(1);
+    expect(screen.getByText(/1 more unfinished/)).toBeInTheDocument();
     home.unmount();
+    localStorage.removeItem(backwardKey);
     open(`/decks/${deck.id}`);
     await user.click(await screen.findByRole('link', { name: /Continue where you stopped/ }));
     await screen.findByText(/Choose the|Type the/);

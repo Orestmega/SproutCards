@@ -1402,8 +1402,9 @@ textarea.input {
   color: #10210f;
 }
 
+/* today: a thick ring, and its name is bold (see .week__name--today) */
 .week__dot--today {
-  box-shadow: 0 0 0 2px var(--color-primary-dark);
+  box-shadow: 0 0 0 3px var(--color-primary-dark);
 }
 
 /* the word of the day */
@@ -2068,154 +2069,155 @@ textarea.input {
 }
 
 /*
- * Wilting: no grey filter over the picture. Each flower bends the way a real one does: the stem leans
- * from the soil, the leaves hang, the head droops and its petals fade a little, the glow goes out, now
- * and then a dry petal falls. Thirsty is the first, gentle step. Plots start one after another (--i).
- * Watering (the rain) lifts them back up. Origins are in the plant's own 32 × 32 box.
+ * Wilting (the owner's design, design/feedback/wilt-demo.html). Every part of a flower has its own wilt
+ * value, from 0 (fresh) to 1 (wilted): the head bows first, then the stem bends in two places, then the
+ * leaves hang and yellow; the colour fades a little; a petal falls once. The values are registered
+ * properties, so a change of state glides; watering lifts everything back with a little spring.
+ * Per flower: --dir (side), --k (strength), --d (delay), all set in Plant.tsx. Units: the 32 × 32 box.
  */
-.plant__body,
+@property --wh {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 0;
+}
+
+@property --ws {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 0;
+}
+
+@property --wl {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 0;
+}
+
+@property --wc {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 0;
+}
+
+.plant__sway,
+.plant__lower,
+.plant__upper,
 .plant__head,
-.plant__leaves,
-.plant__fall {
+.plant__leaf-r,
+.plant__leaf-l,
+.plant__petal {
   transform-box: view-box;
 }
 
-.plant__body {
+.garden .plant {
+  --wh: 0;
+  --ws: 0;
+  --wl: 0;
+  --wc: 0;
+  filter: saturate(calc(1 - var(--wc) * 0.62)) brightness(calc(1 - var(--wc) * 0.07));
+  transition:
+    --wh 2.4s cubic-bezier(0.45, 0, 0.3, 1) var(--d),
+    --ws 3.2s cubic-bezier(0.45, 0, 0.3, 1) calc(var(--d) + 0.5s),
+    --wl 3.2s cubic-bezier(0.45, 0, 0.3, 1) calc(var(--d) + 1s),
+    --wc 3.6s linear var(--d);
+}
+
+.garden--thirsty .plant {
+  --wh: 0.4;
+  --ws: 0.35;
+  --wl: 0.4;
+  --wc: 0.4;
+}
+
+.garden--wilted .plant {
+  --wh: 1;
+  --ws: 1;
+  --wl: 1;
+  --wc: 1;
+}
+
+/* watered: everything perks up quickly, with a little spring */
+.garden--fresh .plant {
+  transition:
+    --wh 1.3s var(--ease-spring) var(--d2),
+    --ws 1.5s var(--ease-spring) var(--d2),
+    --wl 1.7s var(--ease-spring) var(--d2),
+    --wc 1.6s ease-out var(--d2);
+}
+
+.garden .plant__sway {
   transform-origin: 16px 28px;
+  --amp: 1.4deg;
+  animation: plant-sway-soft 3.6s ease-in-out infinite alternate;
+  animation-delay: var(--sd);
+}
+
+.garden--wilted .plant__sway {
+  --amp: 0.5deg;
+  animation-duration: 6s;
+}
+
+@keyframes plant-sway-soft {
+  from {
+    transform: rotate(calc(var(--amp) * -1));
+  }
+  to {
+    transform: rotate(var(--amp));
+  }
+}
+
+.plant__lower {
+  transform-origin: 16px 28px;
+  transform: rotate(calc(var(--ws, 0) * 5deg * var(--dir, 1) * var(--k, 1)));
+}
+
+.plant__upper {
+  transform-origin: 16px 20px;
+  transform: rotate(calc(var(--ws, 0) * 20deg * var(--dir, 1) * var(--k, 1)));
 }
 
 .plant__head {
-  transform-origin: 16px 12px;
+  transform-origin: 16px 12.5px;
+  transform: rotate(calc(var(--wh, 0) * 58deg * var(--dir, 1) * var(--k, 1)))
+    scale(calc(1 - var(--wh, 0) * 0.1));
 }
 
-.plant__leaves {
+.plant__leaf-r {
   transform-origin: 16px 24px;
+  transform: rotate(calc(var(--wl, 0) * 30deg)) scale(calc(1 - var(--wl, 0) * 0.1));
 }
 
-.plant__fall {
-  opacity: 0;
-  pointer-events: none;
+.plant__leaf-l {
+  transform-origin: 16px 25px;
+  transform: rotate(calc(var(--wl, 0) * -30deg)) scale(calc(1 - var(--wl, 0) * 0.1));
 }
 
-.plant__glow {
-  transition: opacity 1.2s ease;
+.garden .plant__leaves {
+  filter: hue-rotate(calc(var(--wc) * -38deg)) saturate(calc(1 - var(--wc) * 0.2));
 }
 
-/* thirsty: a slight lean, the head starts to bow, colours a touch duller */
-.garden--thirsty .plant__body {
-  transform: rotate(7deg);
-  animation: from-upright 1.4s ease-out both;
-  animation-delay: calc(var(--i, 0) * 90ms);
-}
-
-.garden--thirsty .plant__head {
-  transform: rotate(32deg);
-  filter: saturate(0.8);
-  animation: from-upright 1.4s ease-out both;
-  animation-delay: calc(var(--i, 0) * 90ms + 200ms);
-}
-
-.garden--thirsty .plant__glow {
-  opacity: 0.15;
-}
-
-/* wilted: bent over, the head hangs and sways a little, the leaves droop, petals fall */
-.garden--wilted .plant__body {
-  transform: rotate(16deg);
-  animation: from-upright 1.8s ease-out both;
-  animation-delay: calc(var(--i, 0) * 90ms);
-}
-
-.garden--wilted .plant__head {
-  transform: rotate(78deg) scale(0.84);
-  filter: saturate(0.55) sepia(0.25);
-  animation:
-    from-upright 1.8s ease-out both,
-    head-hang 4.5s ease-in-out infinite alternate;
-  animation-delay: calc(var(--i, 0) * 90ms + 250ms), calc(var(--i, 0) * 90ms + 2s);
-}
-
-.garden--wilted .plant__leaves {
-  transform: scaleY(0.7) rotate(6deg);
-  animation: from-upright 1.8s ease-out both;
-  animation-delay: calc(var(--i, 0) * 90ms + 150ms);
-}
-
-.garden--wilted .plant__glow {
+.plant__petal {
   opacity: 0;
 }
 
-.garden--wilted .plant__fall {
-  animation: petal-fall 7s ease-in infinite;
-  animation-delay: calc(var(--i, 0) * 700ms + 2s);
+.garden--wilted .plant__petal {
+  animation: petal-drop 2.8s ease-in var(--pd) forwards;
 }
 
-/* from the upright plant to the pose set on the element (the keyframe has only a start) */
-@keyframes from-upright {
-  from {
-    transform: none;
-    filter: none;
-  }
-}
-
-@keyframes head-hang {
-  from {
-    transform: rotate(74deg) scale(0.84);
-  }
-  to {
-    transform: rotate(82deg) scale(0.84);
-  }
-}
-
-/* a dry petal comes off the drooping head, drifts down and lies on the soil for a moment */
-@keyframes petal-fall {
-  0%,
-  70% {
+@keyframes petal-drop {
+  0% {
     opacity: 0;
-    transform: translate(4px, 2px) rotate(0);
+    transform: translate(0, 0) rotate(0);
   }
-  74% {
+  12% {
     opacity: 1;
   }
-  92% {
-    opacity: 1;
-    transform: translate(1px, 15px) rotate(160deg);
+  85% {
+    opacity: 0.9;
   }
   100% {
     opacity: 0;
-    transform: translate(1px, 15px) rotate(180deg);
-  }
-}
-
-/* watering: the rain lifts every flower back up */
-.garden--raining .plant__body,
-.garden--raining .plant__head,
-.garden--raining .plant__leaves {
-  animation: revive 1.4s cubic-bezier(0.34, 1.4, 0.64, 1) both;
-  animation-delay: calc(var(--i, 0) * 60ms + 300ms);
-}
-
-.garden--raining .plant__head {
-  animation-name: revive-head;
-}
-
-@keyframes revive {
-  from {
-    transform: rotate(16deg) scaleY(0.88);
-  }
-  to {
-    transform: none;
-  }
-}
-
-@keyframes revive-head {
-  from {
-    transform: rotate(78deg) scale(0.84);
-    filter: saturate(0.55) sepia(0.25);
-  }
-  to {
-    transform: none;
-    filter: none;
+    transform: translate(calc(var(--dir, 1) * 5px), 22px) rotate(230deg);
   }
 }
 
@@ -2441,11 +2443,10 @@ textarea.input {
   }
 
   /* the poses stay (a wilted flower is still bent), only the motion goes */
-  .plant__body,
-  .plant__head,
-  .plant__leaves,
-  .plant__fall {
+  .garden .plant,
+  .garden .plant * {
     animation: none !important;
+    transition-duration: 0.01ms !important;
   }
 }
 
@@ -3293,4 +3294,37 @@ textarea.input {
   .chest--open .chest__lid {
     animation: none;
   }
+}
+
+/* a finished weekly item: one line with a tick */
+.weekly__item--done {
+  flex-direction: row;
+  align-items: baseline;
+  gap: var(--space-2);
+  color: var(--color-text-muted);
+}
+
+.weekly__tick {
+  flex: none;
+  width: 1.4em;
+  height: 1.4em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--color-sun);
+  color: #4d3600;
+  font-weight: 900;
+  font-size: 0.85em;
+}
+
+/* the week dots: today's name stands out */
+.week__name {
+  font-size: var(--font-size-sm, 0.875rem);
+  color: var(--color-text-muted);
+}
+
+.week__name--today {
+  color: var(--color-text);
+  font-weight: 900;
 }
