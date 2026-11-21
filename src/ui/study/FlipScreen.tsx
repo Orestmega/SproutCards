@@ -191,6 +191,18 @@ function FlipSession({ data, onRestart }: { data: StudyData; onRestart: () => vo
     navigate(`/decks/${deck.id}`);
   }
 
+  // asked from the close button: drawn on every screen of the session (the round end included)
+  const leaveDialog = confirmLeave && (
+    <ConfirmDialog
+      title={t('learn.leave.title')}
+      confirmLabel={t('learn.leave.confirm')}
+      onConfirm={() => void leaveAndSave()}
+      onCancel={() => setConfirmLeave(false)}
+    >
+      <p>{t('learn.leave.text')}</p>
+    </ConfirmDialog>
+  );
+
   if (state.phase === 'roundEnd') {
     const summary = summarizeFlip(state);
     return (
@@ -208,9 +220,11 @@ function FlipSession({ data, onRestart }: { data: StudyData; onRestart: () => vo
         <Button block onClick={() => setState((s) => continueFlip(s))} autoFocus>
           {tp('flip.roundEnd.continue', state.missed.length)}
         </Button>
-        <Button block variant="secondary" onClick={undo}>
-          {t('flip.undo')}
+        {/* or stop here: what is answered so far is kept */}
+        <Button block variant="secondary" onClick={() => void leaveAndSave()}>
+          {t('flip.roundEnd.finish')}
         </Button>
+        {leaveDialog}
       </>
     );
   }
@@ -349,16 +363,7 @@ function FlipSession({ data, onRestart }: { data: StudyData; onRestart: () => vo
         </p>
       )}
 
-      {confirmLeave && (
-        <ConfirmDialog
-          title={t('learn.leave.title')}
-          confirmLabel={t('learn.leave.confirm')}
-          onConfirm={() => void leaveAndSave()}
-          onCancel={() => setConfirmLeave(false)}
-        >
-          <p>{t('learn.leave.text')}</p>
-        </ConfirmDialog>
-      )}
+      {leaveDialog}
     </>
   );
 }

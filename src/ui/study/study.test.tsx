@@ -474,6 +474,34 @@ describe('Flashcards', () => {
     first.unmount();
   });
 
+  it('at the end of a round the close button asks, and "Finish and save" keeps every answer', async () => {
+    const user = userEvent.setup();
+    const { deck } = await seedDeck();
+    open(`/decks/${deck.id}/flip`);
+    for (const known of [true, false, true]) {
+      await user.click(await screen.findByRole('button', { name: /Show answer/ }));
+      await user.click(
+        screen.getByRole('button', { name: known ? /^✓ I know it/ : /I don.t know/ }),
+      );
+    }
+    await screen.findByRole('heading', { name: 'Round 1 complete' });
+    // no "undo" here (the card screen has its own button for that)
+    expect(screen.queryByRole('button', { name: 'Undo the last answer' })).toBeNull();
+
+    await user.click(screen.getByRole('button', { name: 'Close' }));
+    const dialog = await screen.findByRole('dialog', { name: 'Leave this session?' });
+    await user.click(within(dialog).getByRole('button', { name: 'Cancel' }));
+    expect(screen.queryByRole('dialog')).toBeNull();
+
+    await user.click(screen.getByRole('button', { name: 'Finish and save' }));
+    expect(
+      await screen.findByRole('heading', { name: 'Test deck', level: 1 }, { timeout: 10000 }),
+    ).toBeInTheDocument();
+    await waitFor(async () =>
+      expect((await db.reviewLogs.toArray()).filter((l) => l.mode === 'flip')).toHaveLength(3),
+    );
+  });
+
   it('backward direction shows the translation on the front', async () => {
     const { deck } = await seedDeck();
     open(`/decks/${deck.id}/flip?dir=backward`);

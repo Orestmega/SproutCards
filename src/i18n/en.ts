@@ -374,6 +374,7 @@ export const en = {
   'quiz.statement': 'Shown: {prompt} = {shown}',
   'quiz.yourAnswerTf': 'Your answer: {answer}',
   'flip.roundEnd.title': 'Round {round} complete',
+  'flip.roundEnd.finish': 'Finish and save',
   'flip.roundEnd.counts': 'You know {known} of {total}. Still learning: {learning}.',
   'flip.roundEnd.continue_one': 'Go through {count} card again',
   'flip.roundEnd.continue_other': 'Go through {count} cards again',

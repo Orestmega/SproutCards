@@ -396,6 +396,7 @@ export const uk: Record<Keys, string> & Record<string, string> = {
   'quiz.statement': 'Було показано: {prompt} = {shown}',
   'quiz.yourAnswerTf': 'Твоя відповідь: {answer}',
   'flip.roundEnd.title': 'Раунд {round} завершено',
+  'flip.roundEnd.finish': 'Завершити й зберегти',
   'flip.roundEnd.counts': 'Ти знаєш {known} із {total}. Ще вчиш: {learning}.',
   'flip.roundEnd.continue_one': 'Пройти ще раз {count} картку',
   'flip.roundEnd.continue_few': 'Пройти ще раз {count} картки',
