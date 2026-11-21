@@ -84,7 +84,8 @@ export function HomeScreen() {
   if (!summaries || due === undefined || !logTimes) return null;
 
   const part = dayPart(new Date(now).getHours());
-  // the home picture has room for the first 9 plots of the garden
+  // the home picture has room for the first 9 plots of the garden; while they are all empty, a dug bed
+  // with seedlings stands there instead, and the flowers take its place as soon as one is planted
   const homePlots = garden
     ? gardenPlotsOf(settings.gardenPlots, garden.earned)
         .slice(0, 9)
@@ -153,6 +154,7 @@ export function HomeScreen() {
           <GardenScene
             part={part}
             plants={homePlots}
+            startBed
             decorations={
               garden ? shownDecorations(garden.decorations, settings.hiddenDecorations) : undefined
             }

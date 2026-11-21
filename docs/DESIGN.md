@@ -15,9 +15,12 @@ so a screen is written once. The dark theme turns the dark button light (mint fa
 - **Stages:** seed (not studied), sprout (studied), leaf (2 right in a row), bloom (3 right in a row: learned). The
   stronger direction of a card decides. Drawn in `Plant.tsx`, shown next to every card, as a growth bar on decks
   and as a legend on the deck and Progress screens.
-- **Home scene** (`GardenScene.tsx`): the sky follows the time of day (morning, afternoon, evening, night with
-  moon and stars), clouds drift, and up to 9 plots show the user's real words in proportion. The sky is a separate
-  layer so a wide screen crops only the hills.
+- **Home scene** (`GardenScene.tsx`, after the owner's `design/feedback/scene-demo.html`): every colour is a
+  `--g-*` variable with a set per time of day (morning, afternoon, evening, night). Sun with rays (moves with the
+  day), moon, stars and a shooting star at night, birds by day, fireflies in the evening; far hills, bushes, grass
+  fringe, swaying clumps and wildflowers (`gardenArt.ts`, seeded). Up to 9 plots show earned flowers; while none
+  grows, Home shows a dug bed with seedlings. The height follows the width (aspect-ratio, clamped). The sky is a
+  separate layer so a wide screen crops only the hills.
 
 - **Garden screen:** the big picture (15 plots, earned decorations, rain while watering, droop when wilted), the
   watering card, beds per deck (tap a plant for its word), the flower collection (unknown kinds as silhouettes),

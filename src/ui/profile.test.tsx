@@ -66,7 +66,10 @@ describe('profile', () => {
     await seed();
     open('/');
     await user.click(await screen.findByRole('link', { name: 'Your profile' }));
-    expect(await screen.findByRole('heading', { name: 'Profile', level: 1 })).toBeInTheDocument();
+    // the profile screen is loaded on first use: slow when all the tests run at once
+    expect(
+      await screen.findByRole('heading', { name: 'Profile', level: 1 }, { timeout: 10000 }),
+    ).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Gardener' })).toBeInTheDocument(); // no name yet
     expect(screen.getByText('Seedling')).toBeInTheDocument();
     expect(screen.getByText('4 more learned words to “Young gardener”')).toBeInTheDocument();

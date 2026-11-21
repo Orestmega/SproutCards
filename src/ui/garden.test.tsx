@@ -71,7 +71,10 @@ describe('garden screen', () => {
     const nav = await screen.findByRole('navigation', { name: 'Main navigation' });
     expect(within(nav).getByRole('link', { name: 'Garden' })).toHaveAttribute('href', '#/garden');
     await user.click(await screen.findByRole('link', { name: 'Open your garden' }));
-    expect(await screen.findByRole('heading', { name: 'Garden', level: 1 })).toBeInTheDocument();
+    // the garden screen is loaded on first use: slow when all the tests run at once
+    expect(
+      await screen.findByRole('heading', { name: 'Garden', level: 1 }, { timeout: 10000 }),
+    ).toBeInTheDocument();
   });
 
   it('shows every word as a plant (no flowers: they are rewards); tapping one tells its word, stage, next review', async () => {

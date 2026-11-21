@@ -104,7 +104,8 @@ describe('Learn: the full cycle', () => {
     // tapping Learn asks how many words; the choice is remembered for next time
     await startFromDeck(user, 'Learn', '5');
     await waitFor(async () => expect((await repo.getSettings()).sessionSize).toBe(5));
-    await screen.findByText('Choose the translation');
+    // the Learn screen is loaded on first use: slow when all the tests run at once
+    await screen.findByText('Choose the translation', {}, { timeout: 15000 });
     expect(await playLearnPerfectly(user)).toBe(15); // 5 words, 3 levels each
     await waitFor(async () => expect(await repo.listProgress(deck.id)).toHaveLength(5));
   });

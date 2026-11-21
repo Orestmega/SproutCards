@@ -1078,50 +1078,142 @@ textarea.input {
   }
 }
 
-/* The garden picture: sky by the time of day, hills, plants, Sprout. */
+/*
+ * The garden picture (the owner's design, design/feedback/scene-demo.html): every colour is a variable
+ * set by the time of day. The height follows the width (the picture is wide), within limits, so a wide
+ * screen does not crop the hills to a thin strip and a phone keeps enough sky.
+ */
 .garden {
-  --sky-1: #bfe6ff;
-  --sky-2: #eafaf0;
-  --hill-1: #a9dc8f;
-  --hill-2: #84c866;
-  --hill-3: #5fae45;
-  --soil: #7a5335;
+  --g-s1: #7fc8ff;
+  --g-s2: #bfe6ff;
+  --g-s3: #eafaf0;
+  --g-far1: #a9cfe0;
+  --g-far2: #9cc9b0;
+  --g-h1a: #b8e49c;
+  --g-h1b: #9dd07f;
+  --g-h2a: #96d175;
+  --g-h2b: #78bd58;
+  --g-h3a: #6fbd50;
+  --g-h3b: #529d3a;
+  --g-rim: #f1ffe4;
+  --g-tree: #5fa547;
+  --g-treeL: #9bd67a;
+  --g-treeD: #3f7d2e;
+  --g-haze: #ffffff;
+  --g-cloud: #ffffff;
+  --g-cloudB: #dcecf7;
+  --g-sun: #ffc83d;
+  --g-glow: #fff3b8;
+  --g-path: #dcc690;
+  --g-blade1: #4f9a38;
+  --g-blade2: #7cc25a;
   position: relative;
-  height: 236px;
+  /* the width is set, so the ratio sets the height (not the other way round: the minimum height
+     would otherwise make the picture wider than a phone) */
+  width: 100%;
+  min-width: 0;
+  aspect-ratio: 400 / 170;
+  min-height: 236px;
+  max-height: 340px;
   border-radius: var(--radius-lg);
-  background: linear-gradient(180deg, var(--sky-1), var(--sky-2));
+  background: linear-gradient(180deg, var(--g-s1) 0%, var(--g-s2) 45%, var(--g-s3) 100%);
   box-shadow: var(--shadow-2);
   overflow: hidden;
   isolation: isolate;
+  /* the birds fly the whole width: their path is measured in the picture's width (cqw) */
+  container-type: inline-size;
 }
 
 .garden--morning {
-  --sky-1: #ffd9b8;
-  --sky-2: #fff3d6;
+  --g-s1: #ffbf98;
+  --g-s2: #ffd9b0;
+  --g-s3: #fff2d8;
+  --g-far1: #e7c7b9;
+  --g-far2: #cdd2ae;
+  --g-h1a: #c3e29a;
+  --g-h1b: #a8d27f;
+  --g-h2a: #a2d27a;
+  --g-h2b: #84c05e;
+  --g-h3a: #7cc057;
+  --g-h3b: #5ea43f;
+  --g-rim: #fff1c9;
+  --g-tree: #79b25a;
+  --g-treeL: #b2dc8c;
+  --g-treeD: #4f8a38;
+  --g-haze: #fff0d6;
+  --g-cloud: #fffaf2;
+  --g-cloudB: #ffd9c2;
+  --g-sun: #ffd06a;
+  --g-glow: #ffe9b5;
+  --g-path: #e3c993;
+  --g-blade1: #5fa543;
+  --g-blade2: #86c25f;
 }
 
 .garden--evening {
-  --sky-1: #5d4b9e;
-  --sky-2: #ff9f7a;
-  --hill-1: #8fae74;
-  --hill-2: #6f9a58;
-  --hill-3: #4f7f40;
+  --g-s1: #4a3b8c;
+  --g-s2: #a2599a;
+  --g-s3: #ff9c6a;
+  --g-far1: #8c6a9c;
+  --g-far2: #7d7f82;
+  --g-h1a: #9db073;
+  --g-h1b: #86985f;
+  --g-h2a: #7d9a5a;
+  --g-h2b: #66844a;
+  --g-h3a: #5d8344;
+  --g-h3b: #476a34;
+  --g-rim: #ffc996;
+  --g-tree: #5f7a44;
+  --g-treeL: #94a86a;
+  --g-treeD: #3e5530;
+  --g-haze: #ffb48a;
+  --g-cloud: #ffd6c4;
+  --g-cloudB: #b06a8c;
+  --g-sun: #ff8a3d;
+  --g-glow: #ffb36b;
+  --g-path: #b9976a;
+  --g-blade1: #4a7434;
+  --g-blade2: #6f9550;
 }
 
 .garden--night {
-  --sky-1: #0e1b3d;
-  --sky-2: #2a3a6e;
-  --hill-1: #3f6a4c;
-  --hill-2: #2f573d;
-  --hill-3: #234631;
-  --soil: #4a3525;
+  --g-s1: #0a1530;
+  --g-s2: #16264f;
+  --g-s3: #2c3d74;
+  --g-far1: #24345e;
+  --g-far2: #22413d;
+  --g-h1a: #3d6a4b;
+  --g-h1b: #335c41;
+  --g-h2a: #2f5a3c;
+  --g-h2b: #274c33;
+  --g-h3a: #244a31;
+  --g-h3b: #1b3a26;
+  --g-rim: #8fb8c7;
+  --g-tree: #264634;
+  --g-treeL: #3a6247;
+  --g-treeD: #16301f;
+  --g-haze: #3c4f8a;
+  --g-cloud: #53608f;
+  --g-cloudB: #3a4570;
+  --g-sun: #f4f1d0;
+  --g-glow: #c9d6ff;
+  --g-path: #5a5848;
+  --g-blade1: #1f4329;
+  --g-blade2: #2d5537;
 }
 
+.garden__land,
 .garden__scene {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
+}
+
+/* the moving layers are painted apart, so the still land is not painted again on every frame */
+.garden__sky,
+.garden__scene {
+  will-change: transform;
 }
 
 .garden__sky {
@@ -1133,45 +1225,41 @@ textarea.input {
   overflow: visible;
 }
 
-.garden__hill--1 {
-  fill: var(--hill-1);
-}
-.garden__hill--2 {
-  fill: var(--hill-2);
-}
-.garden__hill--3 {
-  fill: var(--hill-3);
-}
-.garden__soil {
-  fill: var(--soil);
+.garden__far {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 26%;
+  width: 100%;
+  height: 42%;
 }
 
-.garden__cloud {
-  fill: #ffffff;
-  opacity: 0.85;
-  animation: cloud-drift 46s linear infinite alternate;
-}
-
-.garden__cloud--2 {
-  animation-duration: 70s;
-  animation-direction: alternate-reverse;
-  opacity: 0.6;
-}
-
-.garden--night .garden__cloud {
-  opacity: 0.12;
-}
-
-@keyframes cloud-drift {
-  from {
-    transform: translateX(-30px);
-  }
-  to {
-    transform: translateX(90px);
-  }
-}
-
+/* the sun rises low on the right in the morning, stands high by day and sets large in the evening */
 .garden__sun {
+  transform: translate(0, 0);
+}
+
+.garden--morning .garden__sun {
+  transform: translate(-10px, 26px);
+}
+
+.garden--evening .garden__sun {
+  transform: translate(8px, 48px) scale(1.15);
+}
+
+.garden__rays {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: sun-rays 60s linear infinite;
+}
+
+@keyframes sun-rays {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.garden__halo {
   transform-box: fill-box;
   transform-origin: center;
   animation: sun-glow 5s ease-in-out infinite alternate;
@@ -1179,7 +1267,7 @@ textarea.input {
 
 @keyframes sun-glow {
   to {
-    transform: scale(1.07);
+    transform: scale(1.08);
   }
 }
 
@@ -1201,6 +1289,152 @@ textarea.input {
   }
   to {
     opacity: 1;
+  }
+}
+
+.garden__cloud {
+  animation: cloud-drift 50s linear infinite alternate;
+}
+
+.garden__cloud--2 {
+  animation-duration: 72s;
+  animation-direction: alternate-reverse;
+}
+
+@keyframes cloud-drift {
+  from {
+    transform: translateX(-30px);
+  }
+  to {
+    transform: translateX(80px);
+  }
+}
+
+/* grass clumps and the seedlings of the empty bed lean in the wind */
+.garden__tuft {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: grass-sway 3.4s ease-in-out infinite alternate;
+}
+
+@keyframes grass-sway {
+  from {
+    transform: skewX(-6deg);
+  }
+  to {
+    transform: skewX(6deg);
+  }
+}
+
+.garden__wild {
+  opacity: 0.9;
+}
+
+.garden--evening .garden__wild {
+  opacity: 0.7;
+}
+
+.garden--night .garden__wild {
+  opacity: 0.3;
+}
+
+/* daytime: a small flock crosses the sky */
+.garden__birds {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.garden__bird {
+  position: absolute;
+  left: 0;
+  width: 16px;
+  height: 10px;
+  animation: bird-fly 16s linear infinite;
+}
+
+.garden__bird svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.garden__bird path {
+  transform-origin: 8px 4px;
+  animation: bird-flap 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes bird-fly {
+  from {
+    transform: translateX(-60px);
+  }
+  to {
+    /* the first value is for browsers without container units */
+    transform: translateX(980px);
+    transform: translateX(calc(100cqw + 60px));
+  }
+}
+
+@keyframes bird-flap {
+  from {
+    transform: scaleY(1);
+  }
+  to {
+    transform: scaleY(0.35);
+  }
+}
+
+/* evening and night: fireflies wander and blink over the grass */
+.garden__fly {
+  fill: #fff6a8;
+  animation:
+    firefly-wander 7s ease-in-out infinite alternate,
+    firefly-blink 2.2s ease-in-out infinite alternate;
+}
+
+@keyframes firefly-wander {
+  to {
+    transform: translate(9px, -7px);
+  }
+}
+
+@keyframes firefly-blink {
+  from {
+    opacity: 0.15;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* night: now and then a shooting star */
+.garden__shoot {
+  position: absolute;
+  top: 30px;
+  left: 58%;
+  width: 70px;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, transparent, #ffffff);
+  opacity: 0;
+  transform: rotate(-18deg);
+  animation: shooting-star 6s 1s ease-out infinite;
+  pointer-events: none;
+}
+
+@keyframes shooting-star {
+  0%,
+  80% {
+    opacity: 0;
+    transform: rotate(-18deg) translateX(0);
+  }
+  84% {
+    opacity: 1;
+  }
+  96%,
+  100% {
+    opacity: 0;
+    transform: rotate(-18deg) translateX(-160px);
   }
 }
 
@@ -1273,7 +1507,7 @@ textarea.input {
 
 @media (min-width: 640px) {
   .garden {
-    height: 280px;
+    min-height: 280px;
   }
 }
 
@@ -2032,13 +2266,16 @@ textarea.input {
   z-index: 2;
 }
 
+/* the garden screen: a taller picture with room for all the plots */
 .garden--big {
-  height: 300px;
+  aspect-ratio: 400 / 180;
+  min-height: 300px;
+  max-height: 420px;
 }
 
 @media (min-width: 640px) {
   .garden--big {
-    height: 360px;
+    min-height: 360px;
   }
 }
 
@@ -2219,18 +2456,6 @@ textarea.input {
     opacity: 0;
     transform: translate(calc(var(--dir, 1) * 5px), 22px) rotate(230deg);
   }
-}
-
-.garden--evening .garden__sunball {
-  fill: #ff9f4a;
-}
-
-.garden--evening .garden__glow {
-  fill: #ffd2a8;
-}
-
-.garden--morning .garden__sunball {
-  fill: #ffd76a;
 }
 
 .garden__flight {
@@ -2660,7 +2885,7 @@ textarea.input {
 
 /* empty plots stay quiet until pointed at */
 .garden__plot--empty .garden__plant {
-  opacity: 0.38;
+  opacity: 0.85;
   transition: opacity var(--motion-fast);
 }
 
