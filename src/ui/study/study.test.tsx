@@ -474,7 +474,7 @@ describe('Flashcards', () => {
     first.unmount();
   });
 
-  it('at the end of a round the close button asks, and "Finish and save" keeps every answer', async () => {
+  it('at the end of a round the close button asks; leaving keeps every answer', async () => {
     const user = userEvent.setup();
     const { deck } = await seedDeck();
     open(`/decks/${deck.id}/flip`);
@@ -485,15 +485,20 @@ describe('Flashcards', () => {
       );
     }
     await screen.findByRole('heading', { name: 'Round 1 complete' });
-    // no "undo" here (the card screen has its own button for that)
-    expect(screen.queryByRole('button', { name: 'Undo the last answer' })).toBeNull();
+    // only the way on: no "undo" or "finish" buttons here
+    expect(screen.getAllByRole('button').map((b) => b.textContent)).not.toContain(
+      'Undo the last answer',
+    );
 
     await user.click(screen.getByRole('button', { name: 'Close' }));
     const dialog = await screen.findByRole('dialog', { name: 'Leave this session?' });
     await user.click(within(dialog).getByRole('button', { name: 'Cancel' }));
     expect(screen.queryByRole('dialog')).toBeNull();
 
-    await user.click(screen.getByRole('button', { name: 'Finish and save' }));
+    await user.click(screen.getByRole('button', { name: 'Close' }));
+    await user.click(
+      within(await screen.findByRole('dialog')).getByRole('button', { name: 'Leave' }),
+    );
     expect(
       await screen.findByRole('heading', { name: 'Test deck', level: 1 }, { timeout: 10000 }),
     ).toBeInTheDocument();

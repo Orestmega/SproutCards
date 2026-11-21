@@ -220,10 +220,6 @@ function FlipSession({ data, onRestart }: { data: StudyData; onRestart: () => vo
         <Button block onClick={() => setState((s) => continueFlip(s))} autoFocus>
           {tp('flip.roundEnd.continue', state.missed.length)}
         </Button>
-        {/* or stop here: what is answered so far is kept */}
-        <Button block variant="secondary" onClick={() => void leaveAndSave()}>
-          {t('flip.roundEnd.finish')}
-        </Button>
         {leaveDialog}
       </>
     );
