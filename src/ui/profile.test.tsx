@@ -65,7 +65,7 @@ describe('profile', () => {
     const user = userEvent.setup();
     await seed();
     open('/');
-    await user.click(await screen.findByRole('link', { name: 'Your profile' }));
+    await user.click(await screen.findByRole('link', { name: 'Your profile' }, { timeout: 10000 }));
     // the profile screen is loaded on first use: slow when all the tests run at once
     expect(
       await screen.findByRole('heading', { name: 'Profile', level: 1 }, { timeout: 10000 }),

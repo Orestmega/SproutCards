@@ -5,7 +5,8 @@ import tseslint from 'typescript-eslint';
 import prettier from 'eslint-config-prettier';
 
 export default tseslint.config(
-  { ignores: ['dist', 'dev-dist', 'coverage', 'android', 'ios'] },
+  // design: the owner's mock-ups and demos (design/feedback), not code of the app
+  { ignores: ['dist', 'dev-dist', 'coverage', 'android', 'ios', 'design'] },
   js.configs.recommended,
   ...tseslint.configs.recommended,
   {

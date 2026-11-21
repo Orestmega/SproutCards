@@ -1,9 +1,10 @@
-import { useId } from 'react';
+import { useId, useMemo } from 'react';
 import type { CSSProperties, ReactNode } from 'react';
 import type { DayPart } from '../../core/cheer';
 import type { GrowthStage } from '../../core/garden';
 import type { DecorationId, GardenHealth, VarietyId } from '../../core/gardenLife';
-import { DecorationArt } from './Decoration';
+import { ButterflyFlight, DECOR_BOX, DecorationArt, useReducedMotion } from './Decoration';
+import type { RouteStop } from './butterflyRoute';
 import { HILLS, makeGardenArt } from './gardenArt';
 import { PlantArt } from './Plant';
 
@@ -33,16 +34,69 @@ const PLOTS_BIG: Plot[] = [
   [354, 226, 44],
 ];
 
-/** Where each decoration stands: x of its centre, y of its foot, size. */
+/** Where each decoration stands: x of its centre, y of its foot, width (decor-demo.html). */
 const DECOR_PLACES: Record<DecorationId, Plot> = {
-  rainbow: [96, 152, 170],
-  tree: [40, 168, 64],
-  beehive: [372, 152, 40],
-  birdhouse: [300, 160, 46],
+  rainbow: [96, 150, 170],
+  tree: [362, 150, 66],
+  beehive: [334, 160, 30],
+  birdhouse: [238, 146, 34],
+  fence: [66, 152, 82],
+  pond: [262, 238, 90],
   butterflies: [196, 118, 48],
-  pond: [256, 240, 84],
-  fence: [36, 242, 64],
 };
+
+/**
+ * The butterflies' rounds through the air; `{ plot, sit }` is a stop on the flower of that plot for
+ * `sit` seconds. A plot with no flower (or a wilted one) is simply flown past.
+ */
+type PlanStop = readonly [x: number, y: number] | { plot: number; sit: number };
+const PINK_PLAN: PlanStop[] = [
+  [70, 128],
+  [118, 112],
+  [170, 126],
+  [196, 108],
+  { plot: 3, sit: 3.4 },
+  [262, 120],
+  [318, 132],
+  [340, 112],
+  [286, 104],
+  [236, 122],
+  [180, 140],
+  [120, 138],
+  { plot: 0, sit: 3 },
+  [96, 120],
+];
+const BLUE_PLAN: PlanStop[] = [
+  [300, 118],
+  [262, 104],
+  [214, 116],
+  [170, 108],
+  [128, 122],
+  { plot: 2, sit: 3.8 },
+  [64, 130],
+  [86, 108],
+  [150, 118],
+  [214, 140],
+  [268, 146],
+  { plot: 13, sit: 3.2 },
+  [340, 148],
+  [350, 122],
+];
+
+/** The stops of a plan in garden units: a butterfly sits a little above the flower's head. */
+function routeStops(
+  plan: PlanStop[],
+  plots: Plot[],
+  blooming: (plot: number) => boolean,
+): RouteStop[] {
+  return plan.flatMap((stop): RouteStop[] => {
+    if (!('plot' in stop)) return [{ x: stop[0], y: stop[1] }];
+    const place = plots[stop.plot];
+    if (!place || !blooming(stop.plot)) return [];
+    const [x, y, size] = place;
+    return [{ x, y: y - size + (size * 10) / 32 - 6, sit: stop.sit }];
+  });
+}
 
 /** The details of the picture: made once, the same on every visit (see gardenArt.ts). */
 const ART = makeGardenArt();
@@ -98,18 +152,21 @@ function Cloud({ x, y, scale, second }: { x: number; y: number; scale: number; s
   );
 }
 
-function Decor({ id }: { id: DecorationId }) {
-  const [x, y, size] = DECOR_PLACES[id];
+function Decor({ id, still = false }: { id: DecorationId; still?: boolean }) {
+  const [x, y, width] = DECOR_PLACES[id];
+  const box = DECOR_BOX[id];
+  const height = (box.h * width) / box.w;
   return (
     <svg
-      x={x - size / 2}
-      y={y - size}
-      width={size}
-      height={size}
-      viewBox="0 0 48 48"
-      className="garden__decor"
+      x={x - width / 2}
+      y={y - height}
+      width={width}
+      height={height}
+      viewBox={`0 0 ${box.w} ${box.h}`}
+      overflow="visible"
+      className={`garden__decor garden__decor--${id}`}
     >
-      <DecorationArt id={id} />
+      <DecorationArt id={id} still={still} />
     </svg>
   );
 }
@@ -234,9 +291,10 @@ function StartBed() {
  * achievements, and a garden left without water droops (`health`). `children` are drawn on top
  * (Sprout and its words). The picture itself is decoration, except for the plots on the garden screen.
  *
- * Layers, back to front: the sky (sun or moon, stars, clouds), far hills, the land (hills, bushes,
- * patches, wildflowers: nothing in it moves, so the browser can keep it as a still picture), then the
- * living layer (swaying grass, plants, butterflies, fireflies), birds and a shooting star.
+ * Layers, back to front: the sky (sun or moon, stars, clouds), far hills, the land (each hill with its
+ * rim and fringe, then what stands on it: bushes, birdhouse, fence; patches, wildflowers; almost nothing
+ * in it moves, so the browser can keep it as a still picture), then the living layer (swaying grass,
+ * then the tree, hive and pond in front of it, plants, butterflies, fireflies), birds, a shooting star.
  */
 export function GardenScene({
   part,
@@ -273,6 +331,29 @@ export function GardenScene({
   const dusk = part === 'evening' || night;
   const has = (id: DecorationId) => decorations.includes(id);
   const empty = plots.every((_, i) => !plants[i]);
+  const still = useReducedMotion();
+  // which plots a butterfly can sit on (a flower that is not wilted); the routes change only with them
+  const sitOn = health === 'wilted' ? '' : plots.map((_, i) => (plants[i] ? 1 : 0)).join('');
+  const butterflyPlans = useMemo(() => {
+    const blooming = (plot: number) => sitOn[plot] === '1';
+    return {
+      pink: routeStops(PINK_PLAN, plots, blooming),
+      blue: routeStops(BLUE_PLAN, plots, blooming),
+    };
+  }, [sitOn, plots]);
+  const rim = (i: number) => (
+    <>
+      <path
+        d={HILLS[i]}
+        fill="none"
+        style={{ stroke: 'var(--g-rim)' }}
+        strokeWidth={1.2 - i * 0.2}
+        opacity={0.35 - i * 0.08}
+        strokeLinecap="round"
+      />
+      <path d={ART.fringe[i]} style={fill(`h${i + 1}a`)} />
+    </>
+  );
   const classes = [
     'garden',
     `garden--${part}`,
@@ -379,7 +460,9 @@ export function GardenScene({
           ))}
         </defs>
         {has('rainbow') && <Decor id="rainbow" />}
+        {/* every hill with its own rim and fringe of blades, then what stands on it */}
         <path d={`${HILLS[0]} V240 H0Z`} fill={`url(#${uid}-h0)`} />
+        {rim(0)}
         {ART.bushes.map((bush, i) => (
           <g
             key={i}
@@ -412,11 +495,12 @@ export function GardenScene({
             )}
           </g>
         ))}
-        {has('tree') && <Decor id="tree" />}
-        {has('beehive') && <Decor id="beehive" />}
         {has('birdhouse') && <Decor id="birdhouse" />}
+        {has('fence') && <Decor id="fence" />}
         <path d={`${HILLS[1]} V240 H0Z`} fill={`url(#${uid}-h1)`} />
+        {rim(1)}
         <path d={`${HILLS[2]} V240 H0Z`} fill={`url(#${uid}-h2)`} />
+        {rim(2)}
         {ART.patches.map((p, i) => (
           <ellipse
             key={i}
@@ -427,20 +511,6 @@ export function GardenScene({
             style={p.light ? fill('rim') : { fill: '#1e3a12' }}
             opacity="0.06"
           />
-        ))}
-        {HILLS.map((d, i) => (
-          <path
-            key={d}
-            d={d}
-            fill="none"
-            style={{ stroke: 'var(--g-rim)' }}
-            strokeWidth={1.2 - i * 0.2}
-            opacity={0.35 - i * 0.08}
-            strokeLinecap="round"
-          />
-        ))}
-        {ART.fringe.map((d, i) => (
-          <path key={i} d={d} style={fill(`h${i + 1}a`)} />
         ))}
         <g className="garden__wild">
           {ART.wildflowers.map((f, i) => (
@@ -455,7 +525,6 @@ export function GardenScene({
             </g>
           ))}
         </g>
-        {has('pond') && <Decor id="pond" />}
       </svg>
 
       {/* the living layer: grass, plants, butterflies, fireflies */}
@@ -479,6 +548,10 @@ export function GardenScene({
             </g>
           </g>
         ))}
+        {/* the tree, the hive and the pond stand in front of the grass */}
+        {has('tree') && <Decor id="tree" />}
+        {has('beehive') && <Decor id="beehive" still={still || night} />}
+        {has('pond') && <Decor id="pond" />}
         {startBed && empty && <StartBed />}
 
         {plots.map(([x, y, size], i) => {
@@ -530,11 +603,10 @@ export function GardenScene({
             </g>
           );
         })}
-        {has('fence') && <Decor id="fence" />}
-        {has('butterflies') && (
-          // they fly across the garden and back, so the greeting on Home never hides them for long
+        {has('butterflies') && !night && (
+          // they fly across the whole garden and sit on the flowers now and then
           <g className="garden__flight">
-            <Decor id="butterflies" />
+            {still ? <Decor id="butterflies" /> : <ButterflyFlight plans={butterflyPlans} />}
           </g>
         )}
         {dusk && (

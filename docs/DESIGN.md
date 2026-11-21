@@ -21,6 +21,10 @@ so a screen is written once. The dark theme turns the dark button light (mint fa
   fringe, swaying clumps and wildflowers (`gardenArt.ts`, seeded). Up to 9 plots show earned flowers; while none
   grows, Home shows a dug bed with seedlings. The height follows the width (aspect-ratio, clamped). The sky is a
   separate layer so a wide screen crops only the hills.
+- **Decorations** (`Decoration.tsx`, after the owner's `decor-demo.html`): each drawn in its own box, placed
+  by `DECOR_PLACES`. Layer rule: a hill, its rim and fringe, then what stands on it; grass clumps sit behind the
+  tree, hive and pond. Small motion only (tree sway, bird hop, bees, pond shine, reeds, butterflies on a route
+  that stops on real flowers). Evening warms and dims them, night darkens them and puts the animals to sleep.
 
 - **Garden screen:** the big picture (15 plots, earned decorations, rain while watering, droop when wilted), the
   watering card, beds per deck (tap a plant for its word), the flower collection (unknown kinds as silhouettes),
